@@ -29,6 +29,7 @@ def list_stock_brands(
             days_cover=r.days_cover,
             sales=r.sales,
             stock_units=r.stock_units,
+            billing=r.billing,
         )
         for r in rows
     ]
@@ -56,6 +57,8 @@ def list_stock_presentations(
             sales=r.sales,
             days_cover=r.days_cover,
             status=r.status,
+            stock_units=r.stock_units,
+            billing=r.billing,
         )
         for r in rows
     ]

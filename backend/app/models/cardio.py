@@ -5,6 +5,7 @@ from sqlalchemy import (
     Date,
     DateTime,
     ForeignKey,
+    Index,
     Integer,
     Numeric,
     SmallInteger,
@@ -24,6 +25,7 @@ class Molecule(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(80), unique=True)
     clase: Mapped[str | None] = mapped_column(String(120))
+    atc_code: Mapped[str | None] = mapped_column(String(20))
 
     brands: Mapped[list["Brand"]] = relationship(back_populates="molecule")
 
@@ -37,6 +39,7 @@ class Brand(Base):
     manufacturer: Mapped[str | None] = mapped_column(String(80))
     is_siegfried: Mapped[bool] = mapped_column(Boolean, default=False)
     color: Mapped[str | None] = mapped_column(String(7))
+    product_code: Mapped[str | None] = mapped_column(String(20))
 
     molecule: Mapped[Molecule | None] = relationship(back_populates="brands")
     presentations: Mapped[list["Presentation"]] = relationship(back_populates="brand")
@@ -214,6 +217,7 @@ class StockBrand(Base):
     days_cover: Mapped[int | None] = mapped_column(SmallInteger)
     sales: Mapped[int | None] = mapped_column(Integer)
     stock_units: Mapped[int | None] = mapped_column(Integer)
+    billing: Mapped[float | None] = mapped_column(Numeric(14, 2))
 
     brand: Mapped[Brand] = relationship()
 
@@ -229,6 +233,8 @@ class StockPresentation(Base):
     sales: Mapped[int | None] = mapped_column(Integer)
     days_cover: Mapped[int | None] = mapped_column(SmallInteger)
     status: Mapped[str | None] = mapped_column(String(10))
+    stock_units: Mapped[int | None] = mapped_column(Integer)
+    billing: Mapped[float | None] = mapped_column(Numeric(14, 2))
 
     presentation: Mapped[Presentation] = relationship()
 
@@ -256,3 +262,150 @@ class KpiBrand(Base):
     data: Mapped[dict] = mapped_column(JSONB)
 
     brand: Mapped[Brand] = relationship()
+
+
+class AgreementDetail(Base):
+    __tablename__ = "agreement_details"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    brand_id: Mapped[int | None] = mapped_column(ForeignKey("brands.id"))
+    laboratory: Mapped[str | None] = mapped_column(String(120))
+    line: Mapped[str | None] = mapped_column(String(80))
+    familia: Mapped[str | None] = mapped_column(String(80))
+    health_plan: Mapped[str] = mapped_column(String(200))
+    health_plan_detail: Mapped[str | None] = mapped_column(String(200))
+    product_name: Mapped[str | None] = mapped_column(String(200))
+    units: Mapped[int | None] = mapped_column(Integer)
+    pvp_amount: Mapped[float | None] = mapped_column(Numeric(14, 2))
+    system_coverage: Mapped[float | None] = mapped_column(Numeric(14, 2))
+    lab_pvp_contribution: Mapped[float | None] = mapped_column(Numeric(14, 2))
+    lab_adjustment: Mapped[float | None] = mapped_column(Numeric(14, 2))
+    lab_total_contribution: Mapped[float | None] = mapped_column(Numeric(14, 2))
+    net_contribution: Mapped[float | None] = mapped_column(Numeric(14, 2))
+    report_date: Mapped[date | None] = mapped_column(Date)
+
+    brand: Mapped[Brand | None] = relationship()
+
+    __table_args__ = (
+        UniqueConstraint("brand_id", "health_plan", "health_plan_detail", "product_name", "report_date"),
+    )
+
+
+class MarketPerformanceRegional(Base):
+    __tablename__ = "market_performance_regional"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    brand_id: Mapped[int | None] = mapped_column(ForeignKey("brands.id"))
+    molecule_id: Mapped[int | None] = mapped_column(ForeignKey("molecules.id"))
+    region_id: Mapped[int | None] = mapped_column(ForeignKey("regions.id"))
+    month: Mapped[date] = mapped_column(Date)
+    units: Mapped[int | None] = mapped_column(Integer)
+
+    brand: Mapped[Brand | None] = relationship()
+    molecule: Mapped[Molecule | None] = relationship()
+    region: Mapped[Region | None] = relationship()
+
+    __table_args__ = (
+        UniqueConstraint("brand_id", "molecule_id", "region_id", "month"),
+    )
+
+
+class MarketAteneo(Base):
+    __tablename__ = "market_ateneo"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    atc_code: Mapped[str | None] = mapped_column(String(20))
+    region: Mapped[str | None] = mapped_column(String(120))
+    brand_name: Mapped[str | None] = mapped_column(String(200))
+    product_name: Mapped[str | None] = mapped_column(String(200))
+    laboratory: Mapped[str | None] = mapped_column(String(80))
+    product_code: Mapped[str | None] = mapped_column(String(20))
+    mat_5: Mapped[int | None] = mapped_column(Integer)
+    mat_4: Mapped[int | None] = mapped_column(Integer)
+    mat_3: Mapped[int | None] = mapped_column(Integer)
+    mat_2: Mapped[int | None] = mapped_column(Integer)
+    mat_current: Mapped[int | None] = mapped_column(Integer)
+    mes_12: Mapped[int | None] = mapped_column(Integer)
+    mes_11: Mapped[int | None] = mapped_column(Integer)
+    mes_10: Mapped[int | None] = mapped_column(Integer)
+    mes_9: Mapped[int | None] = mapped_column(Integer)
+    mes_8: Mapped[int | None] = mapped_column(Integer)
+    mes_7: Mapped[int | None] = mapped_column(Integer)
+    mes_6: Mapped[int | None] = mapped_column(Integer)
+    mes_5: Mapped[int | None] = mapped_column(Integer)
+    mes_4: Mapped[int | None] = mapped_column(Integer)
+    mes_3: Mapped[int | None] = mapped_column(Integer)
+    mes_2: Mapped[int | None] = mapped_column(Integer)
+    mes_current: Mapped[int | None] = mapped_column(Integer)
+    ytd_5: Mapped[int | None] = mapped_column(Integer)
+    ytd_4: Mapped[int | None] = mapped_column(Integer)
+    ytd_3: Mapped[int | None] = mapped_column(Integer)
+    ytd_2: Mapped[int | None] = mapped_column(Integer)
+    ytd_current: Mapped[int | None] = mapped_column(Integer)
+    ref_date: Mapped[date | None] = mapped_column(Date)
+    loaded_at: Mapped[datetime | None] = mapped_column(
+        DateTime, server_default=text("now()")
+    )
+
+    __table_args__ = (
+        Index("ix_market_ateneo_atc", "atc_code"),
+        Index("ix_market_ateneo_region", "region"),
+        Index("ix_market_ateneo_brand", "brand_name"),
+    )
+
+
+class MarketAteneoNational(Base):
+    __tablename__ = "market_ateneo_national"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    pack_code: Mapped[str | None] = mapped_column(String(40))
+    pack_name: Mapped[str | None] = mapped_column(String(200))
+    product_name: Mapped[str | None] = mapped_column(String(200))
+    corporation: Mapped[str | None] = mapped_column(String(120))
+    manufacturer: Mapped[str | None] = mapped_column(String(120))
+    atc_iv: Mapped[str | None] = mapped_column(String(20))
+    molecule: Mapped[str | None] = mapped_column(String(500))
+    pharma_form: Mapped[str | None] = mapped_column(String(80))
+    launch_date: Mapped[str | None] = mapped_column(String(40))
+    market_type: Mapped[str | None] = mapped_column(String(10))
+    period_type: Mapped[str] = mapped_column(String(10))
+    period_date: Mapped[date] = mapped_column(Date)
+    usd_amount: Mapped[float | None] = mapped_column(Numeric(16, 2))
+    local_amount: Mapped[float | None] = mapped_column(Numeric(16, 2))
+    units: Mapped[int | None] = mapped_column(Integer)
+    loaded_at: Mapped[datetime | None] = mapped_column(
+        DateTime, server_default=text("now()")
+    )
+
+    __table_args__ = (
+        UniqueConstraint("pack_code", "period_type", "period_date"),
+    )
+
+
+class PriceCatalog(Base):
+    __tablename__ = "price_catalog"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    registro: Mapped[str | None] = mapped_column(String(40))
+    troquel: Mapped[str | None] = mapped_column(String(40))
+    product_name: Mapped[str | None] = mapped_column(String(200))
+    presentation: Mapped[str | None] = mapped_column(String(300))
+    drug_name: Mapped[str | None] = mapped_column(String(200))
+    pharma_action: Mapped[str | None] = mapped_column(String(200))
+    laboratory: Mapped[str | None] = mapped_column(String(120))
+    barcode: Mapped[str | None] = mapped_column(String(40))
+    product_type: Mapped[str | None] = mapped_column(String(40))
+    pami_category: Mapped[str | None] = mapped_column(String(40))
+    status: Mapped[str | None] = mapped_column(String(40))
+    qty_presentations: Mapped[int | None] = mapped_column(Integer)
+    pvp_previous: Mapped[float | None] = mapped_column(Numeric(14, 2))
+    pvp_current: Mapped[float | None] = mapped_column(Numeric(14, 2))
+    variation_pct: Mapped[float | None] = mapped_column(Numeric(6, 2))
+    effective_date: Mapped[date | None] = mapped_column(Date)
+    pvp_previous_date: Mapped[date | None] = mapped_column(Date)
+    pvp_current_date: Mapped[date | None] = mapped_column(Date)
+    loaded_at: Mapped[datetime | None] = mapped_column(
+        DateTime, server_default=text("now()")
+    )
+
+    __table_args__ = (UniqueConstraint("registro", "presentation"),)
