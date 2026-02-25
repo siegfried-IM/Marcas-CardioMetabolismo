@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-siegfried}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-siegfried_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-siegfried_bi}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U siegfried"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://siegfried:siegfried_dev@db:5432/siegfried_bi}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
+      PYTHONPATH: /app
+      UV_LINK_MODE: copy
+    volumes:
+      - ./backend:/app
+      - backend_venv:/app/.venv
+      - ./scripts:/app/scripts
+      - ./data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "uv sync &&
+             uv run alembic upgrade head &&
+             uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  backend_venv:
