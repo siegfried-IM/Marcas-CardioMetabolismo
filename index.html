@@ -965,11 +965,18 @@ const LINES = [
 function loadUrls() {
   const DEFAULTS = {
     cardio: '/Marcas-CardioMetabolismo/cardio/'
+    snc:   '/Marcas-CardioMetabolismo/SNC/psq_dashboard.html'
+ // opcional:
+    // ddd: '/Marcas-CardioMetabolismo/SNC/DDD/psq_ddd.html'
   };
+
   try {
     const saved = JSON.parse(localStorage.getItem('sie_hub_urls') || '{}');
     return Object.assign({}, DEFAULTS, saved);
+  } catch(e) {
+    return DEFAULTS;
   }
+}
   catch(e) { return DEFAULTS; }
 }
 
