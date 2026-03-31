@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Siegfried | Dermatología</title>
+<title>Siegfried | SNC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f7f1e8;
-  --paper:#fffdf8;
-  --ink:#221b16;
-  --muted:#6d6258;
-  --line:#e8dbcc;
-  --brand:#d97706;
-  --brand-dark:#9a4f00;
-  --chip:#fff0db;
-  --shadow:0 24px 60px rgba(34,27,22,.08);
+  --bg:#f3efff;
+  --paper:#fcfbff;
+  --ink:#1f1533;
+  --muted:#6a5f84;
+  --line:#dfd8f1;
+  --brand:#7c3aed;
+  --brand-dark:#5b21b6;
+  --chip:#f0e9ff;
+  --shadow:0 24px 60px rgba(31,21,51,.10);
 }
 *{box-sizing:border-box}
 body{
@@ -25,9 +25,9 @@ body{
   font-family:'IBM Plex Sans',sans-serif;
   color:var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(217,119,6,.14), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(180,83,9,.14), transparent 22%),
-    linear-gradient(180deg, #fbf5ed 0%, var(--bg) 100%);
+    radial-gradient(circle at top left, rgba(124,58,237,.14), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(91,33,182,.14), transparent 22%),
+    linear-gradient(180deg, #faf8ff 0%, var(--bg) 100%);
   min-height:100vh;
 }
 .shell{
@@ -69,14 +69,12 @@ body{
 .hero-copy,
 .hero-note,
 .card{
-  background:rgba(255,253,248,.92);
+  background:rgba(252,251,255,.94);
   border:1px solid var(--line);
   box-shadow:var(--shadow);
   border-radius:24px;
 }
-.hero-copy{
-  padding:34px;
-}
+.hero-copy{padding:34px}
 .eyebrow{
   display:inline-flex;
   align-items:center;
@@ -153,7 +151,7 @@ h1{
   border-radius:18px;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg, #ffd8a8 0%, #ffedd5 100%);
+  background:linear-gradient(135deg, #ddd6fe 0%, #f5f3ff 100%);
   font-size:26px;
 }
 .pill{
@@ -191,8 +189,8 @@ h1{
   color:var(--muted);
   padding:8px 10px;
   border-radius:10px;
-  background:#f7efe5;
-  border:1px solid #efe0cf;
+  background:#f5f0ff;
+  border:1px solid #e8defb;
 }
 .action{
   display:inline-flex;
@@ -229,22 +227,22 @@ h1{
 <body>
   <div class="shell">
     <div class="topbar">
-      <a class="crumb" href="javascript:void(0)" onclick="if(history.length>1){history.back()}else{window.location.href='../'}">Volver al hub</a>
-      <div class="stamp">Linea activa · Dermatologia · Mar 2026</div>
+      <a class="crumb" href="../">Volver al hub</a>
+      <div class="stamp">Linea activa · SNC</div>
     </div>
 
     <section class="hero">
       <div class="hero-copy">
         <div class="eyebrow">Hub de Tableros · Siegfried</div>
-        <h1>Dermatologia<br>por molecula</h1>
-        <p>Acceso al tablero ejecutivo y a la vista regional DDD. La estructura de mercado esta agrupada por molecula, con seguimiento de IQVIA, recetas, stock, convenios y precios.</p>
+        <h1>SNC<br>gestion de marcas</h1>
+        <p>Acceso al tablero ejecutivo y a la vista regional DDD. Esta carpeta queda como puerta de entrada estable para que el HUB siempre apunte al mismo lugar aunque el contenido interno cambie.</p>
       </div>
       <div class="hero-note">
         <div>
           <div class="note-label">Cobertura del modulo</div>
           <div class="note-kpi">2</div>
         </div>
-        <div class="note-copy">Resumen ejecutivo para gestion de marca y vista DDD/regional para lectura de market share, competidores y desagregacion geografica.</div>
+        <div class="note-copy">Resumen ejecutivo para lectura comercial y vista DDD/regional para market share, regiones, competidores y desagregacion geografica.</div>
       </div>
     </section>
 
@@ -255,14 +253,14 @@ h1{
           <div class="pill">Resumen</div>
         </div>
         <h2>Dashboard ejecutivo</h2>
-        <p>Vista integral de marcas dermatologicas con KPIs, venta vs presupuesto, IQVIA, recetas, stock, canales, convenios, precios y cobertura.</p>
+        <p>Vista integral de marcas SNC con KPIs, venta vs presupuesto, IQVIA, recetas, stock, canales, convenios, precios y cobertura.</p>
         <div class="meta">
           <span>IQVIA</span>
-          <span>Recetas CUP</span>
-          <span>Stock y cobertura</span>
+          <span>Recetas</span>
+          <span>Stock</span>
           <span>Precios</span>
         </div>
-        <a class="action" href="./dermato_dashboard.html">Abrir dashboard</a>
+        <a class="action" href="./psq_dashboard.html">Abrir dashboard</a>
       </article>
 
       <article class="card">
@@ -283,12 +281,12 @@ h1{
     </section>
 
     <div class="foot">
-      Mercados armados por molecula. Los accesos internos entre resumen y DDD quedan dentro de esta misma carpeta para que el HUB los abra con rutas relativas limpias.
+      Esta carpeta se usa como acceso fijo del HUB. Si cambian los HTML internos, el HUB puede seguir apuntando a <code>SNC/</code> sin romperse.
     </div>
   </div>
   <script>
     if (window.location.hash) {
-      window.location.replace(`./dermato_dashboard.html${window.location.hash}`);
+      window.location.replace(`./psq_dashboard.html${window.location.hash}`);
     }
   </script>
 </body>
