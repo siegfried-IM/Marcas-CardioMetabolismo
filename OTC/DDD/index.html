@@ -2,52 +2,140 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Siegfried · OTC · Vista DDD</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Siegfried · DDD · OTC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script src="../data.js"></script>
   <style>
-    :root{--bg:#eff7f5;--panel:#ffffff;--ink:#152538;--muted:#63748a;--line:#d7e8e3;--brand:#0f766e;--brand-2:#22a69a;--accent:#d97706;--shadow:0 18px 40px rgba(21,37,56,.08);--radius:22px}
-    *{box-sizing:border-box}body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:radial-gradient(circle at top left, rgba(15,118,110,.12), transparent 24%),linear-gradient(180deg,#f7fcfb 0%,var(--bg) 100%)}a{color:inherit;text-decoration:none}
-    .shell{max-width:1380px;margin:0 auto;padding:28px 24px 52px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}.group{display:flex;gap:10px;flex-wrap:wrap}.pill,.link{border:1px solid rgba(21,37,56,.08);background:rgba(255,255,255,.72);padding:10px 14px;border-radius:999px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(10px)}.pill{color:var(--muted)}
-    .hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:16px;margin-bottom:18px}.card{background:rgba(255,255,255,.85);border:1px solid rgba(21,37,56,.08);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(12px)}.hero-main{padding:26px}.eyebrow{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(15,118,110,.1);color:var(--brand);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:16px}h1{margin:0 0 10px;font-size:48px;line-height:.96;letter-spacing:-.05em}.sub{color:var(--muted);font-size:16px;line-height:1.6;margin:0 0 18px}.markets{display:flex;flex-wrap:wrap;gap:10px}.market-btn{border:1px solid rgba(21,37,56,.08);background:rgba(255,255,255,.9);padding:11px 13px;border-radius:16px;font-weight:700;color:var(--muted);cursor:pointer}.market-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}.hero-side{padding:22px;display:grid;gap:14px;align-content:start}.hero-side h2{margin:0;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.hero-side strong{display:block;font-size:28px;line-height:1;margin-top:6px;letter-spacing:-.04em}.meta{display:grid;gap:10px}.meta-item{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:14px;background:#f8fcfb;border:1px solid rgba(21,37,56,.06);font-size:13px}.meta-item strong{font-size:15px}
-    .controls{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:18px}.select{appearance:none;border:1px solid rgba(21,37,56,.08);background:#fff;padding:12px 16px;border-radius:14px;font-weight:700;color:var(--ink)}
-    .kpis{display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));gap:14px;margin-bottom:18px}.kpi{padding:18px}.label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}.value{font-size:34px;font-weight:800;line-height:.94;letter-spacing:-.04em;margin-bottom:8px}.foot{font-size:13px;color:var(--muted);line-height:1.55}
-    .grid{display:grid;grid-template-columns:repeat(12, minmax(0, 1fr));gap:16px}.span-8{grid-column:span 8}.span-4{grid-column:span 4}.span-12{grid-column:span 12}.panel{padding:20px}.head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}.head h3{margin:0 0 6px;font-size:22px;letter-spacing:-.03em}.muted{color:var(--muted);font-size:13px;line-height:1.6}.canvas{min-height:320px}
-    table{width:100%;border-collapse:collapse}th,td{padding:12px 10px;border-bottom:1px solid rgba(21,37,56,.08);text-align:left;font-size:13px}th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}td.num,th.num{text-align:right}.sie{color:var(--brand);font-weight:700}
-    @media (max-width:1120px){.hero,.kpis{grid-template-columns:1fr}.span-8,.span-4,.span-12{grid-column:1 / -1}}@media (max-width:720px){.shell{padding:18px 14px 34px}h1{font-size:40px}.panel,.hero-main,.hero-side,.kpi{padding:18px}.value{font-size:30px}}
+    :root{
+      --bg:#F5F5F5;--surf:#FFF;--bd:#E5E5E5;--bd2:#D4D4D4;
+      --t1:#1A1A1A;--t2:#525252;--t3:#737373;--t4:#A3A3A3;
+      --sie:#7A1518;--sie2:#9B1B1E;--sie-lt:#FEF2F2;
+      --green:#16A34A;--green-bg:#F0FDF4;--red:#DC2626;--red-bg:#FEF2F2;
+      --blue:#2563EB;--purple:#7C3AED;--r:12px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:13px;-webkit-font-smoothing:antialiased}
+    body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+    a{color:inherit;text-decoration:none}
+    .navbar{background:white;display:flex;align-items:center;height:48px;padding:0 28px;border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:200}
+    .nav-brand{color:var(--sie);font-size:13px;font-weight:800;letter-spacing:2px;margin-right:24px;display:flex;align-items:center;gap:7px}
+    .nav-brand .dot{width:7px;height:7px;border-radius:50%;background:var(--sie)}
+    .nav-tabs{display:flex;align-items:center;height:100%;gap:0;overflow-x:auto;flex:1}
+    .nav-tab{color:var(--t2);font-size:12px;font-weight:500;padding:0 14px;height:100%;display:flex;align-items:center;cursor:pointer;text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+    .nav-tab:hover{color:var(--t1)}
+    .nav-tab.ul{color:var(--t1);font-weight:600;border-bottom-color:var(--t1)}
+    .nav-tab.hl{background:var(--t1);color:white;font-weight:700;border-radius:6px;height:32px;margin:auto 4px;padding:0 14px;border-bottom:none}
+    .nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+    .nav-hub{font-size:12px;font-weight:500;color:var(--t2);display:flex;align-items:center;gap:4px}
+    .nav-hub:hover{color:var(--t1)}
+    .hero{background:white;border-bottom:1px solid var(--bd);padding:28px 40px 24px}
+    .hero-bread{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:6px}
+    .hero-bread span{color:var(--sie)}
+    .hero h1{font-size:26px;font-weight:800;color:var(--t1);letter-spacing:-.5px;margin-bottom:5px}
+    .hero-sub{font-size:11.5px;color:var(--t3)}
+    .gf{background:white;border-bottom:1px solid var(--bd);padding:12px 40px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:48px;z-index:150;box-shadow:0 2px 6px rgba(0,0,0,.03)}
+    .gfg{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .gfl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t4);white-space:nowrap}
+    .market-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .market-btn{padding:5px 13px;border-radius:5px;font-size:11px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .15s;border:1px solid var(--bd);background:white}
+    .market-btn:hover{border-color:var(--sie);color:var(--sie)}
+    .market-btn.active{background:var(--sie);color:white;border-color:var(--sie);font-weight:700}
+    .select{padding:6px 14px;border-radius:6px;border:1px solid var(--bd);font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;color:var(--t2);background:white;min-width:160px}
+    .select:focus{outline:none;border-color:var(--sie)}
+    .pill{display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;background:var(--sie-lt);border:1px solid #FECACA;font-size:10.5px;font-weight:600;color:var(--sie)}
+    .family-note{font-size:11px;color:var(--t3)}
+    .main{max-width:1400px;margin:0 auto;padding:20px 40px 60px}
+    .hero-top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);gap:16px;margin-bottom:20px}
+    .cd{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:20px 22px}
+    .cdh{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+    .cn{width:22px;height:22px;border-radius:50%;background:var(--sie);color:white;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800}
+    .ctt{font-size:14px;font-weight:700;color:var(--t1)}
+    .csu{font-size:10.5px;color:var(--t3);margin-bottom:12px;line-height:1.5}
+    .side-main{font-size:32px;font-weight:800;letter-spacing:-1.5px;color:var(--sie);line-height:1;margin-bottom:6px;font-variant-numeric:tabular-nums}
+    .side-copy{font-size:11px;color:var(--t3);line-height:1.5;margin-bottom:12px}
+    .meta{display:grid;gap:8px}
+    .meta-item{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:10px;background:#FAFAFA;border:1px solid var(--bd);font-size:11px;color:var(--t2)}
+    .meta-item strong{font-size:12px;color:var(--t1)}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+    .kpi{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:16px 18px;position:relative}
+    .kpi::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:2px;border-radius:1px}
+    .kpi:nth-child(1)::after{background:var(--sie)}
+    .kpi:nth-child(2)::after{background:var(--blue)}
+    .kpi:nth-child(3)::after{background:var(--green)}
+    .kpi:nth-child(4)::after{background:var(--purple)}
+    .label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t4);margin-bottom:6px}
+    .value{font-size:28px;font-weight:800;letter-spacing:-1.5px;line-height:1;margin-bottom:5px;font-variant-numeric:tabular-nums;color:var(--t1)}
+    .foot{font-size:10.5px;color:var(--t3);line-height:1.4}
+    .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+    .span-8{grid-column:span 8}.span-4{grid-column:span 4}.span-12{grid-column:span 12}
+    .panel{padding:20px 22px}
+    .head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+    .head h3{margin:0 0 6px;font-size:14px;font-weight:700;color:var(--t1)}
+    .muted{color:var(--t3);font-size:10.5px;line-height:1.6}
+    .canvas{min-height:320px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 12px;border-bottom:1px solid #F0F0F0;text-align:left;font-size:11.5px}
+    th{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--t4);background:#FAFAFA}
+    td.num,th.num{text-align:right}
+    .sie{color:var(--sie);font-weight:700}
+    @media(max-width:1100px){.hero-top,.kpis{grid-template-columns:1fr}.grid .span-8,.grid .span-4,.grid .span-12{grid-column:1/-1}.main,.hero,.gf{padding-left:16px;padding-right:16px}}
+    @media(max-width:640px){.kpis{grid-template-columns:1fr}.market-btn{font-size:10px;padding:4px 8px}.side-main,.value{font-size:24px}}
   </style>
 </head>
 <body>
-  <div class="shell">
-    <div class="topbar">
-      <div class="group"><a class="link" id="back-exec" href="../">Volver al ejecutivo OTC</a><a class="link" href="../../">Volver al HUB</a></div>
-      <div class="group"><span class="pill" id="cut-pill">DDD OTC</span></div>
+  <nav class="navbar">
+    <div class="nav-brand"><span class="dot"></span>SIEGFRIED</div>
+    <div class="nav-tabs">
+      <a class="nav-tab ul" id="back-exec" href="../">Resumen</a>
+      <a class="nav-tab" href="../#venta">Venta Interna</a>
+      <a class="nav-tab" href="../#stock">Stock</a>
+      <a class="nav-tab" href="../#mercado">Mercado DDD</a>
+      <a class="nav-tab" href="../#canales">Mostrador vs Convenios</a>
+      <a class="nav-tab" href="../#rx">Recetas</a>
+      <a class="nav-tab" href="../#convenios">Convenios</a>
+      <a class="nav-tab" href="../#cross">Cruce</a>
+      <a class="nav-tab hl" href="./">DDD</a>
     </div>
-    <section class="hero">
-      <div class="card hero-main">
-        <div class="eyebrow">Siegfried · OTC · lectura regional</div>
-        <h1>Vista DDD<br><span id="market-title">OTC</span></h1>
-        <p class="sub" id="hero-sub">Mercado regional con corte mensual por region, productos y share estimado de Siegfried.</p>
-        <div class="markets" id="market-filters"></div>
-      </div>
-      <aside class="card hero-side">
-        <div><h2>Mercado activo</h2><strong id="side-main">0</strong><p class="muted" id="side-copy">Leyendo el ultimo mes disponible.</p></div>
+    <div class="nav-right">
+      <a class="nav-hub" href="../../">← Hub</a>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="hero-bread"><span>SIEGFRIED</span> · OTC · INTELIGENCIA DE MERCADOS</div>
+    <h1>DDD · <span id="market-title">OTC</span></h1>
+    <div class="hero-sub" id="hero-sub">Mercado regional con corte mensual por región, productos y share estimado de Siegfried.</div>
+  </div>
+  <div class="gf">
+    <div class="gfg"><span class="gfl">Mercado:</span><div class="market-bar" id="market-filters"></div></div>
+    <div class="gfg"><span class="gfl">Mes:</span><select class="select" id="month-select"></select></div>
+    <div class="gfg"><span class="gfl">Familia:</span><div class="family-note" id="family-note"></div></div>
+    <div class="gfg"><span class="gfl">Corte:</span><span class="pill" id="cut-pill">DDD OTC</span></div>
+  </div>
+  <div class="main">
+    <section class="hero-top">
+      <article class="cd">
+        <div class="cdh"><div class="cn">01</div><div class="ctt">Mercado activo</div></div>
+        <div class="csu">Lectura regional del mercado seleccionado con serie mensual, captura Siegfried y apertura por producto y región.</div>
+        <div class="meta" id="siblings"></div>
+      </article>
+      <aside class="cd">
+        <div class="label">Share activo</div>
+        <div class="side-main" id="side-main">0</div>
+        <div class="side-copy" id="side-copy">Leyendo el último mes disponible.</div>
         <div class="meta" id="meta-list"></div>
       </aside>
     </section>
-    <div class="controls"><div class="muted" id="family-note"></div><select class="select" id="month-select"></select></div>
     <section class="kpis" id="kpis"></section>
     <section class="grid">
-      <article class="card panel span-8"><div class="head"><div><h3>Evolucion de share</h3><div class="muted">Share estimado de Siegfried sobre el mercado total por mes.</div></div></div><div class="canvas"><canvas id="share-chart"></canvas></div></article>
-      <article class="card panel span-4"><div class="head"><div><h3>Mercados hermanos</h3><div class="muted">Otros mercados regionales disponibles dentro de la misma familia.</div></div></div><div class="meta" id="siblings"></div></article>
-      <article class="card panel span-8"><div class="head"><div><h3>Unidades mercado vs Siegfried</h3><div class="muted">Comparacion mensual entre volumen total y volumen capturado por Siegfried.</div></div></div><div class="canvas"><canvas id="units-chart"></canvas></div></article>
-      <article class="card panel span-4"><div class="head"><div><h3>Top regiones</h3><div class="muted">Share estimado por region en el mes seleccionado.</div></div></div><div class="canvas"><canvas id="regions-chart"></canvas></div></article>
-      <article class="card panel span-12"><div class="head"><div><h3>Productos y competidores</h3><div class="muted">Mix del mercado en el mes seleccionado.</div></div></div><div style="overflow:auto"><table><thead><tr><th>Producto</th><th class="num">Unidades</th><th class="num">Share</th><th class="num">Siegfried</th></tr></thead><tbody id="product-body"></tbody></table></div></article>
-      <article class="card panel span-12"><div class="head"><div><h3>Detalle regional</h3><div class="muted">Desglose de unidades, captura Siegfried y share por region.</div></div></div><div style="overflow:auto"><table><thead><tr><th>Region</th><th class="num">Mercado total</th><th class="num">Siegfried</th><th class="num">Share</th></tr></thead><tbody id="region-body"></tbody></table></div></article>
+      <article class="cd panel span-8"><div class="head"><div><h3>Evolución de share</h3><div class="muted">Share estimado de Siegfried sobre el mercado total por mes.</div></div></div><div class="canvas"><canvas id="share-chart"></canvas></div></article>
+      <article class="cd panel span-4"><div class="head"><div><h3>Mercados hermanos</h3><div class="muted">Otros mercados regionales disponibles dentro de la misma familia.</div></div></div><div class="meta" id="siblings-copy"></div></article>
+      <article class="cd panel span-8"><div class="head"><div><h3>Unidades mercado vs Siegfried</h3><div class="muted">Comparación mensual entre volumen total y volumen capturado por Siegfried.</div></div></div><div class="canvas"><canvas id="units-chart"></canvas></div></article>
+      <article class="cd panel span-4"><div class="head"><div><h3>Top regiones</h3><div class="muted">Share estimado por región en el mes seleccionado.</div></div></div><div class="canvas"><canvas id="regions-chart"></canvas></div></article>
+      <article class="cd panel span-12"><div class="head"><div><h3>Productos y competidores</h3><div class="muted">Mix del mercado en el mes seleccionado.</div></div></div><div style="overflow:auto"><table><thead><tr><th>Producto</th><th class="num">Unidades</th><th class="num">Share</th><th class="num">Siegfried</th></tr></thead><tbody id="product-body"></tbody></table></div></article>
+      <article class="cd panel span-12"><div class="head"><div><h3>Detalle regional</h3><div class="muted">Desglose de unidades, captura Siegfried y share por región.</div></div></div><div style="overflow:auto"><table><thead><tr><th>Región</th><th class="num">Mercado total</th><th class="num">Siegfried</th><th class="num">Share</th></tr></thead><tbody id="region-body"></tbody></table></div></article>
     </section>
   </div>
   <script>
@@ -66,12 +154,16 @@
     const rowsForMonth = () => marketData().regionsByMonth[state.month] || [];
     const productsForMonth = () => marketData().productsByMonth[state.month] || [];
     function syncUrl(){ const url = new URL(window.location.href); url.searchParams.set('market', state.market); url.searchParams.set('family', selectedFamily()); url.searchParams.set('month', state.month); history.replaceState({}, '', url); document.getElementById('back-exec').href = `../?family=${encodeURIComponent(selectedFamily())}`; }
-    function makeCharts(){ charts.share = new Chart(document.getElementById('share-chart'), { type:'line', data:{ labels:[], datasets:[{ label:'Share Siegfried', data:[], borderColor:'#0f766e', backgroundColor:'rgba(15,118,110,.12)', borderWidth:3, pointRadius:2, tension:.24, fill:true }] }, options:{ maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}, scales:{ y:{ beginAtZero:true, ticks:{ callback:v => pct.format(v) + '%' } } } } }); charts.units = new Chart(document.getElementById('units-chart'), { type:'bar', data:{ labels:[], datasets:[{ label:'Mercado total', data:[], backgroundColor:'rgba(21,37,56,.14)', borderRadius:10 },{ label:'Siegfried', data:[], type:'line', borderColor:'#d97706', borderWidth:3, pointRadius:2, tension:.22 }] }, options:{ maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}, scales:{ y:{ beginAtZero:true, ticks:{ callback:v => fmt.format(v) } } } } }); charts.regions = new Chart(document.getElementById('regions-chart'), { type:'bar', data:{ labels:[], datasets:[{ label:'Share', data:[], backgroundColor:'rgba(15,118,110,.7)', borderRadius:10 }] }, options:{ indexAxis:'y', maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ beginAtZero:true, ticks:{ callback:v => pct.format(v) + '%' } } } } }); }
+    function makeCharts(){
+      charts.share = new Chart(document.getElementById('share-chart'), { type:'line', data:{ labels:[], datasets:[{ label:'Share Siegfried', data:[], borderColor:'#7A1518', backgroundColor:'rgba(122,21,24,.10)', borderWidth:3, pointRadius:2, tension:.24, fill:true }] }, options:{ maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}, scales:{ y:{ beginAtZero:true, ticks:{ callback:v => pct.format(v) + '%' } } } } });
+      charts.units = new Chart(document.getElementById('units-chart'), { type:'bar', data:{ labels:[], datasets:[{ label:'Mercado total', data:[], backgroundColor:'rgba(17,24,39,.14)', borderRadius:10 },{ label:'Siegfried', data:[], type:'line', borderColor:'#D97706', borderWidth:3, pointRadius:2, tension:.22 }] }, options:{ maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}, scales:{ y:{ beginAtZero:true, ticks:{ callback:v => fmt.format(v) } } } } });
+      charts.regions = new Chart(document.getElementById('regions-chart'), { type:'bar', data:{ labels:[], datasets:[{ label:'Share', data:[], backgroundColor:'rgba(122,21,24,.80)', borderRadius:10 }] }, options:{ indexAxis:'y', maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ beginAtZero:true, ticks:{ callback:v => pct.format(v) + '%' } } } } });
+    }
     function renderMarketFilters(){ const wrap = document.getElementById('market-filters'); wrap.innerHTML = ''; allMarkets.forEach(m => { const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'market-btn' + (m === state.market ? ' active' : ''); btn.textContent = m; btn.addEventListener('click', () => { state.market = m; state.month = marketData().latestMonth; syncUrl(); render(); }); wrap.appendChild(btn); }); }
-    function renderHeader(){ const data = marketData(); document.getElementById('market-title').textContent = state.market; document.getElementById('hero-sub').textContent = `Mercado ${state.market} dentro de ${data.family} con corte regional hasta ${data.latestMonth}.`; document.getElementById('cut-pill').textContent = `DDD OTC · corte ${data.latestMonth}`; document.getElementById('family-note').textContent = `Familia activa: ${data.family}. Volve al ejecutivo para cruzar esta lectura con presupuesto, stock y convenios.`; const latest = data.monthly[data.monthly.length - 1]; document.getElementById('side-main').textContent = `${pct.format(latest.share)}%`; document.getElementById('side-copy').textContent = `Share estimado de Siegfried en ${latest.month}.`; document.getElementById('meta-list').innerHTML = [['Mercado total',fmt.format(latest.total)],['Siegfried',fmt.format(latest.sie)],['Mes activo',state.month],['Familia',data.family]].map(([l,v]) => `<div class="meta-item"><span class="muted">${l}</span><strong>${v}</strong></div>`).join(''); const siblings = (D.familyToMarkets[data.family] || []).filter(m => m !== state.market); document.getElementById('siblings').innerHTML = siblings.length ? siblings.map(m => `<a class="meta-item" href="?market=${encodeURIComponent(m)}&family=${encodeURIComponent(data.family)}"><span class="muted">Mercado</span><strong>${m}</strong></a>`).join('') : `<div class="meta-item"><span class="muted">Mercado unico</span><strong>${data.family}</strong></div>`; }
+    function renderHeader(){ const data = marketData(); document.getElementById('market-title').textContent = state.market; document.getElementById('hero-sub').textContent = `Mercado ${state.market} dentro de ${data.family} con corte regional hasta ${data.latestMonth}.`; document.getElementById('cut-pill').textContent = `DDD OTC · corte ${data.latestMonth}`; document.getElementById('family-note').textContent = data.family; const latest = data.monthly[data.monthly.length - 1]; document.getElementById('side-main').textContent = `${pct.format(latest.share)}%`; document.getElementById('side-copy').textContent = `Share estimado de Siegfried en ${latest.month}.`; document.getElementById('meta-list').innerHTML = [['Mercado total',fmt.format(latest.total)],['Siegfried',fmt.format(latest.sie)],['Mes activo',state.month],['Familia',data.family]].map(([l,v]) => `<div class="meta-item"><span>${l}</span><strong>${v}</strong></div>`).join(''); const siblings = (D.familyToMarkets[data.family] || []).filter(m => m !== state.market); const siblingHtml = siblings.length ? siblings.map(m => `<a class="meta-item" href="?market=${encodeURIComponent(m)}&family=${encodeURIComponent(data.family)}"><span>Mercado</span><strong>${m}</strong></a>`).join('') : `<div class="meta-item"><span>Mercado único</span><strong>${data.family}</strong></div>`; document.getElementById('siblings').innerHTML = siblingHtml; document.getElementById('siblings-copy').innerHTML = siblingHtml; }
     function renderMonthSelect(){ const select = document.getElementById('month-select'); select.innerHTML = D.ddd.months.map(m => `<option value="${m}">${m}</option>`).join(''); if (!D.ddd.months.includes(state.month)) state.month = marketData().latestMonth; select.value = state.month; select.onchange = () => { state.month = select.value; syncUrl(); renderKpis(); renderBody(); }; }
-    function renderKpis(){ const rows = rowsForMonth(); const total = rows.reduce((a,r) => a + Number(r.total || 0), 0); const sie = rows.reduce((a,r) => a + Number(r.sie || 0), 0); const share = total > 0 ? (sie / total) * 100 : 0; const best = [...rows].sort((a,b) => b.share - a.share)[0] || { name:'Sin dato', share:0 }; const products = productsForMonth(); const topSie = products.find(p => p.isSie) || products[0] || { product:'Sin dato' }; const cards = [{ label:'Mercado total', value:fmt.format(total), foot:`Unidades de ${state.month}` },{ label:'Siegfried', value:fmt.format(sie), foot:'Captura estimada del mercado' },{ label:'Share', value:`${pct.format(share)}%`, foot:`Sobre ${rows.length} regiones con dato` },{ label:'Region lider', value:best.name, foot:`Share ${pct.format(best.share)}% · producto lider ${topSie.product}` }]; document.getElementById('kpis').innerHTML = cards.map(c => `<article class="card kpi"><div class="label">${c.label}</div><div class="value">${c.value}</div><div class="foot">${c.foot}</div></article>`).join(''); }
-    function renderBody(){ const data = marketData(); charts.share.data.labels = data.monthly.map(r => r.month); charts.share.data.datasets[0].data = data.monthly.map(r => r.share); charts.share.update(); charts.units.data.labels = data.monthly.map(r => r.month); charts.units.data.datasets[0].data = data.monthly.map(r => r.total); charts.units.data.datasets[1].data = data.monthly.map(r => r.sie); charts.units.update(); const regions = rowsForMonth().slice(0, 12); charts.regions.data.labels = regions.map(r => r.name); charts.regions.data.datasets[0].data = regions.map(r => r.share); charts.regions.update(); document.getElementById('product-body').innerHTML = productsForMonth().map(r => `<tr><td class="${r.isSie ? 'sie' : ''}">${r.product}</td><td class="num">${fmt.format(r.units)}</td><td class="num">${pct.format(r.share)}%</td><td class="num">${r.isSie ? 'Si' : 'No'}</td></tr>`).join(''); document.getElementById('region-body').innerHTML = rowsForMonth().map(r => `<tr><td>${r.name}</td><td class="num">${fmt.format(r.total)}</td><td class="num">${fmt.format(r.sie)}</td><td class="num">${pct.format(r.share)}%</td></tr>`).join(''); }
+    function renderKpis(){ const rows = rowsForMonth(); const total = rows.reduce((a,r) => a + Number(r.total || 0), 0); const sie = rows.reduce((a,r) => a + Number(r.sie || 0), 0); const share = total > 0 ? (sie / total) * 100 : 0; const best = [...rows].sort((a,b) => b.share - a.share)[0] || { name:'Sin dato', share:0 }; const products = productsForMonth(); const topSie = products.find(p => p.isSie) || products[0] || { product:'Sin dato' }; const cards = [{ label:'Mercado total', value:fmt.format(total), foot:`Unidades de ${state.month}` },{ label:'Siegfried', value:fmt.format(sie), foot:'Captura estimada del mercado' },{ label:'Share', value:`${pct.format(share)}%`, foot:`Sobre ${rows.length} regiones con dato` },{ label:'Región líder', value:best.name, foot:`Share ${pct.format(best.share)}% · producto líder ${topSie.product}` }]; document.getElementById('kpis').innerHTML = cards.map(c => `<article class="kpi"><div class="label">${c.label}</div><div class="value">${c.value}</div><div class="foot">${c.foot}</div></article>`).join(''); }
+    function renderBody(){ const data = marketData(); charts.share.data.labels = data.monthly.map(r => r.month); charts.share.data.datasets[0].data = data.monthly.map(r => r.share); charts.share.update(); charts.units.data.labels = data.monthly.map(r => r.month); charts.units.data.datasets[0].data = data.monthly.map(r => r.total); charts.units.data.datasets[1].data = data.monthly.map(r => r.sie); charts.units.update(); const regions = rowsForMonth().slice(0, 12); charts.regions.data.labels = regions.map(r => r.name); charts.regions.data.datasets[0].data = regions.map(r => r.share); charts.regions.update(); document.getElementById('product-body').innerHTML = productsForMonth().map(r => `<tr><td class="${r.isSie ? 'sie' : ''}">${r.product}</td><td class="num">${fmt.format(r.units)}</td><td class="num">${pct.format(r.share)}%</td><td class="num">${r.isSie ? 'Sí' : 'No'}</td></tr>`).join(''); document.getElementById('region-body').innerHTML = rowsForMonth().map(r => `<tr><td>${r.name}</td><td class="num">${fmt.format(r.total)}</td><td class="num">${fmt.format(r.sie)}</td><td class="num">${pct.format(r.share)}%</td></tr>`).join(''); }
     function render(){ renderMarketFilters(); syncUrl(); renderHeader(); renderMonthSelect(); renderKpis(); renderBody(); }
     makeCharts(); render();
   </script>
