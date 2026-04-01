@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>[PRUEBA] Siegfried · DDD + Mapa · Psiquiatría</title>
+<title>Siegfried · DDD + Mapa · Psiquiatría</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -207,10 +207,13 @@ body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-ser
 <nav class="navbar">
   <div class="nav-brand"><span class="dot"></span>SIEGFRIED</div>
   <div class="nav-tabs">
-    <a class="nav-tab ul" href="../">Resumen</a><a class="nav-tab" href="../#s-bud">Venta Interna</a><a class="nav-tab" href="../#s-perf">Mercado IQVIA</a>
-    <a class="nav-tab" href="../#s-rec">Recetas</a><a class="nav-tab" href="../#s-stock">Stock</a><a class="nav-tab" href="../#s-cover">Cobertura</a>
-    <a class="nav-tab" href="../#s-can">Mostrador vs Convenios</a><a class="nav-tab" href="../#s-conv">Convenios</a><a class="nav-tab" href="../#s-prec">Precios</a>
+    <a class="nav-tab ul" href="../psq_dashboard.html">Resumen</a><a class="nav-tab" href="../psq_dashboard.html#s-bud">Venta Interna</a><a class="nav-tab" href="../psq_dashboard.html#s-perf">Mercado IQVIA</a>
+    <a class="nav-tab" href="../psq_dashboard.html#s-rec">Recetas</a><a class="nav-tab" href="../psq_dashboard.html#s-stock">Stock</a><a class="nav-tab" href="../psq_dashboard.html#s-cover">Cobertura</a>
+    <a class="nav-tab" href="../psq_dashboard.html#s-can">Mostrador vs Convenios</a><a class="nav-tab" href="../psq_dashboard.html#s-conv">Convenios</a><a class="nav-tab" href="../psq_dashboard.html#s-prec">Precios</a>
     <a class="nav-tab hl" href="./">DDD</a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-hub" href="../../">← Hub</a>
   </div>
 </nav>
 
@@ -286,7 +289,7 @@ body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-ser
       <div class="cn">06</div>
       <div class="ctt">Market Share por Zona · Mapa + Scatter</div>
     </div>
-    <div class="csu" id="s6">MS% Siegfried · 2025 · PRUEBA</div>
+    <div class="csu" id="s6">MS% Siegfried · 2025</div>
 
     <div class="map-charts">
 
@@ -688,7 +691,7 @@ function rMapa(mk) {
 
   document.getElementById('map-leg-max').textContent = maxMs.toFixed(1) + '%';
   document.getElementById('s6').textContent =
-    `MS%: ${mk.brands.join(' + ')} · 2025 (PRUEBA)`;
+    `MS%: ${mk.brands.join(' + ')} · 2025`;
 
   // ── Mapa: fondo provincias ──────────────────────────────────────────────
   const pLayer = document.getElementById('prov-layer');
