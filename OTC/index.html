@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siegfried · OTC · Dashboard ejecutivo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="./data.js"></script>
+  <style>
+    :root{--bg:#f7f1e7;--paper:#fffaf2;--panel:#ffffff;--ink:#192536;--muted:#66758a;--line:#e3d6c2;--brand:#0f766e;--brand-2:#22a69a;--accent:#d97706;--accent-soft:#fff0dc;--ok:#0d9488;--warn:#c2410c;--shadow:0 18px 40px rgba(25,37,54,.08);--radius:22px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:radial-gradient(circle at top left, rgba(15,118,110,.12), transparent 28%),radial-gradient(circle at top right, rgba(217,119,6,.14), transparent 22%),linear-gradient(180deg,#fbf6ed 0%,var(--bg) 100%)}
+    a{color:inherit;text-decoration:none}.shell{max-width:1380px;margin:0 auto;padding:28px 24px 52px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}.topbar-left,.topbar-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.toplink,.pill{border:1px solid rgba(25,37,54,.08);background:rgba(255,255,255,.72);color:var(--ink);padding:10px 14px;border-radius:999px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(10px)}.pill{color:var(--muted)}
+    .hero{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.85fr);gap:18px;margin-bottom:18px}.hero-card,.hero-side,.panel{background:rgba(255,255,255,.82);border:1px solid rgba(25,37,54,.08);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(12px)}
+    .hero-card{padding:28px;position:relative;overflow:hidden}.hero-card::after{content:'';position:absolute;inset:auto -60px -70px auto;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle, rgba(15,118,110,.22), transparent 70%)}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--brand);background:rgba(15,118,110,.1);margin-bottom:16px}h1{margin:0 0 12px;font-size:52px;line-height:.96;letter-spacing:-.05em}.hero-copy{max-width:720px;color:var(--muted);font-size:17px;line-height:1.65;margin:0 0 22px}.hero-meta{display:flex;flex-wrap:wrap;gap:10px}.meta-chip{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:14px;background:var(--paper);border:1px solid rgba(25,37,54,.07);color:var(--muted);font-size:12px}.hero-side{padding:22px;display:grid;gap:14px;align-content:start}.hero-side h2{margin:0;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.hero-side strong{display:block;font-size:28px;line-height:1;margin-top:6px;letter-spacing:-.04em}.hero-side p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}.cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;background:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 100%);color:#fff;border-radius:16px;padding:14px 18px;font-weight:700;cursor:pointer;box-shadow:0 14px 24px rgba(15,118,110,.2)}.cta.alt{background:#fff;color:var(--ink);border:1px solid rgba(25,37,54,.09);box-shadow:none}.cta[disabled]{cursor:not-allowed;opacity:.45;box-shadow:none}.subcopy{display:grid;gap:6px;font-size:13px;color:var(--muted)}
+    .filters{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}.filter-btn{border:1px solid rgba(25,37,54,.08);background:rgba(255,255,255,.8);color:var(--muted);padding:12px 14px;border-radius:16px;font-weight:700;cursor:pointer;transition:.18s ease}.filter-btn.active{background:var(--ink);color:#fff;border-color:var(--ink);transform:translateY(-1px)}
+    .kpis{display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));gap:14px;margin-bottom:18px}.kpi{padding:18px 18px 16px}.kpi-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}.kpi-value{font-size:36px;font-weight:800;line-height:.95;letter-spacing:-.05em;margin-bottom:8px}.kpi-foot{color:var(--muted);font-size:13px;line-height:1.55}
+    .grid{display:grid;grid-template-columns:repeat(12, minmax(0, 1fr));gap:16px}.span-8{grid-column:span 8}.span-4{grid-column:span 4}.span-12{grid-column:span 12}.panel{padding:20px}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}.panel-head h3{margin:0 0 6px;font-size:22px;letter-spacing:-.03em}.panel-sub{color:var(--muted);font-size:13px;line-height:1.6;max-width:720px}.canvas-wrap{position:relative;min-height:320px}.empty-state{display:grid;place-items:center;min-height:320px;border:1px dashed rgba(25,37,54,.12);border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.88));color:var(--muted);font-size:14px;text-align:center;line-height:1.6;padding:22px}.note{padding:10px 12px;border-radius:14px;background:var(--accent-soft);color:#7c4a02;font-size:12px;line-height:1.5;border:1px solid rgba(217,119,6,.15)}.market-list,.mini-list{display:grid;gap:10px}.mini-item{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:14px;background:var(--paper);border:1px solid rgba(25,37,54,.06);font-size:13px}.mini-item strong{font-size:15px}
+    table{width:100%;border-collapse:collapse}th,td{padding:12px 10px;border-bottom:1px solid rgba(25,37,54,.08);text-align:left;font-size:13px}th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}td.num,th.num{text-align:right}tbody tr.selected{background:rgba(15,118,110,.08)}tbody tr.clickable{cursor:pointer}.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;background:rgba(15,118,110,.1);color:var(--brand)}.muted{color:var(--muted)}.ok{color:var(--ok)}.warn{color:var(--warn)}
+    @media (max-width:1160px){.hero,.kpis{grid-template-columns:1fr}.span-8,.span-4,.span-12{grid-column:1 / -1}}
+    @media (max-width:720px){.shell{padding:18px 14px 34px}h1{font-size:42px}.panel,.hero-card,.hero-side{padding:18px}.kpi-value{font-size:30px}th,td{padding:10px 8px}.topbar{align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="topbar-left">
+        <a class="toplink" href="../">Volver al HUB</a>
+        <a class="toplink" href="#cross">Cruce por familias</a>
+      </div>
+      <div class="topbar-right"><span class="pill" id="cut-pill">Cortes OTC</span></div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">Siegfried · OTC · tablero ejecutivo</div>
+        <h1>OTC<br>gestion ejecutiva</h1>
+        <p class="hero-copy">Vista integrada para seguimiento comercial OTC con cruce entre venta vs presupuesto, abastecimiento, convenios, obras sociales, recetas y el puente regional hacia la vista DDD.</p>
+        <div class="hero-meta" id="hero-meta"></div>
+      </div>
+      <aside class="hero-side">
+        <div>
+          <h2 id="side-title">Totales OTC</h2>
+          <strong id="side-main">0</strong>
+          <p id="side-copy">Leyendo la familia seleccionada.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="cta" id="ddd-link" href="./DDD/">Abrir vista DDD</a>
+          <button class="cta alt" id="copy-link" type="button">Copiar link</button>
+        </div>
+        <div class="subcopy" id="side-notes"></div>
+      </aside>
+    </section>
+
+    <div class="filters" id="family-filters"></div>
+    <section class="kpis" id="kpis"></section>
+
+    <section class="grid">
+      <article class="panel span-8" id="venta">
+        <div class="panel-head"><div><h3>Venta vs presupuesto</h3><div class="panel-sub" id="budget-sub"></div></div><span class="badge" id="budget-badge">Presupuesto</span></div>
+        <div class="canvas-wrap"><canvas id="budget-chart"></canvas></div>
+      </article>
+      <article class="panel span-4">
+        <div class="panel-head"><div><h3>Lectura rapida</h3><div class="panel-sub">Resumen sintetico del corte activo con la disponibilidad real de informacion para cada familia OTC.</div></div></div>
+        <div class="market-list" id="snapshot-list"></div>
+      </article>
+      <article class="panel span-8" id="stock">
+        <div class="panel-head"><div><h3>Stock, ventas y cobertura</h3><div class="panel-sub" id="stock-sub"></div></div></div>
+        <div class="canvas-wrap"><canvas id="stock-chart"></canvas></div>
+      </article>
+      <article class="panel span-4">
+        <div class="panel-head"><div><h3>Top productos</h3><div class="panel-sub">Ranking por ventas historicas desde la base de stock y facturacion.</div></div></div>
+        <div class="mini-list" id="top-products"></div>
+      </article>
+      <article class="panel span-8" id="mercado">
+        <div class="panel-head"><div><h3>Mercado y share regional</h3><div class="panel-sub" id="market-sub"></div></div></div>
+        <div id="market-state" class="canvas-wrap"><canvas id="market-chart"></canvas></div>
+      </article>
+      <article class="panel span-4">
+        <div class="panel-head"><div><h3>Convenios vs mostrador</h3><div class="panel-sub">Mezcla de canal sobre unidades facturadas y descuento promedio del corte.</div></div></div>
+        <div class="canvas-wrap"><canvas id="channel-chart"></canvas></div>
+        <div class="note" id="channel-note"></div>
+      </article>
+      <article class="panel span-8" id="rx">
+        <div class="panel-head"><div><h3>Recetas y medicos</h3><div class="panel-sub" id="rx-sub"></div></div></div>
+        <div id="rx-state" class="canvas-wrap"><canvas id="rx-chart"></canvas></div>
+      </article>
+      <article class="panel span-4">
+        <div class="panel-head"><div><h3>Mercados DDD activos</h3><div class="panel-sub">Mercados regionales disponibles para la familia elegida.</div></div></div>
+        <div class="mini-list" id="ddd-markets"></div>
+      </article>
+      <article class="panel span-12" id="convenios">
+        <div class="panel-head"><div><h3>Obras sociales 2025 vs 2024</h3><div class="panel-sub" id="os-sub"></div></div></div>
+        <div style="overflow:auto"><table><thead><tr><th>Obra social</th><th class="num">Uni 2024</th><th class="num">Uni 2025</th><th class="num">% 2025</th><th class="num">Delta uni</th><th class="num">Delta %</th></tr></thead><tbody id="os-body"></tbody></table></div>
+      </article>
+      <article class="panel span-12" id="cross">
+        <div class="panel-head"><div><h3>Cruce por familias</h3><div class="panel-sub">Vista comparada para priorizar donde crecer, donde ajustar stock y donde profundizar la lectura regional.</div></div></div>
+        <div style="overflow:auto"><table><thead><tr><th>Familia</th><th class="num">YTD 2026</th><th class="num">Cumpl.</th><th class="num">Dias stock</th><th class="num">% convenio</th><th class="num">Recetas ult.</th><th class="num">Share ult.</th><th class="num">DDD</th></tr></thead><tbody id="cross-body"></tbody></table></div>
+      </article>
+    </section>
+  </div>
+
+  <script>
+    const D = window.OTC_DATA;
+    const fmt = new Intl.NumberFormat('es-AR');
+    const pct = new Intl.NumberFormat('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    const state = { family: new URLSearchParams(window.location.search).get('family') || 'Totales' };
+    const charts = {};
+    const hasFamily = name => D.families.includes(name);
+    if (!hasFamily(state.family)) state.family = 'Totales';
+    const familySummary = name => D.summary[name] || D.summary.Totales;
+    const budgetFamily = name => D.budget.families[name] || D.budget.families.Totales;
+    const stockFamily = name => D.stock.families[name] || D.stock.families.Totales;
+    const marketFamily = name => D.marketShare.families[name] || D.marketShare.families.Totales || [];
+    const rxFamily = name => D.prescriptions.families[name] || D.prescriptions.families.Totales;
+    const channelFamily = name => D.channel.families[name] || D.channel.families.Totales;
+    const osFamily = name => D.osComparison.families[name] || D.osComparison.families.Totales;
+    const dddMarkets = name => D.familyToMarkets[name] || [];
+    function syncUrl(){ const url = new URL(window.location.href); url.searchParams.set('family', state.family); history.replaceState({}, '', url); }
+    function destroyChart(key){ if (charts[key]) { charts[key].destroy(); charts[key] = null; } }
+    function buildBaseChart(ctx, config){ return new Chart(ctx, config); }
+    function makeCharts(){
+      charts.budget = buildBaseChart(document.getElementById('budget-chart'), { type:'line', data:{ labels:D.budget.months, datasets:[{ label:'Venta', data:[], borderColor:'#0f766e', backgroundColor:'rgba(15,118,110,.14)', borderWidth:3, pointRadius:2, tension:.28, fill:true },{ label:'Presupuesto', data:[], borderColor:'#d97706', borderWidth:2, pointRadius:0, borderDash:[8,6], tension:.18 }] }, options:{ maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{position:'bottom'}}, scales:{ y:{ beginAtZero:true, ticks:{ callback:v => fmt.format(v) } } } } });
+      charts.stock = buildBaseChart(document.getElementById('stock-chart'), { type:'bar', data:{ labels:D.stock.months, datasets:[{ label:'Ventas', data:[], backgroundColor:'rgba(15,118,110,.65)', borderRadius:10 },{ label:'Stock final', data:[], type:'line', borderColor:'#192536', borderWidth:2, pointRadius:2, tension:.28 },{ label:'Dias de stock', data:[], type:'line', yAxisID:'y2', borderColor:'#d97706', borderWidth:2, pointRadius:2, tension:.24 }] }, options:{ maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{position:'bottom'}}, scales:{ y:{ beginAtZero:true, ticks:{ callback:v => fmt.format(v) } }, y2:{ position:'right', beginAtZero:true, grid:{ drawOnChartArea:false } } } } });
+      charts.market = buildBaseChart(document.getElementById('market-chart'), { type:'bar', data:{ labels:[], datasets:[{ label:'Mercado total', data:[], backgroundColor:'rgba(25,37,54,.14)', borderRadius:10 },{ label:'Share Siegfried', data:[], type:'line', yAxisID:'y2', borderColor:'#0f766e', borderWidth:3, pointRadius:2, tension:.26 }] }, options:{ maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{position:'bottom'}}, scales:{ y:{ beginAtZero:true, ticks:{ callback:v => fmt.format(v) } }, y2:{ position:'right', beginAtZero:true, grid:{ drawOnChartArea:false }, ticks:{ callback:v => pct.format(v) + '%' } } } } });
+      charts.rx = buildBaseChart(document.getElementById('rx-chart'), { type:'line', data:{ labels:D.prescriptions.months, datasets:[{ label:'Recetas', data:[], borderColor:'#0f766e', borderWidth:3, pointRadius:2, tension:.25 },{ label:'Medicos', data:[], borderColor:'#d97706', borderWidth:2, pointRadius:2, tension:.22 }] }, options:{ maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{position:'bottom'}}, scales:{ y:{ beginAtZero:true, ticks:{ callback:v => fmt.format(v) } } } } });
+      charts.channel = buildBaseChart(document.getElementById('channel-chart'), { type:'bar', data:{ labels:[], datasets:[{ label:'% convenio', data:[], backgroundColor:[], borderRadius:10 }] }, options:{ indexAxis:'y', maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ beginAtZero:true, ticks:{ callback:v => pct.format(v) + '%' } } } } });
+    }
+    function ensureChartCanvas(wrapperId, canvasId, factory){
+      const wrap = document.getElementById(wrapperId);
+      if (!document.getElementById(canvasId)) {
+        wrap.innerHTML = `<canvas id="${canvasId}"></canvas>`;
+        destroyChart(factory);
+      }
+      if (!charts[factory]) {
+        if (factory === 'market') {
+          charts.market = buildBaseChart(document.getElementById('market-chart'), { type:'bar', data:{ labels:[], datasets:[{ label:'Mercado total', data:[], backgroundColor:'rgba(25,37,54,.14)', borderRadius:10 },{ label:'Share Siegfried', data:[], type:'line', yAxisID:'y2', borderColor:'#0f766e', borderWidth:3, pointRadius:2, tension:.26 }] }, options:{ maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{position:'bottom'}}, scales:{ y:{ beginAtZero:true, ticks:{ callback:v => fmt.format(v) } }, y2:{ position:'right', beginAtZero:true, grid:{ drawOnChartArea:false }, ticks:{ callback:v => pct.format(v) + '%' } } } } });
+        }
+        if (factory === 'rx') {
+          charts.rx = buildBaseChart(document.getElementById('rx-chart'), { type:'line', data:{ labels:D.prescriptions.months, datasets:[{ label:'Recetas', data:[], borderColor:'#0f766e', borderWidth:3, pointRadius:2, tension:.25 },{ label:'Medicos', data:[], borderColor:'#d97706', borderWidth:2, pointRadius:2, tension:.22 }] }, options:{ maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{position:'bottom'}}, scales:{ y:{ beginAtZero:true, ticks:{ callback:v => fmt.format(v) } } } } });
+        }
+      }
+    }
+    function renderFilters(){ const wrap = document.getElementById('family-filters'); wrap.innerHTML = ''; D.families.forEach(f => { const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'filter-btn' + (f === state.family ? ' active' : ''); btn.textContent = f; btn.addEventListener('click', () => { state.family = f; syncUrl(); render(); }); wrap.appendChild(btn); }); }
+    function renderHero(){ const s = familySummary(state.family); document.getElementById('hero-meta').innerHTML = [['Presupuesto',D.meta.budgetCut],['Stock',D.meta.stockCut],['Recetas',D.meta.rxCut],['DDD',D.meta.dddCut]].map(([k,v]) => `<span class="meta-chip"><strong>${k}</strong>${v}</span>`).join(''); document.getElementById('cut-pill').textContent = `Cortes: presupuesto ${D.meta.budgetCut} · stock ${D.meta.stockCut} · recetas ${D.meta.rxCut} · DDD ${D.meta.dddCut}`; document.getElementById('side-title').textContent = state.family === 'Totales' ? 'Totales OTC' : state.family; document.getElementById('side-main').textContent = fmt.format(s.ytdActual2026); document.getElementById('side-copy').textContent = `Venta acumulada 2026 vs presupuesto ${pct.format(s.compliance2026)}%. Ultimo corte comercial: ${s.latestMonth}.`; const link = document.getElementById('ddd-link'); if (s.hasDdd) { link.href = `./DDD/?family=${encodeURIComponent(state.family)}`; link.removeAttribute('disabled'); } else { link.href = '#'; link.setAttribute('disabled', 'disabled'); } document.getElementById('side-notes').innerHTML = [`YTD 2026: <strong>${fmt.format(s.ytdActual2026)}</strong> sobre <strong>${fmt.format(s.ytdBudget2026)}</strong>.`,`Dias de stock: <strong>${fmt.format(s.latestStockDays)}</strong>.`,`Convenios: <strong>${pct.format(s.convenioPct)}%</strong> de las unidades facturadas.`,s.hasDdd ? `Mercado regional activo con share ultimo corte de <strong>${pct.format(s.latestShare)}%</strong>.` : 'La familia no tiene base regional para la DDD en este corte.'].map(t => `<div>${t}</div>`).join(''); }
+    function renderKpis(){ const s = familySummary(state.family); const cards = [{label:'Venta YTD 2026',value:fmt.format(s.ytdActual2026),foot:`Presupuesto YTD ${fmt.format(s.ytdBudget2026)}`},{label:'Cumplimiento 2026',value:`${pct.format(s.compliance2026)}%`,foot:`Ultimo cierre comercial: ${s.latestMonth}`},{label:'Dias de stock',value:fmt.format(s.latestStockDays),foot:`Abastecimiento desde la base de stock ${D.meta.stockCut}`},{label:s.hasDdd ? 'Share ultimo corte' : 'Recetas ultimo corte',value:s.hasDdd ? `${pct.format(s.latestShare)}%` : fmt.format(s.latestRx),foot:s.hasDdd ? `Vista regional disponible para ${dddMarkets(state.family).join(', ')}` : `Recetas del ultimo mes con base ${D.meta.rxCut}` }]; document.getElementById('kpis').innerHTML = cards.map(c => `<article class="panel kpi"><div class="kpi-label">${c.label}</div><div class="kpi-value">${c.value}</div><div class="kpi-foot">${c.foot}</div></article>`).join(''); }
+    function renderBudget(){ const row = budgetFamily(state.family); const s = familySummary(state.family); charts.budget.data.labels = D.budget.months; charts.budget.data.datasets[0].data = row.actual; charts.budget.data.datasets[1].data = row.budget; charts.budget.update(); document.getElementById('budget-sub').textContent = `${state.family} muestra ${fmt.format(s.ytdActual2026)} de venta acumulada 2026 contra ${fmt.format(s.ytdBudget2026)} de presupuesto.`; document.getElementById('budget-badge').textContent = `Corte ${s.latestMonth}`; }
+    function renderSnapshot(){ const s = familySummary(state.family); const channel = channelFamily(state.family); const markets = dddMarkets(state.family); document.getElementById('snapshot-list').innerHTML = [['Familia activa',state.family],['Cumplimiento 2026',`${pct.format(s.compliance2026)}%`],['Canal convenio',`${pct.format(channel.convenioPct)}%`],['Recetas ult. mes',fmt.format(s.latestRx)],['Mercados DDD',markets.length ? markets.join(', ') : 'Sin base regional']].map(([l,v]) => `<div class="mini-item"><span class="muted">${l}</span><strong>${v}</strong></div>`).join(''); }
+    function renderStock(){ const row = stockFamily(state.family); charts.stock.data.labels = D.stock.months; charts.stock.data.datasets[0].data = row.sales; charts.stock.data.datasets[1].data = row.stock; charts.stock.data.datasets[2].data = row.days; charts.stock.update(); document.getElementById('stock-sub').textContent = `${state.family} cruza ventas mensuales con stock final y dias de cobertura a partir del corte ${D.meta.stockCut}.`; const products = (D.stock.topProducts[state.family] || D.stock.topProducts.Totales || []).slice(0, 6); document.getElementById('top-products').innerHTML = products.length ? products.map(item => `<div class="mini-item"><div><div><strong>${item.name}</strong></div><div class="muted">Facturacion ${fmt.format(item.totalBilling)} · stock ${fmt.format(item.totalStock)}</div></div><div><strong>${fmt.format(item.totalSales)}</strong></div></div>`).join('') : `<div class="note">No hay detalle de productos para esta familia en la base de stock.</div>`; }
+    function renderMarket(){ const rows = marketFamily(state.family); const wrap = document.getElementById('market-state'); const hasRows = Array.isArray(rows) && rows.some(r => Number(r.total || 0) > 0); if (!hasRows) { destroyChart('market'); wrap.innerHTML = '<div class="empty-state">Esta familia no tiene base regional utilizable para mercado/share en el corte activo.</div>'; document.getElementById('market-sub').textContent = 'La vista DDD solo esta disponible para los mercados OTC con fuente regional provista.'; return; } ensureChartCanvas('market-state', 'market-chart', 'market'); charts.market.data.labels = rows.map(r => r.month); charts.market.data.datasets[0].data = rows.map(r => r.total); charts.market.data.datasets[1].data = rows.map(r => r.share); charts.market.update(); document.getElementById('market-sub').textContent = `${state.family} tiene ${dddMarkets(state.family).length || 0} mercado(s) regional(es) con seguimiento mensual hasta ${D.meta.dddCut}.`; }
+    function renderChannel(){ const families = Object.keys(D.channel.families).filter(n => n !== 'Totales').map(n => ({ family:n, convenioPct:Number(D.channel.families[n].convenioPct || 0) })).sort((a,b) => b.convenioPct - a.convenioPct); charts.channel.data.labels = families.map(i => i.family); charts.channel.data.datasets[0].data = families.map(i => i.convenioPct); charts.channel.data.datasets[0].backgroundColor = families.map(i => i.family === state.family ? 'rgba(15,118,110,.9)' : 'rgba(25,37,54,.18)'); charts.channel.update(); const channel = channelFamily(state.family); document.getElementById('channel-note').innerHTML = `<strong>${state.family}</strong> concentra <strong>${pct.format(channel.convenioPct)}%</strong> de convenio y <strong>${pct.format(channel.mostradorPct)}%</strong> de mostrador sobre ${fmt.format(channel.facturedUnits)} unidades facturadas.`; }
+    function renderRx(){ const row = rxFamily(state.family); const hasRows = row && row.prescriptions.some(v => Number(v || 0) > 0); const wrap = document.getElementById('rx-state'); if (!hasRows) { destroyChart('rx'); wrap.innerHTML = '<div class="empty-state">No hay base de recetas y medicos para esta familia en el corte actual.</div>'; document.getElementById('rx-sub').textContent = 'La fuente de recetas solo llega a los mercados OTC con lectura medica provista.'; return; } ensureChartCanvas('rx-state', 'rx-chart', 'rx'); charts.rx.data.labels = D.prescriptions.months; charts.rx.data.datasets[0].data = row.prescriptions; charts.rx.data.datasets[1].data = row.doctors; charts.rx.update(); document.getElementById('rx-sub').textContent = `${state.family} queda trazado hasta ${row.latestMonth || D.meta.rxCut} con lectura de recetas y medicos.`; }
+    function renderDddMarkets(){ const markets = dddMarkets(state.family); document.getElementById('ddd-markets').innerHTML = markets.length ? markets.map(m => `<a class="mini-item" href="./DDD/?market=${encodeURIComponent(m)}"><span class="muted">Mercado regional</span><strong>${m}</strong></a>`).join('') : `<div class="note">Sin base regional para esta familia. La DDD de OTC hoy cubre ACERPES, ARTRO RED, FLEXINA, MAGNUS y TETRALGIN.</div>`; }
+    function renderOsTable(){ const table = osFamily(state.family); document.getElementById('os-sub').textContent = `${state.family} compara consumo por obra social entre 2025 ano cerrado y 2024 ano cerrado.`; document.getElementById('os-body').innerHTML = (table.rows || []).map(r => `<tr><td>${r.os}</td><td class="num">${fmt.format(r.units2024)}</td><td class="num">${fmt.format(r.units2025)}</td><td class="num">${pct.format(r.share2025)}%</td><td class="num ${r.deltaUnits >= 0 ? 'ok' : 'warn'}">${fmt.format(r.deltaUnits)}</td><td class="num ${r.deltaPct >= 0 ? 'ok' : 'warn'}">${pct.format(r.deltaPct)}%</td></tr>`).join(''); }
+    function renderCross(){ const body = document.getElementById('cross-body'); body.innerHTML = D.families.map(f => { const item = familySummary(f); return `<tr class="clickable ${f === state.family ? 'selected' : ''}" data-family="${f}"><td><strong>${f}</strong></td><td class="num">${fmt.format(item.ytdActual2026)}</td><td class="num">${pct.format(item.compliance2026)}%</td><td class="num">${fmt.format(item.latestStockDays)}</td><td class="num">${pct.format(item.convenioPct)}%</td><td class="num">${fmt.format(item.latestRx)}</td><td class="num">${pct.format(item.latestShare)}%</td><td class="num">${item.hasDdd ? 'Si' : 'No'}</td></tr>`; }).join(''); body.querySelectorAll('tr[data-family]').forEach(row => row.addEventListener('click', () => { state.family = row.dataset.family; syncUrl(); render(); })); }
+    function bindActions(){ document.getElementById('copy-link').addEventListener('click', async () => { const url = new URL(window.location.href); url.searchParams.set('family', state.family); try { await navigator.clipboard.writeText(url.toString()); document.getElementById('copy-link').textContent = 'Link copiado'; setTimeout(() => document.getElementById('copy-link').textContent = 'Copiar link', 1400); } catch (error) { document.getElementById('copy-link').textContent = 'No se pudo copiar'; setTimeout(() => document.getElementById('copy-link').textContent = 'Copiar link', 1400); } }); }
+    function render(){ renderFilters(); renderHero(); renderKpis(); renderBudget(); renderSnapshot(); renderStock(); renderMarket(); renderChannel(); renderRx(); renderDddMarkets(); renderOsTable(); renderCross(); }
+    makeCharts(); bindActions(); syncUrl(); render();
+  </script>
+</body>
+</html>
