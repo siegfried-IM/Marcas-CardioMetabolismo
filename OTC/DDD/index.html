@@ -1,104 +1,375 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Siegfried · DDD · OTC</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <script src="../data.js"></script>
-  <style>
-    :root{
-      --bg:#F5F5F5;--surf:#FFF;--bd:#E5E5E5;--bd2:#D4D4D4;
-      --t1:#1A1A1A;--t2:#525252;--t3:#737373;--t4:#A3A3A3;
-      --sie:#7A1518;--sie2:#9B1B1E;--sie-lt:#FEF2F2;
-      --green:#16A34A;--green-bg:#F0FDF4;--red:#DC2626;--red-bg:#FEF2F2;
-      --blue:#2563EB;--purple:#7C3AED;--r:12px;
-    }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{font-size:13px;-webkit-font-smoothing:antialiased}
-    body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
-    a{color:inherit;text-decoration:none}
-    .navbar{background:white;display:flex;align-items:center;height:48px;padding:0 28px;border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:200}
-    .nav-brand{color:var(--sie);font-size:13px;font-weight:800;letter-spacing:2px;margin-right:24px;display:flex;align-items:center;gap:7px}
-    .nav-brand .dot{width:7px;height:7px;border-radius:50%;background:var(--sie)}
-    .nav-tabs{display:flex;align-items:center;height:100%;gap:0;overflow-x:auto;flex:1}
-    .nav-tab{color:var(--t2);font-size:12px;font-weight:500;padding:0 14px;height:100%;display:flex;align-items:center;cursor:pointer;text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
-    .nav-tab:hover{color:var(--t1)}
-    .nav-tab.ul{color:var(--t1);font-weight:600;border-bottom-color:var(--t1)}
-    .nav-tab.hl{background:var(--t1);color:white;font-weight:700;border-radius:6px;height:32px;margin:auto 4px;padding:0 14px;border-bottom:none}
-    .nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
-    .nav-hub{font-size:12px;font-weight:500;color:var(--t2);display:flex;align-items:center;gap:4px}
-    .nav-hub:hover{color:var(--t1)}
-    .hero{background:white;border-bottom:1px solid var(--bd);padding:28px 40px 24px}
-    .hero-bread{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:6px}
-    .hero-bread span{color:var(--sie)}
-    .hero h1{font-size:26px;font-weight:800;color:var(--t1);letter-spacing:-.5px;margin-bottom:5px}
-    .hero-sub{font-size:11.5px;color:var(--t3)}
-    .gf{background:white;border-bottom:1px solid var(--bd);padding:12px 40px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:48px;z-index:150;box-shadow:0 2px 6px rgba(0,0,0,.03)}
-    .gfg{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-    .gfl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t4);white-space:nowrap}
-    .market-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-    .market-btn{padding:5px 13px;border-radius:5px;font-size:11px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .15s;border:1px solid var(--bd);background:white}
-    .market-btn:hover{border-color:var(--sie);color:var(--sie)}
-    .market-btn.active{background:var(--sie);color:white;border-color:var(--sie);font-weight:700}
-    .select{padding:6px 14px;border-radius:6px;border:1px solid var(--bd);font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;color:var(--t2);background:white;min-width:160px}
-    .select:focus{outline:none;border-color:var(--sie)}
-    .pill{display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;background:var(--sie-lt);border:1px solid #FECACA;font-size:10.5px;font-weight:600;color:var(--sie)}
-    .family-note{font-size:11px;color:var(--t3)}
-    .main{max-width:1400px;margin:0 auto;padding:20px 40px 60px}
-    .hero-top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);gap:16px;margin-bottom:20px}
-    .cd{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:20px 22px}
-    .cdh{display:flex;align-items:center;gap:7px;margin-bottom:3px}
-    .cn{width:22px;height:22px;border-radius:50%;background:var(--sie);color:white;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800}
-    .ctt{font-size:14px;font-weight:700;color:var(--t1)}
-    .csu{font-size:10.5px;color:var(--t3);margin-bottom:12px;line-height:1.5}
-    .side-main{font-size:32px;font-weight:800;letter-spacing:-1.5px;color:var(--sie);line-height:1;margin-bottom:6px;font-variant-numeric:tabular-nums}
-    .side-copy{font-size:11px;color:var(--t3);line-height:1.5;margin-bottom:12px}
-    .meta{display:grid;gap:8px}
-    .meta-item{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:10px;background:#FAFAFA;border:1px solid var(--bd);font-size:11px;color:var(--t2)}
-    .meta-item strong{font-size:12px;color:var(--t1)}
-    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-    .kpi{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:16px 18px;position:relative}
-    .kpi::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:2px;border-radius:1px}
-    .kpi:nth-child(1)::after{background:var(--sie)}
-    .kpi:nth-child(2)::after{background:var(--blue)}
-    .kpi:nth-child(3)::after{background:var(--green)}
-    .kpi:nth-child(4)::after{background:var(--purple)}
-    .label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t4);margin-bottom:6px}
-    .value{font-size:28px;font-weight:800;letter-spacing:-1.5px;line-height:1;margin-bottom:5px;font-variant-numeric:tabular-nums;color:var(--t1)}
-    .foot{font-size:10.5px;color:var(--t3);line-height:1.4}
-    .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
-    .span-8{grid-column:span 8}.span-4{grid-column:span 4}.span-12{grid-column:span 12}
-    .panel{padding:20px 22px}
-    .head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
-    .head h3{margin:0 0 6px;font-size:14px;font-weight:700;color:var(--t1)}
-    .muted{color:var(--t3);font-size:10.5px;line-height:1.6}
-    .canvas{min-height:320px}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:10px 12px;border-bottom:1px solid #F0F0F0;text-align:left;font-size:11.5px}
-    th{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--t4);background:#FAFAFA}
-    td.num,th.num{text-align:right}
-    .sie{color:var(--sie);font-weight:700}
-    @media(max-width:1100px){.hero-top,.kpis{grid-template-columns:1fr}.grid .span-8,.grid .span-4,.grid .span-12{grid-column:1/-1}.main,.hero,.gf{padding-left:16px;padding-right:16px}}
-    @media(max-width:640px){.kpis{grid-template-columns:1fr}.market-btn{font-size:10px;padding:4px 8px}.side-main,.value{font-size:24px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Siegfried · DDD + Mapa · OTC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#F5F5F5;--surf:#FFF;--bd:#E5E5E5;--bd2:#D4D4D4;
+  --t1:#1A1A1A;--t2:#525252;--t3:#737373;--t4:#A3A3A3;
+  --sie:#7A1518;--sie2:#9B1B1E;--sie-lt:#FEF2F2;
+  --green:#16A34A;--green-bg:#F0FDF4;--red:#DC2626;--red-bg:#FEF2F2;
+  --blue:#2563EB;--blue-bg:#EFF6FF;--purple:#7C3AED;--purple-bg:#F5F3FF;
+  --amber:#D97706;--r:12px;--r2:8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:13px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+
+/* NAVBAR */
+.navbar{background:white;display:flex;align-items:center;height:48px;padding:0 28px;border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:200}
+.nav-brand{color:var(--sie);font-size:13px;font-weight:800;letter-spacing:2px;margin-right:24px;display:flex;align-items:center;gap:7px}
+.nav-brand .dot{width:7px;height:7px;border-radius:50%;background:var(--sie)}
+.nav-tabs{display:flex;align-items:center;height:100%;gap:0}
+.nav-tab{color:var(--t2);font-size:12px;font-weight:500;padding:0 14px;height:100%;display:flex;align-items:center;cursor:default;text-decoration:none;border-bottom:2px solid transparent;transition:all .15s}
+.nav-tab:hover{color:var(--t1)}
+.nav-tab.ul{color:var(--t1);font-weight:600;border-bottom-color:var(--t1)}
+.nav-tab.hl{background:var(--t1);color:white;font-weight:700;border-radius:6px;height:32px;margin:auto 4px;padding:0 14px;border-bottom:none}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.nav-logo{width:36px;height:36px;background:var(--sie);border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.nav-logo span{color:white;font-weight:900;font-size:12px;letter-spacing:-.5px}
+.nav-hub{font-size:12px;font-weight:500;color:var(--t2);text-decoration:none;display:flex;align-items:center;gap:4px;cursor:default}
+.nav-hub:hover{color:var(--t1)}
+
+/* HERO */
+.hero{background:white;border-bottom:1px solid var(--bd);padding:28px 40px 24px}
+.hero-bread{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:6px}
+.hero-bread span{color:var(--sie)}
+.hero h1{font-size:26px;font-weight:800;color:var(--t1);letter-spacing:-.5px;margin-bottom:5px}
+.hero-sub{font-size:11.5px;color:var(--t3)}
+
+/* GLOBAL FILTER BAR */
+.gf{background:white;border-bottom:1px solid var(--bd);padding:12px 40px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:48px;z-index:150;box-shadow:0 2px 6px rgba(0,0,0,.03)}
+.gfg{display:flex;align-items:center;gap:8px}
+.gfl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t4);white-space:nowrap}
+.mbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.mc{padding:5px 13px;border-radius:5px;font-size:11px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .15s;border:1px solid var(--bd);background:white}
+.mc:hover{border-color:var(--sie);color:var(--sie)}
+.mc.a{background:var(--sie);color:white;border-color:var(--sie);font-weight:700}
+
+/* Region multi-select dropdown */
+.reg-wrap{position:relative}
+.reg-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--bd);font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;color:var(--t2);background:white;cursor:pointer;display:flex;align-items:center;gap:6px;min-width:200px;user-select:none}
+.reg-btn:hover{border-color:var(--sie)}
+.reg-btn .arr{margin-left:auto;font-size:9px;color:var(--t4)}
+.reg-dd{position:absolute;top:calc(100% + 4px);left:0;background:white;border:1px solid var(--bd);border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.12);z-index:300;width:280px;max-height:360px;display:none;flex-direction:column}
+.reg-dd.open{display:flex}
+.reg-search{padding:10px 12px;border-bottom:1px solid var(--bd)}
+.reg-search input{width:100%;padding:6px 10px;border:1px solid var(--bd);border-radius:5px;font-family:'Inter',sans-serif;font-size:11.5px;outline:none}
+.reg-search input:focus{border-color:var(--sie)}
+.reg-list{overflow-y:auto;flex:1;max-height:280px}
+.reg-list::-webkit-scrollbar{width:4px}.reg-list::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+.reg-opt{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;font-size:11.5px;transition:background .1s}
+.reg-opt:hover{background:#FAFAFA}
+.reg-opt.sel{background:var(--sie-lt);font-weight:600;color:var(--sie)}
+.reg-chk{width:14px;height:14px;border:1.5px solid var(--bd2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;color:white;flex-shrink:0}
+.reg-opt.sel .reg-chk{background:var(--sie);border-color:var(--sie)}
+.reg-actions{padding:8px 12px;border-top:1px solid var(--bd);display:flex;gap:8px}
+.reg-abtn{padding:4px 10px;border-radius:4px;font-size:10.5px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif}
+.reg-abtn.all{background:var(--sie-lt);color:var(--sie)}.reg-abtn.all:hover{background:#FEE2E2}
+.reg-abtn.clr{background:#F5F5F5;color:var(--t3)}.reg-abtn.clr:hover{background:#E5E5E5}
+
+/* Region chips */
+.rtags{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rtag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:14px;background:var(--sie-lt);border:1px solid #FECACA;font-size:10.5px;font-weight:600;color:var(--sie)}
+.rtag .x{cursor:pointer;font-size:12px;opacity:.6}.rtag .x:hover{opacity:1}
+
+.main{max-width:1400px;margin:0 auto;padding:20px 40px 60px}
+
+/* KPIs */
+.kr{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kc{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:16px 18px;position:relative}
+.kc::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:2px;border-radius:1px}
+.kc.c1::after{background:var(--sie)}.kc.c2::after{background:var(--blue)}.kc.c3::after{background:var(--green)}.kc.c4::after{background:var(--purple)}
+.kh{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t4);margin-bottom:6px}
+.kv{font-size:28px;font-weight:800;letter-spacing:-1.5px;line-height:1;margin-bottom:5px;font-variant-numeric:tabular-nums}
+.kv.red{color:var(--sie)}.kv.blue{color:var(--blue)}.kv.green{color:var(--green)}.kv.purple{color:var(--purple)}
+.kd{font-size:10.5px;color:var(--t3);line-height:1.4}
+
+/* BRAND FILTER */
+.fb{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:16px 20px;margin-bottom:20px}
+.fbt{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.fbtl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t3)}
+.fbtl span{color:var(--t4);font-weight:400;text-transform:none;letter-spacing:0;margin-left:6px;font-size:10.5px}
+.fcl{font-size:11px;color:var(--red);font-weight:600;cursor:pointer;padding:3px 10px;border:1px solid #FECACA;border-radius:5px;background:var(--red-bg)}
+.fcl:hover{background:#FEE2E2}
+.fcs{display:flex;flex-wrap:wrap;gap:6px}
+.bc{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:18px;font-size:11.5px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .15s;border:1px solid var(--bd);background:white}
+.bc:hover{border-color:var(--sie);color:var(--sie)}
+.bc.a{border-color:var(--sie);color:var(--sie);background:var(--sie-lt);font-weight:600}
+.bc .d{width:6px;height:6px;border-radius:50%}
+
+/* CARDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.g1{margin-bottom:20px}
+.cd{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:20px 22px}
+.cdh{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.cn{width:22px;height:22px;border-radius:50%;background:var(--sie);color:white;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800}
+.ctt{font-size:14px;font-weight:700;color:var(--t1)}
+.csu{font-size:10.5px;color:var(--t3);margin-bottom:12px}
+.cw{position:relative;height:250px}.cw.tall{height:320px}
+
+/* COMP TABLE */
+.chd{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ccd{background:white;border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.cpe{padding:12px 20px 6px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--sie)}
+.ct2{width:100%;border-collapse:collapse}
+.ct2 th{padding:7px 18px;text-align:left;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--t4);border-bottom:1px solid var(--bd)}
+.ct2 th.r{text-align:right}
+.ct2 tbody tr{border-bottom:1px solid #F5F5F5;transition:background .1s}
+.ct2 tbody tr:last-child{border-bottom:none}
+.ct2 tbody tr:hover{background:#FAFAFA}
+.ct2 td{padding:10px 18px;font-size:12px}
+.ct2 td.r{text-align:right}
+.cbb{display:flex;align-items:center;gap:7px;font-weight:600}
+.cbb .cl{width:3px;height:18px;border-radius:2px}
+.cbb .cl.s{background:var(--sie)}.cbb .cl.o{background:transparent}
+.st{display:inline-block;padding:1px 6px;border-radius:3px;background:var(--sie);color:white;font-size:8.5px;font-weight:700}
+.mn{font-variant-numeric:tabular-nums;font-weight:600;font-size:12px}
+.shs{width:26%}
+.sb{height:5px;background:#F0F0F0;border-radius:3px;overflow:hidden}
+.sf{height:100%;border-radius:3px;transition:width .5s}
+.sf.s{background:var(--sie)}.sf.o{background:#A3A3A3}
+.un{font-variant-numeric:tabular-nums;font-size:11.5px;color:var(--t2)}
+.vb{display:inline-flex;padding:2px 7px;border-radius:7px;font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.vb.p{background:var(--green-bg);color:var(--green)}.vb.n{background:var(--red-bg);color:var(--red)}.vb.z{background:#F5F5F5;color:var(--t3)}
+
+/* REGION TABLE */
+.tw{max-height:500px;overflow-y:auto;border-radius:var(--r2);border:1px solid var(--bd)}
+.tw::-webkit-scrollbar{width:4px}.tw::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+.rt2{width:100%;border-collapse:collapse;font-size:11.5px}
+.rt2 thead{position:sticky;top:0;z-index:2}
+.rt2 thead th{background:var(--sie);color:white;padding:9px 14px;text-align:left;font-weight:600;font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;cursor:pointer;user-select:none}
+.rt2 thead th:hover{background:var(--sie2)}
+.rt2 tbody tr{border-bottom:1px solid #F0F0F0;transition:background .1s;cursor:pointer}
+.rt2 tbody tr:hover{background:#FAFAFA}
+.rt2 tbody td{padding:8px 14px}
+.mbc{display:flex;align-items:center;gap:7px}
+.mmb{height:4px;border-radius:2px;min-width:2px;transition:width .5s}
+.mmb.hi{background:var(--sie)}.mmb.lo{background:var(--bd)}
+.mv{font-variant-numeric:tabular-nums;font-weight:600;font-size:11px;min-width:40px}
+.uv{font-variant-numeric:tabular-nums;font-size:11px;color:var(--t2)}
+.rk{font-variant-numeric:tabular-nums;font-weight:700;color:var(--t4);font-size:10.5px}
+.badge{display:inline-flex;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:600}
+.badge.up{background:var(--green-bg);color:var(--green)}.badge.down{background:var(--red-bg);color:var(--red)}
+
+@media(max-width:1100px){.kr{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}.main,.hero,.gf{padding-left:16px;padding-right:16px}}
+@media(max-width:640px){.kr{grid-template-columns:1fr}.mc{font-size:10px;padding:4px 8px}}
+
+/* ── Sección mapa ─────────────────────────────────────────────── */
+.map-charts{display:grid;grid-template-columns:270px 600px;gap:20px;
+  align-items:start;padding:0 8%;margin-bottom:24px}
+@media(max-width:700px){.map-charts{grid-template-columns:1fr;padding:0 4%}}
+.map-card,.scatter-card{background:white;border:1px solid #e5e7eb;
+  border-radius:10px;padding:12px}
+.map-tbl-wrap{padding:0 2%}
+#mapa-svg,#scatter-svg{width:100%;height:auto;display:block}
+.map-legend-wrap{display:flex;align-items:center;gap:6px;margin-top:8px;padding:0 2px}
+.map-legend-label{font-size:10px;color:#6b7280;font-weight:500}
+.map-legend-bar{flex:1;height:7px;border-radius:3px;
+  background:linear-gradient(to right,#cbd5e1,#1e3a5f,#7A1518)}
+.scatter-legend{display:flex;align-items:center;gap:14px;margin-top:6px;
+  font-size:10px;color:#9ca3af;padding:0 2px}
+.scatter-legend span{display:flex;align-items:center;gap:5px}
+/* ── Tabla ─────────────────────────────────────────────────────── */
+.zt-wrap{overflow:auto}
+.zt{width:100%;border-collapse:collapse;font-size:12px}
+.zt thead th{padding:8px 10px;text-align:left;color:#737373;font-weight:500;
+  border-bottom:2px solid #e5e5e5;white-space:nowrap;cursor:pointer;user-select:none;
+  position:sticky;top:0;background:white;z-index:1}
+.zt thead th:hover{color:#1a1a1a}
+.zt thead th.sort-asc::after{content:' ↑';color:#7A1518;font-size:10px}
+.zt thead th.sort-desc::after{content:' ↓';color:#7A1518;font-size:10px}
+.zt thead th.sort-none::after{content:' ↕';color:#d4d4d4;font-size:10px}
+.zt tbody td{padding:5px 10px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+.zt tbody tr{cursor:pointer;transition:background .1s}
+.zt tbody tr:hover td{background:#fafafa}
+.zt tbody tr.act td{background:#FEF2F2}
+.zt tbody tr.act td:first-child{border-left:3px solid #7A1518}
+.ms-bar-wrap{display:flex;align-items:center;gap:6px}
+.ms-bar-bg{flex:1;height:6px;background:#f0f0f0;border-radius:3px;min-width:50px}
+.ms-bar-fill{height:6px;border-radius:3px;background:#7A1518;transition:width .3s}
+.zt-num{color:#a3a3a3;font-size:11px;width:20px}
+.zt-zone{font-weight:500;color:#1a1a1a}
+.zt-ms{font-weight:700;color:#7A1518;text-align:right;white-space:nowrap}
+.zt-diff{text-align:right;font-size:11px;white-space:nowrap}
+.zt-units{text-align:right;color:#525252;white-space:nowrap}
+.dot-leg{display:inline-block;width:10px;height:10px;border-radius:50%;
+  background:#7A1518;vertical-align:middle;margin-right:4px}
+</style>
 </head>
-<body><style>.mbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.mc{padding:5px 13px;border-radius:5px;font-size:11px;font-weight:500;color:#525252;cursor:pointer;transition:all .15s;border:1px solid #E5E5E5;background:#fff}.mc.a{background:#7A1518;color:#fff;border-color:#7A1518;font-weight:700}.reg-wrap{position:relative}.reg-btn{padding:6px 14px;border-radius:6px;border:1px solid #E5E5E5;font-size:11.5px;font-weight:500;color:#525252;background:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;min-width:200px}.arr{margin-left:auto;font-size:9px;color:#A3A3A3}.reg-dd{position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #E5E5E5;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.12);z-index:300;width:280px;max-height:360px;display:none;flex-direction:column}.reg-dd.open{display:flex}.reg-search{padding:10px 12px;border-bottom:1px solid #E5E5E5}.reg-search input{width:100%;padding:6px 10px;border:1px solid #E5E5E5;border-radius:5px;font-size:11.5px}.reg-list{overflow-y:auto;flex:1;max-height:280px}.reg-opt{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;font-size:11.5px}.reg-opt.sel{background:#FEF2F2;font-weight:600;color:#7A1518}.reg-chk{width:14px;height:14px;border:1.5px solid #D4D4D4;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff}.reg-opt.sel .reg-chk{background:#7A1518;border-color:#7A1518}.reg-actions{padding:8px 12px;border-top:1px solid #E5E5E5;display:flex;gap:8px}.reg-abtn{padding:4px 10px;border-radius:4px;font-size:10.5px;font-weight:600;cursor:pointer;border:none}.reg-abtn.all{background:#FEF2F2;color:#7A1518}.reg-abtn.clr{background:#F5F5F5;color:#737373}.rtags{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.rtag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:14px;background:#FEF2F2;border:1px solid #FECACA;font-size:10.5px;font-weight:600;color:#7A1518}.rtag .x{cursor:pointer;font-size:12px;opacity:.6}.kr{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}.kc{background:#fff;border:1px solid #E5E5E5;border-radius:12px;padding:16px 18px;position:relative}.kc:after{content:"";position:absolute;bottom:0;left:14px;right:14px;height:2px;border-radius:1px}.kc.c1:after{background:#7A1518}.kc.c2:after{background:#2563EB}.kc.c3:after{background:#16A34A}.kc.c4:after{background:#7C3AED}.kh{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#A3A3A3;margin-bottom:6px}.kv{font-size:28px;font-weight:800;letter-spacing:-1.5px;line-height:1;margin-bottom:5px;font-variant-numeric:tabular-nums}.kv.red{color:#7A1518}.kv.blue{color:#2563EB}.kv.green{color:#16A34A}.kv.purple{color:#7C3AED}.kd{font-size:10.5px;color:#737373;line-height:1.4}.fb{background:#fff;border:1px solid #E5E5E5;border-radius:12px;padding:16px 20px;margin-bottom:20px}.fbt{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}.fbtl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#737373}.fbtl span{color:#A3A3A3;font-weight:400;text-transform:none;letter-spacing:0;margin-left:6px;font-size:10.5px}.fcl{font-size:11px;color:#DC2626;font-weight:600;cursor:pointer;padding:3px 10px;border:1px solid #FECACA;border-radius:5px;background:#FEF2F2}.fcs{display:flex;flex-wrap:wrap;gap:6px}.bc{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:18px;font-size:11.5px;font-weight:500;color:#525252;cursor:pointer;border:1px solid #E5E5E5;background:#fff}.bc.a{border-color:#7A1518;color:#7A1518;background:#FEF2F2;font-weight:600}.bc .d{width:6px;height:6px;border-radius:50%}.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}.g1{margin-bottom:20px}.cw{position:relative;height:250px}.cw.tall{height:320px}.chd{display:flex;align-items:center;gap:10px;margin-bottom:12px}.ccd{background:#fff;border:1px solid #E5E5E5;border-radius:12px;overflow:hidden;margin-bottom:20px}.cpe{padding:12px 20px 6px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#7A1518}.ct2,.rt2{width:100%;border-collapse:collapse}.ct2 th,.rt2 th{padding:7px 18px;text-align:left;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#A3A3A3;border-bottom:1px solid #E5E5E5}.ct2 td{padding:10px 18px;font-size:12px}.ct2 td.r,.ct2 th.r,.rt2 td.r,.rt2 th.r{text-align:right}.cbb{display:flex;align-items:center;gap:7px;font-weight:600}.cl{width:3px;height:18px;border-radius:2px}.cl.s{background:#7A1518}.cl.o{background:transparent}.st{display:inline-block;padding:1px 6px;border-radius:3px;background:#7A1518;color:#fff;font-size:8.5px;font-weight:700}.mn{font-variant-numeric:tabular-nums;font-weight:600;font-size:12px}.shs{width:26%}.sb{height:5px;background:#F0F0F0;border-radius:3px;overflow:hidden}.sf{height:100%;border-radius:3px}.sf.s{background:#7A1518}.sf.o{background:#A3A3A3}.un{font-variant-numeric:tabular-nums;font-size:11.5px;color:#525252}.vb{display:inline-flex;padding:2px 7px;border-radius:7px;font-size:10.5px;font-weight:600}.vb.p{background:#F0FDF4;color:#16A34A}.vb.n{background:#FEF2F2;color:#DC2626}.vb.z{background:#F5F5F5;color:#737373}.tw{max-height:500px;overflow-y:auto;border-radius:8px;border:1px solid #E5E5E5}.rt2 thead th{background:#7A1518;color:#fff;padding:9px 14px}.rt2 tbody td{padding:8px 14px}.mbc{display:flex;align-items:center;gap:7px}.mmb{height:4px;border-radius:2px;min-width:2px}.mmb.hi{background:#7A1518}.mmb.lo{background:#D4D4D4}.mv{font-variant-numeric:tabular-nums;font-weight:600;font-size:11px;min-width:40px}.uv{font-variant-numeric:tabular-nums;font-size:11px;color:#525252}.rk{font-variant-numeric:tabular-nums;font-weight:700;color:#A3A3A3;font-size:10.5px}@media(max-width:1100px){.kr,.g2{grid-template-columns:1fr}}</style><nav class="navbar"><div class="nav-brand"><span class="dot"></span>SIEGFRIED</div><div class="nav-tabs"><a class="nav-tab ul" data-exec="" href="../">Resumen</a><a class="nav-tab" data-exec="#s-bud" href="../#s-bud">Venta Interna</a><a class="nav-tab" data-exec="#s-perf" href="../#s-perf">Mercado IQVIA</a><a class="nav-tab" data-exec="#s-rec" href="../#s-rec">Recetas</a><a class="nav-tab" data-exec="#s-stock" href="../#s-stock">Stock</a><a class="nav-tab" data-exec="#s-cover" href="../#s-cover">Cobertura</a><a class="nav-tab" data-exec="#s-can" href="../#s-can">Mostrador vs Convenios</a><a class="nav-tab" data-exec="#s-conv" href="../#s-conv">Convenios</a><a class="nav-tab" data-exec="#s-prec" href="../#s-prec">Precios</a><a class="nav-tab hl" href="./">DDD</a></div><div class="nav-right"><a class="nav-hub" href="../../">← Hub</a></div></nav><div class="hero"><div class="hero-bread"><span>SIEGFRIED</span> · OTC · INTELIGENCIA DE MERCADOS</div><h1>DDD · Linea OTC</h1><div class="hero-sub" id="hero-sub">Market Share por region · producto · competencia · corte mensual OTC</div></div><div class="gf"><div class="gfg"><span class="gfl">Mercado:</span><div class="mbar" id="mbar"></div></div><div class="gfg"><span class="gfl">Mes:</span><select class="select" id="monthSel"></select></div><div class="gfg"><span class="gfl">Region:</span><div class="reg-wrap" id="regWrap"><div class="reg-btn" id="regBtn" onclick="toggleDD()"><span id="regBtnText">Nacional (todas)</span><span class="arr">▼</span></div><div class="reg-dd" id="regDD"><div class="reg-search"><input type="text" placeholder="Buscar region..." id="regQ" oninput="filterRegs()"></div><div class="reg-list" id="regList"></div><div class="reg-actions"><button class="reg-abtn all" onclick="selTop7()">Top 7</button><button class="reg-abtn clr" onclick="clrRegs()">Limpiar</button></div></div></div></div><div class="rtags" id="rtags"></div></div><div class="main"><div class="kr" id="kr"></div><div class="fb"><div class="fbt"><div class="fbtl">FILTRO GLOBAL · PRODUCTO <span>Selecciona una marca o presentacion para seguir su share</span></div><div class="fcl" id="fcl" onclick="clrP()">✕ Limpiar filtro</div></div><div class="fcs" id="fcs"></div></div><div class="g2"><div class="cd"><div class="cdh"><div class="cn">01</div><div class="ctt">Evolucion Mensual MS%</div></div><div class="csu" id="s1"></div><div class="cw"><canvas id="c1"></canvas></div></div><div class="cd"><div class="cdh"><div class="cn">02</div><div class="ctt">MS% Mensual · Competidores</div></div><div class="csu" id="s2"></div><div class="cw"><canvas id="c2"></canvas></div></div></div><div class="g1"><div class="cd"><div class="cdh"><div class="cn">03</div><div class="ctt">Evolucion Trimestral MS% por Region</div></div><div class="csu" id="s3"></div><div class="cw tall"><canvas id="c3"></canvas></div></div></div><div class="chd"><div class="cn">04</div><div class="ctt" style="font-size:16px">Competidores en Provincia</div></div><div class="ccd"><div class="cpe" id="cpe"></div><table class="ct2"><thead><tr><th style="width:3%"></th><th>Marca</th><th class="r">MS%</th><th class="shs">Share</th><th class="r">Unidades</th><th class="r">Var MoM</th></tr></thead><tbody id="cbo"></tbody></table></div><div class="cd"><div class="cdh"><div class="cn">05</div><div class="ctt">Market Share por Region</div></div><div class="csu">Click en la fila para agregar o quitar regiones del filtro</div><div class="tw" id="tw"></div></div><div class="g1" style="margin-top:20px"><div class="cd"><div class="cdh"><div class="cn">06</div><div class="ctt">Scatter regional</div></div><div class="csu" id="s6"></div><div class="g2"><div><div id="rankBox"></div></div><div><div class="cw tall"><svg id="scatter-svg" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="320" fill="white" rx="4"/><g id="scatter-g"></g></svg></div></div></div></div></div></div><script>
-const D=window.OTC_DATA||{},F=new Intl.NumberFormat('es-AR'),P=new Intl.NumberFormat('es-AR',{minimumFractionDigits:1,maximumFractionDigits:1}),Q=new URLSearchParams(location.search),MK=Object.keys((D.ddd&&D.ddd.markets)||{}),fm=Q.get('family'),fmk=fm?(D.familyToMarkets[fm]||[]):[],S={market:MK.includes(Q.get('market'))?Q.get('market'):(fmk[0]||MK[0]),month:Q.get('month')||'',regs:(Q.get('regions')||'').split('|').filter(Boolean),prod:Q.get('product')||''},C={};
-const M=()=>D.ddd.markets[S.market],allMonths=()=>D.ddd.months||[],allRegs=()=>[...new Set(allMonths().flatMap(m=>(M().regionsByMonth[m]||[]).map(r=>r.name)).filter(n=>n&&n!=='-'))],prodRows=m=>(M().productsByMonth[m]||[]),regRows=m=>(M().regionsByMonth[m]||[]).filter(r=>r.name&&r.name!=='-'),selRows=m=>S.regs.length?regRows(m).filter(r=>S.regs.includes(r.name)):regRows(m),agg=m=>{const rs=selRows(m);const t=rs.reduce((a,r)=>a+Number(r.total||0),0),s=rs.reduce((a,r)=>a+Number(r.sie||0),0);return{month:m,total:t,sie:s,share:t?100*s/t:0}},series=()=>allMonths().map(agg),prodSeries=p=>allMonths().map(m=>{const r=prodRows(m).find(x=>x.product===p);return r?Number(r.share||0):0}),qLabel=m=>{const x=m.split('-'),map={Ene:1,Feb:1,Mar:1,Abr:2,May:2,Jun:2,Jul:3,Ago:3,Sep:3,Oct:4,Nov:4,Dic:4};return`Q${map[x[0]]||1} ${x[1]}`},qSeries=ns=>{const out={};ns.forEach(n=>out[n]={});allMonths().forEach(m=>{const q=qLabel(m);regRows(m).forEach(r=>{if(!ns.includes(r.name))return;out[r.name][q]=out[r.name][q]||{t:0,s:0};out[r.name][q].t+=Number(r.total||0);out[r.name][q].s+=Number(r.sie||0)})});const qs=[...new Set(allMonths().map(qLabel))];return{qs,ds:ns.map((n,i)=>({label:n,data:qs.map(q=>out[n][q]&&out[n][q].t?100*out[n][q].s/out[n][q].t:0),borderColor:['#7A1518','#2563EB','#16A34A','#7C3AED','#D97706','#0891B2'][i%6],backgroundColor:'transparent',borderWidth:2,pointRadius:2,tension:.2}))}};
-function sync(){if(!S.month||!allMonths().includes(S.month))S.month=M().latestMonth;const u=new URL(location.href),f=M().family;u.searchParams.set('market',S.market);u.searchParams.set('family',f);u.searchParams.set('month',S.month);S.regs.length?u.searchParams.set('regions',S.regs.join('|')):u.searchParams.delete('regions');S.prod?u.searchParams.set('product',S.prod):u.searchParams.delete('product');history.replaceState({},'',u);document.querySelectorAll('[data-exec]').forEach(a=>a.href=`../?family=${encodeURIComponent(f)}&market=${encodeURIComponent(S.market)}${a.dataset.exec}`)}
-function make(){ if(!C.c1)C.c1=new Chart(document.getElementById('c1'),{type:'line',data:{labels:[],datasets:[{label:'Share Siegfried',data:[],borderColor:'#7A1518',backgroundColor:'rgba(122,21,24,.10)',borderWidth:3,pointRadius:2,tension:.24,fill:true}]},options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,ticks:{callback:v=>P.format(v)+'%'}}}}}); if(!C.c2)C.c2=new Chart(document.getElementById('c2'),{type:'bar',data:{labels:[],datasets:[{label:'Share',data:[],backgroundColor:'rgba(122,21,24,.8)',borderRadius:10}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>P.format(v)+'%'}}}}}); if(!C.c3)C.c3=new Chart(document.getElementById('c3'),{type:'line',data:{labels:[],datasets:[]},options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,ticks:{callback:v=>P.format(v)+'%'}}}}})}
-function renderTop(){document.getElementById('hero-sub').textContent=`Mercado ${S.market} dentro de ${M().family} con corte regional hasta ${M().latestMonth}.`;document.getElementById('monthSel').innerHTML=allMonths().map(m=>`<option value="${m}">${m}</option>`).join('');document.getElementById('monthSel').value=S.month;document.getElementById('monthSel').onchange=e=>{S.month=e.target.value;sync();render()};const mb=document.getElementById('mbar');mb.innerHTML=MK.map(m=>`<button class="mc ${m===S.market?'a':''}" data-m="${m}">${m}</button>`).join('');mb.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{S.market=b.dataset.m;S.month=M().latestMonth;S.regs=[];S.prod='';sync();render()})}
-function renderK(){const a=agg(S.month),best=[...regRows(S.month)].sort((x,y)=>y.share-x.share)[0]||{name:'Sin dato',share:0},cards=[['Mercado total',F.format(a.total),`Unidades de ${S.month}`],['Siegfried',F.format(a.sie),`Captura estimada en ${S.market}`],['MS%',`${P.format(a.share)}%`,S.regs.length?`${S.regs.length} regiones filtradas`:'Lectura nacional'],['Region lider',best.name,`Share ${P.format(best.share)}%`]];document.getElementById('kr').innerHTML=cards.map((c,i)=>`<div class="kc c${i+1}"><div class="kh">${c[0]}</div><div class="kv ${['red','blue','green','purple'][i]}">${c[1]}</div><div class="kd">${c[2]}</div></div>`).join('')}
-function renderRegs(q=''){const rs=allRegs().filter(n=>n.toLowerCase().includes(q.toLowerCase())),w=document.getElementById('regList');w.innerHTML=rs.map(n=>`<div class="reg-opt ${S.regs.includes(n)?'sel':''}" data-r="${n}"><div class="reg-chk">✓</div><span>${n}</span></div>`).join('');w.querySelectorAll('[data-r]').forEach(x=>x.onclick=()=>{const n=x.dataset.r;S.regs=S.regs.includes(n)?S.regs.filter(r=>r!==n):[...S.regs,n];sync();render()});document.getElementById('regBtnText').textContent=S.regs.length?`${S.regs.length} region(es)`:'Nacional (todas)';document.getElementById('rtags').innerHTML=S.regs.map(n=>`<span class="rtag">${n}<span class="x" onclick="pickReg('${n.replace(/'/g,"\\'")}')">×</span></span>`).join('')}
-window.toggleDD=()=>document.getElementById('regDD').classList.toggle('open');window.filterRegs=()=>renderRegs(document.getElementById('regQ').value);window.pickReg=n=>{S.regs=S.regs.includes(n)?S.regs.filter(r=>r!==n):[...S.regs,n];sync();render()};window.selTop7=()=>{S.regs=[...regRows(S.month)].sort((a,b)=>b.share-a.share).slice(0,7).map(r=>r.name);sync();render()};window.clrRegs=()=>{S.regs=[];sync();render()};window.clrP=()=>{S.prod="";sync();render()};
-function renderProds(){const rows=prodRows(S.month).slice(0,12),w=document.getElementById('fcs');if(S.prod&&!rows.some(r=>r.product===S.prod))S.prod='';w.innerHTML=rows.map(r=>`<button class="bc ${r.product===S.prod?'a':''}" data-p="${r.product}"><span class="d" style="background:${r.isSie?'#7A1518':'#d4d4d4'}"></span>${r.product}</button>`).join('');w.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{S.prod=b.dataset.p===S.prod?'':b.dataset.p;sync();render()});document.getElementById('fcl').style.display=S.prod?'inline-flex':'none'}
-function renderCharts(){const s=series();C.c1.data.labels=s.map(r=>r.month);C.c1.data.datasets[0].data=s.map(r=>r.share);C.c1.update();document.getElementById('s1').textContent=S.regs.length?`Siegfried · ${S.regs.join(' · ')}`:`Siegfried · ${S.market} · Nacional`;if(S.prod){C.c2.config.type='line';C.c2.data.labels=allMonths();C.c2.data.datasets=[{label:S.prod,data:prodSeries(S.prod),borderColor:'#7A1518',backgroundColor:'rgba(122,21,24,.10)',borderWidth:3,pointRadius:2,tension:.24,fill:true}];document.getElementById('s2').textContent=`Tracking mensual de ${S.prod}`}else{const p=prodRows(S.month).slice(0,8);C.c2.config.type='bar';C.c2.data.labels=p.map(r=>r.product.length>24?r.product.slice(0,24)+'…':r.product);C.c2.data.datasets=[{label:'Share',data:p.map(r=>r.share),backgroundColor:p.map(r=>r.isSie?'rgba(122,21,24,.85)':'rgba(163,163,163,.7)'),borderRadius:10}];document.getElementById('s2').textContent=`Top competidores · ${S.month}`}C.c2.update();const ns=(S.regs.length?S.regs:[...regRows(S.month)].sort((a,b)=>b.share-a.share).slice(0,6).map(r=>r.name)),q=qSeries(ns);C.c3.data.labels=q.qs;C.c3.data.datasets=q.ds;C.c3.update();document.getElementById('s3').textContent=ns.length?ns.join(' · '):'Selecciona regiones para comparar'}
-function renderComp(){const cur=prodRows(S.month),ms=allMonths(),i=ms.indexOf(S.month),pm=i>0?ms[i-1]:null,prev=pm?prodRows(pm):[];document.getElementById('cpe').textContent=`${S.market} · ${S.month}`;document.getElementById('cbo').innerHTML=cur.slice(0,12).map((r,idx)=>{const p=prev.find(x=>x.product===r.product),d=p?Number(r.share||0)-Number(p.share||0):null,w=Math.max(6,Math.min(100,Number(r.share||0)*4));return`<tr><td>${idx+1}</td><td><div class="cbb"><span class="cl ${r.isSie?'s':'o'}"></span>${r.product}${r.isSie?' <span class="st">SIE</span>':''}</div></td><td class="r mn">${P.format(Number(r.share||0))}%</td><td class="shs"><div class="sb"><div class="sf ${r.isSie?'s':'o'}" style="width:${w}%"></div></div></td><td class="r un">${F.format(Number(r.units||0))}</td><td class="r"><span class="vb ${d==null?'z':d>=0?'p':'n'}">${d==null?'n/d':`${d>=0?'+':''}${P.format(d)} pp`}</span></td></tr>`}).join('')}
-function renderRegions(){const rows=[...regRows(S.month)].sort((a,b)=>b.share-a.share);document.getElementById('tw').innerHTML=`<table class="rt2"><thead><tr><th>#</th><th>Region</th><th>MS%</th><th>Unidades</th><th>SIE</th></tr></thead><tbody>${rows.map((r,i)=>`<tr data-r="${r.name}" class="${S.regs.includes(r.name)?'sel':''}"><td class="rk">${i+1}</td><td>${r.name}</td><td><div class="mbc"><div class="mmb ${r.share>=5?'hi':'lo'}" style="width:${Math.max(8,r.share*8)}px"></div><span class="mv">${P.format(r.share)}%</span></div></td><td class="uv">${F.format(Number(r.total||0))}</td><td class="uv">${F.format(Number(r.sie||0))}</td></tr>`).join('')}</tbody></table>`;document.querySelectorAll('#tw [data-r]').forEach(x=>x.onclick=()=>pickReg(x.dataset.r))}
-function renderScatter(){const rows=(S.regs.length?selRows(S.month):regRows(S.month)).slice().sort((a,b)=>b.share-a.share),top=rows.slice(0,8);document.getElementById('s6').textContent=`Volumen total vs share Siegfried · ${S.month}`;document.getElementById('rankBox').innerHTML=top.map(r=>`<div style="display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:10px;background:#fafafa;border:1px solid #e5e5e5;margin-bottom:8px;font-size:11px"><span>${r.name}</span><strong>${P.format(r.share)}%</strong></div>`).join('');const g=document.getElementById('scatter-g');g.innerHTML='';const W=400,H=320,L=46,R=18,T=18,B=28,mx=Math.max(...rows.map(r=>Number(r.total||0)),1),my=Math.max(...rows.map(r=>Number(r.share||0)),1);const ax=(x1,y1,x2,y2,c)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="1"/>`;g.insertAdjacentHTML('beforeend',ax(L,H-B,W-R,H-B,'#d4d4d4')+ax(L,T,L,H-B,'#d4d4d4')+`<text x="${W/2}" y="${H-8}" font-size="10" fill="#737373">Volumen mercado</text><text x="12" y="${H/2}" transform="rotate(-90 12 ${H/2})" font-size="10" fill="#737373">MS%</text>`);rows.slice(0,24).forEach((r,i)=>{const x=L+(Number(r.total||0)/mx)*(W-L-R),y=H-B-(Number(r.share||0)/my)*(H-T-B),rad=4+Math.sqrt(Number(r.total||0)/mx)*12;g.insertAdjacentHTML('beforeend',`<circle cx="${x}" cy="${y}" r="${rad}" fill="rgba(122,21,24,.25)" stroke="#7A1518" stroke-width="1.2"></circle>${i<10?`<text x="${x+6}" y="${y-6}" font-size="9" fill="#525252">${r.name}</text>`:''}`)})}
-function render(){sync();make();renderTop();renderRegs();renderK();renderProds();renderCharts();renderComp();renderRegions();renderScatter()}
-document.addEventListener('click',e=>{if(!document.getElementById('regWrap').contains(e.target))document.getElementById('regDD').classList.remove('open')});render();
-</script></body></html>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand"><span class="dot"></span>SIEGFRIED</div>
+  <div class="nav-tabs">
+    <a class="nav-tab ul" href="../">Resumen</a><a class="nav-tab" href="../#s-bud">Venta Interna</a><a class="nav-tab" href="../#s-perf">Mercado IQVIA</a>
+    <a class="nav-tab" href="../#s-rec">Recetas</a><a class="nav-tab" href="../#s-stock">Stock</a><a class="nav-tab" href="../#s-cover">Cobertura</a>
+    <a class="nav-tab" href="../#s-can">Mostrador vs Convenios</a><a class="nav-tab" href="../#s-conv">Convenios</a><a class="nav-tab" href="../#s-prec">Precios</a>
+    <a class="nav-tab hl" href="./">DDD</a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-hub" href="../../">← Hub</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bread"><span>SIEGFRIED</span> · OTC · INTELIGENCIA DE MERCADOS</div>
+  <h1>DDD · Línea OTC</h1>
+  <div class="hero-sub">Market Share por Región · Producto · Competencia · IQVIA OTC</div>
+</div>
+
+<div class="gf" id="gf">
+  <div class="gfg"><span class="gfl">Mercado:</span><div class="mbar" id="mbar"></div></div>
+  <div class="gfg">
+    <span class="gfl">Región:</span>
+    <div class="reg-wrap" id="regWrap">
+      <div class="reg-btn" id="regBtn" onclick="toggleDD()">
+        <span id="regBtnText">🇦🇷 Nacional (todas)</span>
+        <span class="arr">▼</span>
+      </div>
+      <div class="reg-dd" id="regDD">
+        <div class="reg-search"><input type="text" placeholder="Buscar región..." id="regQ" oninput="filterRegs()"></div>
+        <div class="reg-list" id="regList"></div>
+        <div class="reg-actions">
+          <button class="reg-abtn all" onclick="selTop7()">Top 7</button>
+          <button class="reg-abtn clr" onclick="clrRegs()">Limpiar todo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rtags" id="rtags"></div>
+</div>
+
+<div class="main">
+  <div class="kr" id="kr"></div>
+
+  <div class="fb" id="fb">
+    <div class="fbt">
+      <div class="fbtl">FILTRO GLOBAL · PRODUCTO <span>Selecciona un competidor para compararlo vs Siegfried</span></div>
+      <div class="fcl" id="fcl" onclick="clrB()">✕ Limpiar filtro</div>
+    </div>
+    <div class="fcs" id="fcs"></div>
+  </div>
+
+  <div class="g2">
+    <div class="cd"><div class="cdh"><div class="cn">01</div><div class="ctt">Evolución Mensual MS%</div></div>
+      <div class="csu" id="s1">Siegfried</div><div class="cw"><canvas id="c1"></canvas></div></div>
+    <div class="cd"><div class="cdh"><div class="cn">02</div><div class="ctt">MS% Mensual · Competidores</div></div>
+      <div class="csu" id="s2">Top competidores</div><div class="cw"><canvas id="c2"></canvas></div></div>
+  </div>
+
+  <div class="g1"><div class="cd">
+    <div class="cdh"><div class="cn">03</div><div class="ctt">Evolución Trimestral MS% por Región</div></div>
+    <div class="csu" id="s3">Seleccioná regiones para comparar</div>
+    <div class="cw tall"><canvas id="c3"></canvas></div>
+  </div></div>
+
+  <div class="chd"><div class="cn">04</div><div class="ctt" style="font-size:16px">Competidores en Provincia</div></div>
+  <div class="ccd">
+    <div class="cpe" id="cpe"></div>
+    <table class="ct2"><thead><tr><th style="width:3%"></th><th>Producto</th><th class="r">MS%</th><th class="shs">Share</th><th class="r">Unidades</th><th class="r">Var MoM</th></tr></thead>
+    <tbody id="cbo"></tbody></table>
+  </div>
+
+  <div class="cd">
+    <div class="cdh"><div class="cn">05</div><div class="ctt">Market Share por Región</div></div>
+    <div class="csu">42 regiones · Click en fila para agregar al filtro</div>
+    <div class="tw" id="tw"></div>
+  </div>
+</div>
+
+
+  <div class="g1"><div class="cd">
+    <div class="cdh">
+      <div class="cn">06</div>
+      <div class="ctt">Market Share por Zona · Mapa + Scatter</div>
+    </div>
+    <div class="csu" id="s6">MS% Siegfried · 2025</div>
+
+    <div class="map-charts">
+
+      <!-- Bubble Map ───────────────── -->
+      <div class="map-card">
+        <svg id="mapa-svg" viewBox="0 0 300 560" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="fshadow">
+              <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#00000025"/>
+            </filter>
+            <filter id="fglow">
+              <feGaussianBlur stdDeviation="2.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect width="300" height="560" fill="white" rx="4"/>
+          <g id="prov-layer"></g>
+          <g id="bub-layer"></g>
+          <g id="map-tip" visibility="hidden">
+            <rect id="mt-bg" rx="5" fill="white" stroke="#e5e7eb" stroke-width="1"
+                  filter="url(#fshadow)"/>
+            <text id="mt-t1" font-size="9" font-weight="700" fill="#111827" x="9" y="14"></text>
+            <text id="mt-t2" font-size="8.5" font-weight="600" fill="#7A1518" x="9" y="25"></text>
+            <text id="mt-t3" font-size="7.5" fill="#6b7280" x="9" y="35"></text>
+            <text id="mt-t4" font-size="7.5" fill="#6b7280" x="9" y="44"></text>
+          </g>
+        </svg>
+        <div class="map-legend-wrap">
+          <span class="map-legend-label">0%</span>
+          <div class="map-legend-bar"></div>
+          <span class="map-legend-label" id="map-leg-max">—</span>
+        </div>
+        <div class="scatter-legend" style="margin-top:6px">
+          <span>Tamaño ∝ volumen mercado</span>
+        </div>
+      </div>
+
+      <!-- Scatter Plot ──────────────── -->
+      <div class="scatter-card">
+        <svg id="scatter-svg" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="320" fill="white" rx="4"/>
+          <g id="scatter-g"></g>
+          <g id="sc-tip" visibility="hidden">
+            <rect id="st-bg" rx="5" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+            <text id="st-t1" font-size="9" font-weight="700" fill="#111827" x="9" y="14"></text>
+            <text id="st-t2" font-size="8.5" font-weight="600" fill="#7A1518" x="9" y="25"></text>
+            <text id="st-t3" font-size="7.5" fill="#6b7280" x="9" y="35"></text>
+            <text id="st-t4" font-size="7.5" fill="#6b7280" x="9" y="44"></text>
+          </g>
+        </svg>
+        <div class="scatter-legend">
+          <span>— — Promedio nacional</span>
+          <span style="margin-left:auto;color:#475569">X: escala logarítmica</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tabla separada de los gráficos -->
+    <div class="map-tbl-wrap">
+      <div class="zt-wrap">
+        <table class="zt">
+          <thead>
+            <tr>
+              <th class="sort-none" data-col="rank"  onclick="sortZT(this)">#</th>
+              <th class="sort-none" data-col="zone"  onclick="sortZT(this)">Zona</th>
+              <th class="sort-desc" data-col="ms"    onclick="sortZT(this)">MS%</th>
+              <th class="sort-none" data-col="diff"  onclick="sortZT(this)">vs Nac.</th>
+              <th class="sort-none" data-col="sie"   onclick="sortZT(this)">U. SIE</th>
+              <th class="sort-none" data-col="total" onclick="sortZT(this)">U. Mkt</th>
+            </tr>
+          </thead>
+          <tbody id="zona-tbl-mapa"></tbody>
+        </table>
+      </div>
+    </div>
+  </div></div>
+
+<script src="../data.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
+
