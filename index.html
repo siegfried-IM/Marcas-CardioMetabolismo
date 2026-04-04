@@ -836,18 +836,21 @@ body {
   </div>
 </a>
 
-    <!-- 07 OTX -->
-    <a class="card" href="#" data-line="otx" target="_blank" style="--bar-color:#0284C7;">
+    <!-- 07 OTC -->
+    <a class="card" href="OTC/" data-line="otx" data-live="true" style="--bar-color:#0284C7;">
       <div class="card-bar"></div>
       <div class="card-minimal">
         <div class="card-name-line">
           <div>
-            <div class="card-num-sm">07 — OTX</div>
-            <div class="card-label">💊 &nbsp;Línea OTX</div>
+            <div class="card-num-sm">07 — OTC</div>
+            <div class="card-label">💊 &nbsp;Línea OTC</div>
             <div class="card-owner" style="margin-top:4px;"><div class="card-owner-avatar">TP</div>Tatiana Peker</div>
           </div>
         </div>
-        <span class="badge badge-soon">Próximamente</span>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+          <span class="badge badge-live">● Live</span>
+          <span class="card-cta">Abrir tablero →</span>
+        </div>
       </div>
     </a>
 
@@ -928,9 +931,36 @@ function applyUrls() {
         card.removeAttribute('rel');
       }
       card.dataset.live = 'true';
-      const badge = card.querySelector('.badge');
-      if (badge) { badge.className = 'badge badge-live'; badge.textContent = '● Live'; }
-      const cta = card.querySelector('.card-cta');
+      let badge = card.querySelector('.badge');
+      if (badge) {
+        badge.className = 'badge badge-live';
+        badge.textContent = '● Live';
+      }
+      let cta = card.querySelector('.card-cta');
+      if (!cta) {
+        const minimal = card.querySelector('.card-minimal');
+        if (minimal) {
+          let actions = minimal.querySelector('.card-actions');
+          if (!actions) {
+            actions = document.createElement('div');
+            actions.className = 'card-actions';
+            actions.style.display = 'flex';
+            actions.style.flexDirection = 'column';
+            actions.style.alignItems = 'flex-end';
+            actions.style.gap = '8px';
+            minimal.appendChild(actions);
+          }
+          if (!badge || !actions.contains(badge)) {
+            badge = document.createElement('span');
+            badge.className = 'badge badge-live';
+            badge.textContent = '● Live';
+            actions.appendChild(badge);
+          }
+          cta = document.createElement('span');
+          cta.className = 'card-cta';
+          actions.appendChild(cta);
+        }
+      }
       if (cta) {
         cta.className = 'card-cta';
         cta.textContent = 'Abrir tablero →';
