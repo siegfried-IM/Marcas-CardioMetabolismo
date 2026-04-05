@@ -469,37 +469,49 @@
     var workbook = root.XLSX.utils.book_new();
     var seen = new Set();
     var context = dashboardContext(cfg, data);
+    var entries = [];
+
+    common.ensureWorkbookChrome(workbook, seen);
 
     var sheets = [
-      ["Resumen", "Resumen", buildOverviewRows(data, cfg)],
-      ["Meta", "Metadatos", buildMetaRows(data, cfg)],
-      ["KPI_Global", "KPI Global", buildGlobalKpiRows(data)],
-      ["KPI_Marca", "KPI por Marca", buildBrandKpiRows(data)],
-      ["Presupuesto_Mes", "Presupuesto Mensual", buildBudgetRows(data)],
-      ["IQVIA_Mes", "IQVIA Mensual", buildIqviaMonthlyRows(data)],
-      ["IQVIA_Acum", "IQVIA Acumulados", buildIqviaAccumRows(data)],
-      ["IQVIA_Trim", "IQVIA Trimestral", buildIqviaQuarterRows(data)],
-      ["Recetas_Mes", "Recetas Mensuales", buildRecetasRows(data)],
-      ["Recetas_Trim", "Recetas Trimestrales", buildRecetasQuarterRows(data)],
-      ["Rec_Comp_Mes", "Competidores Recetas", buildRecCompetitorMonthlyRows(data)],
-      ["Rec_Comp_Trim", "Competidores Recetas Trim", buildRecCompetitorQuarterRows(data)],
-      ["Canales", "Canales", buildCanalesRows(data)],
-      ["Convenios_OS", "Convenios OS", buildConveniosRows(data)],
-      ["Stock_Mes", "Stock Mensual", buildStockRows(data)],
-      ["Stock_Alertas", "Alertas de Stock", buildStockAlertRows(data)],
-      ["Stock_Present", "Cobertura por Presentacion", buildStockPresentationRows(data)],
-      ["Precios_Comp", "Precios Comparados", buildPriceRows(data)]
+      ["Resumen", "Resumen", buildOverviewRows(data, cfg), "Resumen Ejecutivo"],
+      ["Meta", "Metadatos", buildMetaRows(data, cfg), "Resumen Ejecutivo"],
+      ["KPI_Global", "KPI Global", buildGlobalKpiRows(data), "Indicadores"],
+      ["KPI_Marca", "KPI por Marca", buildBrandKpiRows(data), "Indicadores"],
+      ["Presupuesto_Mes", "Presupuesto Mensual", buildBudgetRows(data), "Presupuesto"],
+      ["IQVIA_Mes", "IQVIA Mensual", buildIqviaMonthlyRows(data), "IQVIA"],
+      ["IQVIA_Acum", "IQVIA Acumulados", buildIqviaAccumRows(data), "IQVIA"],
+      ["IQVIA_Trim", "IQVIA Trimestral", buildIqviaQuarterRows(data), "IQVIA"],
+      ["Recetas_Mes", "Recetas Mensuales", buildRecetasRows(data), "Recetas"],
+      ["Recetas_Trim", "Recetas Trimestrales", buildRecetasQuarterRows(data), "Recetas"],
+      ["Rec_Comp_Mes", "Competidores Recetas", buildRecCompetitorMonthlyRows(data), "Recetas"],
+      ["Rec_Comp_Trim", "Competidores Recetas Trim", buildRecCompetitorQuarterRows(data), "Recetas"],
+      ["Canales", "Canales", buildCanalesRows(data), "Canales y Convenios"],
+      ["Convenios_OS", "Convenios OS", buildConveniosRows(data), "Canales y Convenios"],
+      ["Stock_Mes", "Stock Mensual", buildStockRows(data), "Stock"],
+      ["Stock_Alertas", "Alertas de Stock", buildStockAlertRows(data), "Stock"],
+      ["Stock_Present", "Cobertura por Presentacion", buildStockPresentationRows(data), "Stock"],
+      ["Precios_Comp", "Precios Comparados", buildPriceRows(data), "Precios"]
     ];
 
     sheets.forEach(function (item) {
-      common.appendTableSheet(
+      entries.push(common.appendTableSheet(
         workbook,
         seen,
         item[0],
         "Siegfried | " + context.title + " | " + item[1],
         common.makeSubtitle(context, item[2].length),
-        item[2]
-      );
+        item[2],
+        {
+          group: item[3],
+          label: item[1],
+          description: item[1]
+        }
+      ));
+    });
+
+    common.finalizeWorkbook(workbook, context, entries, {
+      kind: "Dashboard Ejecutivo"
     });
 
     return workbook;
@@ -508,8 +520,8 @@
   function exportWorkbook() {
     var cfg = exportConfig();
     var data = exportData(cfg);
-    if (!root.XLSX || !root.XLSX.utils) {
-      root.alert("No se pudo cargar la libreria de Excel. Recarga la pagina e intenta otra vez.");
+    if (!common || !common.ensureStyledXlsx) {
+      root.alert("No se pudo preparar la exportacion de Excel.");
       return;
     }
     if (!data) {
@@ -518,17 +530,25 @@
     }
 
     common.setButtonState("[data-export-dashboard]", true);
-    root.setTimeout(function () {
-      try {
-        var workbook = buildWorkbookFromConfig(cfg);
-        root.XLSX.writeFile(workbook, workbookFileName(cfg, data));
-      } catch (error) {
+    common.ensureStyledXlsx()
+      .then(function () {
+        root.setTimeout(function () {
+          try {
+            var workbook = buildWorkbookFromConfig(cfg);
+            root.XLSX.writeFile(workbook, workbookFileName(cfg, data));
+          } catch (error) {
+            console.error(error);
+            root.alert("No se pudo generar el Excel del dashboard.");
+          } finally {
+            common.setButtonState("[data-export-dashboard]", false);
+          }
+        }, 0);
+      })
+      .catch(function (error) {
         console.error(error);
-        root.alert("No se pudo generar el Excel del dashboard.");
-      } finally {
+        root.alert("No se pudo cargar la libreria de Excel.");
         common.setButtonState("[data-export-dashboard]", false);
-      }
-    }, 0);
+      });
   }
 
   function mountButton() {

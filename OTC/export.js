@@ -1,6 +1,8 @@
 (function () {
   "use strict";
 
+  var common = window.SfExportCommon || null;
+
   function dashboardData() {
     return window.OTC_DASHBOARD || null;
   }
@@ -631,6 +633,61 @@
     var ddd = regionalData();
     var workbook = XLSX.utils.book_new();
     var seen = new Set();
+    var entries = [];
+    var footer = (dash && dash.meta && dash.meta.footer_date) || (ddd && ddd.meta && ddd.meta.dddCut) || "";
+    var context = {
+      title: "OTC",
+      footer: footer
+    };
+
+    if (common && common.ensureWorkbookChrome) {
+      common.ensureWorkbookChrome(workbook, seen);
+    }
+
+    if (common && common.appendTableSheet) {
+      [
+        ["Meta", "Metadatos", buildMetaRows(dash, ddd), "Resumen Ejecutivo"],
+        ["Resumen", "Resumen", buildSummaryRows(ddd), "Resumen Ejecutivo"],
+        ["KPI_Global", "KPI Global", buildGlobalKpiRows(dash), "Indicadores"],
+        ["KPI_Marca", "KPI por Marca", buildBrandKpiRows(dash), "Indicadores"],
+        ["Presupuesto_Mes", "Presupuesto Mensual", buildBudgetRows(dash), "Presupuesto"],
+        ["Presupuesto_Top", "Presupuesto Top Productos", buildBudgetTopRows(ddd), "Presupuesto"],
+        ["IQVIA_Mes", "IQVIA Mensual", buildIqviaMonthlyRows(dash), "IQVIA"],
+        ["IQVIA_Acum", "IQVIA Acumulados", buildIqviaAccumRows(dash), "IQVIA"],
+        ["IQVIA_Trim", "IQVIA Trimestral", buildIqviaQuarterRows(dash), "IQVIA"],
+        ["Recetas_Mes", "Recetas Mensuales", buildRecetasRows(dash), "Recetas"],
+        ["Recetas_Trim", "Recetas Trimestrales", buildRecetasQuarterRows(dash), "Recetas"],
+        ["Rec_Comp_Mes", "Competidores Recetas", buildRecetasCompetidorRows(dash), "Recetas"],
+        ["Canales", "Canales", buildCanalesRows(dash), "Canales y Convenios"],
+        ["Convenios_OS", "Convenios OS", buildConveniosRows(dash), "Canales y Convenios"],
+        ["Stock_Mes", "Stock Mensual", buildStockRows(dash), "Stock"],
+        ["Stock_Alertas", "Alertas de Stock", buildStockAlertRows(dash), "Stock"],
+        ["Stock_Present", "Cobertura por Presentacion", buildStockPresentRows(dash), "Stock"],
+        ["Precios_Comp", "Precios Comparados", buildPriceRows(dash), "Precios"],
+        ["DDD_Mensual", "DDD Mensual", buildDddMonthlyRows(ddd), "DDD"],
+        ["DDD_Regiones", "DDD Regiones", buildDddRegionRows(ddd), "DDD"],
+        ["DDD_Productos", "DDD Productos", buildDddProductRows(ddd), "DDD"]
+      ].forEach(function (item) {
+        entries.push(common.appendTableSheet(
+          workbook,
+          seen,
+          item[0],
+          "Siegfried | OTC | " + item[1],
+          common.makeSubtitle(context, item[2].length),
+          item[2],
+          {
+            group: item[3],
+            label: item[1],
+            description: item[1]
+          }
+        ));
+      });
+
+      common.finalizeWorkbook(workbook, context, entries, {
+        kind: "Dashboard + DDD OTC"
+      });
+      return workbook;
+    }
 
     appendSheet(workbook, seen, "Meta", buildMetaRows(dash, ddd));
     appendSheet(workbook, seen, "Resumen", buildSummaryRows(ddd));
@@ -658,8 +715,8 @@
   }
 
   window.exportOtcWorkbook = function () {
-    if (!window.XLSX || !window.XLSX.utils) {
-      window.alert("No se pudo cargar la libreria de Excel. Recarga la pagina e intenta otra vez.");
+    if (!common || !common.ensureStyledXlsx) {
+      window.alert("No se pudo preparar la exportacion de Excel.");
       return;
     }
     if (!dashboardData() || !regionalData()) {
@@ -668,17 +725,25 @@
     }
 
     setExportState(true);
-    window.setTimeout(function () {
-      try {
-        var workbook = buildWorkbook();
-        XLSX.writeFile(workbook, workbookFileName(dashboardData()));
-      } catch (error) {
+    common.ensureStyledXlsx()
+      .then(function () {
+        window.setTimeout(function () {
+          try {
+            var workbook = buildWorkbook();
+            XLSX.writeFile(workbook, workbookFileName(dashboardData()));
+          } catch (error) {
+            console.error(error);
+            window.alert("No se pudo generar el Excel de OTC.");
+          } finally {
+            setExportState(false);
+          }
+        }, 0);
+      })
+      .catch(function (error) {
         console.error(error);
-        window.alert("No se pudo generar el Excel de OTC.");
-      } finally {
+        window.alert("No se pudo cargar la libreria de Excel.");
         setExportState(false);
-      }
-    }, 0);
+      });
   };
 
   document.addEventListener("DOMContentLoaded", mountExportButtons);

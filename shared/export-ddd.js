@@ -366,29 +366,41 @@
     var workbook = root.XLSX.utils.book_new();
     var seen = new Set();
     var context = dddContext(cfg, data);
+    var entries = [];
+
+    common.ensureWorkbookChrome(workbook, seen);
 
     var sheets = [
-      ["Resumen", "Resumen DDD", buildOverviewRows(data, cfg)],
-      ["Meta", "Metadatos DDD", buildMetaRows(data, cfg)],
-      ["Mercado_Resumen", "Mercados", buildMarketSummaryRows(data)],
-      ["Mercado_Mes", "Mercados por Mes", buildMarketMonthlyRows(data)],
-      ["Mercado_Trim", "Mercados por Trimestre", buildMarketQuarterRows(data)],
-      ["Marca_Resumen", "Marcas", buildBrandSummaryRows(data)],
-      ["Marca_Mes", "Marcas por Mes", buildBrandMonthlyRows(data)],
-      ["Region_Resumen", "Regiones", buildRegionSummaryRows(data)],
-      ["Region_Mes", "Regiones por Mes", buildRegionMonthlyRows(data)],
-      ["Region_Trim", "Regiones por Trimestre", buildRegionQuarterRows(data)]
+      ["Resumen", "Resumen DDD", buildOverviewRows(data, cfg), "Resumen Regional"],
+      ["Meta", "Metadatos DDD", buildMetaRows(data, cfg), "Resumen Regional"],
+      ["Mercado_Resumen", "Mercados", buildMarketSummaryRows(data), "Mercados"],
+      ["Mercado_Mes", "Mercados por Mes", buildMarketMonthlyRows(data), "Mercados"],
+      ["Mercado_Trim", "Mercados por Trimestre", buildMarketQuarterRows(data), "Mercados"],
+      ["Marca_Resumen", "Marcas", buildBrandSummaryRows(data), "Marcas"],
+      ["Marca_Mes", "Marcas por Mes", buildBrandMonthlyRows(data), "Marcas"],
+      ["Region_Resumen", "Regiones", buildRegionSummaryRows(data), "Regiones"],
+      ["Region_Mes", "Regiones por Mes", buildRegionMonthlyRows(data), "Regiones"],
+      ["Region_Trim", "Regiones por Trimestre", buildRegionQuarterRows(data), "Regiones"]
     ];
 
     sheets.forEach(function (item) {
-      common.appendTableSheet(
+      entries.push(common.appendTableSheet(
         workbook,
         seen,
         item[0],
         "Siegfried | " + context.title + " | " + item[1],
         common.makeSubtitle(context, item[2].length),
-        item[2]
-      );
+        item[2],
+        {
+          group: item[3],
+          label: item[1],
+          description: item[1]
+        }
+      ));
+    });
+
+    common.finalizeWorkbook(workbook, context, entries, {
+      kind: "Vista Regional DDD"
     });
 
     return workbook;
@@ -397,8 +409,8 @@
   function exportWorkbook() {
     var cfg = exportConfig();
     var data = exportData(cfg);
-    if (!root.XLSX || !root.XLSX.utils) {
-      root.alert("No se pudo cargar la libreria de Excel. Recarga la pagina e intenta otra vez.");
+    if (!common || !common.ensureStyledXlsx) {
+      root.alert("No se pudo preparar la exportacion de Excel.");
       return;
     }
     if (!data) {
@@ -407,17 +419,25 @@
     }
 
     common.setButtonState("[data-export-ddd]", true);
-    root.setTimeout(function () {
-      try {
-        var workbook = buildWorkbookFromConfig(cfg);
-        root.XLSX.writeFile(workbook, workbookFileName(cfg, data));
-      } catch (error) {
+    common.ensureStyledXlsx()
+      .then(function () {
+        root.setTimeout(function () {
+          try {
+            var workbook = buildWorkbookFromConfig(cfg);
+            root.XLSX.writeFile(workbook, workbookFileName(cfg, data));
+          } catch (error) {
+            console.error(error);
+            root.alert("No se pudo generar el Excel regional.");
+          } finally {
+            common.setButtonState("[data-export-ddd]", false);
+          }
+        }, 0);
+      })
+      .catch(function (error) {
         console.error(error);
-        root.alert("No se pudo generar el Excel regional.");
-      } finally {
+        root.alert("No se pudo cargar la libreria de Excel.");
         common.setButtonState("[data-export-ddd]", false);
-      }
-    }, 0);
+      });
   }
 
   function mountButton() {
