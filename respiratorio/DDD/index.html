@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Siegfried · DDD + Mapa · Respiratorio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="../../shared/export-common.js"></script>
+<style>
+:root{
+  --bg:#F5F5F5;--surf:#FFF;--bd:#E5E5E5;--bd2:#D4D4D4;
+  --t1:#1A1A1A;--t2:#525252;--t3:#737373;--t4:#A3A3A3;
+  --sie:#7A1518;--sie2:#9B1B1E;--sie-lt:#FEF2F2;
+  --green:#16A34A;--green-bg:#F0FDF4;--red:#DC2626;--red-bg:#FEF2F2;
+  --blue:#2563EB;--blue-bg:#EFF6FF;--purple:#7C3AED;--purple-bg:#F5F3FF;
+  --amber:#D97706;--r:12px;--r2:8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:13px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+
+/* NAVBAR */
+.navbar{background:white;display:flex;align-items:center;height:48px;padding:0 28px;border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:200}
+.nav-brand{color:var(--sie);font-size:13px;font-weight:800;letter-spacing:2px;margin-right:24px;display:flex;align-items:center;gap:7px}
+.nav-brand .dot{width:7px;height:7px;border-radius:50%;background:var(--sie)}
+.nav-tabs{display:flex;align-items:center;height:100%;gap:0}
+.nav-tab{color:var(--t2);font-size:12px;font-weight:500;padding:0 14px;height:100%;display:flex;align-items:center;cursor:default;text-decoration:none;border-bottom:2px solid transparent;transition:all .15s}
+.nav-tab:hover{color:var(--t1)}
+.nav-tab.ul{color:var(--t1);font-weight:600;border-bottom-color:var(--t1)}
+.nav-tab.hl{background:var(--t1);color:white;font-weight:700;border-radius:6px;height:32px;margin:auto 4px;padding:0 14px;border-bottom:none}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.nav-logo{width:36px;height:36px;background:var(--sie);border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.nav-logo span{color:white;font-weight:900;font-size:12px;letter-spacing:-.5px}
+.nav-hub{font-size:12px;font-weight:500;color:var(--t2);text-decoration:none;display:flex;align-items:center;gap:4px;cursor:default}
+.nav-hub:hover{color:var(--t1)}
+
+/* HERO */
+.hero{background:white;border-bottom:1px solid var(--bd);padding:28px 40px 24px}
+.hero-bread{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:6px}
+.hero-bread span{color:var(--sie)}
+.hero h1{font-size:26px;font-weight:800;color:var(--t1);letter-spacing:-.5px;margin-bottom:5px}
+.hero-sub{font-size:11.5px;color:var(--t3)}
+
+/* GLOBAL FILTER BAR */
+.gf{background:white;border-bottom:1px solid var(--bd);padding:12px 40px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:48px;z-index:150;box-shadow:0 2px 6px rgba(0,0,0,.03)}
+.gfg{display:flex;align-items:center;gap:8px}
+.gfl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t4);white-space:nowrap}
+.mbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.mc{padding:5px 13px;border-radius:5px;font-size:11px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .15s;border:1px solid var(--bd);background:white}
+.mc:hover{border-color:var(--sie);color:var(--sie)}
+.mc.a{background:var(--sie);color:white;border-color:var(--sie);font-weight:700}
+
+/* Region multi-select dropdown */
+.reg-wrap{position:relative}
+.reg-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--bd);font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;color:var(--t2);background:white;cursor:pointer;display:flex;align-items:center;gap:6px;min-width:200px;user-select:none}
+.reg-btn:hover{border-color:var(--sie)}
+.reg-btn .arr{margin-left:auto;font-size:9px;color:var(--t4)}
+.reg-dd{position:absolute;top:calc(100% + 4px);left:0;background:white;border:1px solid var(--bd);border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.12);z-index:300;width:280px;max-height:360px;display:none;flex-direction:column}
+.reg-dd.open{display:flex}
+.reg-search{padding:10px 12px;border-bottom:1px solid var(--bd)}
+.reg-search input{width:100%;padding:6px 10px;border:1px solid var(--bd);border-radius:5px;font-family:'Inter',sans-serif;font-size:11.5px;outline:none}
+.reg-search input:focus{border-color:var(--sie)}
+.reg-list{overflow-y:auto;flex:1;max-height:280px}
+.reg-list::-webkit-scrollbar{width:4px}.reg-list::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+.reg-opt{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;font-size:11.5px;transition:background .1s}
+.reg-opt:hover{background:#FAFAFA}
+.reg-opt.sel{background:var(--sie-lt);font-weight:600;color:var(--sie)}
+.reg-chk{width:14px;height:14px;border:1.5px solid var(--bd2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;color:white;flex-shrink:0}
+.reg-opt.sel .reg-chk{background:var(--sie);border-color:var(--sie)}
+.reg-actions{padding:8px 12px;border-top:1px solid var(--bd);display:flex;gap:8px}
+.reg-abtn{padding:4px 10px;border-radius:4px;font-size:10.5px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif}
+.reg-abtn.all{background:var(--sie-lt);color:var(--sie)}.reg-abtn.all:hover{background:#FEE2E2}
+.reg-abtn.clr{background:#F5F5F5;color:var(--t3)}.reg-abtn.clr:hover{background:#E5E5E5}
+
+/* Region chips */
+.rtags{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rtag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:14px;background:var(--sie-lt);border:1px solid #FECACA;font-size:10.5px;font-weight:600;color:var(--sie)}
+.rtag .x{cursor:pointer;font-size:12px;opacity:.6}.rtag .x:hover{opacity:1}
+
+.main{max-width:1400px;margin:0 auto;padding:20px 40px 60px}
+
+/* KPIs */
+.kr{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kc{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:16px 18px;position:relative}
+.kc::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:2px;border-radius:1px}
+.kc.c1::after{background:var(--sie)}.kc.c2::after{background:var(--blue)}.kc.c3::after{background:var(--green)}.kc.c4::after{background:var(--purple)}
+.kh{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--t4);margin-bottom:6px}
+.kv{font-size:28px;font-weight:800;letter-spacing:-1.5px;line-height:1;margin-bottom:5px;font-variant-numeric:tabular-nums}
+.kv.red{color:var(--sie)}.kv.blue{color:var(--blue)}.kv.green{color:var(--green)}.kv.purple{color:var(--purple)}
+.kd{font-size:10.5px;color:var(--t3);line-height:1.4}
+
+/* BRAND FILTER */
+.fb{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:16px 20px;margin-bottom:20px}
+.fbt{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.fbtl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t3)}
+.fbtl span{color:var(--t4);font-weight:400;text-transform:none;letter-spacing:0;margin-left:6px;font-size:10.5px}
+.fcl{font-size:11px;color:var(--red);font-weight:600;cursor:pointer;padding:3px 10px;border:1px solid #FECACA;border-radius:5px;background:var(--red-bg)}
+.fcl:hover{background:#FEE2E2}
+.fcs{display:flex;flex-wrap:wrap;gap:6px}
+.bc{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:18px;font-size:11.5px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .15s;border:1px solid var(--bd);background:white}
+.bc:hover{border-color:var(--sie);color:var(--sie)}
+.bc.a{border-color:var(--sie);color:var(--sie);background:var(--sie-lt);font-weight:600}
+.bc .d{width:6px;height:6px;border-radius:50%}
+
+/* CARDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.g1{margin-bottom:20px}
+.cd{background:white;border:1px solid var(--bd);border-radius:var(--r);padding:20px 22px}
+.cdh{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.cn{width:22px;height:22px;border-radius:50%;background:var(--sie);color:white;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800}
+.ctt{font-size:14px;font-weight:700;color:var(--t1)}
+.csu{font-size:10.5px;color:var(--t3);margin-bottom:12px}
+.cw{position:relative;height:250px}.cw.tall{height:320px}
+
+/* COMP TABLE */
+.chd{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ccd{background:white;border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.cpe{padding:12px 20px 6px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--sie)}
+.ct2{width:100%;border-collapse:collapse}
+.ct2 th{padding:7px 18px;text-align:left;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--t4);border-bottom:1px solid var(--bd)}
+.ct2 th.r{text-align:right}
+.ct2 tbody tr{border-bottom:1px solid #F5F5F5;transition:background .1s}
+.ct2 tbody tr:last-child{border-bottom:none}
+.ct2 tbody tr:hover{background:#FAFAFA}
+.ct2 td{padding:10px 18px;font-size:12px}
+.ct2 td.r{text-align:right}
+.cbb{display:flex;align-items:center;gap:7px;font-weight:600}
+.cbb .cl{width:3px;height:18px;border-radius:2px}
+.cbb .cl.s{background:var(--sie)}.cbb .cl.o{background:transparent}
+.st{display:inline-block;padding:1px 6px;border-radius:3px;background:var(--sie);color:white;font-size:8.5px;font-weight:700}
+.mn{font-variant-numeric:tabular-nums;font-weight:600;font-size:12px}
+.shs{width:26%}
+.sb{height:5px;background:#F0F0F0;border-radius:3px;overflow:hidden}
+.sf{height:100%;border-radius:3px;transition:width .5s}
+.sf.s{background:var(--sie)}.sf.o{background:#A3A3A3}
+.un{font-variant-numeric:tabular-nums;font-size:11.5px;color:var(--t2)}
+.vb{display:inline-flex;padding:2px 7px;border-radius:7px;font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.vb.p{background:var(--green-bg);color:var(--green)}.vb.n{background:var(--red-bg);color:var(--red)}.vb.z{background:#F5F5F5;color:var(--t3)}
+
+/* REGION TABLE */
+.tw{max-height:500px;overflow-y:auto;border-radius:var(--r2);border:1px solid var(--bd)}
+.tw::-webkit-scrollbar{width:4px}.tw::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+.rt2{width:100%;border-collapse:collapse;font-size:11.5px}
+.rt2 thead{position:sticky;top:0;z-index:2}
+.rt2 thead th{background:var(--sie);color:white;padding:9px 14px;text-align:left;font-weight:600;font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;cursor:pointer;user-select:none}
+.rt2 thead th:hover{background:var(--sie2)}
+.rt2 tbody tr{border-bottom:1px solid #F0F0F0;transition:background .1s;cursor:pointer}
+.rt2 tbody tr:hover{background:#FAFAFA}
+.rt2 tbody td{padding:8px 14px}
+.mbc{display:flex;align-items:center;gap:7px}
+.mmb{height:4px;border-radius:2px;min-width:2px;transition:width .5s}
+.mmb.hi{background:var(--sie)}.mmb.lo{background:var(--bd)}
+.mv{font-variant-numeric:tabular-nums;font-weight:600;font-size:11px;min-width:40px}
+.uv{font-variant-numeric:tabular-nums;font-size:11px;color:var(--t2)}
+.rk{font-variant-numeric:tabular-nums;font-weight:700;color:var(--t4);font-size:10.5px}
+.badge{display:inline-flex;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:600}
+.badge.up{background:var(--green-bg);color:var(--green)}.badge.down{background:var(--red-bg);color:var(--red)}
+
+@media(max-width:1100px){.kr{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}.main,.hero,.gf{padding-left:16px;padding-right:16px}}
+@media(max-width:640px){.kr{grid-template-columns:1fr}.mc{font-size:10px;padding:4px 8px}}
+
+/* ── Sección mapa ─────────────────────────────────────────────── */
+.map-charts{display:grid;grid-template-columns:270px 600px;gap:20px;
+  align-items:start;padding:0 8%;margin-bottom:24px}
+@media(max-width:700px){.map-charts{grid-template-columns:1fr;padding:0 4%}}
+.map-card,.scatter-card{background:white;border:1px solid #e5e7eb;
+  border-radius:10px;padding:12px}
+.map-tbl-wrap{padding:0 2%}
+#mapa-svg,#scatter-svg{width:100%;height:auto;display:block}
+.map-legend-wrap{display:flex;align-items:center;gap:6px;margin-top:8px;padding:0 2px}
+.map-legend-label{font-size:10px;color:#6b7280;font-weight:500}
+.map-legend-bar{flex:1;height:7px;border-radius:3px;
+  background:linear-gradient(to right,#cbd5e1,#1e3a5f,#7A1518)}
+.scatter-legend{display:flex;align-items:center;gap:14px;margin-top:6px;
+  font-size:10px;color:#9ca3af;padding:0 2px}
+.scatter-legend span{display:flex;align-items:center;gap:5px}
+/* ── Tabla ─────────────────────────────────────────────────────── */
+.zt-wrap{overflow:auto}
+.zt{width:100%;border-collapse:collapse;font-size:12px}
+.zt thead th{padding:8px 10px;text-align:left;color:#737373;font-weight:500;
+  border-bottom:2px solid #e5e5e5;white-space:nowrap;cursor:pointer;user-select:none;
+  position:sticky;top:0;background:white;z-index:1}
+.zt thead th:hover{color:#1a1a1a}
+.zt thead th.sort-asc::after{content:' ↑';color:#7A1518;font-size:10px}
+.zt thead th.sort-desc::after{content:' ↓';color:#7A1518;font-size:10px}
+.zt thead th.sort-none::after{content:' ↕';color:#d4d4d4;font-size:10px}
+.zt tbody td{padding:5px 10px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+.zt tbody tr{cursor:pointer;transition:background .1s}
+.zt tbody tr:hover td{background:#fafafa}
+.zt tbody tr.act td{background:#FEF2F2}
+.zt tbody tr.act td:first-child{border-left:3px solid #7A1518}
+.ms-bar-wrap{display:flex;align-items:center;gap:6px}
+.ms-bar-bg{flex:1;height:6px;background:#f0f0f0;border-radius:3px;min-width:50px}
+.ms-bar-fill{height:6px;border-radius:3px;background:#7A1518;transition:width .3s}
+.zt-num{color:#a3a3a3;font-size:11px;width:20px}
+.zt-zone{font-weight:500;color:#1a1a1a}
+.zt-ms{font-weight:700;color:#7A1518;text-align:right;white-space:nowrap}
+.zt-diff{text-align:right;font-size:11px;white-space:nowrap}
+.zt-units{text-align:right;color:#525252;white-space:nowrap}
+.dot-leg{display:inline-block;width:10px;height:10px;border-radius:50%;
+  background:#7A1518;vertical-align:middle;margin-right:4px}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand"><span class="dot"></span>SIEGFRIED</div>
+  <div class="nav-tabs">
+    <a class="nav-tab ul" href="../">Resumen</a><a class="nav-tab" href="../#s-bud">Venta Interna</a><a class="nav-tab" href="../#s-perf">Mercado IQVIA</a>
+    <a class="nav-tab" href="../#s-rec">Recetas</a><a class="nav-tab" href="../#s-stock">Stock</a><a class="nav-tab" href="../#s-cover">Cobertura</a>
+    <a class="nav-tab" href="../#s-can">Mostrador vs Convenios</a><a class="nav-tab" href="../#s-conv">Convenios</a><a class="nav-tab" href="../#s-prec">Precios</a>
+    <a class="nav-tab hl" href="./">DDD</a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-hub" href="../../">← Hub</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bread"><span>SIEGFRIED</span> · RESPIRATORIO · INTELIGENCIA DE MERCADOS</div>
+  <h1>DDD · Línea Respiratoria</h1>
+  <div class="hero-sub">Market Share por Región · Producto · Competencia · IQVIA Respiratorio</div>
+</div>
+
+<div class="gf" id="gf">
+  <div class="gfg"><span class="gfl">Mercado:</span><div class="mbar" id="mbar"></div></div>
+  <div class="gfg"><span class="gfl">Comparación:</span><div class="mbar" id="cmpBar"></div></div>
+  <div class="gfg"><span class="gfl">Segmento:</span><div class="mbar" id="segBar"></div></div>
+  <div class="gfg">
+    <span class="gfl">Región:</span>
+    <div class="reg-wrap" id="regWrap">
+      <div class="reg-btn" id="regBtn" onclick="toggleDD()">
+        <span id="regBtnText">🇦🇷 Nacional (todas)</span>
+        <span class="arr">▼</span>
+      </div>
+      <div class="reg-dd" id="regDD">
+        <div class="reg-search"><input type="text" placeholder="Buscar región..." id="regQ" oninput="filterRegs()"></div>
+        <div class="reg-list" id="regList"></div>
+        <div class="reg-actions">
+          <button class="reg-abtn all" onclick="selTop7()">Top 7</button>
+          <button class="reg-abtn clr" onclick="clrRegs()">Limpiar todo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rtags" id="rtags"></div>
+</div>
+
+<div class="main">
+  <div class="kr" id="kr"></div>
+
+  <div class="fb" id="fb">
+    <div class="fbt">
+      <div class="fbtl">FILTRO GLOBAL · PRODUCTO <span>Selecciona un competidor para compararlo vs Siegfried</span></div>
+      <div class="fcl" id="fcl" onclick="clrB()">✕ Limpiar filtro</div>
+    </div>
+    <div class="fcs" id="fcs"></div>
+  </div>
+
+  <div class="g2">
+    <div class="cd"><div class="cdh"><div class="cn">01</div><div class="ctt">Evolución Mensual MS%</div></div>
+      <div class="csu" id="s1">Siegfried</div><div class="cw"><canvas id="c1"></canvas></div></div>
+    <div class="cd"><div class="cdh"><div class="cn">02</div><div class="ctt">MS% Mensual · Competidores</div></div>
+      <div class="csu" id="s2">Top competidores</div><div class="cw"><canvas id="c2"></canvas></div></div>
+  </div>
+
+  <div class="g1"><div class="cd">
+    <div class="cdh"><div class="cn">03</div><div class="ctt">Evolución Trimestral MS% por Región</div></div>
+    <div class="csu" id="s3">Seleccioná regiones para comparar</div>
+    <div class="cw tall"><canvas id="c3"></canvas></div>
+  </div></div>
+
+  <div class="chd"><div class="cn">04</div><div class="ctt" style="font-size:16px">Competidores en Provincia</div></div>
+  <div class="ccd">
+    <div class="cpe" id="cpe"></div>
+    <table class="ct2"><thead><tr><th style="width:3%"></th><th>Producto</th><th class="r">MS%</th><th class="shs">Share</th><th class="r">Unidades</th><th class="r">Var MoM</th></tr></thead>
+    <tbody id="cbo"></tbody></table>
+  </div>
+
+  <div class="cd">
+    <div class="cdh"><div class="cn">05</div><div class="ctt">Market Share por Región</div></div>
+    <div class="csu">42 regiones · Click en fila para agregar al filtro</div>
+    <div class="tw" id="tw"></div>
+  </div>
+</div>
+
+
+  <div class="g1"><div class="cd">
+    <div class="cdh">
+      <div class="cn">06</div>
+      <div class="ctt">Market Share por Zona · Mapa + Scatter</div>
+    </div>
+    <div class="csu" id="s6">MS% Siegfried · 2025</div>
+
+    <div class="map-charts">
+
+      <!-- Bubble Map ───────────────── -->
+      <div class="map-card">
+        <svg id="mapa-svg" viewBox="0 0 300 560" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="fshadow">
+              <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#00000025"/>
+            </filter>
+            <filter id="fglow">
+              <feGaussianBlur stdDeviation="2.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect width="300" height="560" fill="white" rx="4"/>
+          <g id="prov-layer"></g>
+          <g id="bub-layer"></g>
+          <g id="map-tip" visibility="hidden">
+            <rect id="mt-bg" rx="5" fill="white" stroke="#e5e7eb" stroke-width="1"
+                  filter="url(#fshadow)"/>
+            <text id="mt-t1" font-size="9" font-weight="700" fill="#111827" x="9" y="14"></text>
+            <text id="mt-t2" font-size="8.5" font-weight="600" fill="#7A1518" x="9" y="25"></text>
+            <text id="mt-t3" font-size="7.5" fill="#6b7280" x="9" y="35"></text>
+            <text id="mt-t4" font-size="7.5" fill="#6b7280" x="9" y="44"></text>
+          </g>
+        </svg>
+        <div class="map-legend-wrap">
+          <span class="map-legend-label">0%</span>
+          <div class="map-legend-bar"></div>
+          <span class="map-legend-label" id="map-leg-max">—</span>
+        </div>
+        <div class="scatter-legend" style="margin-top:6px">
+          <span>Tamaño ∝ volumen mercado</span>
+        </div>
+      </div>
+
+      <!-- Scatter Plot ──────────────── -->
+      <div class="scatter-card">
+        <svg id="scatter-svg" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="320" fill="white" rx="4"/>
+          <g id="scatter-g"></g>
+          <g id="sc-tip" visibility="hidden">
+            <rect id="st-bg" rx="5" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+            <text id="st-t1" font-size="9" font-weight="700" fill="#111827" x="9" y="14"></text>
+            <text id="st-t2" font-size="8.5" font-weight="600" fill="#7A1518" x="9" y="25"></text>
+            <text id="st-t3" font-size="7.5" fill="#6b7280" x="9" y="35"></text>
+            <text id="st-t4" font-size="7.5" fill="#6b7280" x="9" y="44"></text>
+          </g>
+        </svg>
+        <div class="scatter-legend">
+          <span>— — Promedio nacional</span>
+          <span style="margin-left:auto;color:#475569">X: escala logarítmica</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tabla separada de los gráficos -->
+    <div class="map-tbl-wrap">
+      <div class="zt-wrap">
+        <table class="zt">
+          <thead>
+            <tr>
+              <th class="sort-none" data-col="rank"  onclick="sortZT(this)">#</th>
+              <th class="sort-none" data-col="zone"  onclick="sortZT(this)">Zona</th>
+              <th class="sort-desc" data-col="ms"    onclick="sortZT(this)">MS%</th>
+              <th class="sort-none" data-col="diff"  onclick="sortZT(this)">vs Nac.</th>
+              <th class="sort-none" data-col="sie"   onclick="sortZT(this)">U. SIE</th>
+              <th class="sort-none" data-col="total" onclick="sortZT(this)">U. Mkt</th>
+            </tr>
+          </thead>
+          <tbody id="zona-tbl-mapa"></tbody>
+        </table>
+      </div>
+    </div>
+  </div></div>
+
+<script src="../data.js"></script>
+<script src="../export.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
+
