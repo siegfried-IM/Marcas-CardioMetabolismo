@@ -1320,12 +1320,32 @@ foreach ($rowSet in @(
 
   for ($r = 2; $r -le $matrix.GetLength(0); $r++) {
     $family = Normalize-Text $matrix[$r, 3]
-    $os = Normalize-Text $matrix[$r, 4]
-    if (-not $family -or -not $os) {
+    $osPrimary = Normalize-Text $matrix[$r, 4]
+    $osSecondary = Normalize-Text $matrix[$r, 5]
+    $product = Normalize-Text $matrix[$r, 6]
+    if (-not $family) {
       continue
     }
 
-    $units = To-Number $matrix[$r, 5]
+    # The convenios base has one rollup row per OS and then product detail rows.
+    # We only want the OS-level rollup, otherwise totals get duplicated.
+    if ($product -and $product -ne 'Totales') {
+      continue
+    }
+
+    $os = ''
+    if ($osSecondary -and $osSecondary -ne 'Totales') {
+      $os = $osSecondary
+    }
+    elseif ($osPrimary -and $osPrimary -ne 'Totales') {
+      $os = $osPrimary
+    }
+
+    if (-not $os) {
+      continue
+    }
+
+    $units = To-Number $matrix[$r, 7]
     foreach ($bucket in @($family, 'Totales')) {
       if (-not $osAggregate.ContainsKey($bucket)) {
         $osAggregate[$bucket] = @{}
@@ -1954,8 +1974,12 @@ foreach ($family in $dashboardFamilyOrder) {
     }
   }
 
-  $pmProductMatLookup[$family] = @{}
-  $molAll = Convert-PerfBucket -Bucket $perfBuckets.molecule.all -SieProducts $cfg.sieProducts -Family $family -MonthlyKeys $pmMonthlyKeys -YtdKeys $pmYtdKeys -MatKeys $pmMatKeys -QuarterKeys $pmQuarterKeys -CurrentMatKey $pmCurrentMatKey -CurrentYtdKey $pmCurrentYtdKey -ProductMatLookup $pmProductMatLookup[$family]
+  $pmProductMatLookup[$family] = @{
+    molecule = @{}
+    atc = @{}
+  }
+  $molAll = Convert-PerfBucket -Bucket $perfBuckets.molecule.all -SieProducts $cfg.sieProducts -Family $family -MonthlyKeys $pmMonthlyKeys -YtdKeys $pmYtdKeys -MatKeys $pmMatKeys -QuarterKeys $pmQuarterKeys -CurrentMatKey $pmCurrentMatKey -CurrentYtdKey $pmCurrentYtdKey -ProductMatLookup $pmProductMatLookup[$family].molecule
+  $atcAll = Convert-PerfBucket -Bucket $perfBuckets.atc.all -SieProducts $cfg.sieProducts -Family $family -MonthlyKeys $pmMonthlyKeys -YtdKeys $pmYtdKeys -MatKeys $pmMatKeys -QuarterKeys $pmQuarterKeys -CurrentMatKey $pmCurrentMatKey -CurrentYtdKey $pmCurrentYtdKey -ProductMatLookup $pmProductMatLookup[$family].atc
   $respPerf[$family] = [ordered]@{
     molecule = [ordered]@{
       all = $molAll
@@ -1963,7 +1987,7 @@ foreach ($family in $dashboardFamilyOrder) {
       popular = (Convert-PerfBucket -Bucket $perfBuckets.molecule.popular -SieProducts $cfg.sieProducts -Family $family -MonthlyKeys $pmMonthlyKeys -YtdKeys $pmYtdKeys -MatKeys $pmMatKeys -QuarterKeys $pmQuarterKeys -CurrentMatKey $pmCurrentMatKey -CurrentYtdKey $pmCurrentYtdKey -ProductMatLookup $null)
     }
     atc = [ordered]@{
-      all = (Convert-PerfBucket -Bucket $perfBuckets.atc.all -SieProducts $cfg.sieProducts -Family $family -MonthlyKeys $pmMonthlyKeys -YtdKeys $pmYtdKeys -MatKeys $pmMatKeys -QuarterKeys $pmQuarterKeys -CurrentMatKey $pmCurrentMatKey -CurrentYtdKey $pmCurrentYtdKey -ProductMatLookup $null)
+      all = $atcAll
       etico = (Convert-PerfBucket -Bucket $perfBuckets.atc.etico -SieProducts $cfg.sieProducts -Family $family -MonthlyKeys $pmMonthlyKeys -YtdKeys $pmYtdKeys -MatKeys $pmMatKeys -QuarterKeys $pmQuarterKeys -CurrentMatKey $pmCurrentMatKey -CurrentYtdKey $pmCurrentYtdKey -ProductMatLookup $null)
       popular = (Convert-PerfBucket -Bucket $perfBuckets.atc.popular -SieProducts $cfg.sieProducts -Family $family -MonthlyKeys $pmMonthlyKeys -YtdKeys $pmYtdKeys -MatKeys $pmMatKeys -QuarterKeys $pmQuarterKeys -CurrentMatKey $pmCurrentMatKey -CurrentYtdKey $pmCurrentYtdKey -ProductMatLookup $null)
     }
@@ -2397,13 +2421,22 @@ $priceCurrLabel = Normalize-Text $priceMatrix[1, 14]
 $dashboardPrices = [ordered]@{}
 $precIqvia = [ordered]@{}
 foreach ($family in $dashboardFamilyOrder) {
-  $dashboardPrices[$family] = [ordered]@{}
-  $precIqvia[$family] = [ordered]@{}
+  $dashboardPrices[$family] = [ordered]@{
+    molecule = [ordered]@{}
+    atc = [ordered]@{}
+  }
+  $precIqvia[$family] = [ordered]@{
+    molecule = [ordered]@{}
+    atc = [ordered]@{}
+  }
   if (-not $pmProductMatLookup.ContainsKey($family)) {
     continue
   }
 
-  $allowedProducts = $pmProductMatLookup[$family]
+  $allowedByMode = @{
+    molecule = if ($pmProductMatLookup[$family].ContainsKey('molecule')) { $pmProductMatLookup[$family].molecule } else { @{} }
+    atc = if ($pmProductMatLookup[$family].ContainsKey('atc')) { $pmProductMatLookup[$family].atc } else { @{} }
+  }
   for ($r = 2; $r -le $priceMatrix.GetLength(0); $r++) {
     $productName = Normalize-Text $priceMatrix[$r, 3]
     $presentation = Normalize-Text $priceMatrix[$r, 4]
@@ -2413,32 +2446,40 @@ foreach ($family in $dashboardFamilyOrder) {
     }
 
     $normPriceKey = Normalize-ProductKey $productName
-    $matchedKey = ''
-    foreach ($candidate in $allowedProducts.Keys) {
-      if (Test-NormalizedProductMatch -Left $candidate -Right $normPriceKey) {
-        $matchedKey = $candidate
-        break
+
+    foreach ($compareMode in @('molecule', 'atc')) {
+      $allowedProducts = $allowedByMode[$compareMode]
+      if (-not $allowedProducts -or $allowedProducts.Keys.Count -eq 0) {
+        continue
       }
-    }
-    if (-not $matchedKey) {
-      continue
-    }
 
-    if (-not $dashboardPrices[$family].Contains($presentation)) {
-      $dashboardPrices[$family].Add($presentation, @())
-    }
+      $matchedKey = ''
+      foreach ($candidate in $allowedProducts.Keys) {
+        if (Test-NormalizedProductMatch -Left $candidate -Right $normPriceKey) {
+          $matchedKey = $candidate
+          break
+        }
+      }
+      if (-not $matchedKey) {
+        continue
+      }
 
-    if (-not $precIqvia[$family].Contains($productName.ToUpper())) {
-      $precIqvia[$family].Add($productName.ToUpper(), $allowedProducts[$matchedKey])
-    }
+      if (-not $dashboardPrices[$family][$compareMode].Contains($presentation)) {
+        $dashboardPrices[$family][$compareMode].Add($presentation, @())
+      }
 
-    $dashboardPrices[$family][$presentation] += [ordered]@{
-      lab = $lab
-      prod = $productName
-      is_sie = $lab.ToUpper().Contains('SIEGFRIED')
-      pvp_dic25 = Round-Number (To-Number $priceMatrix[$r, 13]) 2
-      pvp_feb26 = Round-Number (To-Number $priceMatrix[$r, 14]) 2
-      var = if ((To-Number $priceMatrix[$r, 15]) -ne 0) { (To-Number $priceMatrix[$r, 15]) / 100 } else { 0.0 }
+      if (-not $precIqvia[$family][$compareMode].Contains($productName.ToUpper())) {
+        $precIqvia[$family][$compareMode].Add($productName.ToUpper(), $allowedProducts[$matchedKey])
+      }
+
+      $dashboardPrices[$family][$compareMode][$presentation] += [ordered]@{
+        lab = $lab
+        prod = $productName
+        is_sie = $lab.ToUpper().Contains('SIEGFRIED')
+        pvp_dic25 = Round-Number (To-Number $priceMatrix[$r, 13]) 2
+        pvp_feb26 = Round-Number (To-Number $priceMatrix[$r, 14]) 2
+        var = if ((To-Number $priceMatrix[$r, 15]) -ne 0) { (To-Number $priceMatrix[$r, 15]) / 100 } else { 0.0 }
+      }
     }
   }
 }
@@ -2511,6 +2552,7 @@ $dashboardMeta = [ordered]@{
   canales_label = '2025 vs 2024'
   price_prev_label = $pricePrevLabel
   price_curr_label = $priceCurrLabel
+  has_budget = [bool]$budgetPath
   footer_date = '06/04/2026'
 }
 

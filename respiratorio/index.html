@@ -422,6 +422,10 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
     <p class="sec-sub" id="price-copy">PVP vigente vs corte previo · Misma familia y presentación · SIE destacado</p>
     <div class="card">
       <div class="pill-group" id="prec-pills" style="margin-bottom:14px;"></div>
+      <div class="seg-ctrl" id="prec-compare-ctrl" style="margin:0 0 14px 0;">
+        <button class="seg on" data-v="molecule">Molécula</button>
+        <button class="seg" data-v="atc">ATC</button>
+      </div>
       <div class="prec-dose-pills" id="prec-dose-pills"></div>
       <div id="prec-content"></div>
     </div>
@@ -628,7 +632,7 @@ function applyMetaLabels(){
   if(matBtn) matBtn.textContent = mat;
   if(budCopy) budCopy.textContent = `Unidades mensuales: venta interna Siegfried vs presupuesto planificado · 2025 cierre · 2026 disponible a ${budgetCut}`;
   if(convCopy) convCopy.textContent = `Top obras sociales por familia · ${currYear} año cerrado vs ${prevYear} año cerrado`;
-  if(priceCopy) priceCopy.textContent = `${pricePrev} vs ${priceCurr} · Misma familia y presentación · SIE destacado`;
+  if(priceCopy) priceCopy.textContent = `${pricePrev} vs ${priceCurr} · Comparativa configurable por molécula o ATC · SIE destacado`;
   if(footer) footer.textContent = footerDate;
 }
 
@@ -682,7 +686,7 @@ function setGlobalFilter(brand){
   if(m.conv && D.convenios[m.conv]){ cvProd=m.conv; renderConvPills(); renderConv(); }
 
   // Precios
-  if(m.prec && D.precios[m.prec]){ prProd=m.prec; prDose=null; renderPrecPills(); renderPrecDoses(); renderPrec(); }
+  if(m.prec && D.precios[m.prec]){ prProd=m.prec; prDose=null; renderPrecPills(); renderPrecCompareCtrl(); renderPrecDoses(); renderPrec(); }
   // Stock
   if(m.canal && D.stock[m.canal]){ stProd=m.canal; renderStockPills(); renderStockYr(); renderStock(); }
   renderBrandKpis();
@@ -809,6 +813,21 @@ function renderBudget(){
   const src = D.budget[bProd]?.[bYear]||{};
   const budget = src.budget||[];
   let real   = src.real||[];
+  const noteEl=document.getElementById('bud-iqvia-note');
+  const hasVisibleData = [...budget, ...real].some(v=>v!=null && Number(v)!==0);
+  if(META.has_budget===false && !hasVisibleData){
+    if(bChart){ bChart.destroy(); bChart = null; }
+    clearCanvas('budChart');
+    if(noteEl){
+      noteEl.textContent = 'No hay archivo de presupuesto cargado para Respiratorio en los inputs mensuales.';
+      noteEl.style.display = 'block';
+    }
+    document.getElementById('bud-meter').innerHTML = `
+      <div style="padding:18px 0;color:#4b5563;font-size:12px;line-height:1.5;">
+        Falta la base de presupuesto de Respiratorio. Cuando se cargue ese archivo en la carpeta mensual, este bloque se completa automáticamente.
+      </div>`;
+    return;
+  }
   // 2026: if real is all-null, derive from IQVIA mol_perf
   if(bYear==='2026' && !real.some(v=>v!=null)){
     const iqvArr = getIQVIAReal2026(bProd);
@@ -846,8 +865,10 @@ function renderBudget(){
   });
 
   const maxB = Math.max(...budget.filter(Boolean),1);
-  const noteEl=document.getElementById('bud-iqvia-note');
   if(noteEl) noteEl.style.display=isIQVIADerived?'block':'none';
+  if(noteEl && isIQVIADerived){
+    noteEl.textContent = 'Real derivado de IQVIA PM · dato SAP no disponible';
+  }
   document.getElementById('bud-meter').innerHTML = MESES.map((m,i)=>{
     const b=budget[i],r=real[i];
     const pct=(b&&r)?Math.round(r/b*100):null;
@@ -1413,8 +1434,35 @@ function renderConv(){
 
 
 // ── PRECIOS CON COMPETIDORES ────────────────────────────────────────
-let prProd=(D.defaults?.brand||Object.keys(D.precios)[0]), prDose=null;
+let prProd=(D.defaults?.brand||Object.keys(D.precios)[0]), prDose=null, prCompare='molecule';
 const PREC_PRODS=Object.keys(D.precios).sort();
+
+function getPriceGroups(prod=prProd, compare=prCompare){
+  const source = D.precios?.[prod] || {};
+  const hasModes = source && typeof source === 'object' && !Array.isArray(source) && (
+    (source.molecule && typeof source.molecule === 'object') ||
+    (source.atc && typeof source.atc === 'object')
+  );
+  return hasModes ? (source[compare] || source.molecule || {}) : source;
+}
+
+function getPriceIqvia(prod=prProd, compare=prCompare){
+  const source = D.prec_iqvia?.[prod] || {};
+  const hasModes = source && typeof source === 'object' && !Array.isArray(source) && (
+    (source.molecule && typeof source.molecule === 'object') ||
+    (source.atc && typeof source.atc === 'object')
+  );
+  return hasModes ? (source[compare] || source.molecule || {}) : source;
+}
+
+function renderPrecCompareCtrl(){
+  const host = document.getElementById('prec-compare-ctrl');
+  if(!host) return;
+  host.querySelectorAll('.seg').forEach(b=>{
+    b.classList.toggle('on', b.dataset.v===prCompare);
+    b.onclick = ()=> setPrCompare(b.dataset.v);
+  });
+}
 
 function renderPrecPills(){
   document.getElementById('prec-pills').innerHTML=PREC_PRODS.map(p=>`
@@ -1424,11 +1472,17 @@ function renderPrecPills(){
     </button>`).join('');
 }
 
-function setPrP(p){prProd=p;prDose=null;renderPrecPills();renderPrecDoses();renderPrec();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
+function setPrP(p){prProd=p;prDose=null;renderPrecPills();renderPrecCompareCtrl();renderPrecDoses();renderPrec();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
+function setPrCompare(mode){prCompare=mode;prDose=null;renderPrecCompareCtrl();renderPrecDoses();renderPrec();}
 
 function renderPrecDoses(){
-  const groups=D.precios[prProd]||{};
+  const groups=getPriceGroups();
   const doses=Object.keys(groups);
+  if(!doses.length){
+    prDose=null;
+    document.getElementById('prec-dose-pills').innerHTML='<span style="font-size:11px;color:#6b7280;">Sin presentaciones comparables para esta selección.</span>';
+    return;
+  }
   if(!prDose||!groups[prDose]) prDose=doses[0]||null;
   const brandColor = COLORS[prProd]||'#b01e1e';
   document.getElementById('prec-dose-pills').innerHTML=doses.map(d=>{
@@ -1445,14 +1499,21 @@ function renderPrecDoses(){
 function setPrD(d){prDose=d;renderPrecDoses();renderPrec();}
 
 function renderPrec(){
-  const groups=D.precios[prProd]||{};
-  if(!prDose||!groups[prDose]){document.getElementById('prec-content').innerHTML='';return;}
+  const groups=getPriceGroups();
+  const iqviaMap = getPriceIqvia();
+  const compareLabel = prCompare==='atc' ? 'mismo ATC y presentación' : 'misma molécula y presentación';
+  const priceCopy = document.getElementById('price-copy');
+  if(priceCopy){
+    priceCopy.textContent = `${D.meta.price_prev_label} vs ${D.meta.price_curr_label} · ${compareLabel} · SIE destacado`;
+  }
+  if(!prDose||!groups[prDose]){
+    document.getElementById('prec-content').innerHTML='<p style="color:#4b5563;font-size:11px;">Sin datos de precios para la selección actual.</p>';
+    return;
+  }
   const entries=groups[prDose];
   const sieEntry=entries.find(e=>e.is_sie);
   const siePvp=sieEntry?.pvp_feb26||0;
 
-  // IQVIA units lookup for this product
-  const iqviaMap = D.prec_iqvia?.[prProd] || {};
   // Sort entries: SIE first, then by IQVIA units desc
   const sortedEntries = [...entries].sort((a,b)=>{
     if(a.is_sie) return -1; if(b.is_sie) return 1;
@@ -1813,9 +1874,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   renderBudPills(); renderBudYr(); renderBudget();
   renderPerfMolGrid(); bindPerfCtrls(); renderPerf();
   renderRecPills(); bindRecCtrls(); renderRec();
-  renderConvPills(); renderConv();
-  renderPrecPills(); renderPrecDoses(); renderPrec();
-  renderStockPills(); renderStockYr(); renderStock();
+renderConvPills(); renderConv();
+renderPrecPills(); renderPrecCompareCtrl(); renderPrecDoses(); renderPrec();
+renderStockPills(); renderStockYr(); renderStock();
   renderCovBrandPills(); renderCobertura();
 });
 </script>
