@@ -675,7 +675,7 @@ function Test-TextContainsAny {
 
   if (-not $Text -or -not $Candidates -or $Candidates.Count -eq 0) { return $false }
   foreach ($candidate in $Candidates) {
-    if ($candidate -and ($Text -eq $candidate -or $Text.Contains($candidate))) {
+    if ($candidate -and $Text -eq $candidate) {
       return $true
     }
   }
@@ -1280,6 +1280,38 @@ foreach ($family in @($stockProducts.Keys)) {
       Sort-Object -Property @{ Expression = 'totalSales'; Descending = $true }, @{ Expression = 'totalBilling'; Descending = $true } |
       Select-Object -First 8
   )
+}
+
+if (-not $budgetPath) {
+  foreach ($family in $familyOrder) {
+    if (-not $budgetFamilies.Contains($family)) {
+      $budgetFamilies[$family] = [ordered]@{
+        actual = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+        budget = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+        compliance = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+      }
+    }
+
+    if (-not $stockFamilies.Contains($family)) {
+      continue
+    }
+
+    $actualSeries = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+    for ($idx = 0; $idx -lt $stockMonths.Count; $idx++) {
+      $monthKey = $stockMonths[$idx]
+      $budgetIdx = $budgetMonths.IndexOf($monthKey)
+      if ($budgetIdx -lt 0) {
+        continue
+      }
+      $actualSeries[$budgetIdx] = [double]$stockFamilies[$family].sales[$idx]
+    }
+
+    $budgetFamilies[$family].actual = @($actualSeries)
+  }
+
+  if ($budgetMonths.IndexOf($stockCut) -ge 0) {
+    $budgetCut = $stockCut
+  }
 }
 
 $channelFamilies = [ordered]@{}
