@@ -51,34 +51,26 @@ $lineConfigs = @{
   cardio = @{
     workbookLine = 'Cardio met'
     matchers = @(
-      @{ key = 'ROXOLAN PLUS'; aliases = @('ROXOLAN PLUS') }
-      @{ key = 'EXFORGE D'; aliases = @('EXFORGE D') }
-      @{ key = 'DIOVAN D'; aliases = @('DIOVAN D') }
-      @{ key = 'NEBILET D'; aliases = @('NEBILET D') }
+      @{ key = 'DAURAN'; aliases = @('DAURAN ') }
       @{ key = 'DILATREND AP'; aliases = @('DILATREND AP') }
       @{ key = 'DILATREND D'; aliases = @('DILATREND D') }
-      @{ key = 'NORANAT SR'; aliases = @('NORANAT SR') }
-      @{ key = 'ERROLON E'; aliases = @('ERROLON E') }
-      @{ key = 'ERROLON A'; aliases = @('ERROLON A') }
       @{ key = 'EMPAX MET'; aliases = @('EMPAX MET') }
       @{ key = 'METGLUCON DUO'; aliases = @('METGLUCON DUO') }
       @{ key = 'SILTRAN MET'; aliases = @('SILTRAN MET') }
-      @{ key = 'KINFIL D'; aliases = @('KINFIL D') }
       @{ key = 'ENTRESTO'; aliases = @('ENTRESTO') }
+      @{ key = 'EXFORGE D'; aliases = @('EXFORGE D') }
       @{ key = 'EXFORGE'; aliases = @('EXFORGE') }
       @{ key = 'ROXOLAN'; aliases = @('ROXOLAN') }
-      @{ key = 'BEZACUR'; aliases = @('BEZACUR') }
-      @{ key = 'ERROLON'; aliases = @('ERROLON') }
+      @{ key = 'DIOVAN D'; aliases = @('DIOVAN D') }
       @{ key = 'DIOVAN'; aliases = @('DIOVAN') }
-      @{ key = 'SOTACOR'; aliases = @('SOTACOR') }
-      @{ key = 'NEBILET'; aliases = @('NEBILET') }
-      @{ key = 'KINFIL'; aliases = @('KINFIL') }
       @{ key = 'PIXABAN'; aliases = @('PIXABAN') }
       @{ key = 'SINTROM'; aliases = @('SINTROM') }
-      @{ key = 'NORANAT'; aliases = @('NORANAT') }
       @{ key = 'TERLOC'; aliases = @('TERLOC') }
       @{ key = 'DILATREND'; aliases = @('DILATREND') }
       @{ key = 'TELPRES'; aliases = @('TELPRES') }
+      @{ key = 'EMPAX'; aliases = @('EMPAX ') }
+      @{ key = 'METGLUCON AP'; aliases = @('METGLUCON ') }
+      @{ key = 'SILTRAN'; aliases = @('SILTRAN ') }
     )
   }
   snc = @{
@@ -128,6 +120,17 @@ $lineConfigs = @{
       @{ key = 'FLEXINA'; aliases = @('FLEXINA') }
       @{ key = 'MAGNUS'; aliases = @('MAGNUS') }
       @{ key = 'TETRALGIN'; aliases = @('TETRALGIN') }
+    )
+  }
+  atb = @{
+    workbookLine = 'ATB'
+    matchers = @(
+      @{ key = 'CEFALEXINA ARG DUO'; aliases = @('CEFALEXINA ARG DUO') }
+      @{ key = 'BACTRIM FORTE'; aliases = @('BACTRIM FORTE') }
+      @{ key = 'ACANTEX'; aliases = @('ACANTEX') }
+      @{ key = 'BACTRIM'; aliases = @('BACTRIM ') }
+      @{ key = 'CEFALEXINA ARG'; aliases = @('CEFALEXINA ARG ') }
+      @{ key = 'MACROMAX'; aliases = @('MACROMAX') }
     )
   }
   respiratorio = @{
