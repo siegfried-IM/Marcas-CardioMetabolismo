@@ -8,6 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="./data.js"></script>
+<script src="./runtime-overrides.js"></script>
 <script src="../shared/budget-overrides.js"></script>
 <script src="../shared/export-common.js"></script>
 <script src="./export.js"></script>
@@ -414,6 +415,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
     <p class="sec-sub" id="price-copy">PVP vigente vs corte previo · Misma familia y presentación · SIE destacado</p>
     <div class="card">
       <div class="pill-group" id="prec-pills" style="margin-bottom:14px;"></div>
+      <div class="pill-group" id="prec-mode-pills" style="margin-bottom:12px;"></div>
       <div class="prec-dose-pills" id="prec-dose-pills"></div>
       <div id="prec-content"></div>
     </div>
@@ -477,7 +479,8 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
 </div>
 
 <script>
-const D = window.OTC_DASHBOARD;
+const D = window.OTC_DASHBOARD || window.OTC_DATA;
+window.OTC_DASHBOARD = D;
 window.applyBudget2026Overrides?.({ line: 'cardio', data: D });
 const META = D.meta || {};
 
@@ -1386,8 +1389,21 @@ function renderConv(){
 
 
 // ── PRECIOS CON COMPETIDORES ────────────────────────────────────────
-let prProd=(D.defaults?.brand||Object.keys(D.precios)[0]), prDose=null;
+let prProd=(D.defaults?.brand||Object.keys(D.precios)[0]), prMode='molecule', prDose=null;
 const PREC_PRODS=Object.keys(D.precios).sort();
+
+function getPriceModes(prod){
+  const groups=D.precios[prod]||{};
+  const available=['molecule','atc'].filter(mode=>Object.keys(groups[mode]||{}).length);
+  return available.length?available:['molecule'];
+}
+
+function getActivePriceGroups(prod){
+  const groups=D.precios[prod]||{};
+  const modes=getPriceModes(prod);
+  if(!modes.includes(prMode)) prMode=modes[0];
+  return groups[prMode]||{};
+}
 
 function renderPrecPills(){
   document.getElementById('prec-pills').innerHTML=PREC_PRODS.map(p=>`
@@ -1397,10 +1413,19 @@ function renderPrecPills(){
     </button>`).join('');
 }
 
-function setPrP(p){prProd=p;prDose=null;renderPrecPills();renderPrecDoses();renderPrec();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
+function renderPrecModes(){
+  const labels={molecule:'vs Molécula',atc:'vs ATC'};
+  const modes=getPriceModes(prProd);
+  document.getElementById('prec-mode-pills').innerHTML=modes.map(mode=>`
+    <button class="pill ${mode===prMode?'on':''}" onclick="setPrM('${mode}')">${labels[mode]}</button>
+  `).join('');
+}
+
+function setPrP(p){prProd=p;prMode='molecule';prDose=null;renderPrecPills();renderPrecModes();renderPrecDoses();renderPrec();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
+function setPrM(mode){prMode=mode;prDose=null;renderPrecModes();renderPrecDoses();renderPrec();}
 
 function renderPrecDoses(){
-  const groups=D.precios[prProd]||{};
+  const groups=getActivePriceGroups(prProd);
   const doses=Object.keys(groups);
   if(!prDose||!groups[prDose]) prDose=doses[0]||null;
   const brandColor = COLORS[prProd]||'#b01e1e';
@@ -1418,14 +1443,14 @@ function renderPrecDoses(){
 function setPrD(d){prDose=d;renderPrecDoses();renderPrec();}
 
 function renderPrec(){
-  const groups=D.precios[prProd]||{};
+  const groups=getActivePriceGroups(prProd);
   if(!prDose||!groups[prDose]){document.getElementById('prec-content').innerHTML='';return;}
   const entries=groups[prDose];
   const sieEntry=entries.find(e=>e.is_sie);
   const siePvp=sieEntry?.pvp_feb26||0;
 
   // IQVIA units lookup for this product
-  const iqviaMap = D.prec_iqvia?.[prProd] || {};
+  const iqviaMap = D.prec_iqvia?.[prProd]?.[prMode] || {};
   // Sort entries: SIE first, then by IQVIA units desc
   const sortedEntries = [...entries].sort((a,b)=>{
     if(a.is_sie) return -1; if(b.is_sie) return 1;
@@ -1441,7 +1466,7 @@ function renderPrec(){
 
   document.getElementById('prec-content').innerHTML=`
     <div class="prec-group">
-      <span class="prec-group-title">${prDose}</span>
+      <span class="prec-group-title">${prDose} · ${prMode==='atc'?'Comparativa ATC':'Comparativa molécula'}</span>
       ${leaderEntry?`<div style="font-size:10px;color:#4b5563;margin-bottom:8px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
         <span>🏆 Líder: <strong>${leaderEntry.prod}</strong> (${leaderEntry.lab}) · ${fmt(leaderUnits)} u. MAT · PVP $${leaderPvp.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
         ${sieUnits&&leaderUnits?`<span>Siegfried: ${fmt(sieUnits)} u. <span style="font-weight:700;color:${sieUnits>=leaderUnits?'#16a34a':'#dc2626'}">(${sieUnits>=leaderUnits?'+':''}${Math.round((sieUnits/leaderUnits-1)*100)}% vs líder)</span></span>`:''}
@@ -1787,7 +1812,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   renderPerfMolGrid(); bindPerfCtrls(); renderPerf();
   renderRecPills(); bindRecCtrls(); renderRec();
   renderConvPills(); renderConv();
-  renderPrecPills(); renderPrecDoses(); renderPrec();
+  renderPrecPills(); renderPrecModes(); renderPrecDoses(); renderPrec();
   renderStockPills(); renderStockYr(); renderStock();
   renderCovBrandPills(); renderCobertura();
 });
