@@ -1413,6 +1413,47 @@ function renderConv(){
 let prProd='VALIUM', prDose=null;
 const PREC_PRODS=Object.keys(D.precios).sort();
 
+function normPrec(v){
+  return String(v||'')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g,' ')
+    .trim();
+}
+
+function aliasCandidatesForDose(prod, dose, iqviaMap){
+  const prodNorm = normPrec(prod);
+  const doseNorm = normPrec(dose);
+  const doseTokens = doseNorm.split(' ').filter(Boolean);
+  const keys = Object.keys(iqviaMap||{});
+  return keys.filter(key=>{
+    const aliasNorm = normPrec(key);
+    if(!aliasNorm.includes(prodNorm)) return false;
+    if(!doseTokens.length) return true;
+    return doseTokens.some(tok=>tok.length > 1 && aliasNorm.includes(tok));
+  }).sort((a,b)=>a.length-b.length);
+}
+
+function buildPrecRows(entries, iqviaMap, dose){
+  const used = new Set();
+  return entries.map((entry, idx)=>{
+    const direct = entry.prod.toUpperCase();
+    const candidates = aliasCandidatesForDose(entry.prod, dose, iqviaMap).filter(alias=>{
+      const key = alias.toUpperCase();
+      return !used.has(key);
+    });
+    const lookupKey = (candidates[0] || direct).toUpperCase();
+    used.add(lookupKey);
+    return {
+      ...entry,
+      lookupKey,
+      presentation: candidates[0] || dose || entry.prod,
+      _idx: idx
+    };
+  });
+}
+
 function renderPrecPills(){
   document.getElementById('prec-pills').innerHTML=PREC_PRODS.map(p=>`
     <button class="pill ${p===prProd?'on':''}" onclick="setPrP('${p}')"
@@ -1450,18 +1491,20 @@ function renderPrec(){
 
   // IQVIA units lookup for this product
   const iqviaMap = D.prec_iqvia?.[prProd] || {};
+  const rows = buildPrecRows(entries, iqviaMap, prDose);
   // Sort entries: SIE first, then by IQVIA units desc
-  const sortedEntries = [...entries].sort((a,b)=>{
+  const sortedEntries = [...rows].sort((a,b)=>{
     if(a.is_sie) return -1; if(b.is_sie) return 1;
-    const ua = iqviaMap[a.prod.toUpperCase()] || 0;
-    const ub = iqviaMap[b.prod.toUpperCase()] || 0;
+    const ua = iqviaMap[a.lookupKey] || 0;
+    const ub = iqviaMap[b.lookupKey] || 0;
     return ub - ua;
   });
   // Find leader (highest IQVIA units, ALL products including SIE)
-  const leaderEntry = [...sortedEntries].sort((a,b)=>(iqviaMap[b.prod.toUpperCase()]||0)-(iqviaMap[a.prod.toUpperCase()]||0))[0];
-  const leaderUnits = leaderEntry ? (iqviaMap[leaderEntry.prod.toUpperCase()]||0) : 0;
+  const leaderEntry = [...sortedEntries].sort((a,b)=>(iqviaMap[b.lookupKey]||0)-(iqviaMap[a.lookupKey]||0))[0];
+  const leaderUnits = leaderEntry ? (iqviaMap[leaderEntry.lookupKey]||0) : 0;
   const leaderPvp   = leaderEntry?.pvp_feb26 || 0;
-  const sieUnits = iqviaMap[(sieEntry?.prod||'').toUpperCase()] || 0;
+  const sieRow = sortedEntries.find(e=>e.is_sie);
+  const sieUnits = iqviaMap[sieRow?.lookupKey||''] || 0;
 
   document.getElementById('prec-content').innerHTML=`
     <div class="prec-group">
@@ -1472,7 +1515,7 @@ function renderPrec(){
       </div>`:''}
       <table class="pct-table">
         <thead><tr>
-          <th>Laboratorio</th><th>Producto</th><th>PVP Dic 2025</th><th>PVP Feb 2026</th><th>Var.</th><th>vs SIE</th><th title="PVP Feb 2026 vs el líder por volumen IQVIA MAT">vs Líder 🏆</th><th title="Unidades MAT IQVIA">IQVIA MAT u.</th><th>Rk</th>
+          <th>Laboratorio</th><th>Producto</th><th>Presentación</th><th>PVP Dic 2025</th><th>PVP Feb 2026</th><th>Var.</th><th>vs SIE</th><th title="PVP Feb 2026 vs el líder por volumen IQVIA MAT">vs Líder 🏆</th><th title="Unidades MAT IQVIA">IQVIA MAT u.</th><th>Rk</th>
         </tr></thead>
         <tbody>${sortedEntries.map((e,i)=>{
           const vp=e.var!=null?Math.round(e.var*100):null;
@@ -1492,13 +1535,14 @@ function renderPrec(){
                 :`<span class="cheaper-tag">${vsL.toFixed(1)}%</span>`;
             }
           }
-          const iqvU = iqviaMap[e.prod.toUpperCase()] || null;
-          const allUnits = sortedEntries.map(x=>iqviaMap[x.prod.toUpperCase()]||0).sort((a,b)=>b-a);
+          const iqvU = iqviaMap[e.lookupKey] || null;
+          const allUnits = sortedEntries.map(x=>iqviaMap[x.lookupKey]||0).sort((a,b)=>b-a);
           const rank = iqvU ? allUnits.indexOf(iqvU)+1 : null;
           const rankStr = rank==null?'—':`<span style="font-size:9px;font-weight:700;color:${rank===1?'#b01e1e':rank<=3?'#d97706':'#4b5563'};">#${rank}</span>`;
           return`<tr class="${e.is_sie?'sie-pr':''}">
             <td style="font-weight:${e.is_sie?600:400}">${e.lab}${e.is_sie?'<span class="sie-tag">★ SIE</span>':''}</td>
             <td>${e.prod}</td>
+            <td class="mono" style="font-size:10px;color:#4b5563;">${e.presentation}</td>
             <td class="mono">$${e.pvp_dic25?.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})||'—'}</td>
             <td class="mono">$${e.pvp_feb26?.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})||'—'}</td>
             <td><span class="var-up">${vp!=null?(vp>=0?'+':'')+vp+'%':'—'}</span></td>
