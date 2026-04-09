@@ -5,7 +5,14 @@ const RESP_FAMILIES = RESP_DDD.families || {};
 const MKT_MAP = Object.keys(RESP_FAMILIES).length ? RESP_FAMILIES : (DD.markets || {});
 const MONTHS = RESP_DDD.months || DD.months || [];
 const FAMILY_MAP = ROOT.familyToMarkets || {};
-const ORDERED_MARKETS = (RESP_DDD.order || FAMILY_MAP.Totales || Object.keys(MKT_MAP)).filter(m => MKT_MAP[m]);
+function hasMeaningfulDddMarket(market){
+  const views = MKT_MAP[market];
+  if (!views) return false;
+  const bucket = views?.molecule?.all || views;
+  const monthly = bucket?.monthly || [];
+  return monthly.some(row => Number(row?.total || 0) > 0 || Number(row?.sie || 0) > 0);
+}
+const ORDERED_MARKETS = (RESP_DDD.order || FAMILY_MAP.Totales || Object.keys(MKT_MAP)).filter(m => MKT_MAP[m] && hasMeaningfulDddMarket(m));
 const PARAMS = new URLSearchParams(location.search);
 const MONTH_INDEX = {Ene:0,Feb:1,Mar:2,Abr:3,May:4,Jun:5,Jul:6,Ago:7,Sep:8,Oct:9,Nov:10,Dic:11};
 const SIE = '#7A1518';

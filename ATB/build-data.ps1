@@ -262,6 +262,88 @@ function Sort-QuarterLabels {
   return $Labels | Sort-Object { Get-QuarterSortValue $_ }
 }
 
+function Resolve-RxFamily {
+  param(
+    [string]$Market,
+    [string]$Brand
+  )
+
+  $marketUpper = (Normalize-Text $Market).ToUpper()
+  $brandUpper = (Normalize-Text $Brand).ToUpper()
+
+  if ($brandUpper.Contains('BACTRIM FORTE') -or $brandUpper.Contains('FUERTE')) {
+    return 'BACTRIM FORTE'
+  }
+  if ($brandUpper.Contains('BACTRIM')) {
+    return 'BACTRIM'
+  }
+  if ($brandUpper.Contains('ACANTEX')) {
+    return 'ACANTEX'
+  }
+  if ($brandUpper.Contains('MACROMAX')) {
+    return 'MACROMAX'
+  }
+  if ($brandUpper.Contains('CEFALEX') -or $brandUpper.Contains('CEPOREXIN') -or $brandUpper.Contains('KEFORAL') -or $brandUpper.Contains('SEPTILISIN')) {
+    return 'CEFALEXINA ARG DUO'
+  }
+
+  if ($marketUpper -match '\(([^)]+)\)') {
+    $family = $matches[1].Trim().ToUpper()
+    if ($family -eq 'BACTRIM') { return 'BACTRIM' }
+    if ($family -eq 'ACANTEX') { return 'ACANTEX' }
+  }
+
+  switch ($marketUpper) {
+    'CEFALEXINA ARG DUO' { return 'CEFALEXINA ARG DUO' }
+    'TRIMETOPRIMA (BACTRIM)' { return 'BACTRIM' }
+    'CEFALOSPOR INY (ACANTEX)' { return 'ACANTEX' }
+    default { return '' }
+  }
+}
+
+function Resolve-InternalSalesFamily {
+  param(
+    [string]$GranFamily,
+    [string]$Family,
+    [string]$Product
+  )
+
+  $gran = (Normalize-Text $GranFamily).ToUpper()
+  $family = (Normalize-Text $Family).ToUpper()
+  $product = (Normalize-Text $Product).ToUpper()
+
+  foreach ($candidate in @($family, $gran)) {
+    switch ($candidate) {
+      'TOTALES' { return 'Totales' }
+      'ACANTEX' { return 'ACANTEX' }
+      'BACTRIM' { return 'BACTRIM' }
+      'BACTRIM FORTE' { return 'BACTRIM FORTE' }
+      'CEFALEXINA ARG' { return 'CEFALEXINA ARG' }
+      'CEFALEXINA ARG DUO' { return 'CEFALEXINA ARG DUO' }
+      'MACROMAX' { return 'MACROMAX' }
+    }
+  }
+
+  if ($product -eq 'TOTALES') {
+    switch ($family) {
+      'BACTRIM FORTE' { return 'BACTRIM FORTE' }
+      'CEFALEXINA ARG DUO' { return 'CEFALEXINA ARG DUO' }
+      'ACANTEX' { return 'ACANTEX' }
+      'BACTRIM' { return 'BACTRIM' }
+      'CEFALEXINA ARG' { return 'CEFALEXINA ARG' }
+      'MACROMAX' { return 'MACROMAX' }
+    }
+    switch ($gran) {
+      'ACANTEX' { return 'ACANTEX' }
+      'BACTRIM' { return 'BACTRIM' }
+      'CEFALEXINA ARG' { return 'CEFALEXINA ARG' }
+      'MACROMAX' { return 'MACROMAX' }
+    }
+  }
+
+  return ''
+}
+
 function Convert-QuarterLabelFromHeader {
   param([string]$Header)
 
@@ -912,6 +994,7 @@ if (-not (Test-Path -LiteralPath $dddDir)) {
 }
 
 $budgetPath = $null
+$internalSalesPath = Get-MatchingPath -Dir $dashboardDir -Include 'VENTA INTERNA*'
 $rxPath = Get-MatchingPath -Dir $dashboardDir -Include 'RECETAS*'
 $stockPath = Get-MatchingPath -Dir $dashboardDir -Include 'STOCK Y VENTAS*'
 $channelPath = Get-MatchingPath -Dir $dashboardDir -Include 'Convenios vs mostrador*'
@@ -956,6 +1039,7 @@ function Open-Matrix {
 
 try {
   $budgetMatrix = if ($budgetPath) { Open-Matrix -Excel $excel -Path $budgetPath } else { $null }
+  $internalSalesMatrix = if ($internalSalesPath) { Open-Matrix -Excel $excel -Path $internalSalesPath } else { $null }
   $rxMatrix = Open-Matrix -Excel $excel -Path $rxPath
   $stockMatrix = Open-Matrix -Excel $excel -Path $stockPath
   $channelMatrix = if ($channelPath) { Open-Matrix -Excel $excel -Path $channelPath } else { $null }
@@ -972,7 +1056,7 @@ finally {
   [GC]::WaitForPendingFinalizers()
 }
 
-Write-Host "[Respiratorio] Fuentes cargadas."
+Write-Host "[ATB] Fuentes cargadas."
 
 $budgetMonths = @()
 $budgetFamilies = [ordered]@{}
@@ -1116,6 +1200,66 @@ foreach ($family in @($stockProducts.Keys)) {
   )
 }
 
+if (-not $budgetPath -and $internalSalesMatrix) {
+  $internalMonths = @()
+  for ($c = 7; $c -le $internalSalesMatrix.GetLength(1); $c++) {
+    $label = Normalize-MonthLabel $internalSalesMatrix[2, $c]
+    if ($label) {
+      $internalMonths += $label
+    }
+  }
+
+  foreach ($family in $familyOrder) {
+    if (-not $budgetFamilies.Contains($family)) {
+      $budgetFamilies[$family] = [ordered]@{
+        actual = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+        budget = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+        compliance = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+      }
+    }
+  }
+
+  for ($r = 3; $r -le $internalSalesMatrix.GetLength(0); $r++) {
+    $granFamily = Normalize-Text $internalSalesMatrix[$r, 2]
+    $familyLabel = Normalize-Text $internalSalesMatrix[$r, 3]
+    $product = Normalize-Text $internalSalesMatrix[$r, 4]
+    $family = Resolve-InternalSalesFamily -GranFamily $granFamily -Family $familyLabel -Product $product
+    if (-not $family -or ($product -and $product -ne 'Totales')) {
+      continue
+    }
+    if (-not $budgetFamilies.Contains($family)) {
+      continue
+    }
+
+    $actualSeries = @($budgetFamilies[$family].actual)
+    for ($c = 7; $c -le $internalSalesMatrix.GetLength(1); $c++) {
+      $monthKey = Normalize-MonthLabel $internalSalesMatrix[2, $c]
+      $budgetIdx = $budgetMonths.IndexOf($monthKey)
+      if ($budgetIdx -lt 0) {
+        continue
+      }
+      $actualSeries[$budgetIdx] = To-Number $internalSalesMatrix[$r, $c]
+    }
+    $budgetFamilies[$family].actual = @($actualSeries)
+  }
+
+  $totalActual = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+  foreach ($family in $dashboardFamilyOrder) {
+    if (-not $budgetFamilies.Contains($family)) {
+      continue
+    }
+    for ($i = 0; $i -lt $budgetMonths.Count; $i++) {
+      $totalActual[$i] += To-Number $budgetFamilies[$family].actual[$i]
+    }
+  }
+  $budgetFamilies['Totales'].actual = @($totalActual)
+
+  $internalCut = Get-LastNonZeroMonth -Months $budgetMonths -Values $budgetFamilies['Totales'].actual
+  if ($internalCut) {
+    $budgetCut = $internalCut
+  }
+}
+
 $channelFamilies = [ordered]@{}
 if ($channelMatrix) {
   for ($r = 2; $r -le $channelMatrix.GetLength(0); $r++) {
@@ -1124,19 +1268,19 @@ if ($channelMatrix) {
       continue
     }
 
-    $units = To-Number $channelMatrix[$r, 3]
-    $convenioUnits = To-Number $channelMatrix[$r, 4]
+    $units = To-Number $channelMatrix[$r, 5]
+    $convenioUnits = To-Number $channelMatrix[$r, 8]
     $mostradorUnits = $units - $convenioUnits
 
     Ensure-OrderedMap -Map $channelFamilies -Key $family -Value ([ordered]@{
       facturedUnits = [math]::Round($units, 0)
       convenioUnits = [math]::Round($convenioUnits, 0)
       mostradorUnits = [math]::Round($mostradorUnits, 0)
-      convenioPct = Round-Number ((To-Number $channelMatrix[$r, 10]) * 100)
-      mostradorPct = Round-Number ((To-Number $channelMatrix[$r, 11]) * 100)
-      discountCommonPct = Round-Number ((To-Number $channelMatrix[$r, 12]) * 100)
-      discountConvenioPct = Round-Number ((To-Number $channelMatrix[$r, 13]) * 100)
-      discountTotalPct = Round-Number ((To-Number $channelMatrix[$r, 14]) * 100)
+      convenioPct = Round-Number ((To-Number $channelMatrix[$r, 12]) * 100)
+      mostradorPct = Round-Number ((To-Number $channelMatrix[$r, 13]) * 100)
+      discountCommonPct = Round-Number ((To-Number $channelMatrix[$r, 14]) * 100)
+      discountConvenioPct = Round-Number ((To-Number $channelMatrix[$r, 15]) * 100)
+      discountTotalPct = Round-Number ((To-Number $channelMatrix[$r, 16]) * 100)
     })
   }
 }
@@ -1265,14 +1409,10 @@ for ($r = 3; $r -le $rxMatrix.GetLength(0); $r++) {
     continue
   }
 
-  $family = ''
-  if ($market -match '\(([^)]+)\)') {
-    $family = $matches[1].Trim().ToUpper()
-  }
-  else {
-    $family = $market.ToUpper()
-    if ($family -like 'FLEXINA*') { $family = 'FLEXINA' }
-    if ($family -like 'MAGNUS*') { $family = 'MAGNUS' }
+  $marketFamily = Resolve-RxFamily -Market $market -Brand ''
+  $family = Resolve-RxFamily -Market $market -Brand $brand
+  if (-not $family) {
+    continue
   }
 
   if (-not $rxFamilies.ContainsKey($family)) {
@@ -1310,6 +1450,10 @@ for ($r = 3; $r -le $rxMatrix.GetLength(0); $r++) {
     }
     $index = 0
     for ($c = 4; $c -le $rxMatrix.GetLength(1); $c += 2) {
+      if ($family -ne $marketFamily) {
+        $rxFamilies[$family].prescriptions[$index] += To-Number $rxMatrix[$r, $c]
+        $rxFamilies[$family].doctors[$index] += To-Number $rxMatrix[$r, ($c + 1)]
+      }
       $rxBrandMonthly[$family][$brand].prescriptions[$index] += To-Number $rxMatrix[$r, $c]
       $rxBrandMonthly[$family][$brand].doctors[$index] += To-Number $rxMatrix[$r, ($c + 1)]
       $index++
@@ -2506,9 +2650,9 @@ $dashboardMeta = [ordered]@{
 }
 
 $dashboardDefaults = [ordered]@{
-  brand = 'ACEMUK'
-  market = 'Acemuk'
-  rec = 'ACEMUK'
+  brand = 'ACANTEX'
+  market = 'ACANTEX'
+  rec = 'ACANTEX'
 }
 
 $dashboardData = [ordered]@{
