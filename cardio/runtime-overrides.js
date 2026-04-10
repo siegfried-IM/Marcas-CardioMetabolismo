@@ -35,7 +35,64 @@
     data.budget = converted;
   }
 
+  function normalizeChannelShape(data){
+    if(data?.canales) return;
+    const families = data?.channel?.families;
+    if(!families) return;
+    const converted = {};
+    Object.entries(families).forEach(([brand, entry]) => {
+      converted[brand] = {
+        unid: entry?.facturedUnits ?? 0,
+        conv: entry?.convenioPct ?? 0,
+        most: entry?.mostradorPct ?? 0,
+        conv_units: entry?.convenioUnits ?? 0,
+        most_units: entry?.mostradorUnits ?? 0,
+        dto_total: entry?.discountTotalPct ?? 0,
+        dto_conv: entry?.discountConvenioPct ?? 0,
+        dto_most: entry?.discountCommonPct ?? 0,
+        unid_prev: null,
+        conv_prev: null,
+        most_prev: null,
+        conv_units_prev: null,
+        most_units_prev: null,
+        dto_total_prev: null,
+        dto_conv_prev: null,
+        dto_most_prev: null,
+        conv_pp: null,
+        most_pp: null
+      };
+    });
+    data.canales = converted;
+  }
+
+  function normalizeConveniosShape(data){
+    if(data?.convenios) return;
+    const families = data?.osComparison?.families;
+    if(!families) return;
+    const converted = {};
+    Object.entries(families).forEach(([brand, entry]) => {
+      converted[brand] = Array.isArray(entry?.rows) ? entry.rows.map((row) => ({
+        os: row.os,
+        unid24: row.units2024 ?? null,
+        unid: row.units2025 ?? 0,
+        delta: row.deltaPct ?? null
+      })) : [];
+    });
+    data.convenios = converted;
+  }
+
+  function normalizeMeta(data){
+    data.meta = data.meta || {};
+    if(data.meta.canales_prev_year == null) data.meta.canales_prev_year = '2024';
+    if(data.meta.canales_current_year == null) data.meta.canales_current_year = '2025';
+    if(data.meta.conv_prev_year == null) data.meta.conv_prev_year = '2024';
+    if(data.meta.conv_current_year == null) data.meta.conv_current_year = '2025';
+  }
+
   normalizeBudgetShape(D);
+  normalizeChannelShape(D);
+  normalizeConveniosShape(D);
+  normalizeMeta(D);
 
   D.defaults = {
     brand: 'DAURAN',
