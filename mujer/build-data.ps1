@@ -309,6 +309,59 @@ function Sort-MonthsEn {
   return $Months | Sort-Object { Get-MonthSortValueEn $_ }
 }
 
+function Get-YtdSumEn {
+  param(
+    [hashtable]$MonthlyMap,
+    [string]$MonthKey
+  )
+
+  if (-not $MonthlyMap -or -not $MonthKey -or $MonthKey -notmatch '^([A-Za-z]{3}) (\d{4})$') {
+    return 0.0
+  }
+
+  $targetMonth = $monthIndexEn[$matches[1].ToLower()]
+  $targetYear = [int]$matches[2]
+  $sum = 0.0
+  foreach ($key in $MonthlyMap.Keys) {
+    if ($key -match '^([A-Za-z]{3}) (\d{4})$') {
+      $month = $monthIndexEn[$matches[1].ToLower()]
+      $year = [int]$matches[2]
+      if ($year -eq $targetYear -and $month -le $targetMonth) {
+        $sum += [double]$MonthlyMap[$key]
+      }
+    }
+  }
+  return $sum
+}
+
+function Get-MatSumEn {
+  param(
+    [hashtable]$MonthlyMap,
+    [string[]]$OrderedKeys,
+    [string]$MonthKey
+  )
+
+  if (-not $MonthlyMap -or -not $OrderedKeys -or -not $MonthKey) {
+    return 0.0
+  }
+
+  $idx = [array]::IndexOf($OrderedKeys, $MonthKey)
+  if ($idx -lt 0) {
+    return 0.0
+  }
+
+  $start = [Math]::Max(0, $idx - 11)
+  $sum = 0.0
+  for ($i = $start; $i -le $idx; $i++) {
+    $monthValue = 0.0
+    if ($MonthlyMap.ContainsKey($OrderedKeys[$i])) {
+      $monthValue = [double]$MonthlyMap[$OrderedKeys[$i]]
+    }
+    $sum += $monthValue
+  }
+  return $sum
+}
+
 function Get-QuarterSortValue {
   param([string]$Label)
 
@@ -665,6 +718,7 @@ finally {
 }
 
 $rxMasterMap = @{}
+$budgetMasterMap = @{}
 for ($r = 3; $r -le $maestroMatrix.GetLength(0); $r++) {
   $familySap = Normalize-Text $maestroMatrix[$r, 5]
   $nameIqvia = Normalize-Text $maestroMatrix[$r, 4]
@@ -672,6 +726,7 @@ for ($r = 3; $r -le $maestroMatrix.GetLength(0); $r++) {
   if ($familySap) {
     if ($nameIqvia) { $rxMasterMap[(Normalize-ProductKey $nameIqvia)] = $familySap.ToUpper() }
     if ($presSap) { $rxMasterMap[(Normalize-ProductKey $presSap)] = $familySap.ToUpper() }
+    if ($presSap) { $budgetMasterMap[(Normalize-ProductKey $presSap)] = $familySap.ToUpper() }
   }
 }
 
@@ -723,8 +778,12 @@ $budgetTotalsActual = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
 $budgetTotalsBudget = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
 
 for ($r = 2; $r -le $budgetMatrix.GetLength(0); $r++) {
-  $family = Normalize-Text $budgetMatrix[$r, 2]
   $product = Normalize-Text $budgetMatrix[$r, 4]
+  $family = ''
+  $budgetLookupKey = Normalize-ProductKey $product
+  if ($budgetLookupKey -and $budgetMasterMap.ContainsKey($budgetLookupKey)) {
+    $family = $budgetMasterMap[$budgetLookupKey]
+  }
   if (-not $family) {
     continue
   }
@@ -1519,6 +1578,24 @@ foreach ($family in $dashboardFamilyOrder) {
     }
   }
 
+  if (($pmHeaderInfo.ytd.Count -eq 0 -or $pmHeaderInfo.mat.Count -eq 0) -and $pmMonthlyKeys.Count -gt 0) {
+    foreach ($productName in $aggregatedProducts.Keys) {
+      $item = $aggregatedProducts[$productName]
+      foreach ($key in $pmMonthlyKeys) {
+        $item.ytd[$key] = Get-YtdSumEn -MonthlyMap $item.monthly -MonthKey $key
+        $item.mat[$key] = Get-MatSumEn -MonthlyMap $item.monthly -OrderedKeys $pmMonthlyKeys -MonthKey $key
+      }
+    }
+    foreach ($key in $pmMonthlyKeys) {
+      $marketYtd[$key] = 0.0
+      $marketMat[$key] = 0.0
+      foreach ($productName in $aggregatedProducts.Keys) {
+        $marketYtd[$key] += [double]$aggregatedProducts[$productName].ytd[$key]
+        $marketMat[$key] += [double]$aggregatedProducts[$productName].mat[$key]
+      }
+    }
+  }
+
   $productRows = @(
     $aggregatedProducts.Keys |
       ForEach-Object {
@@ -2166,9 +2243,9 @@ $dashboardMeta = [ordered]@{
 }
 
 $dashboardDefaults = [ordered]@{
-  brand = 'MAGNUS'
-  market = 'MAGNUS'
-  rec = 'MAGNUS'
+  brand = 'ISIS'
+  market = 'ISIS'
+  rec = 'ISIS'
 }
 
 $rxCut = ''
