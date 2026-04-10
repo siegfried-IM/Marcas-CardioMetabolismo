@@ -137,6 +137,20 @@ function Get-MatchingPath {
   return $match.FullName
 }
 
+function Get-FirstExistingPath {
+  param(
+    [string[]]$Paths
+  )
+
+  foreach ($path in $Paths) {
+    if ($path -and (Test-Path -LiteralPath $path)) {
+      return $path
+    }
+  }
+
+  return $null
+}
+
 function Normalize-Text {
   param([object]$Value)
 
@@ -1018,7 +1032,16 @@ $budgetPath = $null
 $internalSalesPath = try { Get-MatchingPath -Dir $dashboardDir -Include 'VENTA*' } catch { $null }
 $rxPath = Get-MatchingPath -Dir $dashboardDir -Include 'RECETAS*'
 $stockPath = Get-MatchingPath -Dir $dashboardDir -Include 'STOCK Y VENTAS*'
-$channelPath = try { Get-MatchingPath -Dir $dashboardDir -Include 'Convenios vs mostrador*' } catch { $null }
+$channel2024DashboardPath = try { Get-MatchingPath -Dir $dashboardDir -Include 'Convenios vs mostrador*.xlsx' -Exclude '*(*' } catch { $null }
+$channel2025DashboardPath = try { Get-MatchingPath -Dir $dashboardDir -Include 'Convenios vs mostrador*(*).xlsx' } catch { $null }
+$channel2024Path = Get-FirstExistingPath @(
+  'C:\Users\camarinaro\Downloads\Convenios vs mostrador - 10 de abril de 2026.xlsx',
+  $channel2024DashboardPath
+)
+$channel2025Path = Get-FirstExistingPath @(
+  'C:\Users\camarinaro\Downloads\Convenios vs mostrador - 10 de abril de 2026 (1).xlsx',
+  $channel2025DashboardPath
+)
 $conv2024Path = Get-MatchingPath -Dir $dashboardDir -Include 'CONVENIOS 2024*'
 $conv2025Path = Get-MatchingPath -Dir $dashboardDir -Include 'CONVENIOS 2025*'
 $dddPath = Get-MatchingPath -Dir $dddDir -Include '*.xlsx'
@@ -1063,7 +1086,8 @@ try {
   $internalSalesMatrix = if ($internalSalesPath) { Open-Matrix -Excel $excel -Path $internalSalesPath } else { $null }
   $rxMatrix = Open-Matrix -Excel $excel -Path $rxPath
   $stockMatrix = Open-Matrix -Excel $excel -Path $stockPath
-  $channelMatrix = if ($channelPath) { Open-Matrix -Excel $excel -Path $channelPath } else { $null }
+  $channel2024Matrix = if ($channel2024Path) { Open-Matrix -Excel $excel -Path $channel2024Path } else { $null }
+  $channel2025Matrix = if ($channel2025Path) { Open-Matrix -Excel $excel -Path $channel2025Path } else { $null }
   $conv2024Matrix = Open-Matrix -Excel $excel -Path $conv2024Path
   $conv2025Matrix = Open-Matrix -Excel $excel -Path $conv2025Path
   $dddMatrix = Open-Matrix -Excel $excel -Path $dddPath
@@ -1274,40 +1298,76 @@ foreach ($family in @($stockProducts.Keys)) {
 }
 
 $channelFamilies = [ordered]@{}
-if ($channelMatrix) {
-  for ($r = 2; $r -le $channelMatrix.GetLength(0); $r++) {
-    $family = Normalize-Text $channelMatrix[$r, 2]
+function Get-ChannelFamilyEntry {
+  return [ordered]@{
+    prev = [ordered]@{
+      facturedUnits = 0
+      convenioUnits = 0
+      mostradorUnits = 0
+      convenioPct = 0.0
+      mostradorPct = 0.0
+      discountCommonPct = 0.0
+      discountConvenioPct = 0.0
+      discountTotalPct = 0.0
+    }
+    current = [ordered]@{
+      facturedUnits = 0
+      convenioUnits = 0
+      mostradorUnits = 0
+      convenioPct = 0.0
+      mostradorPct = 0.0
+      discountCommonPct = 0.0
+      discountConvenioPct = 0.0
+      discountTotalPct = 0.0
+    }
+  }
+}
+
+function Set-ChannelYearData {
+  param(
+    $Map,
+    [object[,]]$Matrix,
+    [string]$YearKey
+  )
+
+  if (-not $Matrix) {
+    return
+  }
+
+  for ($r = 2; $r -le $Matrix.GetLength(0); $r++) {
+    $family = Normalize-Text $Matrix[$r, 2]
     if (-not $family) {
       continue
     }
 
-    $units = To-Number $channelMatrix[$r, 3]
-    $convenioUnits = To-Number $channelMatrix[$r, 4]
-    $mostradorUnits = $units - $convenioUnits
+    if (-not $Map.Contains($family)) {
+      $Map[$family] = Get-ChannelFamilyEntry
+    }
 
-    Ensure-OrderedMap -Map $channelFamilies -Key $family -Value ([ordered]@{
+    $units = To-Number $Matrix[$r, 5]
+    $convenioUnits = To-Number $Matrix[$r, 8]
+    $mostradorUnits = [math]::Max(0, $units - $convenioUnits)
+
+    $Map[$family][$YearKey] = [ordered]@{
       facturedUnits = [math]::Round($units, 0)
       convenioUnits = [math]::Round($convenioUnits, 0)
       mostradorUnits = [math]::Round($mostradorUnits, 0)
-      convenioPct = Round-Number ((To-Number $channelMatrix[$r, 10]) * 100)
-      mostradorPct = Round-Number ((To-Number $channelMatrix[$r, 11]) * 100)
-      discountCommonPct = Round-Number ((To-Number $channelMatrix[$r, 12]) * 100)
-      discountConvenioPct = Round-Number ((To-Number $channelMatrix[$r, 13]) * 100)
-      discountTotalPct = Round-Number ((To-Number $channelMatrix[$r, 14]) * 100)
-    })
+      convenioPct = Round-Number ((To-Number $Matrix[$r, 12]) * 100)
+      mostradorPct = Round-Number ((To-Number $Matrix[$r, 13]) * 100)
+      discountCommonPct = Round-Number ((To-Number $Matrix[$r, 14]) * 100)
+      discountConvenioPct = Round-Number ((To-Number $Matrix[$r, 15]) * 100)
+      discountTotalPct = Round-Number ((To-Number $Matrix[$r, 16]) * 100)
+    }
   }
 }
+
+Set-ChannelYearData -Map $channelFamilies -Matrix $channel2024Matrix -YearKey 'prev'
+Set-ChannelYearData -Map $channelFamilies -Matrix $channel2025Matrix -YearKey 'current'
+
 foreach ($family in $familyOrder) {
-  Ensure-OrderedMap -Map $channelFamilies -Key $family -Value ([ordered]@{
-    facturedUnits = 0
-    convenioUnits = 0
-    mostradorUnits = 0
-    convenioPct = 0.0
-    mostradorPct = 0.0
-    discountCommonPct = 0.0
-    discountConvenioPct = 0.0
-    discountTotalPct = 0.0
-  })
+  if (-not $channelFamilies.Contains($family)) {
+    $channelFamilies[$family] = Get-ChannelFamilyEntry
+  }
 }
 
 $osAggregate = @{}
@@ -1783,7 +1843,7 @@ foreach ($family in $familyOrder) {
     latestActual = $latestBudgetActual
     latestBudget = $latestBudgetTarget
     latestStockDays = $latestStockDays
-    convenioPct = if ($channelFamily) { $channelFamily.convenioPct } else { 0.0 }
+    convenioPct = if ($channelFamily) { $channelFamily.current.convenioPct } else { 0.0 }
     latestRx = $latestRx
     latestShare = $latestShare
     hasDdd = ($familyToMarkets[$family].Count -gt 0)
@@ -2343,25 +2403,27 @@ foreach ($family in $dashboardFamilyOrder) {
     continue
   }
   $entry = $channelFamilies[$family]
+  $prevEntry = $entry.prev
+  $currentEntry = $entry.current
   $dashboardCanales[$family] = [ordered]@{
-    unid = $entry.facturedUnits
-    conv = $entry.convenioPct
-    most = $entry.mostradorPct
-    conv_units = $entry.convenioUnits
-    most_units = $entry.mostradorUnits
-    dto_total = $entry.discountTotalPct
-    dto_conv = $entry.discountConvenioPct
-    dto_most = $entry.discountCommonPct
-    unid_prev = $null
-    conv_prev = $null
-    most_prev = $null
-    conv_units_prev = $null
-    most_units_prev = $null
-    dto_total_prev = $null
-    dto_conv_prev = $null
-    dto_most_prev = $null
-    conv_pp = $null
-    most_pp = $null
+    unid = $currentEntry.facturedUnits
+    conv = $currentEntry.convenioPct
+    most = $currentEntry.mostradorPct
+    conv_units = $currentEntry.convenioUnits
+    most_units = $currentEntry.mostradorUnits
+    dto_total = $currentEntry.discountTotalPct
+    dto_conv = $currentEntry.discountConvenioPct
+    dto_most = $currentEntry.discountCommonPct
+    unid_prev = $prevEntry.facturedUnits
+    conv_prev = $prevEntry.convenioPct
+    most_prev = $prevEntry.mostradorPct
+    conv_units_prev = $prevEntry.convenioUnits
+    most_units_prev = $prevEntry.mostradorUnits
+    dto_total_prev = $prevEntry.discountTotalPct
+    dto_conv_prev = $prevEntry.discountConvenioPct
+    dto_most_prev = $prevEntry.discountCommonPct
+    conv_pp = Round-Number ($currentEntry.convenioPct - $prevEntry.convenioPct)
+    most_pp = Round-Number ($currentEntry.mostradorPct - $prevEntry.mostradorPct)
   }
 }
 

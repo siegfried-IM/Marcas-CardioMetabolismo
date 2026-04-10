@@ -41,25 +41,31 @@
     if(!families) return;
     const converted = {};
     Object.entries(families).forEach(([brand, entry]) => {
+      const prev = entry?.prev || null;
+      const current = entry?.current || null;
+      const currConv = current?.convenioPct ?? entry?.convenioPct ?? 0;
+      const prevConv = prev?.convenioPct ?? entry?.convenioPctPrev ?? null;
+      const currMost = current?.mostradorPct ?? entry?.mostradorPct ?? 0;
+      const prevMost = prev?.mostradorPct ?? entry?.mostradorPctPrev ?? null;
       converted[brand] = {
-        unid: entry?.facturedUnits ?? 0,
-        conv: entry?.convenioPct ?? 0,
-        most: entry?.mostradorPct ?? 0,
-        conv_units: entry?.convenioUnits ?? 0,
-        most_units: entry?.mostradorUnits ?? 0,
-        dto_total: entry?.discountTotalPct ?? 0,
-        dto_conv: entry?.discountConvenioPct ?? 0,
-        dto_most: entry?.discountCommonPct ?? 0,
-        unid_prev: null,
-        conv_prev: null,
-        most_prev: null,
-        conv_units_prev: null,
-        most_units_prev: null,
-        dto_total_prev: null,
-        dto_conv_prev: null,
-        dto_most_prev: null,
-        conv_pp: null,
-        most_pp: null
+        unid: current?.facturedUnits ?? entry?.facturedUnits ?? 0,
+        conv: currConv,
+        most: currMost,
+        conv_units: current?.convenioUnits ?? entry?.convenioUnits ?? 0,
+        most_units: current?.mostradorUnits ?? entry?.mostradorUnits ?? 0,
+        dto_total: current?.discountTotalPct ?? entry?.discountTotalPct ?? 0,
+        dto_conv: current?.discountConvenioPct ?? entry?.discountConvenioPct ?? 0,
+        dto_most: current?.discountCommonPct ?? entry?.discountCommonPct ?? 0,
+        unid_prev: prev?.facturedUnits ?? entry?.facturedUnitsPrev ?? null,
+        conv_prev: prevConv,
+        most_prev: prevMost,
+        conv_units_prev: prev?.convenioUnits ?? entry?.convenioUnitsPrev ?? null,
+        most_units_prev: prev?.mostradorUnits ?? entry?.mostradorUnitsPrev ?? null,
+        dto_total_prev: prev?.discountTotalPct ?? entry?.discountTotalPctPrev ?? null,
+        dto_conv_prev: prev?.discountConvenioPct ?? entry?.discountConvenioPctPrev ?? null,
+        dto_most_prev: prev?.discountCommonPct ?? entry?.discountCommonPctPrev ?? null,
+        conv_pp: prevConv == null ? null : currConv - prevConv,
+        most_pp: prevMost == null ? null : currMost - prevMost
       };
     });
     data.canales = converted;
