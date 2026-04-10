@@ -736,17 +736,15 @@
     }
 
     setExportState(true);
-    window.setTimeout(function () {
-      try {
-        var workbook = buildWorkbook();
-        triggerWorkbookDownload(workbook, workbookFileName(dashboardData()));
-      } catch (error) {
-        console.error(error);
-        window.alert("No se pudo generar el Excel de Cardio.");
-      } finally {
-        setExportState(false);
-      }
-    }, 0);
+    try {
+      var workbook = buildWorkbook();
+      triggerWorkbookDownload(workbook, workbookFileName(dashboardData()));
+    } catch (error) {
+      console.error(error);
+      window.alert("No se pudo generar el Excel de Cardio.");
+    } finally {
+      setExportState(false);
+    }
   };
 
   document.addEventListener("DOMContentLoaded", mountExportButtons);
