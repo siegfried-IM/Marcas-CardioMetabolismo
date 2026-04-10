@@ -440,6 +440,44 @@ function Normalize-ProductKey {
   return $text.Trim()
 }
 
+function Resolve-MujerFamily {
+  param(
+    [string]$Candidate,
+    [hashtable]$MasterMap
+  )
+
+  $lookup = Normalize-ProductKey $Candidate
+  if ($lookup -and $MasterMap.ContainsKey($lookup)) {
+    return $MasterMap[$lookup]
+  }
+
+  $probe = (Normalize-Text $Candidate).ToUpper()
+  if (-not $probe) { return '' }
+  if ($probe.Contains('ISIS FREE') -or $probe -eq 'DROSPIRENONA') { return 'ISIS FREE' }
+  if ($probe.Contains('ISIS MINI 24')) { return 'ISIS MINI 24' }
+  if ($probe.Contains('ISIS MINI')) { return 'ISIS MINI' }
+  if ($probe.Contains('ISIS') -or $probe.Contains('ETINILESTRADIOL')) { return 'ISIS' }
+  if ($probe.Contains('SIDERBLUT FOLIC')) { return 'SIDERBLUT FOLICO' }
+  if ($probe.Contains('SIDERBLUT POLI')) { return 'SIDERBLUT POLI' }
+  if ($probe.Contains('SIDERBLUT COMPLEX')) { return 'SIDERBLUT COMPLEX' }
+  if ($probe.Contains('SIDERBLUT')) { return 'SIDERBLUT' }
+  if ($probe.Contains('TRIP MAGNESIO')) { return 'TRIP MAGNESIO' }
+  if ($probe.Contains('TRIP +45')) { return 'TRIP +45' }
+  if ($probe.Contains('TRIP D3 PLUS')) { return 'TRIP D3 PLUS' }
+  if ($probe.Contains('TRIP D3') -or $probe.Contains('TRIP')) { return 'TRIP D3' }
+  if ($probe.Contains('DELTROX')) { return 'DELTROX NF' }
+  if ($probe.Contains('CALCIO CITRATO') -and $probe.Contains('400')) { return 'CALCIO CITRATO DUPOMAR D3 400' }
+  if ($probe.Contains('CALCIO CITRATO')) { return 'CALCIO CITRATO DUPOMAR D3 200' }
+  if ($probe.Contains('CALCIO BASE') -and ($probe.Contains(' D ') -or $probe.EndsWith(' D') -or $probe.Contains(' D3'))) {
+    if ($probe.Contains('400')) { return 'CALCIO CITRATO DUPOMAR D3 400' }
+    if ($probe.Contains('200')) { return 'CALCIO CITRATO DUPOMAR D3 200' }
+    return 'CALCIO BASE DUPOMAR D'
+  }
+  if ($probe.Contains('CALCIO BASE')) { return 'CALCIO BASE DUPOMAR' }
+  if ($probe.Contains('CLIMATIX')) { return 'CLIMATIX' }
+  return ''
+}
+
 function Test-NormalizedProductMatch {
   param(
     [string]$Left,
@@ -649,6 +687,7 @@ if (-not (Test-Path -LiteralPath $SourceDir)) {
 }
 
 $budgetPath = Get-MatchingPath -Dir $SourceDir -Include 'ESTIMADOS VIGENTES_CARLITOS.xlsx'
+$ventaInternaPath = Get-MatchingPath -Dir $SourceDir -Include 'VENTA INTERNA_CARLITOS.xlsx'
 $rxPath = 'C:\Users\camarinaro\Downloads\RECETAS_CARLITOS 1.xlsx'
 if (-not (Test-Path -LiteralPath $rxPath)) {
   $rxPath = Get-MatchingPath -Dir $SourceDir -Include 'RECETAS_CARLITOS.xlsx'
@@ -695,6 +734,7 @@ function Open-Matrix {
 
 try {
   $budgetMatrix = Open-Matrix -Excel $excel -Path $budgetPath
+  $ventaInternaMatrix = Open-Matrix -Excel $excel -Path $ventaInternaPath
   try {
     $rxMatrix = Open-Matrix -Excel $excel -Path $rxPath
   }
@@ -779,11 +819,7 @@ $budgetTotalsBudget = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
 
 for ($r = 2; $r -le $budgetMatrix.GetLength(0); $r++) {
   $product = Normalize-Text $budgetMatrix[$r, 4]
-  $family = ''
-  $budgetLookupKey = Normalize-ProductKey $product
-  if ($budgetLookupKey -and $budgetMasterMap.ContainsKey($budgetLookupKey)) {
-    $family = $budgetMasterMap[$budgetLookupKey]
-  }
+  $family = Resolve-MujerFamily -Candidate $product -MasterMap $budgetMasterMap
   if (-not $family) {
     continue
   }
@@ -825,6 +861,72 @@ for ($r = 2; $r -le $budgetMatrix.GetLength(0); $r++) {
     totalActual = [math]::Round(($rowActual | Measure-Object -Sum).Sum, 0)
     ytd2026 = Get-YtdSum -Months $budgetMonths -Values @($rowActual) -Year 2026 -CutMonth (Get-LastNonZeroMonth -Months $budgetMonths -Values @($rowActual))
     latestActual = if ($latestIndex -ge 0) { [math]::Round($rowActual[$latestIndex], 0) } else { 0 }
+  }
+}
+
+$ventaInternaMonths = @()
+for ($c = 7; $c -le $ventaInternaMatrix.GetLength(1); $c++) {
+  $ventaInternaMonths += Normalize-MonthLabel $ventaInternaMatrix[2, $c]
+}
+
+$ventaInternaFamilies = @{}
+for ($r = 3; $r -le $ventaInternaMatrix.GetLength(0); $r++) {
+  $granFamilia = Normalize-Text $ventaInternaMatrix[$r, 2]
+  $familia = Normalize-Text $ventaInternaMatrix[$r, 3]
+  $producto = Normalize-Text $ventaInternaMatrix[$r, 4]
+  $presentacion = Normalize-Text $ventaInternaMatrix[$r, 5]
+  $resolvedFamily = Resolve-MujerFamily -Candidate $presentacion -MasterMap $budgetMasterMap
+  if (-not $resolvedFamily) { $resolvedFamily = Resolve-MujerFamily -Candidate $producto -MasterMap $budgetMasterMap }
+  if (-not $resolvedFamily) { $resolvedFamily = Resolve-MujerFamily -Candidate $familia -MasterMap $budgetMasterMap }
+  if (-not $resolvedFamily) { $resolvedFamily = Resolve-MujerFamily -Candidate $granFamilia -MasterMap $budgetMasterMap }
+  if (-not $resolvedFamily) { continue }
+
+  if (-not $ventaInternaFamilies.ContainsKey($resolvedFamily)) {
+    $ventaInternaFamilies[$resolvedFamily] = @(for ($i = 0; $i -lt $ventaInternaMonths.Count; $i++) { 0.0 })
+  }
+
+  for ($c = 7; $c -le $ventaInternaMatrix.GetLength(1); $c++) {
+    $idx = $c - 7
+    $ventaInternaFamilies[$resolvedFamily][$idx] += To-Number $ventaInternaMatrix[$r, $c]
+  }
+}
+
+foreach ($family in $ventaInternaFamilies.Keys) {
+  if (-not $budgetFamilies.Contains($family)) { continue }
+  for ($i = 0; $i -lt $ventaInternaMonths.Count; $i++) {
+    $monthKey = $ventaInternaMonths[$i]
+    $budgetIdx = $budgetMonths.IndexOf($monthKey)
+    if ($budgetIdx -ge 0) {
+      $budgetFamilies[$family].actual[$budgetIdx] = [math]::Round($ventaInternaFamilies[$family][$i], 0)
+    }
+  }
+}
+
+$ventaInternaMonthSet = New-Object 'System.Collections.Generic.HashSet[string]'
+foreach ($monthKey in $ventaInternaMonths) {
+  $ventaInternaMonthSet.Add($monthKey) | Out-Null
+}
+for ($i = 0; $i -lt $budgetMonths.Count; $i++) {
+  $monthKey = $budgetMonths[$i]
+  if ($monthKey -match '-2026$' -and -not $ventaInternaMonthSet.Contains($monthKey)) {
+    foreach ($family in $budgetFamilies.Keys) {
+      if ($family -eq 'Totales') { continue }
+      $budgetFamilies[$family].actual[$i] = 0.0
+    }
+  }
+  if ($monthKey -like 'Total *') {
+    foreach ($family in $budgetFamilies.Keys) {
+      if ($family -eq 'Totales') { continue }
+      $budgetFamilies[$family].actual[$i] = 0.0
+    }
+  }
+}
+
+$budgetTotalsActual = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+foreach ($family in $budgetFamilies.Keys) {
+  if ($family -eq 'Totales') { continue }
+  for ($i = 0; $i -lt $budgetMonths.Count; $i++) {
+    $budgetTotalsActual[$i] += [double]$budgetFamilies[$family].actual[$i]
   }
 }
 
