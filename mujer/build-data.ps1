@@ -604,6 +604,7 @@ $stockPath = Get-MatchingPath -Dir $SourceDir -Include 'STOCK Y VENTAS_ CARLITOS
 $channelPath = Get-MatchingPath -Dir $SourceDir -Include 'Convenios vs mostrador*'
 $conv2024Path = Get-MatchingPath -Dir $SourceDir -Include 'CONVENIOS VS MOSTRADOS 2024_CARLITOS.xlsx'
 $conv2025Path = Get-MatchingPath -Dir $SourceDir -Include 'Convenios vs mostrador _CARLITOS.xlsx'
+$maestroPath = Get-MatchingPath -Dir $SourceDir -Include 'MAESTRO_COM_CARLITOS.xlsx'
 $dddPath = Get-MatchingPath -Dir $SourceDir -Include 'IQUVIA_VENTAS.xlsx'
 $pmPath = Get-MatchingPath -Dir $SourceDir -Include 'IQUVIA_VENTAS.xlsx'
 $pricePath = Get-MatchingPath -Dir $SourceDir -Include 'PRECIOS_CARLITOS.xlsx'
@@ -651,6 +652,7 @@ try {
   $channelMatrix = Open-Matrix -Excel $excel -Path $channelPath
   $conv2024Matrix = Open-Matrix -Excel $excel -Path $conv2024Path
   $conv2025Matrix = Open-Matrix -Excel $excel -Path $conv2025Path
+  $maestroMatrix = Open-Matrix -Excel $excel -Path $maestroPath
   $dddMatrix = Open-Matrix -Excel $excel -Path $dddPath
   $pmMatrix = Open-Matrix -Excel $excel -Path $pmPath
   $priceMatrix = Open-Matrix -Excel $excel -Path $pricePath
@@ -660,6 +662,17 @@ finally {
   [System.Runtime.InteropServices.Marshal]::ReleaseComObject($excel) | Out-Null
   [GC]::Collect()
   [GC]::WaitForPendingFinalizers()
+}
+
+$rxMasterMap = @{}
+for ($r = 3; $r -le $maestroMatrix.GetLength(0); $r++) {
+  $familySap = Normalize-Text $maestroMatrix[$r, 5]
+  $nameIqvia = Normalize-Text $maestroMatrix[$r, 4]
+  $presSap = Normalize-Text $maestroMatrix[$r, 9]
+  if ($familySap) {
+    if ($nameIqvia) { $rxMasterMap[(Normalize-ProductKey $nameIqvia)] = $familySap.ToUpper() }
+    if ($presSap) { $rxMasterMap[(Normalize-ProductKey $presSap)] = $familySap.ToUpper() }
+  }
 }
 
 if (-not $rxMatrix) {
@@ -953,13 +966,47 @@ for ($r = 3; $r -le $rxMatrix.GetLength(0); $r++) {
   }
 
   $family = ''
+  $familyLookupKey = Normalize-ProductKey $brand
+  if ($familyLookupKey -and $rxMasterMap.ContainsKey($familyLookupKey)) {
+    $family = $rxMasterMap[$familyLookupKey]
+  }
   if ($familyRaw -match '\(([^)]+)\)') {
     $family = $matches[1].Trim().ToUpper()
   }
   else {
-    $family = $familyRaw.ToUpper()
+    if (-not $family) {
+      $family = $familyRaw.ToUpper()
+    }
     if ($family -like 'FLEXINA*') { $family = 'FLEXINA' }
     if ($family -like 'MAGNUS*') { $family = 'MAGNUS' }
+  }
+
+  if (-not ($dashboardFamilyOrder -contains $family)) {
+    $familyProbe = $familyRaw.ToUpper()
+    if ($familyProbe.Contains('DROSPIRENONA')) {
+      $family = 'ISIS'
+    }
+    elseif ($familyProbe.Contains('SIDERBLUT')) {
+      if ($familyProbe.Contains('FOLIC')) { $family = 'SIDERBLUT FOLICO' }
+      elseif ($familyProbe.Contains('POLI')) { $family = 'SIDERBLUT POLI' }
+      elseif ($familyProbe.Contains('COMPLEX')) { $family = 'SIDERBLUT COMPLEX' }
+      else { $family = 'SIDERBLUT' }
+    }
+    elseif ($familyProbe.Contains('TRIP')) {
+      if ($familyProbe.Contains('PLUS')) { $family = 'TRIP D3 PLUS' }
+      elseif ($familyProbe.Contains('+45')) { $family = 'TRIP +45' }
+      elseif ($familyProbe.Contains('MAGNESIO')) { $family = 'TRIP MAGNESIO' }
+      else { $family = 'TRIP D3' }
+    }
+    elseif ($familyProbe.Contains('CALCIO')) {
+      if ($familyProbe.Contains('CITRATO') -and $familyProbe.Contains('400')) { $family = 'CALCIO CITRATO DUPOMAR D3 400' }
+      elseif ($familyProbe.Contains('CITRATO')) { $family = 'CALCIO CITRATO DUPOMAR D3 200' }
+      elseif ($familyProbe.Contains('BASE') -and $familyProbe.Contains('D ')) { $family = 'CALCIO BASE DUPOMAR D' }
+      else { $family = 'CALCIO BASE DUPOMAR' }
+    }
+    elseif ($familyProbe.Contains('CLIMATIX')) {
+      $family = 'CLIMATIX'
+    }
   }
 
   if (-not $rxFamilies.ContainsKey($family)) {
