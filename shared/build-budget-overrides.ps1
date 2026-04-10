@@ -37,7 +37,7 @@ function Match-BudgetKey {
   foreach($entry in $Matchers){
     foreach($alias in $entry.aliases){
       $aliasNorm = Normalize-Text $alias
-      if($aliasNorm -and $norm.Contains($aliasNorm)){
+      if($aliasNorm -and ($norm -eq $aliasNorm -or $norm.StartsWith($aliasNorm + ' '))){
         return $entry.key
       }
     }
