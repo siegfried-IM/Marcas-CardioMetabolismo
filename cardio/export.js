@@ -472,18 +472,44 @@
     Object.keys(dash.precios).forEach(function (brand) {
       var presentations = dash.precios[brand] || {};
       var iqviaMap = (dash.prec_iqvia && dash.prec_iqvia[brand]) || {};
-      Object.keys(presentations).forEach(function (dose) {
-        (presentations[dose] || []).forEach(function (item) {
-          rows.push({
-            marca: brand,
-            presentacion: dose,
-            laboratorio: item.lab || "",
-            producto: item.prod || "",
-            es_siegfried: item.is_sie ? "Si" : "No",
-            pvp_prev: valueOrNull(item.pvp_dic25),
-            pvp_actual: valueOrNull(item.pvp_feb26),
-            variacion: valueOrNull(item.var),
-            iqvia_mat_unidades: valueOrNull(iqviaMap[item.prod])
+      Object.keys(presentations).forEach(function (bucket) {
+        var bucketValue = presentations[bucket] || {};
+        if (Array.isArray(bucketValue)) {
+          bucketValue.forEach(function (item) {
+            rows.push({
+              marca: brand,
+              agrupador: "",
+              presentacion: bucket,
+              laboratorio: item.lab || "",
+              producto: item.prod || "",
+              es_siegfried: item.is_sie ? "Si" : "No",
+              pvp_prev: valueOrNull(item.pvp_dic25),
+              pvp_actual: valueOrNull(item.pvp_feb26),
+              variacion: valueOrNull(item.var),
+              iqvia_mat_unidades: valueOrNull(iqviaMap[item.prod])
+            });
+          });
+          return;
+        }
+
+        Object.keys(bucketValue).forEach(function (dose) {
+          var items = bucketValue[dose];
+          if (!Array.isArray(items)) {
+            return;
+          }
+          items.forEach(function (item) {
+            rows.push({
+              marca: brand,
+              agrupador: bucket,
+              presentacion: dose,
+              laboratorio: item.lab || "",
+              producto: item.prod || "",
+              es_siegfried: item.is_sie ? "Si" : "No",
+              pvp_prev: valueOrNull(item.pvp_dic25),
+              pvp_actual: valueOrNull(item.pvp_feb26),
+              variacion: valueOrNull(item.var),
+              iqvia_mat_unidades: valueOrNull(iqviaMap[item.prod])
+            });
           });
         });
       });
@@ -498,7 +524,10 @@
     var rows = [];
     Object.keys(ddd.ddd.markets).forEach(function (market) {
       var payload = ddd.ddd.markets[market] || {};
-      (payload.monthly || []).forEach(function (item) {
+      if (!Array.isArray(payload.monthly)) {
+        return;
+      }
+      payload.monthly.forEach(function (item) {
         rows.push({
           mercado: market,
           familia: payload.family || "",
@@ -522,7 +551,10 @@
       var payload = ddd.ddd.markets[market] || {};
       var byMonth = payload.regionsByMonth || {};
       Object.keys(byMonth).forEach(function (period) {
-        (byMonth[period] || []).forEach(function (item, idx) {
+        if (!Array.isArray(byMonth[period])) {
+          return;
+        }
+        byMonth[period].forEach(function (item, idx) {
           rows.push({
             mercado: market,
             familia: payload.family || "",
@@ -548,7 +580,10 @@
       var payload = ddd.ddd.markets[market] || {};
       var byMonth = payload.productsByMonth || {};
       Object.keys(byMonth).forEach(function (period) {
-        (byMonth[period] || []).forEach(function (item, idx) {
+        if (!Array.isArray(byMonth[period])) {
+          return;
+        }
+        byMonth[period].forEach(function (item, idx) {
           rows.push({
             mercado: market,
             familia: payload.family || "",
