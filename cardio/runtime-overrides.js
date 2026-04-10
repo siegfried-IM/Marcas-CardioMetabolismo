@@ -3,6 +3,40 @@
   if(!D) return;
   window.OTC_DASHBOARD = D;
 
+  function normalizeBudgetShape(data){
+    const src = data?.budget;
+    if(!src || !Array.isArray(src.months) || !src.families || Array.isArray(src)) return;
+    const months = src.months;
+    const families = src.families;
+    const brands = (Array.isArray(data.families) ? data.families : Object.keys(families)).filter(name => name && name !== 'Totales');
+    const converted = {};
+
+    brands.forEach((brand) => {
+      const family = families[brand];
+      if(!family) return;
+      const actual = Array.isArray(family.actual) ? family.actual : [];
+      const budget = Array.isArray(family.budget) ? family.budget : [];
+      converted[brand] = {
+        '2025': { budget: [], real: [] },
+        '2026': { budget: [], real: [] }
+      };
+      months.forEach((label, idx) => {
+        const year = String(label || '').split('-')[1];
+        if(year !== '2025' && year !== '2026') return;
+        converted[brand][year].budget.push(budget[idx] ?? null);
+        converted[brand][year].real.push(actual[idx] ?? null);
+      });
+      ['2025','2026'].forEach((year) => {
+        while(converted[brand][year].budget.length < 12) converted[brand][year].budget.push(null);
+        while(converted[brand][year].real.length < 12) converted[brand][year].real.push(null);
+      });
+    });
+
+    data.budget = converted;
+  }
+
+  normalizeBudgetShape(D);
+
   D.defaults = {
     brand: 'DAURAN',
     market: 'Dapagliflozina',
@@ -36,6 +70,10 @@
     D.budget = D.budget || {};
     D.budget[family] = D.budget[family] || {};
     D.budget[family]['2026'] = D.budget[family]['2026'] || { budget:Array(12).fill(null), real:Array(12).fill(null) };
-    D.budget[family]['2026'].real = values.slice(0, 12);
+    const current = Array.isArray(D.budget[family]['2026'].real) ? D.budget[family]['2026'].real : [];
+    const hasReal = current.some(value => value != null && Number(value) !== 0);
+    if(!hasReal){
+      D.budget[family]['2026'].real = values.slice(0, 12);
+    }
   });
 })();

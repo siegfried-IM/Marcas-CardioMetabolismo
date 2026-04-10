@@ -409,6 +409,59 @@ function Test-NormalizedProductMatch {
   return $Left -eq $Right -or $Left.StartsWith($Right) -or $Right.StartsWith($Left)
 }
 
+function Resolve-InternalSalesFamily {
+  param(
+    [string]$GranFamily,
+    [string]$Family,
+    [string]$Product
+  )
+
+  $gran = (Normalize-Text $GranFamily).ToUpper()
+  $family = (Normalize-Text $Family).ToUpper()
+  $product = (Normalize-Text $Product).ToUpper()
+
+  foreach ($candidate in @($family, $gran)) {
+    switch ($candidate) {
+      'TOTALES' { return 'Totales' }
+      'DAURAN' { return 'DAURAN' }
+      'DILATREND' { return 'DILATREND' }
+      'DILATREND AP' { return 'DILATREND AP' }
+      'DILATREND D' { return 'DILATREND D' }
+      'DIOVAN' { return 'DIOVAN' }
+      'DIOVAN D' { return 'DIOVAN D' }
+      'EMPAX' { return 'EMPAX' }
+      'EMPAX MET' { return 'EMPAX MET' }
+      'ENTRESTO' { return 'ENTRESTO' }
+      'EXFORGE' { return 'EXFORGE' }
+      'EXFORGE D' { return 'EXFORGE D' }
+      'METGLUCON AP' { return 'METGLUCON AP' }
+      'METGLUCON DUO' { return 'METGLUCON DUO' }
+      'PIXABAN' { return 'PIXABAN' }
+      'ROXOLAN' { return 'ROXOLAN' }
+      'SILTRAN' { return 'SILTRAN' }
+      'SILTRAN MET' { return 'SILTRAN MET' }
+      'SINTROM' { return 'SINTROM' }
+      'TELPRES' { return 'TELPRES' }
+      'TERLOC' { return 'TERLOC' }
+    }
+  }
+
+  if ($product -eq 'TOTALES') {
+    switch ($family) {
+      'DILATREND AP' { return 'DILATREND AP' }
+      'DILATREND D' { return 'DILATREND D' }
+      'DIOVAN D' { return 'DIOVAN D' }
+      'EMPAX MET' { return 'EMPAX MET' }
+      'EXFORGE D' { return 'EXFORGE D' }
+      'METGLUCON AP' { return 'METGLUCON AP' }
+      'METGLUCON DUO' { return 'METGLUCON DUO' }
+      'SILTRAN MET' { return 'SILTRAN MET' }
+    }
+  }
+
+  return ''
+}
+
 function Classify-StockStatus {
   param([nullable[double]]$Days)
 
@@ -962,6 +1015,7 @@ if (-not (Test-Path -LiteralPath $dddDir)) {
 }
 
 $budgetPath = $null
+$internalSalesPath = try { Get-MatchingPath -Dir $dashboardDir -Include 'VENTA*' } catch { $null }
 $rxPath = Get-MatchingPath -Dir $dashboardDir -Include 'RECETAS*'
 $stockPath = Get-MatchingPath -Dir $dashboardDir -Include 'STOCK Y VENTAS*'
 $channelPath = try { Get-MatchingPath -Dir $dashboardDir -Include 'Convenios vs mostrador*' } catch { $null }
@@ -1006,6 +1060,7 @@ function Open-Matrix {
 
 try {
   $budgetMatrix = if ($budgetPath) { Open-Matrix -Excel $excel -Path $budgetPath } else { $null }
+  $internalSalesMatrix = if ($internalSalesPath) { Open-Matrix -Excel $excel -Path $internalSalesPath } else { $null }
   $rxMatrix = Open-Matrix -Excel $excel -Path $rxPath
   $stockMatrix = Open-Matrix -Excel $excel -Path $stockPath
   $channelMatrix = if ($channelPath) { Open-Matrix -Excel $excel -Path $channelPath } else { $null }
@@ -1097,6 +1152,58 @@ else {
     }
   }
   $budgetCut = 'Abr-2026'
+}
+
+if (-not $budgetPath -and $internalSalesMatrix) {
+  foreach ($family in $familyOrder) {
+    if (-not $budgetFamilies.Contains($family)) {
+      $budgetFamilies[$family] = [ordered]@{
+        actual = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+        budget = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+        compliance = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+      }
+    }
+  }
+
+  for ($r = 3; $r -le $internalSalesMatrix.GetLength(0); $r++) {
+    $granFamily = Normalize-Text $internalSalesMatrix[$r, 2]
+    $familyLabel = Normalize-Text $internalSalesMatrix[$r, 3]
+    $product = Normalize-Text $internalSalesMatrix[$r, 4]
+    $family = Resolve-InternalSalesFamily -GranFamily $granFamily -Family $familyLabel -Product $product
+    if (-not $family -or ($product -and $product -ne 'Totales')) {
+      continue
+    }
+    if (-not $budgetFamilies.Contains($family)) {
+      continue
+    }
+
+    $actualSeries = @($budgetFamilies[$family].actual)
+    for ($c = 7; $c -le $internalSalesMatrix.GetLength(1); $c++) {
+      $monthKey = Normalize-MonthLabel $internalSalesMatrix[2, $c]
+      $budgetIdx = $budgetMonths.IndexOf($monthKey)
+      if ($budgetIdx -lt 0) {
+        continue
+      }
+      $actualSeries[$budgetIdx] = To-Number $internalSalesMatrix[$r, $c]
+    }
+    $budgetFamilies[$family].actual = @($actualSeries)
+  }
+
+  $totalActual = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+  foreach ($family in $dashboardFamilyOrder) {
+    if (-not $budgetFamilies.Contains($family)) {
+      continue
+    }
+    for ($i = 0; $i -lt $budgetMonths.Count; $i++) {
+      $totalActual[$i] += To-Number $budgetFamilies[$family].actual[$i]
+    }
+  }
+  $budgetFamilies['Totales'].actual = @($totalActual)
+
+  $internalCut = Get-LastNonZeroMonth -Months $budgetMonths -Values $budgetFamilies['Totales'].actual
+  if ($internalCut) {
+    $budgetCut = $internalCut
+  }
 }
 
 $stockMonths = @()
@@ -2556,9 +2663,9 @@ $dashboardMeta = [ordered]@{
 }
 
 $dashboardDefaults = [ordered]@{
-  brand = 'ACEMUK'
-  market = 'Acemuk'
-  rec = 'ACEMUK'
+  brand = 'DAURAN'
+  market = 'Dapagliflozina'
+  rec = 'DAURAN'
 }
 
 $dashboardData = [ordered]@{
