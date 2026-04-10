@@ -86,6 +86,8 @@ function Resolve-MujerFamily([string]$Candidate) {
 
 function Normalize-MonthKey([string]$Header) {
   $raw = (Normalize-Text $Header).ToLower()
+  $raw = $raw -replace '\s+', ' '
+  $raw = $raw -replace '\.', ''
   if ($raw -match '^([a-z]{3})[ -](\d{2,4})$') {
     $mon = $matches[1]
     $year = [int]$matches[2]
@@ -116,7 +118,13 @@ function Read-WorksheetMatrixByCells([object]$Worksheet) {
     $matrix = New-Object 'object[,]' ($rows + 1), ($cols + 1)
     for ($r = 1; $r -le $rows; $r++) {
       for ($c = 1; $c -le $cols; $c++) {
-        $matrix[$r, $c] = $Worksheet.Cells.Item($r, $c).Value2
+        $cell = $Worksheet.Cells.Item($r, $c)
+        if ($r -le 2) {
+          $matrix[$r, $c] = $cell.Text
+        }
+        else {
+          $matrix[$r, $c] = $cell.Value2
+        }
       }
     }
     return ,$matrix
