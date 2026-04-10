@@ -156,14 +156,17 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
 .ms-bar{display:inline-block;height:4px;border-radius:2px;background:currentColor;opacity:.55;vertical-align:middle;margin-left:5px;}
 
 /* ── CANALES ── */
-.can-row{display:grid;grid-template-columns:110px 1fr 55px;align-items:center;gap:8px;margin-bottom:5px;}
+.can-row{display:grid;grid-template-columns:120px 1fr 88px;align-items:center;gap:10px;margin-bottom:7px;}
 .can-lbl{font-size:10px;color:#4b5563;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .can-bar{height:19px;border-radius:3px;overflow:hidden;display:flex;}
 .can-conv{background:linear-gradient(90deg,#1d4ed8,#2563eb);display:flex;align-items:center;
   padding-left:5px;font-size:9px;color:rgba(255,255,255,.85);font-weight:700;overflow:hidden;white-space:nowrap;}
 .can-most{background:linear-gradient(90deg,#92400e,#b45309);display:flex;align-items:center;
   padding-left:4px;font-size:10px;color:#ffffff;font-weight:700;font-weight:700;overflow:hidden;white-space:nowrap;}
-.can-vol{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#4b5563;}
+.can-delta{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:flex-end;gap:4px;}
+.can-delta.up{color:#15803d;}
+.can-delta.down{color:#b91c1c;}
+.can-delta.flat{color:#6b7280;}
 .can-legend{display:flex;gap:14px;font-size:10px;color:#4b5563;margin-bottom:12px;}
 .can-sq{width:12px;height:8px;border-radius:2px;display:inline-block;}
 .can-conv{--conv-clr:#2563eb;}.can-most-sq{background:#d97706 !important;}
@@ -1314,7 +1317,6 @@ function renderRecComp(prod, months){
 
 // ── CANALES ───────────────────────────────────────────────────────────
 function renderCanales(filterFam){
-  const prevYear=D.meta?.canales_prev_year||'2024';
   const currYear=D.meta?.canales_current_year||'2025';
   const allEntries=Object.entries(D.canales)
     .filter(([,v])=>Math.max(v.unid||0,v.unid_prev||0)>500 && v.conv!=null)
@@ -1332,24 +1334,21 @@ function renderCanales(filterFam){
   }
 
   document.getElementById('can-chart').innerHTML=entries.map(([fam,v])=>{
-    const currUnits=v.unid||0;
-    const prevUnits=v.unid_prev||0;
     const c=Math.max(0,Math.min(v.conv||0,100));
     const m=Math.max(0,Math.min(v.most||0,100));
-    const cPrev=v.conv_prev!=null?Math.max(0,Math.min(v.conv_prev,100)):null;
-    const mPrev=v.most_prev!=null?Math.max(0,Math.min(v.most_prev,100)):null;
     const cs=c>5?c.toFixed(0)+'%':'';
     const ms=m>5?m.toFixed(0)+'%':'';
     const pp=v.conv_pp;
-    const ppStr=pp==null?'—':`${pp>=0?'+':''}${pp.toFixed(1)} pp`;
-    const prevLine=cPrev!=null?`${prevYear}: ${cPrev.toFixed(1)}% conv / ${mPrev.toFixed(1)}% mostr.`:`${prevYear}: sin datos`;
-    return`<div class="can-row" title="${fam}: ${currYear} Conv ${c.toFixed(1)}% | Most ${m.toFixed(1)}% | ${fmt(currUnits)} u. | ${prevLine}${pp!=null?` | Δ conv ${ppStr}`:''}">
-      <span class="can-lbl" style="display:flex;flex-direction:column;gap:1px;">${fam}<span style="font-size:8px;color:#6b7280;">${currYear}: ${c.toFixed(1)}% conv${cPrev!=null?` | ${prevYear}: ${cPrev.toFixed(1)}%`:''}${pp!=null?` | Δ ${ppStr}`:''}</span></span>
+    const deltaClass=pp==null?'flat':pp>0?'up':pp<0?'down':'flat';
+    const deltaIcon=pp==null?'•':pp>0?'▲':pp<0?'▼':'•';
+    const deltaText=pp==null?'s/d':`${pp>=0?'+':''}${pp.toFixed(1)} pp`;
+    return`<div class="can-row" title="${fam}: ${currYear} Conv ${c.toFixed(1)}% | Most ${m.toFixed(1)}%${pp!=null?` | Δ convenio ${deltaText} vs año cerrado previo`:''}">
+      <span class="can-lbl">${fam}</span>
       <div class="can-bar">
         <div class="can-conv" style="width:${c}%">${cs}</div>
         <div class="can-most" style="width:${m}%">${ms}</div>
       </div>
-      <span class="can-vol" style="display:flex;flex-direction:column;align-items:flex-end;gap:1px;"><span>${currUnits>=1000?(currUnits/1000).toFixed(0)+'k':fmt(currUnits)}</span><span style="font-size:8px;color:#6b7280;">${prevYear}: ${prevUnits?fmt(prevUnits):'—'}</span></span>
+      <span class="can-delta ${deltaClass}">${deltaIcon} ${deltaText}</span>
     </div>`;
   }).join('');
 

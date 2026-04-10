@@ -568,7 +568,7 @@
   function workbookFileName(dash) {
     var footer = dash && dash.meta && dash.meta.footer_date ? dash.meta.footer_date : "";
     var stamp = footer ? footer.replace(/\//g, "-") : new Date().toISOString().slice(0, 10);
-    return "OTC_Datos_" + stamp + ".xlsx";
+    return "Cardio_Datos_" + stamp + ".xlsx";
   }
 
   function setExportState(isBusy) {
@@ -636,7 +636,7 @@
     var entries = [];
     var footer = (dash && dash.meta && dash.meta.footer_date) || (ddd && ddd.meta && ddd.meta.dddCut) || "";
     var context = {
-      title: "OTC",
+      title: "Cardio Metabolismo",
       footer: footer
     };
 
@@ -672,7 +672,7 @@
           workbook,
           seen,
           item[0],
-          "Siegfried | OTC | " + item[1],
+          "Siegfried | Cardio Metabolismo | " + item[1],
           common.makeSubtitle(context, item[2].length),
           item[2],
           {
@@ -684,7 +684,7 @@
       });
 
       common.finalizeWorkbook(workbook, context, entries, {
-        kind: "Dashboard + DDD OTC"
+        kind: "Dashboard + DDD Cardio"
       });
       return workbook;
     }
@@ -714,6 +714,37 @@
     return workbook;
   }
 
+  function triggerWorkbookDownload(workbook, fileName) {
+    if (XLSX && typeof XLSX.writeFile === "function") {
+      try {
+        XLSX.writeFile(workbook, fileName, { compression: true });
+        return;
+      } catch (primaryError) {
+        console.warn("writeFile fallo, intento fallback manual", primaryError);
+      }
+    }
+
+    var arrayBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+      compression: true
+    });
+    var blob = new Blob(
+      [arrayBuffer],
+      { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
+    );
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.setTimeout(function () {
+      URL.revokeObjectURL(url);
+    }, 1000);
+  }
+
   window.exportOtcWorkbook = function () {
     if (!common || !common.ensureStyledXlsx) {
       window.alert("No se pudo preparar la exportacion de Excel.");
@@ -730,10 +761,10 @@
         window.setTimeout(function () {
           try {
             var workbook = buildWorkbook();
-            XLSX.writeFile(workbook, workbookFileName(dashboardData()));
+            triggerWorkbookDownload(workbook, workbookFileName(dashboardData()));
           } catch (error) {
             console.error(error);
-            window.alert("No se pudo generar el Excel de OTC.");
+            window.alert("No se pudo generar el Excel de Cardio.");
           } finally {
             setExportState(false);
           }
