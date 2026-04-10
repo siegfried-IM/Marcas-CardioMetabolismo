@@ -89,10 +89,21 @@
 
   function normalizeMeta(data){
     data.meta = data.meta || {};
+    var latestLabel = data.meta.latest_month || 'Mar-2026';
+    var latestPretty = String(latestLabel).replace('-', " '");
     if(data.meta.canales_prev_year == null) data.meta.canales_prev_year = '2024';
     if(data.meta.canales_current_year == null) data.meta.canales_current_year = '2025';
     if(data.meta.conv_prev_year == null) data.meta.conv_prev_year = '2024';
     if(data.meta.conv_current_year == null) data.meta.conv_current_year = '2025';
+    data.meta.kpi_ytd_label = 'YTD ' + latestPretty;
+    data.meta.kpi_mat_label = 'MAT ' + latestPretty;
+    data.meta.kpi_ytd_prev_label = 'YTD Mar\'2025';
+    data.meta.kpi_mat_prev_label = 'MAT Mar\'2025';
+    data.meta.budget_label = latestPretty;
+    data.meta.rec_label = data.meta.rec_label || 'Recetas';
+    data.meta.canales_label = 'Marzo 2026';
+    data.meta.price_prev_label = 'Dic 2025';
+    data.meta.price_curr_label = 'Feb 2026';
   }
 
   normalizeBudgetShape(D);
