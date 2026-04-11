@@ -358,7 +358,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
       </div>
       <!-- Competitor recetas (only shown in MS% mode) -->
       <div id="rec-comp-panel" style="display:none;margin-top:14px;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;">
-        <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Top competidores por recetas · misma molécula</p>
+        <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Top competidores por recetas · misma familia</p>
         <div id="rec-comp-table"></div>
       </div>
     </div>
@@ -1252,28 +1252,11 @@ function renderRec(){
 
 function round2(v){return Math.round(v*100)/100;}
 
-function normalizeRecCompKey(key){
-  return String(key||'').replace(/\s+\(SIE\)$/,'').trim();
-}
-
-function findRecCompKey(prod){
-  const compMap=D.rec_comp||{};
-  if(compMap[prod]) return prod;
-  const clean=normalizeRecCompKey(prod);
-  if(compMap[clean]) return clean;
-  const alias=Object.keys(compMap).find(k=>{
-    const kk=normalizeRecCompKey(k);
-    return kk===clean || kk.includes(clean) || clean.includes(kk);
-  });
-  return alias||prod;
-}
-
 
 function renderRecComp(prod, months){
-  const compKey=findRecCompKey(prod);
-  const compData=D.rec_comp?.[compKey]||{};
+  const compData=D.rec_comp?.[prod]||{};
   const el=document.getElementById('rec-comp-table');
-  if(!Object.keys(compData).length){el.innerHTML='<p style="color:#4b5563;font-size:11px;">Sin datos de competidores para esta marca.</p>';return;}
+  if(!Object.keys(compData).length){el.innerHTML='<p style="color:#4b5563;font-size:11px;">Sin datos de competidores.</p>';return;}
   const lastMes=months[months.length-1];
   const prevMes=(()=>{
     if(!lastMes) return null;
@@ -1296,12 +1279,7 @@ function renderRecComp(prod, months){
   const currentYear=lastMes?parseInt(lastMes.split(' ')[1],10):2025;
   const prevYear=currentYear-1;
   const MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  el.innerHTML=`<div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:12px 14px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
-      <div style="font-size:10px;font-weight:700;color:#b01e1e;letter-spacing:.12em;text-transform:uppercase;">Competidores principales</div>
-      <div style="font-size:10px;color:#4b5563;">${compKey}</div>
-    </div>
-    <table class="pt">
+  el.innerHTML=`<table class="pt">
     <thead><tr>
       <th>Producto</th>
       <th>${lastMes||'Último corte'}</th>
@@ -1329,7 +1307,7 @@ function renderRecComp(prod, months){
         <td style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#374151;text-align:right;">${totCurr?fmt(totCurr):'—'}</td>
         <td style="font-size:9px;font-weight:700;color:${dyClr};text-align:right;">${dy!=null?(dy>=0?'+':'')+dy+'%':'—'}</td>
       </tr>`;
-    }).join('')}</tbody></table></div>`;
+    }).join('')}</tbody></table>`;
 }
 
 
