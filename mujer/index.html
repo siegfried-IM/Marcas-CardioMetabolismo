@@ -1402,12 +1402,18 @@ function renderPrecPills(){
 
 function setPrP(p){prProd=p;prDose=null;renderPrecPills();renderPrecDoses();renderPrec();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
 
+function precKeyParts(key){
+  const parts = String(key||'').split(' | ');
+  return { seq: parts[0] || '', pres: parts[1] || '', dose: parts[2] || '', qty: parts[3] || '' };
+}
+
 function renderPrecDoses(){
   const groups=D.precios[prProd]||{};
   const doses=Object.keys(groups);
   if(!prDose||!groups[prDose]) prDose=doses[0]||null;
   const brandColor = COLORS[prProd]||'#b01e1e';
   document.getElementById('prec-dose-pills').innerHTML=doses.map(d=>{
+    const seg = precKeyParts(d);
     const hasSie = groups[d].some(e=>e.is_sie);
     const isOn = d===prDose;
     const sty = isOn
@@ -1415,7 +1421,8 @@ function renderPrecDoses(){
       : hasSie
         ? `border-color:${brandColor};color:${brandColor};font-weight:500;`
         : `border-color:#d1d5db;color:#9ca3af;`;
-    return `<button class="prec-dose-pill" onclick="setPrD('${d}')" style="${sty}">${hasSie?'★ ':''}${d}</button>`;
+    const label = [seg.pres, seg.dose, seg.qty].filter(Boolean).join(' · ') || d;
+    return `<button class="prec-dose-pill" onclick="setPrD('${d}')" style="${sty}" title="${label}">${hasSie?'★ ':''}${label}</button>`;
   }).join('');
 }
 function setPrD(d){prDose=d;renderPrecDoses();renderPrec();}
@@ -1424,6 +1431,7 @@ function renderPrec(){
   const groups=D.precios[prProd]||{};
   if(!prDose||!groups[prDose]){document.getElementById('prec-content').innerHTML='';return;}
   const entries=groups[prDose];
+  const seg = precKeyParts(prDose);
   const sieEntry=entries.find(e=>e.is_sie);
   const siePvp=sieEntry?.pvp_feb26||0;
 
@@ -1444,7 +1452,7 @@ function renderPrec(){
 
   document.getElementById('prec-content').innerHTML=`
     <div class="prec-group">
-      <span class="prec-group-title">${prDose}</span>
+      <span class="prec-group-title">${[seg.pres, seg.dose, seg.qty].filter(Boolean).join(' · ') || prDose}</span>
       ${leaderEntry?`<div style="font-size:10px;color:#4b5563;margin-bottom:8px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
         <span>🏆 Líder: <strong>${leaderEntry.prod}</strong> (${leaderEntry.lab}) · ${fmt(leaderUnits)} u. MAT · PVP $${leaderPvp.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
         ${sieUnits&&leaderUnits?`<span>Siegfried: ${fmt(sieUnits)} u. <span style="font-weight:700;color:${sieUnits>=leaderUnits?'#16a34a':'#dc2626'}">(${sieUnits>=leaderUnits?'+':''}${Math.round((sieUnits/leaderUnits-1)*100)}% vs líder)</span></span>`:''}

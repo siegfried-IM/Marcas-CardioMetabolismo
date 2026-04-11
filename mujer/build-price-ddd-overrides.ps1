@@ -75,24 +75,6 @@ finally {
 
 $dddMonths = New-Object 'System.Collections.Generic.HashSet[string]'
 $dddMarkets = @{}
-$productAliasMap = @{
-  'ISIS FREE' = 'ISIS FREE'
-  'ISIS MINI 24' = 'ISIS MINI 24'
-  'ISIS MINI' = 'ISIS MINI'
-  'ISIS' = 'ISIS'
-  'SIDERBLUT FOLIC' = 'SIDERBLUT FOLICO'
-  'SIDERBLUT POLI' = 'SIDERBLUT POLI'
-  'SIDERBLUT COMPLEX' = 'SIDERBLUT COMPLEX'
-  'SIDERBLUT' = 'SIDERBLUT'
-  'TRIP D3 PLUS' = 'TRIP D3 PLUS'
-  'TRIP +45' = 'TRIP +45'
-  'TRIP MAGNESIO' = 'TRIP MAGNESIO'
-  'TRIP D3' = 'TRIP D3'
-  'DELTROX' = 'DELTROX NF'
-  'CALCIO CITRATO' = 'CALCIO CITRATO DUPOMAR D3 200'
-  'CALCIO BASE' = 'CALCIO BASE DUPOMAR'
-  'CLIMATIX' = 'CLIMATIX'
-}
 for($r=2; $r -le $ddd.GetLength(0); $r++){
   $family = Family (T $ddd[$r,2])
   if(-not $family){ continue }
@@ -105,17 +87,12 @@ for($r=2; $r -le $ddd.GetLength(0); $r++){
   if(-not $dddMarkets.Contains($family)){ $dddMarkets[$family] = @{ family=$family; latestMonth=''; productsByMonth=@{}; regionsByMonth=@{} } }
   if(-not $dddMarkets[$family].productsByMonth.Contains($month)){ $dddMarkets[$family].productsByMonth[$month] = @() }
   if(-not $dddMarkets[$family].regionsByMonth.Contains($month)){ $dddMarkets[$family].regionsByMonth[$month] = @() }
-  $normProd = $product.ToUpper()
-  $alias = $family
-  foreach($k in $productAliasMap.Keys){
-    if($normProd.Contains($k)){ $alias = $productAliasMap[$k]; break }
-  }
   $prodRows = $dddMarkets[$family].productsByMonth[$month]
-  $existing = $prodRows | Where-Object { $_.product -eq $alias } | Select-Object -First 1
+  $existing = $prodRows | Where-Object { $_.product -eq $product } | Select-Object -First 1
   if($existing){
     $existing.units += [math]::Round($units,0)
   } else {
-    $dddMarkets[$family].productsByMonth[$month] += [ordered]@{ product=$alias; units=[math]::Round($units,0); share=0; isSie=($alias -eq $family) }
+    $dddMarkets[$family].productsByMonth[$month] += [ordered]@{ product=$product; units=[math]::Round($units,0); share=0; isSie=($product -eq $family) }
   }
   $regRows = $dddMarkets[$family].regionsByMonth[$month]
   $existingReg = $regRows | Where-Object { $_.name -eq $region } | Select-Object -First 1
@@ -147,7 +124,7 @@ for($r=2; $r -le $price.GetLength(0); $r++){
   $lab = T $price[$r,7]
   if(-not $fam -or -not $pres){ continue }
   if(-not $precios.Contains($fam)){ $precios[$fam] = [ordered]@{} }
-  $presKey = @($pres, $dose, $qpres) -join ' | '
+  $presKey = @($r.ToString('000000'), $pres, $dose, $qpres) -join ' | '
   if(-not $precios[$fam].Contains($presKey)){ $precios[$fam].Add($presKey, @()) }
   $precios[$fam][$presKey] += [ordered]@{
     lab = $lab
