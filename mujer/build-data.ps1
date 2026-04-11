@@ -690,6 +690,8 @@ $rxOverridePath = 'C:\Users\camarinaro\Downloads\RECETAS LINEA MUJER MARCAS.xlsx
 $stockOverridePath = 'C:\Users\camarinaro\Downloads\STOCK Y VENTAS LINEA MUJER.xlsx'
 $convCurrentOverridePath = 'C:\Users\camarinaro\Downloads\CONVENIOS POR OS.xlsx'
 $convPrevOverridePath = 'C:\Users\camarinaro\Downloads\Detalle consumos y aportes por convenio - 10 de abril de 2026.xlsx'
+$dddOverridePath = 'C:\Users\camarinaro\Downloads\DDD LINEA MUJER.xlsx'
+$priceOverridePath = 'C:\Users\camarinaro\Downloads\PRECIO LINEA MUJER 10-04-26.xlsx'
 
 $budgetPath = Get-MatchingPath -Dir $SourceDir -Include 'ESTIMADOS VIGENTES_CARLITOS.xlsx'
 $ventaInternaPath = Get-MatchingPath -Dir $SourceDir -Include 'VENTA INTERNA_CARLITOS.xlsx'
@@ -700,9 +702,9 @@ $channelPath = Get-MatchingPath -Dir $SourceDir -Include 'Convenios vs mostrador
 $conv2024Path = if (Test-Path -LiteralPath $convPrevOverridePath) { $convPrevOverridePath } else { Get-MatchingPath -Dir $SourceDir -Include 'CONVENIOS VS MOSTRADOS 2024_CARLITOS.xlsx' }
 $conv2025Path = if (Test-Path -LiteralPath $convCurrentOverridePath) { $convCurrentOverridePath } else { Get-MatchingPath -Dir $SourceDir -Include 'Convenios vs mostrador _CARLITOS.xlsx' }
 $maestroPath = Get-MatchingPath -Dir $SourceDir -Include 'MAESTRO_COM_CARLITOS.xlsx'
-$dddPath = Get-MatchingPath -Dir $SourceDir -Include 'IQUVIA_VENTAS.xlsx'
+$dddPath = if (Test-Path -LiteralPath $dddOverridePath) { $dddOverridePath } else { Get-MatchingPath -Dir $SourceDir -Include 'IQUVIA_VENTAS.xlsx' }
 $pmPath = Get-MatchingPath -Dir $SourceDir -Include 'IQUVIA_VENTAS.xlsx'
-$pricePath = Get-MatchingPath -Dir $SourceDir -Include 'PRECIOS_CARLITOS.xlsx'
+$pricePath = if (Test-Path -LiteralPath $priceOverridePath) { $priceOverridePath } else { Get-MatchingPath -Dir $SourceDir -Include 'PRECIOS_CARLITOS.xlsx' }
 
 $excel = New-Object -ComObject Excel.Application
 $excel.Visible = $false
@@ -1502,16 +1504,21 @@ $dddMonthsSet = New-Object 'System.Collections.Generic.HashSet[string]'
 $dddMonthly = @{}
 $dddRegions = @{}
 $dddProducts = @{}
+$dddSourceIsNew = (Normalize-Text $dddMatrix[1, 2]) -eq 'Mercado'
 
 for ($r = 2; $r -le $dddMatrix.GetLength(0); $r++) {
-  $market = Normalize-Text $dddMatrix[$r, 2]
-  if (-not $dddMarketConfig.Contains($market)) {
+  $market = if ($dddSourceIsNew) {
+    Resolve-MujerFamily -Candidate (Normalize-Text $dddMatrix[$r, 2]) -MasterMap $budgetMasterMap
+  } else {
+    Normalize-Text $dddMatrix[$r, 2]
+  }
+  if (-not $market -or -not $dddMarketConfig.Contains($market)) {
     continue
   }
 
-  $month = Normalize-MonthLabel $dddMatrix[$r, 5]
+  $month = if ($dddSourceIsNew) { Normalize-MonthLabelEn $dddMatrix[$r, 5] } else { Normalize-MonthLabel $dddMatrix[$r, 5] }
   $region = Normalize-Text $dddMatrix[$r, 1]
-  $product = Normalize-Text $dddMatrix[$r, 8]
+  $product = if ($dddSourceIsNew) { Normalize-Text $dddMatrix[$r, 8] } else { Normalize-Text $dddMatrix[$r, 8] }
   $units = To-Number $dddMatrix[$r, 9]
   if (-not $month -or -not $region -or -not $product -or $units -le 0) {
     continue

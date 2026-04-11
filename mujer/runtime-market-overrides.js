@@ -19,6 +19,7 @@
 
   var D = window.MUJER_DASHBOARD || window.MUJER_DATA;
   var O = window.MUJER_MARKET_OVERRIDE;
+  var E = window.MUJER_EXTRA_OVERRIDE;
   if(!D || !O) return;
 
   D.mol_perf = O.mol_perf || D.mol_perf;
@@ -107,6 +108,21 @@
     });
     D.ddd = { months: Object.keys(markets[firstFamily].regionsByMonth || {}), markets: markets };
     D.marketShare = { months: D.ddd.months, markets: markets };
+  }
+
+  if (E) {
+    if (E.precios) {
+      D.precios = merge(D.precios || {}, E.precios);
+    }
+    if (E.ddd && E.ddd.markets) {
+      D.ddd = E.ddd;
+      D.marketShare = E.ddd;
+    }
+    if (E.priceMeta) {
+      D.meta = D.meta || {};
+      if (E.priceMeta.prevLabel) { D.meta.price_prev_label = E.priceMeta.prevLabel; }
+      if (E.priceMeta.currLabel) { D.meta.price_curr_label = E.priceMeta.currLabel; }
+    }
   }
 
   window.MUJER_DATA = D;
