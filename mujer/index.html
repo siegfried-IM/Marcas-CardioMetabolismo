@@ -1409,12 +1409,20 @@ function precKeyParts(key){
 
 function renderPrecDoses(){
   const groups=D.precios[prProd]||{};
-  const doses=Object.keys(groups);
-  if(!prDose||!groups[prDose]) prDose=doses[0]||null;
+  const doses=Object.keys(groups).sort((a,b)=>{
+    const ah=(groups[a]||[]).some(e=>!e.is_sie) ? 1 : 0;
+    const bh=(groups[b]||[]).some(e=>!e.is_sie) ? 1 : 0;
+    if(ah!==bh) return bh-ah;
+    return a.localeCompare(b);
+  });
+  if(!prDose||!groups[prDose]){
+    prDose=doses.find(d=>(groups[d]||[]).some(e=>!e.is_sie)) || doses[0] || null;
+  }
   const brandColor = COLORS[prProd]||'#b01e1e';
   document.getElementById('prec-dose-pills').innerHTML=doses.map(d=>{
     const seg = precKeyParts(d);
     const hasSie = groups[d].some(e=>e.is_sie);
+    const hasComp = groups[d].some(e=>!e.is_sie);
     const isOn = d===prDose;
     const sty = isOn
       ? `background:${brandColor};color:#fff;border-color:${brandColor};font-weight:600;`
@@ -1422,7 +1430,7 @@ function renderPrecDoses(){
         ? `border-color:${brandColor};color:${brandColor};font-weight:500;`
         : `border-color:#d1d5db;color:#9ca3af;`;
     const label = [seg.pres, seg.dose, seg.qty].filter(Boolean).join(' · ') || d;
-    return `<button class="prec-dose-pill" onclick="setPrD('${d}')" style="${sty}" title="${label}">${hasSie?'★ ':''}${label}</button>`;
+    return `<button class="prec-dose-pill" onclick="setPrD('${d}')" style="${sty}" title="${label}">${hasComp?'● ':hasSie?'★ ':''}${label}</button>`;
   }).join('');
 }
 function setPrD(d){prDose=d;renderPrecDoses();renderPrec();}
