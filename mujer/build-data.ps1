@@ -686,16 +686,19 @@ if (-not (Test-Path -LiteralPath $SourceDir)) {
   throw "La carpeta de fuentes no existe: $SourceDir"
 }
 
+$rxOverridePath = 'C:\Users\camarinaro\Downloads\RECETAS LINEA MUJER MARCAS.xlsx'
+$stockOverridePath = 'C:\Users\camarinaro\Downloads\STOCK Y VENTAS LINEA MUJER.xlsx'
+$convCurrentOverridePath = 'C:\Users\camarinaro\Downloads\CONVENIOS POR OS.xlsx'
+$convPrevOverridePath = 'C:\Users\camarinaro\Downloads\Detalle consumos y aportes por convenio - 10 de abril de 2026.xlsx'
+
 $budgetPath = Get-MatchingPath -Dir $SourceDir -Include 'ESTIMADOS VIGENTES_CARLITOS.xlsx'
 $ventaInternaPath = Get-MatchingPath -Dir $SourceDir -Include 'VENTA INTERNA_CARLITOS.xlsx'
-$rxPath = 'C:\Users\camarinaro\Downloads\RECETAS_CARLITOS 1.xlsx'
-if (-not (Test-Path -LiteralPath $rxPath)) {
-  $rxPath = Get-MatchingPath -Dir $SourceDir -Include 'RECETAS_CARLITOS.xlsx'
-}
-$stockPath = Get-MatchingPath -Dir $SourceDir -Include 'STOCK Y VENTAS_ CARLITOS.xlsx'
+$rxPath = if (Test-Path -LiteralPath $rxOverridePath) { $rxOverridePath } else { 'C:\Users\camarinaro\Downloads\RECETAS_CARLITOS 1.xlsx' }
+if (-not (Test-Path -LiteralPath $rxPath)) { $rxPath = Get-MatchingPath -Dir $SourceDir -Include 'RECETAS_CARLITOS.xlsx' }
+$stockPath = if (Test-Path -LiteralPath $stockOverridePath) { $stockOverridePath } else { Get-MatchingPath -Dir $SourceDir -Include 'STOCK Y VENTAS_ CARLITOS.xlsx' }
 $channelPath = Get-MatchingPath -Dir $SourceDir -Include 'Convenios vs mostrador*'
-$conv2024Path = Get-MatchingPath -Dir $SourceDir -Include 'CONVENIOS VS MOSTRADOS 2024_CARLITOS.xlsx'
-$conv2025Path = Get-MatchingPath -Dir $SourceDir -Include 'Convenios vs mostrador _CARLITOS.xlsx'
+$conv2024Path = if (Test-Path -LiteralPath $convPrevOverridePath) { $convPrevOverridePath } else { Get-MatchingPath -Dir $SourceDir -Include 'CONVENIOS VS MOSTRADOS 2024_CARLITOS.xlsx' }
+$conv2025Path = if (Test-Path -LiteralPath $convCurrentOverridePath) { $convCurrentOverridePath } else { Get-MatchingPath -Dir $SourceDir -Include 'Convenios vs mostrador _CARLITOS.xlsx' }
 $maestroPath = Get-MatchingPath -Dir $SourceDir -Include 'MAESTRO_COM_CARLITOS.xlsx'
 $dddPath = Get-MatchingPath -Dir $SourceDir -Include 'IQUVIA_VENTAS.xlsx'
 $pmPath = Get-MatchingPath -Dir $SourceDir -Include 'IQUVIA_VENTAS.xlsx'
@@ -763,12 +766,185 @@ for ($r = 3; $r -le $maestroMatrix.GetLength(0); $r++) {
   $familySap = Normalize-Text $maestroMatrix[$r, 5]
   $nameIqvia = Normalize-Text $maestroMatrix[$r, 4]
   $presSap = Normalize-Text $maestroMatrix[$r, 9]
+  $familyCanonical = ''
   if ($familySap) {
-    if ($nameIqvia) { $rxMasterMap[(Normalize-ProductKey $nameIqvia)] = $familySap.ToUpper() }
-    if ($presSap) { $rxMasterMap[(Normalize-ProductKey $presSap)] = $familySap.ToUpper() }
-    if ($presSap) { $budgetMasterMap[(Normalize-ProductKey $presSap)] = $familySap.ToUpper() }
+    $familyCanonical = Resolve-MujerFamily -Candidate $familySap -MasterMap @{}
+    if (-not $familyCanonical) { $familyCanonical = Resolve-MujerFamily -Candidate $nameIqvia -MasterMap @{} }
+    if (-not $familyCanonical) { $familyCanonical = Resolve-MujerFamily -Candidate $presSap -MasterMap @{} }
+    if (-not $familyCanonical) { $familyCanonical = $familySap.ToUpper() }
+    if ($nameIqvia) { $rxMasterMap[(Normalize-ProductKey $nameIqvia)] = $familyCanonical }
+    if ($presSap) { $rxMasterMap[(Normalize-ProductKey $presSap)] = $familyCanonical }
+    if ($presSap) { $budgetMasterMap[(Normalize-ProductKey $presSap)] = $familyCanonical }
   }
 }
+
+function Convert-MujerRecetasMatrix {
+  param(
+    [object[,]]$Matrix,
+    [hashtable]$MasterMap
+  )
+
+  if (-not $Matrix -or $Matrix.GetLength(0) -lt 3 -or (Normalize-Text $Matrix[2, 4]) -ne 'Cant. Recetas') {
+    return ,$Matrix
+  }
+
+  $months = New-Object 'System.Collections.Generic.List[string]'
+  for ($c = 4; $c -le $Matrix.GetLength(1); $c += 2) {
+    $month = Normalize-MonthLabel $Matrix[1, $c]
+    if ($month) {
+      $months.Add($month)
+    }
+  }
+
+  $familyTotals = @{}
+  $brandRows = @{}
+  for ($r = 3; $r -le $Matrix.GetLength(0); $r++) {
+    $market = Normalize-Text $Matrix[$r, 1]
+    $molecule = Normalize-Text $Matrix[$r, 2]
+    $brand = Normalize-Text $Matrix[$r, 3]
+    if (-not $brand) {
+      continue
+    }
+
+    $family = Resolve-MujerFamily -Candidate $brand -MasterMap $MasterMap
+    if (-not $family) { $family = Resolve-MujerFamily -Candidate $market -MasterMap $MasterMap }
+    if (-not $family) { $family = Resolve-MujerFamily -Candidate $molecule -MasterMap $MasterMap }
+    if (-not $family -or -not ($dashboardFamilyOrder -contains $family)) {
+      continue
+    }
+
+    if (-not $familyTotals.ContainsKey($family)) {
+      $familyTotals[$family] = @{
+        prescriptions = @(for ($i = 0; $i -lt $months.Count; $i++) { 0.0 })
+        doctors = @(for ($i = 0; $i -lt $months.Count; $i++) { 0.0 })
+      }
+    }
+
+    $brandName = if ($brand -eq 'Totales') { '' } else { $brand }
+    if ($brandName) {
+      if (-not $brandRows.ContainsKey($family)) {
+        $brandRows[$family] = @{}
+      }
+      if (-not $brandRows[$family].ContainsKey($brandName)) {
+        $brandRows[$family][$brandName] = @{
+          prescriptions = @(for ($i = 0; $i -lt $months.Count; $i++) { 0.0 })
+          doctors = @(for ($i = 0; $i -lt $months.Count; $i++) { 0.0 })
+        }
+      }
+    }
+
+    $idx = 0
+    for ($c = 4; $c -le $Matrix.GetLength(1) -and $idx -lt $months.Count; $c += 2) {
+      $rxValue = To-Number $Matrix[$r, $c]
+      $docValue = if (($c + 1) -le $Matrix.GetLength(1)) { To-Number $Matrix[$r, ($c + 1)] } else { 0.0 }
+      $familyTotals[$family].prescriptions[$idx] += $rxValue
+      $familyTotals[$family].doctors[$idx] += $docValue
+      if ($brandName) {
+        $brandRows[$family][$brandName].prescriptions[$idx] += $rxValue
+        $brandRows[$family][$brandName].doctors[$idx] += $docValue
+      }
+      $idx++
+    }
+  }
+
+  $outputRows = New-Object System.Collections.Generic.List[object]
+  foreach ($family in $dashboardFamilyOrder) {
+    if (-not $familyTotals.ContainsKey($family)) {
+      continue
+    }
+    $outputRows.Add([pscustomobject]@{
+      family = $family
+      brand = 'Totales'
+      prescriptions = $familyTotals[$family].prescriptions
+      doctors = $familyTotals[$family].doctors
+    }) | Out-Null
+
+    if ($brandRows.ContainsKey($family)) {
+      foreach ($brandName in ($brandRows[$family].Keys | Sort-Object)) {
+        $outputRows.Add([pscustomobject]@{
+          family = $family
+          brand = $brandName
+          prescriptions = $brandRows[$family][$brandName].prescriptions
+          doctors = $brandRows[$family][$brandName].doctors
+        }) | Out-Null
+      }
+    }
+  }
+
+  $out = [Array]::CreateInstance([object], @([int](2 + $outputRows.Count), [int](3 + ($months.Count * 2))), @(1, 1))
+  for ($i = 0; $i -lt $months.Count; $i++) {
+    $out[1, (4 + ($i * 2))] = $months[$i]
+    $out[1, (5 + ($i * 2))] = $months[$i]
+  }
+  $row = 3
+  foreach ($item in $outputRows) {
+    $out[$row, 2] = $item.family
+    $out[$row, 3] = $item.brand
+    for ($i = 0; $i -lt $months.Count; $i++) {
+      $out[$row, (4 + ($i * 2))] = [math]::Round([double]$item.prescriptions[$i], 0)
+      $out[$row, (5 + ($i * 2))] = [math]::Round([double]$item.doctors[$i], 0)
+    }
+    $row++
+  }
+
+  return ,$out
+}
+
+function Convert-MujerConveniosMatrix {
+  param([object[,]]$Matrix)
+
+  if (-not $Matrix -or $Matrix.GetLength(0) -lt 2 -or (Normalize-Text $Matrix[1, 4]) -ne 'ObraSocial1') {
+    return ,$Matrix
+  }
+
+  $rows = New-Object System.Collections.Generic.List[object]
+  for ($r = 2; $r -le $Matrix.GetLength(0); $r++) {
+    $family = Normalize-Text $Matrix[$r, 3]
+    $os1 = Normalize-Text $Matrix[$r, 4]
+    $os2 = Normalize-Text $Matrix[$r, 5]
+    $product = Normalize-Text $Matrix[$r, 6]
+    $units = To-Number $Matrix[$r, 7]
+    if (-not $family -or -not $os1 -or $units -le 0) {
+      continue
+    }
+    if ($os2 -and $os2 -ne 'Totales') {
+      continue
+    }
+    if ($product -and $product -ne 'Totales') {
+      continue
+    }
+    $resolvedFamily = Resolve-MujerFamily -Candidate $family -MasterMap $budgetMasterMap
+    if (-not $resolvedFamily) {
+      $resolvedFamily = $family.ToUpper()
+    }
+    if (-not ($familyOrder -contains $resolvedFamily)) {
+      continue
+    }
+
+    $rows.Add([pscustomobject]@{
+      family = $resolvedFamily
+      os = $os1
+      units = [math]::Round($units, 0)
+    }) | Out-Null
+  }
+
+  $out = [Array]::CreateInstance([object], @([int](1 + $rows.Count), [int]5), @(1, 1))
+  $out[1, 3] = 'Familia'
+  $out[1, 4] = 'OS'
+  $out[1, 5] = 'Units'
+  $row = 2
+  foreach ($item in $rows) {
+    $out[$row, 3] = $item.family
+    $out[$row, 4] = $item.os
+    $out[$row, 5] = $item.units
+    $row++
+  }
+  return ,$out
+}
+
+$rxMatrix = Convert-MujerRecetasMatrix -Matrix $rxMatrix -MasterMap $rxMasterMap
+$conv2024Matrix = Convert-MujerConveniosMatrix -Matrix $conv2024Matrix
+$conv2025Matrix = Convert-MujerConveniosMatrix -Matrix $conv2025Matrix
 
 if (-not $rxMatrix) {
   $rxMonthsFallback = @(
@@ -818,6 +994,10 @@ $budgetTotalsActual = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
 $budgetTotalsBudget = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
 
 for ($r = 2; $r -le $budgetMatrix.GetLength(0); $r++) {
+  $line = Normalize-Text $budgetMatrix[$r, 2]
+  if ($line -and $line.ToUpper() -ne 'MUJER') {
+    continue
+  }
   $product = Normalize-Text $budgetMatrix[$r, 4]
   $family = Resolve-MujerFamily -Candidate $product -MasterMap $budgetMasterMap
   if (-not $family) {
@@ -954,8 +1134,13 @@ $stockFamilies = [ordered]@{}
 $stockProducts = [ordered]@{}
 $stockProductSeries = [ordered]@{}
 for ($r = 3; $r -le $stockMatrix.GetLength(0); $r++) {
-  $family = Normalize-Text $stockMatrix[$r, 2]
+  $familyRaw = Normalize-Text $stockMatrix[$r, 2]
   $product = Normalize-Text $stockMatrix[$r, 3]
+  $family = $familyRaw
+  if ($familyRaw -and $familyRaw -ne 'Totales') {
+    $family = Resolve-MujerFamily -Candidate $familyRaw -MasterMap $budgetMasterMap
+    if (-not $family) { $family = Resolve-MujerFamily -Candidate $product -MasterMap $budgetMasterMap }
+  }
   if (-not $family) {
     continue
   }
@@ -979,6 +1164,10 @@ for ($r = 3; $r -le $stockMatrix.GetLength(0); $r++) {
       billing = @($billingSeries)
       days = @($daysSeries)
     })
+    continue
+  }
+
+  if (-not ($familyOrder -contains $family)) {
     continue
   }
 
@@ -1011,6 +1200,35 @@ foreach ($family in @($stockProducts.Keys)) {
       Select-Object -First 8
   )
 }
+
+foreach ($family in $stockFamilies.Keys) {
+  if (-not $budgetFamilies.Contains($family)) {
+    continue
+  }
+  for ($i = 0; $i -lt $stockMonths.Count; $i++) {
+    $monthKey = $stockMonths[$i]
+    $budgetIdx = $budgetMonths.IndexOf($monthKey)
+    if ($budgetIdx -ge 0) {
+      $budgetFamilies[$family].actual[$budgetIdx] = [math]::Round([double]$stockFamilies[$family].sales[$i], 0)
+    }
+  }
+}
+
+$budgetTotalsActual = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 0.0 })
+foreach ($family in $budgetFamilies.Keys) {
+  if ($family -eq 'Totales') { continue }
+  for ($i = 0; $i -lt $budgetMonths.Count; $i++) {
+    $budgetTotalsActual[$i] += [double]$budgetFamilies[$family].actual[$i]
+  }
+}
+
+$budgetFamilies['Totales'] = [ordered]@{
+  actual = @($budgetTotalsActual | ForEach-Object { [math]::Round($_, 0) })
+  budget = @($budgetTotalsBudget | ForEach-Object { [math]::Round($_, 0) })
+  compliance = @(for ($i = 0; $i -lt $budgetMonths.Count; $i++) { 100.0 })
+}
+
+$budgetCut = Get-LastNonZeroMonth -Months $budgetMonths -Values $budgetFamilies['Totales'].actual
 
 $channelFamilies = [ordered]@{}
 for ($r = 2; $r -le $channelMatrix.GetLength(0); $r++) {
