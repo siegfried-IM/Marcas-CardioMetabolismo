@@ -75,6 +75,24 @@ finally {
 
 $dddMonths = New-Object 'System.Collections.Generic.HashSet[string]'
 $dddMarkets = @{}
+$productAliasMap = @{
+  'ISIS FREE' = 'ISIS FREE'
+  'ISIS MINI 24' = 'ISIS MINI 24'
+  'ISIS MINI' = 'ISIS MINI'
+  'ISIS' = 'ISIS'
+  'SIDERBLUT FOLIC' = 'SIDERBLUT FOLICO'
+  'SIDERBLUT POLI' = 'SIDERBLUT POLI'
+  'SIDERBLUT COMPLEX' = 'SIDERBLUT COMPLEX'
+  'SIDERBLUT' = 'SIDERBLUT'
+  'TRIP D3 PLUS' = 'TRIP D3 PLUS'
+  'TRIP +45' = 'TRIP +45'
+  'TRIP MAGNESIO' = 'TRIP MAGNESIO'
+  'TRIP D3' = 'TRIP D3'
+  'DELTROX' = 'DELTROX NF'
+  'CALCIO CITRATO' = 'CALCIO CITRATO DUPOMAR D3 200'
+  'CALCIO BASE' = 'CALCIO BASE DUPOMAR'
+  'CLIMATIX' = 'CLIMATIX'
+}
 for($r=2; $r -le $ddd.GetLength(0); $r++){
   $family = Family (T $ddd[$r,2])
   if(-not $family){ continue }
@@ -87,8 +105,25 @@ for($r=2; $r -le $ddd.GetLength(0); $r++){
   if(-not $dddMarkets.Contains($family)){ $dddMarkets[$family] = @{ family=$family; latestMonth=''; productsByMonth=@{}; regionsByMonth=@{} } }
   if(-not $dddMarkets[$family].productsByMonth.Contains($month)){ $dddMarkets[$family].productsByMonth[$month] = @() }
   if(-not $dddMarkets[$family].regionsByMonth.Contains($month)){ $dddMarkets[$family].regionsByMonth[$month] = @() }
-  $dddMarkets[$family].productsByMonth[$month] += [ordered]@{ product=$product; units=[math]::Round($units,0); share=0; isSie=($product.ToUpper().Contains($family)) }
-  $dddMarkets[$family].regionsByMonth[$month] += [ordered]@{ name=$region; rr='__NAC__'; total=[math]::Round($units,0); sie=0; share=0 }
+  $normProd = $product.ToUpper()
+  $alias = $family
+  foreach($k in $productAliasMap.Keys){
+    if($normProd.Contains($k)){ $alias = $productAliasMap[$k]; break }
+  }
+  $prodRows = $dddMarkets[$family].productsByMonth[$month]
+  $existing = $prodRows | Where-Object { $_.product -eq $alias } | Select-Object -First 1
+  if($existing){
+    $existing.units += [math]::Round($units,0)
+  } else {
+    $dddMarkets[$family].productsByMonth[$month] += [ordered]@{ product=$alias; units=[math]::Round($units,0); share=0; isSie=($alias -eq $family) }
+  }
+  $regRows = $dddMarkets[$family].regionsByMonth[$month]
+  $existingReg = $regRows | Where-Object { $_.name -eq $region } | Select-Object -First 1
+  if($existingReg){
+    $existingReg.total += [math]::Round($units,0)
+  } else {
+    $dddMarkets[$family].regionsByMonth[$month] += [ordered]@{ name=$region; rr='__NAC__'; total=[math]::Round($units,0); sie=0; share=0 }
+  }
 }
 
 $dddMonthsSorted = @($dddMonths | Sort-Object { MonthSort $_ })
@@ -107,13 +142,19 @@ for($r=2; $r -le $price.GetLength(0); $r++){
   $fam = Family (T $price[$r,3])
   $prod = T $price[$r,3]
   $pres = T $price[$r,4]
+  $dose = T $price[$r,5]
+  $qpres = T $price[$r,12]
   $lab = T $price[$r,7]
   if(-not $fam -or -not $pres){ continue }
   if(-not $precios.Contains($fam)){ $precios[$fam] = [ordered]@{} }
-  if(-not $precios[$fam].Contains($pres)){ $precios[$fam].Add($pres, @()) }
-  $precios[$fam][$pres] += [ordered]@{
+  $presKey = @($pres, $dose, $qpres) -join ' | '
+  if(-not $precios[$fam].Contains($presKey)){ $precios[$fam].Add($presKey, @()) }
+  $precios[$fam][$presKey] += [ordered]@{
     lab = $lab
     prod = $prod
+    dose = $dose
+    qty = $qpres
+    presentation = $pres
     is_sie = $lab.ToUpper().Contains('SIEGFRIED')
     pvp_dic25 = [math]::Round((N $price[$r,13]),2)
     pvp_feb26 = [math]::Round((N $price[$r,14]),2)
