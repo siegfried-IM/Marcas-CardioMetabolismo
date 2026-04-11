@@ -1409,10 +1409,18 @@ function precKeyParts(key){
 
 function renderPrecDoses(){
   const groups=D.precios[prProd]||{};
-  const doses=Object.keys(groups);
-  if(!prDose||!groups[prDose]) prDose=doses[0]||null;
+  const doses=Object.keys(groups).sort((a,b)=>{
+    const ah=(groups[a]||[]).some(e=>!e.is_sie) ? 1 : 0;
+    const bh=(groups[b]||[]).some(e=>!e.is_sie) ? 1 : 0;
+    if(ah!==bh) return bh-ah;
+    return a.localeCompare(b);
+  });
+  if(!prDose||!groups[prDose]){
+    prDose=doses.find(d=>(groups[d]||[]).some(e=>!e.is_sie)) || doses[0] || null;
+  }
   const brandColor = COLORS[prProd]||'#b01e1e';
   document.getElementById('prec-dose-pills').innerHTML=doses.map(d=>{
+    const seg = precKeyParts(d);
     const hasSie = groups[d].some(e=>e.is_sie);
     const hasComp = groups[d].some(e=>!e.is_sie);
     const isOn = d===prDose;
@@ -1429,69 +1437,73 @@ function setPrD(d){prDose=d;renderPrecDoses();renderPrec();}
 
 function renderPrec(){
   const groups=D.precios[prProd]||{};
-  if(!prDose||!groups[prDose]){document.getElementById('prec-content').innerHTML='';return;}
-  const entries=groups[prDose];
-  const sieEntry=entries.find(e=>e.is_sie);
-  const siePvp=sieEntry?.pvp_feb26||0;
+  if(!Object.keys(groups).length){document.getElementById('prec-content').innerHTML='';return;}
 
   const iqviaMap = D.prec_iqvia?.[prProd] || {};
-  const sortedEntries = [...entries].sort((a,b)=>{
-    if(a.is_sie) return -1; if(b.is_sie) return 1;
-    const ua = getIqviaUnits(iqviaMap,a.prod) || 0;
-    const ub = getIqviaUnits(iqviaMap,b.prod) || 0;
-    return ub - ua;
-  });
-  const leaderEntry = [...sortedEntries].sort((a,b)=>(getIqviaUnits(iqviaMap,b.prod)||0)-(getIqviaUnits(iqviaMap,a.prod)||0))[0];
-  const leaderUnits = leaderEntry ? (getIqviaUnits(iqviaMap,leaderEntry.prod)||0) : 0;
-  const leaderPvp   = leaderEntry?.pvp_feb26 || 0;
-  const sieUnits = getIqviaUnits(iqviaMap,sieEntry?.prod||'') || 0;
-
-  document.getElementById('prec-content').innerHTML=`
-    <div class="prec-group">
-      <span class="prec-group-title">${prDose}</span>
-      ${leaderEntry?`<div style="font-size:10px;color:#4b5563;margin-bottom:8px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-        <span>🏆 Líder: <strong>${leaderEntry.prod}</strong> (${leaderEntry.lab}) · ${fmt(leaderUnits)} u. MAT · PVP $${leaderPvp.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
-        ${sieUnits&&leaderUnits?`<span>Siegfried: ${fmt(sieUnits)} u. <span style="font-weight:700;color:${sieUnits>=leaderUnits?'#16a34a':'#dc2626'}">(${sieUnits>=leaderUnits?'+':''}${Math.round((sieUnits/leaderUnits-1)*100)}% vs líder)</span></span>`:''}
-      </div>`:''}
-      <table class="pct-table">
-        <thead><tr>
-          <th>Laboratorio</th><th>Producto</th><th>${D.meta.price_prev_label}</th><th>${D.meta.price_curr_label}</th><th>Var.</th><th>vs SIE</th><th title="${D.meta.price_curr_label} vs el líder por volumen IQVIA MAT">vs Líder 🏆</th><th title="Unidades MAT IQVIA">IQVIA MAT u.</th><th>Rk</th>
-        </tr></thead>
-        <tbody>${sortedEntries.map((e)=>{
-          const vp=e.var!=null?Math.round(e.var*100):null;
-          const vsSie=(!e.is_sie&&siePvp&&e.pvp_feb26)?((e.pvp_feb26/siePvp-1)*100):null;
-          const vsSieStr=vsSie==null?'—':vsSie>=0
-            ?`<span class="pricier-tag">+${vsSie.toFixed(1)}%</span>`
-            :`<span class="cheaper-tag">${vsSie.toFixed(1)}%</span>`;
-          let vsLiderStr='—';
-          if(leaderPvp && e.pvp_feb26){
-            if(e===leaderEntry){
-              vsLiderStr=`<span style="font-size:9px;font-weight:700;color:#b01e1e;">🏆 Líder</span>`;
-            } else {
-              const vsL=(e.pvp_feb26/leaderPvp-1)*100;
-              vsLiderStr=vsL>=0
-                ?`<span class="pricier-tag">+${vsL.toFixed(1)}%</span>`
-                :`<span class="cheaper-tag">${vsL.toFixed(1)}%</span>`;
+  const blocks = Object.entries(groups).map(([doseKey, entries])=>{
+    const seg = precKeyParts(doseKey);
+    const sieEntry = entries.find(e=>e.is_sie);
+    const siePvp = sieEntry?.pvp_feb26 || 0;
+    const sortedEntries = [...entries].sort((a,b)=>{
+      if(a.is_sie) return -1; if(b.is_sie) return 1;
+      const ua = getIqviaUnits(iqviaMap,a.prod) || 0;
+      const ub = getIqviaUnits(iqviaMap,b.prod) || 0;
+      return ub - ua;
+    });
+    const leaderEntry = [...sortedEntries].sort((a,b)=>(getIqviaUnits(iqviaMap,b.prod)||0)-(getIqviaUnits(iqviaMap,a.prod)||0))[0];
+    const leaderUnits = leaderEntry ? (getIqviaUnits(iqviaMap,leaderEntry.prod)||0) : 0;
+    const leaderPvp   = leaderEntry?.pvp_feb26 || 0;
+    const sieUnits = getIqviaUnits(iqviaMap,sieEntry?.prod||'') || 0;
+    const title = [seg.pres, seg.dose, seg.qty].filter(Boolean).join(' · ') || doseKey;
+    return `
+      <div class="prec-group">
+        <span class="prec-group-title">${title}</span>
+        ${leaderEntry?`<div style="font-size:10px;color:#4b5563;margin-bottom:8px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+          <span>🏆 Líder: <strong>${leaderEntry.prod}</strong> (${leaderEntry.lab}) · ${fmt(leaderUnits)} u. MAT · PVP $${leaderPvp.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+          ${sieUnits&&leaderUnits?`<span>Siegfried: ${fmt(sieUnits)} u. <span style="font-weight:700;color:${sieUnits>=leaderUnits?'#16a34a':'#dc2626'}">(${sieUnits>=leaderUnits?'+':''}${Math.round((sieUnits/leaderUnits-1)*100)}% vs líder)</span></span>`:''}
+        </div>`:''}
+        <table class="pct-table">
+          <thead><tr>
+            <th>Laboratorio</th><th>Producto</th><th>${D.meta.price_prev_label}</th><th>${D.meta.price_curr_label}</th><th>Var.</th><th>vs SIE</th><th title="${D.meta.price_curr_label} vs el líder por volumen IQVIA MAT">vs Líder 🏆</th><th title="Unidades MAT IQVIA">IQVIA MAT u.</th><th>Rk</th>
+          </tr></thead>
+          <tbody>${sortedEntries.map((e)=>{
+            const vp=e.var!=null?Math.round(e.var*100):null;
+            const vsSie=(!e.is_sie&&siePvp&&e.pvp_feb26)?((e.pvp_feb26/siePvp-1)*100):null;
+            const vsSieStr=vsSie==null?'—':vsSie>=0
+              ?`<span class="pricier-tag">+${vsSie.toFixed(1)}%</span>`
+              :`<span class="cheaper-tag">${vsSie.toFixed(1)}%</span>`;
+            let vsLiderStr='—';
+            if(leaderPvp && e.pvp_feb26){
+              if(e===leaderEntry){
+                vsLiderStr=`<span style="font-size:9px;font-weight:700;color:#b01e1e;">🏆 Líder</span>`;
+              } else {
+                const vsL=(e.pvp_feb26/leaderPvp-1)*100;
+                vsLiderStr=vsL>=0
+                  ?`<span class="pricier-tag">+${vsL.toFixed(1)}%</span>`
+                  :`<span class="cheaper-tag">${vsL.toFixed(1)}%</span>`;
+              }
             }
-          }
-          const iqvU = getIqviaUnits(iqviaMap,e.prod) || null;
-          const allUnits = sortedEntries.map(x=>getIqviaUnits(iqviaMap,x.prod)||0).sort((a,b)=>b-a);
-          const rank = iqvU ? allUnits.indexOf(iqvU)+1 : null;
-          const rankStr = rank==null?'—':`<span style="font-size:9px;font-weight:700;color:${rank===1?'#b01e1e':rank<=3?'#d97706':'#4b5563'};">#${rank}</span>`;
-          return`<tr class="${e.is_sie?'sie-pr':''}">
-            <td style="font-weight:${e.is_sie?600:400}">${e.lab}${e.is_sie?'<span class="sie-tag">★ SIE</span>':''}</td>
-            <td>${e.prod}</td>
-            <td class="mono">$${e.pvp_dic25?.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})||'—'}</td>
-            <td class="mono">$${e.pvp_feb26?.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})||'—'}</td>
-            <td><span class="var-up">${vp!=null?(vp>=0?'+':'')+vp+'%':'—'}</span></td>
-            <td>${e.is_sie?'<span style="font-size:9px;color:#4b5563;">—</span>':vsSieStr}</td>
-            <td style="text-align:center;">${vsLiderStr}</td>
-            <td class="mono" style="color:${iqvU?'#111827':'#9ca3af'};font-size:10px;">${iqvU?fmt(iqvU):'—'}</td>
-            <td>${rankStr}</td>
-          </tr>`;
-        }).join('')}</tbody>
-      </table>
-    </div>`;
+            const iqvU = getIqviaUnits(iqviaMap,e.prod) || null;
+            const allUnits = sortedEntries.map(x=>getIqviaUnits(iqviaMap,x.prod)||0).sort((a,b)=>b-a);
+            const rank = iqvU ? allUnits.indexOf(iqvU)+1 : null;
+            const rankStr = rank==null?'—':`<span style="font-size:9px;font-weight:700;color:${rank===1?'#b01e1e':rank<=3?'#d97706':'#4b5563'};">#${rank}</span>`;
+            return`<tr class="${e.is_sie?'sie-pr':''}">
+              <td style="font-weight:${e.is_sie?600:400}">${e.lab}${e.is_sie?'<span class="sie-tag">★ SIE</span>':''}</td>
+              <td>${e.prod}</td>
+              <td class="mono">$${e.pvp_dic25?.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})||'—'}</td>
+              <td class="mono">$${e.pvp_feb26?.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})||'—'}</td>
+              <td><span class="var-up">${vp!=null?(vp>=0?'+':'')+vp+'%':'—'}</span></td>
+              <td>${e.is_sie?'<span style="font-size:9px;color:#4b5563;">—</span>':vsSieStr}</td>
+              <td style="text-align:center;">${vsLiderStr}</td>
+              <td class="mono" style="color:${iqvU?'#111827':'#9ca3af'};font-size:10px;">${iqvU?fmt(iqvU):'—'}</td>
+              <td>${rankStr}</td>
+            </tr>`;
+          }).join('')}</tbody>
+        </table>
+      </div>`;
+  }).join('');
+
+  document.getElementById('prec-content').innerHTML = blocks;
 }
 
 
