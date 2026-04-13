@@ -1408,8 +1408,15 @@ function precKeyParts(key){
 }
 
 function precLabelFromKey(key){
-  const seg = precKeyParts(key);
-  return [seg.seq, seg.pres, seg.dose, seg.qty].filter(Boolean).join(' · ') || String(key||'').trim();
+  const raw = String(key||'').toLowerCase();
+  const qtyMatch = raw.match(/\bx\s*(\d+)\b/);
+  const baseQty = qtyMatch ? qtyMatch[1] : '';
+  const isEnv = raw.includes('env.doble') || raw.includes('env doble');
+  const isTriple = raw.includes('(28 x 3)') || raw.includes('x 3');
+  if (!baseQty) return String(key||'').trim();
+  if (isEnv) return `${baseQty} env. doble`;
+  if (isTriple) return `${baseQty} (28 x 3)`;
+  return baseQty;
 }
 
 function renderPrecDoses(){
