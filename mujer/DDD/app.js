@@ -203,13 +203,18 @@ function rKPI(mk){
   const firstRow = ar === '__NAC__' ? natRow(mk, first) : regionRow(mk, ar, first);
   const latestMs = Number(ar === '__NAC__' ? latestRow.ms : latestRow.share || 0);
   const firstMs = Number(ar === '__NAC__' ? firstRow.ms : firstRow.share || 0);
-  const diff = +(latestMs - firstMs).toFixed(1);
+  const msChange = +(latestMs - firstMs).toFixed(1);
+  const marketFirst = ar === '__NAC__' ? firstRow.total : natRow(mk, first).total;
+  const marketLatest = ar === '__NAC__' ? latestRow.total : natRow(mk, latest).total;
+  const marketGrowth = marketFirst > 0 ? +(((marketLatest / marketFirst) - 1) * 100).toFixed(1) : 0;
+  const shareVsMarket = +(msChange - marketGrowth).toFixed(1);
+  const shareGrewFaster = shareVsMarket >= 0;
   const label = activeLabel();
   let k4 = '';
   if (ar === '__NAC__') {
     const rows = regionRows(mk, latest);
     const above = rows.filter(row => Number(row.share || 0) > latestMs).length;
-    k4 = `<div class="kc c4"><div class="kh">REGIONES SOBRE PROMEDIO</div><div class="kv purple">${above}<span style="font-size:15px;color:var(--t4)">/${rows.length}</span></div><div class="kd">MS% > ${fms(latestMs)} nacional</div></div>`;
+    k4 = `<div class="kc c4"><div class="kh">VS MERCADO</div><div class="kv purple">${shareVsMarket >= 0 ? '+' : ''}${shareVsMarket}pp</div><div class="kd">${shareGrewFaster ? 'Share creció más que el mercado' : 'Share creció menos que el mercado'} · ${above}/${rows.length} regiones por encima del MS% nacional</div></div>`;
   } else {
     const nat = natRow(mk, latest).ms;
     const gap = +(latestMs - nat).toFixed(1);
@@ -218,7 +223,7 @@ function rKPI(mk){
   document.getElementById('kr').innerHTML = `
     <div class="kc c1"><div class="kh">MS% · ${label.toUpperCase()}</div><div class="kv red">${fms(latestMs)}</div><div class="kd">${cur}<br>${fmt(latestRow.total)} u. mercado</div></div>
     <div class="kc c2"><div class="kh">UNIDADES SIE · ${monthLabel(latest).toUpperCase()}</div><div class="kv blue">${fk(latestRow.sie)}</div><div class="kd">${mk.family}<br>de ${fk(latestRow.total)} u.</div></div>
-    <div class="kc c3"><div class="kh">MS% ÚLTIMO CORTE · ${label.toUpperCase()}</div><div class="kv green">${fms(latestMs)}</div><div class="kd">${monthLabel(latest)} · <span style="color:${diff >= 0 ? 'var(--green)' : 'var(--red)'}">${diff >= 0 ? '+' : ''}${diff}pp</span> vs ${monthLabel(first)}</div></div>${k4}`;
+    <div class="kc c3"><div class="kh">Evolución MS% · ${label.toUpperCase()}</div><div class="kv green">${msChange >= 0 ? '+' : ''}${msChange}pp</div><div class="kd">${monthLabel(latest)} vs ${monthLabel(first)} · mercado ${marketGrowth >= 0 ? '+' : ''}${marketGrowth}%</div></div>${k4}`;
 }
 
 function rBF(mk){
@@ -280,7 +285,7 @@ function rC1(mk){
 function rC2(mk){
   destroyChart('c2');
   const labels = marketMonths(mk).map(monthShort);
-  document.getElementById('s2').textContent = 'Top competidores · Nacional';
+  document.getElementById('s2').textContent = `Top competidores · ${activeLabel()}`;
   const top = competitorRows(mk).sort((a, b) => Number(b.units || 0) - Number(a.units || 0)).slice(0, 8).map(row => row.product);
   if (selB && !top.includes(selB)) top[top.length - 1] = selB;
   const ds = [{
