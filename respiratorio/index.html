@@ -1326,14 +1326,21 @@ function renderRecComp(prod, months){
   const currentYear=lastMes?parseInt(lastMes.split(' ')[1],10):2025;
   const prevYear=currentYear-1;
   const MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const lastMonthToken=!isQ&&lastMes?lastMes.split(' ')[0]:null;
+  const ytdMonths=lastMonthToken?MO.slice(0,Math.max(MO.indexOf(lastMonthToken)+1,0)):MO;
+  const totalPrevLabel=isQ?`Total ${prevYear}`:`YTD ${prevYear}`;
+  const totalCurrLabel=isQ?`Total ${currentYear}`:`YTD ${currentYear}`;
+  const deltaLabel=isQ
+    ? `Δ ${String(prevYear).slice(-2)}→${String(currentYear).slice(-2)}`
+    : `Δ YTD ${String(prevYear).slice(-2)}→${String(currentYear).slice(-2)}`;
   el.innerHTML=`<table class="pt">
     <thead><tr>
       <th>Producto</th>
       <th>${lastMes||'Último corte'}</th>
       <th>Δ vs año ant.</th>
-      <th style="text-align:right">Total ${prevYear}</th>
-      <th style="text-align:right">Total ${currentYear}</th>
-      <th style="text-align:right">Δ ${String(prevYear).slice(-2)}→${String(currentYear).slice(-2)}</th>
+      <th style="text-align:right">${totalPrevLabel}</th>
+      <th style="text-align:right">${totalCurrLabel}</th>
+      <th style="text-align:right">${deltaLabel}</th>
     </tr></thead>
     <tbody>${sorted.map(([p,data])=>{
       const isSie=p.includes(' SIE');
@@ -1342,8 +1349,9 @@ function renderRecComp(prod, months){
       const barW=Math.round(vNow/maxVal*80);
       const clr=isSie?'#b01e1e':colors[cIdx++%colors.length];
       const dClr=delta==null?'#6b7280':delta>=0?'#16a34a':'#dc2626';
-      const totPrev=MO.reduce((s,m)=>s+(data.monthly?.[m+' '+prevYear]||0),0);
-      const totCurr=MO.reduce((s,m)=>s+(data.monthly?.[m+' '+currentYear]||0),0);
+      const totalMonths=isQ?MO:ytdMonths;
+      const totPrev=totalMonths.reduce((s,m)=>s+(data.monthly?.[m+' '+prevYear]||0),0);
+      const totCurr=totalMonths.reduce((s,m)=>s+(data.monthly?.[m+' '+currentYear]||0),0);
       const dy=totPrev>0?Math.round((totCurr/totPrev-1)*100):null;
       const dyClr=dy==null?'#6b7280':dy>=0?'#16a34a':'#dc2626';
       return `<tr class="${isSie?'sie-row':''}">
