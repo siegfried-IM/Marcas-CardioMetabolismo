@@ -37,12 +37,13 @@
 
 .PARAMETER IqviaPattern
   Glob para encontrar el Excel maestro de IQVIA dentro de la carpeta IqviaSubfolder.
-  Default: 'AR PM*'. Solo se usa si la carpeta IqviaSubfolder existe.
+  Default: 'AR_PM*' (matchea 'AR_PM_FV_Standard_<fecha>.xlsx', el formato
+  estandar de IQVIA). Solo se usa si la carpeta IqviaSubfolder existe.
 
 .EXAMPLE
   .\shared\build-all.ps1 -Month '2026-04'
   Regenera data.js de las 5 lineas para el corte 2026-04. No hace commit.
-  Lee el PM IQVIA desde Hub-Marcas-Inputs/_iqvia-master/2026-04/AR PM*.xlsx
+  Lee el PM IQVIA desde Hub-Marcas-Inputs/_iqvia-master/2026-04/AR_PM*.xlsx
   si existe, sino cada linea cae al lookup legacy.
 
 .EXAMPLE
@@ -77,20 +78,23 @@ param(
 
     [string]$IqviaSubfolder = '_iqvia-master',
 
-    [string]$IqviaPattern = 'AR PM*'
+    [string]$IqviaPattern = 'AR_PM*'
 )
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
-# Mapeo: linea repo -> carpeta hub + subcarpeta de fuentes
+# Mapeo: linea repo -> carpeta hub + subcarpeta de fuentes + flag central IQVIA
 # La subcarpeta '' significa que el script lee de la raiz del mes (caso respiratorio).
+# UseCentralIqvia=$false: la linea NO usa el AR_PM centralizado y cae a su lookup legacy.
+# (mujer queda fuera porque su script espera IQUVIA_VENTAS.xlsx con un layout custom,
+#  no el formato AR_PM_FV_Standard de IQVIA Premium.)
 $lineConfig = [ordered]@{
-    'cardio'       = @{ HubFolder = 'cardio';       FuentesSub = 'fuentes-originales' }
-    'ATB'          = @{ HubFolder = 'ATB';          FuentesSub = 'fuentes-originales' }
-    'OTC'          = @{ HubFolder = 'OTC';          FuentesSub = 'fuentes-originales' }
-    'mujer'        = @{ HubFolder = 'linea-mujer';  FuentesSub = 'fuentes-originales' }
-    'respiratorio' = @{ HubFolder = 'respiratorio'; FuentesSub = '' }
+    'cardio'       = @{ HubFolder = 'cardio';       FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true  }
+    'ATB'          = @{ HubFolder = 'ATB';          FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true  }
+    'OTC'          = @{ HubFolder = 'OTC';          FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true  }
+    'mujer'        = @{ HubFolder = 'linea-mujer';  FuentesSub = 'fuentes-originales'; UseCentralIqvia = $false }
+    'respiratorio' = @{ HubFolder = 'respiratorio'; FuentesSub = '';                   UseCentralIqvia = $true  }
 }
 
 if ($Lines -contains 'all') {
@@ -173,9 +177,11 @@ foreach ($line in $Lines) {
 
     # Build args para la invocacion
     $invokeArgs = @{ SourceDir = $sourceDir }
-    if ($iqviaCentralized) {
+    if ($iqviaCentralized -and $cfg.UseCentralIqvia) {
         $invokeArgs.IqviaDir = $iqviaMasterDir
         $invokeArgs.IqviaPattern = $IqviaPattern
+    } elseif ($iqviaCentralized -and -not $cfg.UseCentralIqvia) {
+        Write-Host "  IQVIA: legacy (esta linea no soporta AR_PM centralizado)" -ForegroundColor DarkGray
     }
 
     if ($DryRun) {
