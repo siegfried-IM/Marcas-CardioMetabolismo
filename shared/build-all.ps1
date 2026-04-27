@@ -30,9 +30,20 @@
 .PARAMETER DryRun
   No corre ningun build, solo imprime que harian.
 
+.PARAMETER IqviaSubfolder
+  Subcarpeta dentro de BaseDir donde esta el Excel maestro de IQVIA.
+  Default: '_iqvia-master'. Path final: <BaseDir>/<IqviaSubfolder>/<Month>/.
+  Si la carpeta no existe, cada linea cae al lookup legacy en sus propias fuentes.
+
+.PARAMETER IqviaPattern
+  Glob para encontrar el Excel maestro de IQVIA dentro de la carpeta IqviaSubfolder.
+  Default: 'AR PM*'. Solo se usa si la carpeta IqviaSubfolder existe.
+
 .EXAMPLE
   .\shared\build-all.ps1 -Month '2026-04'
   Regenera data.js de las 5 lineas para el corte 2026-04. No hace commit.
+  Lee el PM IQVIA desde Hub-Marcas-Inputs/_iqvia-master/2026-04/AR PM*.xlsx
+  si existe, sino cada linea cae al lookup legacy.
 
 .EXAMPLE
   .\shared\build-all.ps1 -Month '2026-04' -Lines cardio,ATB
@@ -62,7 +73,11 @@ param(
 
     [string]$CommitMessage,
 
-    [switch]$DryRun
+    [switch]$DryRun,
+
+    [string]$IqviaSubfolder = '_iqvia-master',
+
+    [string]$IqviaPattern = 'AR PM*'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -91,11 +106,28 @@ if (-not (Test-Path -LiteralPath $BaseDir)) {
     throw "BaseDir not found: $BaseDir`nUsa -BaseDir <path> si tu Hub-Marcas-Inputs esta en otro lugar."
 }
 
+# IQVIA centralizada (opcional). Si la carpeta no existe, cada linea
+# cae al lookup legacy en su propia carpeta de fuentes.
+$iqviaMasterDir = Join-Path $BaseDir (Join-Path $IqviaSubfolder $Month)
+$iqviaCentralized = Test-Path -LiteralPath $iqviaMasterDir
+if ($iqviaCentralized) {
+    $iqviaFile = Get-ChildItem -LiteralPath $iqviaMasterDir -Filter $IqviaPattern -File -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $iqviaFile) {
+        Write-Warning "Carpeta IQVIA centralizada existe pero no hay match para '$IqviaPattern' en $iqviaMasterDir. Cae a legacy."
+        $iqviaCentralized = $false
+    }
+}
+
 Write-Host ""
 Write-Host "================================================================"
 Write-Host " build-all  -  Mes: $Month  -  Lineas: $($Lines -join ', ')"
 Write-Host " Hub:  $BaseDir"
 Write-Host " Repo: $repoRoot"
+if ($iqviaCentralized) {
+    Write-Host " IQVIA: $iqviaMasterDir  (pattern '$IqviaPattern')" -ForegroundColor Green
+} else {
+    Write-Host " IQVIA: legacy (cada linea lee de su carpeta de fuentes)" -ForegroundColor DarkGray
+}
 if ($DryRun) { Write-Host " ** DRY RUN ** (no se ejecuta nada)" }
 Write-Host "================================================================"
 
@@ -139,15 +171,23 @@ foreach ($line in $Lines) {
         continue
     }
 
+    # Build args para la invocacion
+    $invokeArgs = @{ SourceDir = $sourceDir }
+    if ($iqviaCentralized) {
+        $invokeArgs.IqviaDir = $iqviaMasterDir
+        $invokeArgs.IqviaPattern = $IqviaPattern
+    }
+
     if ($DryRun) {
-        Write-Host "  [DRY RUN] $scriptPath -SourceDir `"$sourceDir`"" -ForegroundColor Yellow
+        $argsPreview = $invokeArgs.GetEnumerator() | ForEach-Object { "-$($_.Key) `"$($_.Value)`"" }
+        Write-Host "  [DRY RUN] $scriptPath $($argsPreview -join ' ')" -ForegroundColor Yellow
         $results[$line] = 'dry-run'
         continue
     }
 
     $sw = [System.Diagnostics.Stopwatch]::StartNew()
     try {
-        & $scriptPath -SourceDir $sourceDir
+        & $scriptPath @invokeArgs
         $sw.Stop()
         $results[$line] = "ok ($([int]$sw.Elapsed.TotalSeconds)s)"
         Write-Host "  OK ($([int]$sw.Elapsed.TotalSeconds)s)" -ForegroundColor Green

@@ -1,6 +1,13 @@
 param(
   [string]$SourceDir = 'C:\Users\camarinaro\Downloads\Hub-Marcas-Inputs\linea-mujer\2026-04\fuentes-originales',
-  [string]$OutputPath = (Join-Path $PSScriptRoot 'data.js')
+  [string]$OutputPath = (Join-Path $PSScriptRoot 'data.js'),
+  # Override opcional para leer el PM IQVIA desde una carpeta centralizada
+  # (ej. Hub-Marcas-Inputs/_iqvia-master/2026-04/). Si no se pasa, usa el
+  # lookup legacy en $SourceDir con el patron 'IQUVIA_VENTAS.xlsx'.
+  # NOTA: solo afecta el lookup de PM, NO el de DDD ni el del MAESTRO_COM_CARLITOS,
+  # que siguen leyendose desde $SourceDir.
+  [string]$IqviaDir = $null,
+  [string]$IqviaPattern = $null
 )
 
 Set-StrictMode -Version Latest
@@ -703,7 +710,7 @@ $conv2024Path = if (Test-Path -LiteralPath $convPrevOverridePath) { $convPrevOve
 $conv2025Path = if (Test-Path -LiteralPath $convCurrentOverridePath) { $convCurrentOverridePath } else { Get-MatchingPath -Dir $SourceDir -Include 'Convenios vs mostrador _CARLITOS.xlsx' }
 $maestroPath = Get-MatchingPath -Dir $SourceDir -Include 'MAESTRO_COM_CARLITOS.xlsx'
 $dddPath = if (Test-Path -LiteralPath $dddOverridePath) { $dddOverridePath } else { Get-MatchingPath -Dir $SourceDir -Include 'IQUVIA_VENTAS.xlsx' }
-$pmPath = Get-MatchingPath -Dir $SourceDir -Include 'IQUVIA_VENTAS.xlsx'
+$pmPath = Get-MatchingPath -Dir $(if ($IqviaDir) { $IqviaDir } else { $SourceDir }) -Include $(if ($IqviaPattern) { $IqviaPattern } else { 'IQUVIA_VENTAS.xlsx' })
 $pricePath = if (Test-Path -LiteralPath $priceOverridePath) { $priceOverridePath } else { Get-MatchingPath -Dir $SourceDir -Include 'PRECIOS_CARLITOS.xlsx' }
 
 $excel = New-Object -ComObject Excel.Application

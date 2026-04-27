@@ -1,6 +1,11 @@
 param(
   [string]$SourceDir = 'C:\Users\camarinaro\Downloads\Hub-Marcas-Inputs\respiratorio\2026-04',
-  [string]$OutputPath = (Join-Path $PSScriptRoot 'data.js')
+  [string]$OutputPath = (Join-Path $PSScriptRoot 'data.js'),
+  # Override opcional para leer el PM IQVIA desde una carpeta centralizada
+  # (ej. Hub-Marcas-Inputs/_iqvia-master/2026-04/). Si no se pasa, usa el
+  # lookup legacy en $dashboardDir con el patron 'AR_PM_FV_Standard*'.
+  [string]$IqviaDir = $null,
+  [string]$IqviaPattern = $null
 )
 
 Set-StrictMode -Version Latest
@@ -1084,7 +1089,7 @@ $channelPath = Get-MatchingPath -Dir $dashboardDir -Include 'Convenios vs mostra
 $conv2024Path = Get-MatchingPath -Dir $dashboardDir -Include 'CONVENIOS 2024*'
 $conv2025Path = Get-MatchingPath -Dir $dashboardDir -Include 'CONVENIOS 2025*'
 $dddPath = Get-MatchingPath -Dir $dddDir -Include '*.xlsx'
-$pmPath = Get-MatchingPath -Dir $dashboardDir -Include 'AR_PM_FV_Standard*'
+$pmPath = Get-MatchingPath -Dir $(if ($IqviaDir) { $IqviaDir } else { $dashboardDir }) -Include $(if ($IqviaPattern) { $IqviaPattern } else { 'AR_PM_FV_Standard*' })
 $pricePath = Get-MatchingPath -Dir $dashboardDir -Include 'PRECIOS*'
 
 $excel = New-Object -ComObject Excel.Application
