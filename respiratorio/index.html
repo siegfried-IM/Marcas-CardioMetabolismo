@@ -888,7 +888,9 @@ function renderBudget(){
 }
 
 // ── PERFORMANCE (MS% + UNITS only) ────────────────────────────────────
-let pChart=null, pMol=(D.defaults?.market||perfFamilies()[0]), pPeriod='ytd', pCompare='molecule', pSegment='all', pMetric='ms', pYear='todos';
+// Defensive: D.defaults.market puede tener case mismatch ('Acemuk' vs
+// 'ACEMUK'); validamos contra perfFamilies() y caemos al primero si no.
+let pChart=null, pMol=((typeof perfFamilies==='function'&&perfFamilies().includes(D.defaults?.market))?D.defaults.market:(typeof perfFamilies==='function'?perfFamilies()[0]:Object.keys(D.mol_perf||{})[0])), pPeriod='ytd', pCompare='molecule', pSegment='all', pMetric='ms', pYear='todos';
 
 const MOL_LABELS = D.molLabels || {};
 

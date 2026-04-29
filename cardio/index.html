@@ -856,7 +856,10 @@ function renderBudget(){
 }
 
 // ── PERFORMANCE (MS% + UNITS only) ────────────────────────────────────
-let pChart=null, pMol=(D.defaults?.market||Object.keys(D.mol_perf)[0]), pPeriod='ytd', pMetric='ms', pYear='todos';
+// Defensive: validate that the configured default still exists in mol_perf
+// (D.defaults.market puede quedar stale tras un rename de familia y dejar
+// la tabla vacia en el primer render). Caemos al primer family si no.
+let pChart=null, pMol=((D.mol_perf&&D.mol_perf[D.defaults?.market])?D.defaults.market:(Object.keys(D.mol_perf||{})[0])), pPeriod='ytd', pMetric='ms', pYear='todos';
 
 const MOL_LABELS = D.molLabels || {};
 

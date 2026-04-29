@@ -850,7 +850,9 @@ function renderBudget(){
 }
 
 // ── PERFORMANCE (MS% + UNITS only) ────────────────────────────────────
-let pChart=null, pMol=(D.defaults?.market||Object.keys(D.mol_perf)[0]), pPeriod='ytd', pMetric='ms', pYear='todos';
+// Defensive: validate D.defaults.market against mol_perf keys; fall back
+// to the first family if stale.
+let pChart=null, pMol=((D.mol_perf&&D.mol_perf[D.defaults?.market])?D.defaults.market:(Object.keys(D.mol_perf||{})[0])), pPeriod='ytd', pMetric='ms', pYear='todos';
 
 const MOL_LABELS = D.molLabels || {};
 
