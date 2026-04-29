@@ -137,7 +137,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
 .mol-chip:hover{background:rgba(255,255,255,.05);}
 .mol-chip.on{background:#b01e1e;color:#ffffff;border-color:#b01e1e;}
 
-.perf-layout{display:grid;grid-template-columns:1fr 330px;gap:16px;}
+.perf-layout{display:grid;grid-template-columns:1fr 380px;gap:16px;}
 @media(max-width:920px){.perf-layout{grid-template-columns:1fr;}}
 
 .pt{width:100%;border-collapse:collapse;font-size:11px;}
@@ -322,7 +322,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
         <div><div class="chart-h280"><canvas id="perfChart"></canvas></div></div>
         <div class="card-sm">
           <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Tabla comparativa · <span id="perf-table-period"></span></p>
-          <div style="overflow-y:auto;max-height:260px;overflow-x:hidden;" id="perf-table"></div>
+          <div style="overflow-y:auto;max-height:260px;overflow-x:auto;" id="perf-table"></div>
         </div>
       </div>
     </div>
@@ -934,10 +934,24 @@ const MOL_LABELS={
   'VILAZODONE':'Vilazodona',
 };
 
+// Inverso del sieMolMap: dado una molecula devuelve los productos SIE que la
+// usan. Asi las pills muestran el nombre comercial del producto (ej "PGB",
+// "MADOPAR / MADOPAR HBS") en lugar del de la molecula.
+const SIE_PROD_BY_MOL={};
+Object.entries(D.sieMolMap||{}).forEach(([prod,mol])=>{
+  if(!SIE_PROD_BY_MOL[mol]) SIE_PROD_BY_MOL[mol]=[];
+  SIE_PROD_BY_MOL[mol].push(prod);
+});
+function chipLabel(mol){
+  const prods=SIE_PROD_BY_MOL[mol];
+  if(prods&&prods.length) return prods.join(' / ');
+  return MOL_LABELS[mol]||mol;
+}
+
 function renderPerfMolGrid(){
   document.getElementById('perf-mol-grid').innerHTML = Object.keys(D.mol_perf).map(mol=>{
     const hasSie = D.mol_perf[mol].products?.some(p=>p.is_sie);
-    return `<button class="mol-chip ${mol===pMol?'on':''} ${hasSie?'sie':''}" onclick="setPMol('${mol}')">${MOL_LABELS[mol]||mol}</button>`;
+    return `<button class="mol-chip ${mol===pMol?'on':''} ${hasSie?'sie':''}" onclick="setPMol('${mol}')">${chipLabel(mol)}</button>`;
   }).join('');
 }
 function bindPerfCtrls(){
