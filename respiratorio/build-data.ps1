@@ -1844,9 +1844,20 @@ for ($c = 7; $c -le $pmMatrix.GetLength(1); $c++) {
     continue
   }
 
+  # MAT legacy: "MAT M 2026 Mar" (mes/anio invertido, con M)
   if ($header -match '^(?:Units )?MAT M (\d{4}) ([A-Za-z]{3,9})(?: \*)?$') {
     $monthToken = $matches[2].Substring(0, 3)
     $key = Normalize-MonthLabelEn ('{0} {1}' -f $monthToken, $matches[1])
+    if ((Get-MonthSortValueEn $key) -ge 202402) {
+      $pmHeaderInfo.mat += [pscustomobject]@{ col = $c; key = $key }
+    }
+    continue
+  }
+
+  # MAT AR_PM Premium standard: "Units MAT Mar 2026" (mes/anio normal, sin M)
+  if ($header -match '^(?:Units )?MAT ([A-Za-z]{3,9}) (\d{4})(?: \*)?$') {
+    $monthToken = $matches[1].Substring(0, 3)
+    $key = Normalize-MonthLabelEn ('{0} {1}' -f $monthToken, $matches[2])
     if ((Get-MonthSortValueEn $key) -ge 202402) {
       $pmHeaderInfo.mat += [pscustomobject]@{ col = $c; key = $key }
     }

@@ -87,14 +87,17 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 # Mapeo: linea repo -> carpeta hub + subcarpeta de fuentes + flag central IQVIA
 # La subcarpeta '' significa que el script lee de la raiz del mes (caso respiratorio).
 # UseCentralIqvia=$false: la linea NO usa el AR_PM centralizado y cae a su lookup legacy.
-# (mujer queda fuera porque su script espera IQUVIA_VENTAS.xlsx con un layout custom,
-#  no el formato AR_PM_FV_Standard de IQVIA Premium.)
+# UseSlicedIqvia=$true: la linea consume un AR_PM pre-sliceado (filtrado y reformateado
+#   con shared/slice-iqvia-master.py) en lugar del master crudo. Necesario para mujer
+#   porque su parser espera el layout de IQUVIA_VENTAS (col 4 = ATC-4, col 5 = mol)
+#   y no el de AR_PM Premium (col 4 = ATC IV, col 6 = Molecules Long); el slicer hace
+#   el reshape ademas del filtro por ATC-4 codes que mujer compite.
 $lineConfig = [ordered]@{
-    'cardio'       = @{ HubFolder = 'cardio';       FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true  }
-    'ATB'          = @{ HubFolder = 'ATB';          FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true  }
-    'OTC'          = @{ HubFolder = 'OTC';          FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true  }
-    'mujer'        = @{ HubFolder = 'linea-mujer';  FuentesSub = 'fuentes-originales'; UseCentralIqvia = $false }
-    'respiratorio' = @{ HubFolder = 'respiratorio'; FuentesSub = '';                   UseCentralIqvia = $true  }
+    'cardio'       = @{ HubFolder = 'cardio';       FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $false }
+    'ATB'          = @{ HubFolder = 'ATB';          FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $false }
+    'OTC'          = @{ HubFolder = 'OTC';          FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $false }
+    'mujer'        = @{ HubFolder = 'linea-mujer';  FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $true  }
+    'respiratorio' = @{ HubFolder = 'respiratorio'; FuentesSub = '';                   UseCentralIqvia = $true;  UseSlicedIqvia = $false }
 }
 
 if ($Lines -contains 'all') {
@@ -113,12 +116,30 @@ if (-not (Test-Path -LiteralPath $BaseDir)) {
 # IQVIA centralizada (opcional). Si la carpeta no existe, cada linea
 # cae al lookup legacy en su propia carpeta de fuentes.
 $iqviaMasterDir = Join-Path $BaseDir (Join-Path $IqviaSubfolder $Month)
+$iqviaSlicedDir = Join-Path $iqviaMasterDir 'sliced'
 $iqviaCentralized = Test-Path -LiteralPath $iqviaMasterDir
+$iqviaMasterFile = $null
 if ($iqviaCentralized) {
-    $iqviaFile = Get-ChildItem -LiteralPath $iqviaMasterDir -Filter $IqviaPattern -File -ErrorAction SilentlyContinue | Select-Object -First 1
-    if (-not $iqviaFile) {
+    $iqviaMasterFile = Get-ChildItem -LiteralPath $iqviaMasterDir -Filter $IqviaPattern -File -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $iqviaMasterFile) {
         Write-Warning "Carpeta IQVIA centralizada existe pero no hay match para '$IqviaPattern' en $iqviaMasterDir. Cae a legacy."
         $iqviaCentralized = $false
+    }
+}
+
+# Si alguna linea pidio slice y existe master, generamos los slices con
+# shared/slice-iqvia-master.py antes de empezar a procesar.
+$linesNeedingSlice = @($Lines | Where-Object {
+    $lineConfig.Contains($_) -and $lineConfig[$_].UseSlicedIqvia
+})
+if ($iqviaCentralized -and $linesNeedingSlice.Count -gt 0 -and -not $DryRun) {
+    Write-Host ""
+    Write-Host "Generando slices de IQVIA master para: $($linesNeedingSlice -join ', ')..." -ForegroundColor Cyan
+    $slicerPath = Join-Path $PSScriptRoot 'slice-iqvia-master.py'
+    $pyExe = if (Get-Command 'py' -ErrorAction SilentlyContinue) { 'py' } else { 'python' }
+    & $pyExe $slicerPath --master $iqviaMasterFile.FullName --out-dir $iqviaSlicedDir --lines @($linesNeedingSlice)
+    if ($LASTEXITCODE -ne 0) {
+        throw "El slicer ($slicerPath) fallo con exit code $LASTEXITCODE."
     }
 }
 
@@ -188,8 +209,17 @@ foreach ($line in $Lines) {
     # Build args para la invocacion
     $invokeArgs = @{ SourceDir = $sourceDir }
     if ($iqviaCentralized -and $cfg.UseCentralIqvia) {
-        $invokeArgs.IqviaDir = $iqviaMasterDir
-        $invokeArgs.IqviaPattern = $IqviaPattern
+        if ($cfg.UseSlicedIqvia) {
+            # Esta linea consume un slice pre-procesado de AR_PM (re-shaped al
+            # layout que su parser espera). Apuntamos -IqviaDir al sliced/ dir
+            # y -IqviaPattern al archivo concreto del slice.
+            $invokeArgs.IqviaDir = $iqviaSlicedDir
+            $invokeArgs.IqviaPattern = "AR_PM_$line.xlsx"
+            Write-Host "  IQVIA: sliced ($($invokeArgs.IqviaDir)\$($invokeArgs.IqviaPattern))" -ForegroundColor Green
+        } else {
+            $invokeArgs.IqviaDir = $iqviaMasterDir
+            $invokeArgs.IqviaPattern = $IqviaPattern
+        }
     } elseif ($iqviaCentralized -and -not $cfg.UseCentralIqvia) {
         Write-Host "  IQVIA: legacy (esta linea no soporta AR_PM centralizado)" -ForegroundColor DarkGray
     }
