@@ -1265,18 +1265,36 @@ foreach ($family in $familyOrder) {
 }
 
 # Dashboard layer compatible with the dermatologia executive view
+# Deteccion dinamica de columnas. El AR_PM Premium centralizado pone
+# ATC IV en col 4 y Molecules Long en col 6 (no 5). Escaneamos los
+# headers de row 1 para mapear correctamente. Default fallback al layout
+# legacy: atc=4, molecule=5.
+$pmColMap = [ordered]@{
+  atc = 4
+  molecule = 5
+}
+for ($_c = 1; $_c -le [Math]::Min(8, $pmMatrix.GetLength(1)); $_c++) {
+  $_h = ((Normalize-Text $pmMatrix[1, $_c]) -replace '\s+', ' ').Trim().ToUpper()
+  if (-not $_h) { continue }
+  if ($_h -match '^MOLECULES?(\s+LONG)?$') { $pmColMap.molecule = $_c }
+  elseif ($_h -match '^ATC([\s-]?(IV|4))?$') { $pmColMap.atc = $_c }
+}
+
 $pmHeaderInfo = [ordered]@{
   monthly = @()
   ytd = @()
   mat = @()
   quarterly = @()
 }
-for ($c = 8; $c -le $pmMatrix.GetLength(1); $c++) {
+for ($c = 7; $c -le $pmMatrix.GetLength(1); $c++) {
   $header = ((Normalize-Text $pmMatrix[1, $c]) -replace '\s+', ' ').Trim()
-  if (-not $header -or $header -notlike '*Units') {
-    continue
-  }
+  if (-not $header) { continue }
+  # AR_PM Premium pone "Units" al inicio (Units Apr 2026, Units MAT Mar 2026,
+  # Units YTD Mar 2026); el layout legacy lo pone al final (Mar 2026 Units,
+  # MAT Mar 2026 Units). Aceptamos ambos.
+  if ($header -notlike '*Units' -and $header -notlike 'Units *') { continue }
 
+  # MAT: legacy "MAT MMM YYYY Units"
   if ($header -match '^MAT ([A-Za-z]{3}) (\d{4}) Units$') {
     $key = '{0} {1}' -f $matches[1], $matches[2]
     if ((Get-MonthSortValueEn $key) -ge 202402) {
@@ -1284,7 +1302,16 @@ for ($c = 8; $c -le $pmMatrix.GetLength(1); $c++) {
     }
     continue
   }
+  # MAT: AR_PM "Units MAT MMM YYYY"
+  if ($header -match '^Units MAT ([A-Za-z]{3}) (\d{4})(?: \*)?$') {
+    $key = '{0} {1}' -f $matches[1].Substring(0,3), $matches[2]
+    if ((Get-MonthSortValueEn $key) -ge 202402) {
+      $pmHeaderInfo.mat += [pscustomobject]@{ col = $c; key = $key }
+    }
+    continue
+  }
 
+  # YTD: legacy "YTD MMM YYYY Units"
   if ($header -match '^YTD ([A-Za-z]{3}) (\d{4}) Units$') {
     $key = '{0} {1}' -f $matches[1], $matches[2]
     if ((Get-MonthSortValueEn $key) -ge 202402) {
@@ -1292,9 +1319,34 @@ for ($c = 8; $c -le $pmMatrix.GetLength(1); $c++) {
     }
     continue
   }
+  # YTD: AR_PM "Units YTD MMM YYYY"
+  if ($header -match '^Units YTD ([A-Za-z]{3}) (\d{4})$') {
+    $key = '{0} {1}' -f $matches[1].Substring(0,3), $matches[2]
+    if ((Get-MonthSortValueEn $key) -ge 202402) {
+      $pmHeaderInfo.ytd += [pscustomobject]@{ col = $c; key = $key }
+    }
+    continue
+  }
 
+  # Monthly legacy: "M/YYYY Units"
   if ($header -match '^\d{1,2}/\d{1,2}/\d{4} Units$') {
     $monthKey = Normalize-MonthLabelEn (($header -replace ' Units$', '').Trim())
+    if ((Get-MonthSortValueEn $monthKey) -ge 202402) {
+      $pmHeaderInfo.monthly += [pscustomobject]@{ col = $c; key = $monthKey }
+    }
+    continue
+  }
+  # Monthly AR_PM: "Units MMM YYYY"
+  if ($header -match '^Units ([A-Za-z]{3}) (\d{4})$') {
+    $monthKey = '{0} {1}' -f $matches[1].Substring(0,3), $matches[2]
+    if ((Get-MonthSortValueEn $monthKey) -ge 202402) {
+      $pmHeaderInfo.monthly += [pscustomobject]@{ col = $c; key = $monthKey }
+    }
+    continue
+  }
+  # Monthly: "MMM YYYY Units"
+  if ($header -match '^([A-Za-z]{3}) (\d{4}) Units$') {
+    $monthKey = '{0} {1}' -f $matches[1].Substring(0,3), $matches[2]
     if ((Get-MonthSortValueEn $monthKey) -ge 202402) {
       $pmHeaderInfo.monthly += [pscustomobject]@{ col = $c; key = $monthKey }
     }
@@ -1306,6 +1358,16 @@ for ($c = 8; $c -le $pmMatrix.GetLength(1); $c++) {
     if ($quarterKey -and (Get-QuarterSortValue $quarterKey) -ge 20240) {
       $pmHeaderInfo.quarterly += [pscustomobject]@{ col = $c; key = $quarterKey }
     }
+  }
+}
+
+# Si el master no trae MAT/YTD pero si monthly, derivar fallback (igual que cardio/mujer)
+if ($pmHeaderInfo.monthly.Count -gt 0) {
+  if ($pmHeaderInfo.mat.Count -eq 0) {
+    $pmHeaderInfo.mat = @($pmHeaderInfo.monthly)
+  }
+  if ($pmHeaderInfo.ytd.Count -eq 0) {
+    $pmHeaderInfo.ytd = @($pmHeaderInfo.monthly)
   }
 }
 
@@ -1353,8 +1415,11 @@ foreach ($family in $dashboardFamilyOrder) {
   for ($r = 2; $r -le $pmMatrix.GetLength(0); $r++) {
     $product = Normalize-Text $pmMatrix[$r, 2]
     $manufacturer = Normalize-Text $pmMatrix[$r, 1]
-    $molecule = Normalize-Text $pmMatrix[$r, 4]
-    $atc = Normalize-Text $pmMatrix[$r, 5]
+    # Cada variable lee de la columna que corresponde a su semantica, sin
+    # importar el orden en el Excel: pmColMap se detecta dinamicamente leyendo
+    # los headers de row 1 ("Molecules Long" y "ATC IV/4").
+    $molecule = Normalize-Text $pmMatrix[$r, $pmColMap.molecule]
+    $atc = Normalize-Text $pmMatrix[$r, $pmColMap.atc]
     if (-not $product) {
       continue
     }

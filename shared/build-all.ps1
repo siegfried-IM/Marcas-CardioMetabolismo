@@ -86,6 +86,9 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 
 # Mapeo: linea repo -> carpeta hub + subcarpeta de fuentes + flag central IQVIA
 # La subcarpeta '' significa que el script lee de la raiz del mes (caso respiratorio).
+# OverrideBaseDir: si esta setteada, esa linea ignora el -BaseDir general y
+#   busca sus fuentes en otro lado (caso OTC: sus inputs viven en
+#   Actualizaciones-Marcas y no en Hub-Marcas-Inputs).
 # UseCentralIqvia=$false: la linea NO usa el AR_PM centralizado y cae a su lookup legacy.
 # UseSlicedIqvia=$true: la linea consume un AR_PM pre-sliceado (filtrado y reformateado
 #   con shared/slice-iqvia-master.py) en lugar del master crudo. Necesario para mujer
@@ -93,11 +96,11 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 #   y no el de AR_PM Premium (col 4 = ATC IV, col 6 = Molecules Long); el slicer hace
 #   el reshape ademas del filtro por ATC-4 codes que mujer compite.
 $lineConfig = [ordered]@{
-    'cardio'       = @{ HubFolder = 'cardio';       FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $false }
-    'ATB'          = @{ HubFolder = 'ATB';          FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $false }
-    'OTC'          = @{ HubFolder = 'OTC';          FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $false }
-    'mujer'        = @{ HubFolder = 'linea-mujer';  FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $true  }
-    'respiratorio' = @{ HubFolder = 'respiratorio'; FuentesSub = '';                   UseCentralIqvia = $true;  UseSlicedIqvia = $false }
+    'cardio'       = @{ HubFolder = 'cardio';       FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $false; OverrideBaseDir = $null }
+    'ATB'          = @{ HubFolder = 'ATB';          FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $false; OverrideBaseDir = $null }
+    'OTC'          = @{ HubFolder = 'OTC';          FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $false; OverrideBaseDir = (Join-Path $env:OneDrive 'Documentos\Actualizaciones-Marcas') }
+    'mujer'        = @{ HubFolder = 'linea-mujer';  FuentesSub = 'fuentes-originales'; UseCentralIqvia = $true;  UseSlicedIqvia = $true;  OverrideBaseDir = $null }
+    'respiratorio' = @{ HubFolder = 'respiratorio'; FuentesSub = '';                   UseCentralIqvia = $true;  UseSlicedIqvia = $false; OverrideBaseDir = $null }
 }
 
 if ($Lines -contains 'all') {
@@ -165,7 +168,10 @@ foreach ($line in $Lines) {
         continue
     }
     $cfg = $lineConfig[$line]
-    $monthDir = Join-Path $BaseDir (Join-Path $cfg.HubFolder $Month)
+    # Algunas lineas tienen sus inputs en otra carpeta-raiz (ej. OTC vive
+    # en Actualizaciones-Marcas en vez de Hub-Marcas-Inputs).
+    $effectiveBase = if ($cfg.OverrideBaseDir) { $cfg.OverrideBaseDir } else { $BaseDir }
+    $monthDir = Join-Path $effectiveBase (Join-Path $cfg.HubFolder $Month)
     if ($cfg.FuentesSub) {
         $sourceDir = Join-Path $monthDir $cfg.FuentesSub
     } else {
