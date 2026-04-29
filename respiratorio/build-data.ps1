@@ -1581,11 +1581,37 @@ foreach ($family in $dashboardFamilyOrder) {
   $familySiePatterns[$family] = @($patterns | Sort-Object { $_.Length } -Descending)
 }
 
+# Deteccion dinamica de columnas del PM. El "AR_PM_FV_Standard" centralizado
+# tiene Pack=3, ATC IV=4, Ph. Forms III=5, Molecules Long=6 (sin Market Type).
+# El layout legacy usado por respi tenia ATC=4, molecule=5, segment=6.
+# Escaneamos los headers de row 1 para mappear correctamente.
+$pmColMap = [ordered]@{
+  pack = 3
+  atc = 4
+  molecule = 5
+  segment = 6
+}
+for ($_c = 1; $_c -le [Math]::Min(8, $pmMatrix.GetLength(1)); $_c++) {
+  $_h = ((Normalize-Text $pmMatrix[1, $_c]) -replace '\s+', ' ').Trim().ToUpper()
+  if (-not $_h) { continue }
+  if ($_h -match '^MOLECULES?(\s+LONG)?$') { $pmColMap.molecule = $_c }
+  elseif ($_h -match '^ATC([\s-]?(IV|4))?$') { $pmColMap.atc = $_c }
+  elseif ($_h -eq 'MARKET TYPE') { $pmColMap.segment = $_c }
+  elseif ($_h -eq 'PACK') { $pmColMap.pack = $_c }
+}
+# Si el AR_PM no trae Market Type, no hay segment (lo dejamos null para que
+# el codigo abajo caiga al default 'all' en lugar de leer una columna que
+# no existe o que tiene otra cosa).
+if ($pmColMap.segment -eq 6) {
+  $_segHdr = ((Normalize-Text $pmMatrix[1, 6]) -replace '\s+', ' ').Trim().ToUpper()
+  if ($_segHdr -ne 'MARKET TYPE') { $pmColMap.segment = $null }
+}
+
 for ($r = 2; $r -le $pmMatrix.GetLength(0); $r++) {
   $manufacturer = Normalize-Text $pmMatrix[$r, 1]
   $product = Normalize-Text $pmMatrix[$r, 2]
-  $pack = Normalize-Text $pmMatrix[$r, 3]
-  $segment = Get-SegmentKey $pmMatrix[$r, 6]
+  $pack = Normalize-Text $pmMatrix[$r, $pmColMap.pack]
+  $segment = if ($pmColMap.segment) { Get-SegmentKey $pmMatrix[$r, $pmColMap.segment] } else { 'all' }
   $meta = @{
     segment = $segment
     manufacturer = $manufacturer
@@ -1961,9 +1987,9 @@ foreach ($family in $dashboardFamilyOrder) {
   for ($r = 2; $r -le $pmMatrix.GetLength(0); $r++) {
     $product = Normalize-Text $pmMatrix[$r, 2]
     $manufacturer = Normalize-Text $pmMatrix[$r, 1]
-    $segment = Get-SegmentKey $pmMatrix[$r, 6]
-    $atc = Normalize-Text $pmMatrix[$r, 4]
-    $molecule = Normalize-Text $pmMatrix[$r, 5]
+    $segment = if ($pmColMap.segment) { Get-SegmentKey $pmMatrix[$r, $pmColMap.segment] } else { 'all' }
+    $atc = Normalize-Text $pmMatrix[$r, $pmColMap.atc]
+    $molecule = Normalize-Text $pmMatrix[$r, $pmColMap.molecule]
     if (-not $product) {
       continue
     }
