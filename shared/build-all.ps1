@@ -162,10 +162,20 @@ foreach ($line in $Lines) {
         $results[$line] = 'skipped (no source folder)'
         continue
     }
-    $excelCount = (Get-ChildItem -LiteralPath $sourceDir -File -ErrorAction SilentlyContinue |
-        Where-Object { $_.Extension -in '.xlsx','.xlsm','.xls','.csv' }).Count
+    # Algunas lineas (ej. respiratorio) splitean inputs en subcarpetas
+    # 'dashboard/' y 'ddd/'. Buscamos xlsx/csv en la raiz Y en esas subcarpetas.
+    $checkDirs = @($sourceDir)
+    foreach ($sub in 'dashboard','ddd') {
+        $subPath = Join-Path $sourceDir $sub
+        if (Test-Path -LiteralPath $subPath) { $checkDirs += $subPath }
+    }
+    $excelCount = 0
+    foreach ($d in $checkDirs) {
+        $excelCount += (Get-ChildItem -LiteralPath $d -File -ErrorAction SilentlyContinue |
+            Where-Object { $_.Extension -in '.xlsx','.xlsm','.xls','.csv' }).Count
+    }
     if ($excelCount -eq 0) {
-        Write-Warning "  No hay Excels/CSV en la carpeta. Saltando."
+        Write-Warning "  No hay Excels/CSV en la carpeta (ni en subcarpetas dashboard/ ddd/). Saltando."
         $results[$line] = 'skipped (empty)'
         continue
     }
