@@ -1910,6 +1910,19 @@ $pmColMap = [ordered]@{
   firstMetric = $null
 }
 
+# Deteccion dinamica de columnas: el "PM ARGENTINA Premium" legacy tenia
+# molecule en col 3 y ATC en col 4. El "AR_PM_FV_Standard" (Premium central
+# de IQVIA) tiene Pack en col 3, ATC IV en col 4, Ph. Forms III en col 5 y
+# Molecules Long en col 6. Escaneamos los primeros 8 headers de row 1 y
+# pisamos los defaults si encontramos los nombres canonicos.
+for ($_c = 1; $_c -le [Math]::Min(8, $pmMatrix.GetLength(1)); $_c++) {
+  $_h = ((Normalize-Text $pmMatrix[1, $_c]) -replace '\s+', ' ').Trim().ToUpper()
+  if (-not $_h) { continue }
+  if ($_h -match '^MOLECULES?(\s+LONG)?$') { $pmColMap.molecule = $_c }
+  elseif ($_h -match '^ATC([\s-]?(IV|4))?$') { $pmColMap.atc = $_c }
+  elseif ($_h -eq 'MARKET TYPE') { $pmColMap.segment = $_c }
+}
+
 $pmHeaderInfo = [ordered]@{
   monthly = @()
   ytd = @()

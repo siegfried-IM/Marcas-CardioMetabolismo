@@ -1837,6 +1837,18 @@ $pmColMap = [ordered]@{
   firstMetric = $null
 }
 
+# Deteccion dinamica de columnas (igual que cardio): el AR_PM_FV_Standard
+# centralizado tiene Pack=3, ATC IV=4, Ph. Forms III=5, Molecules Long=6,
+# mientras que el legacy "ATB PM IQVIA" tenia molecule=3, atc=4. Pisamos
+# defaults segun los headers reales de row 1.
+for ($_c = 1; $_c -le [Math]::Min(8, $pmMatrix.GetLength(1)); $_c++) {
+  $_h = ((Normalize-Text $pmMatrix[1, $_c]) -replace '\s+', ' ').Trim().ToUpper()
+  if (-not $_h) { continue }
+  if ($_h -match '^MOLECULES?(\s+LONG)?$') { $pmColMap.molecule = $_c }
+  elseif ($_h -match '^ATC([\s-]?(IV|4))?$') { $pmColMap.atc = $_c }
+  elseif ($_h -eq 'MARKET TYPE') { $pmColMap.segment = $_c }
+}
+
 $pmHeaderInfo = [ordered]@{
   monthly = @()
   ytd = @()
