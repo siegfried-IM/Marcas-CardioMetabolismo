@@ -685,6 +685,67 @@ body {
   text-transform: uppercase;
   margin-bottom: 2px;
 }
+
+/* ─── CROSS-LINE SUMMARY ─────────────────────────────────────────── */
+.xline-wrap {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.xline-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.xline-table thead th {
+  background: #f9fafb;
+  color: #525252;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-200);
+  white-space: nowrap;
+}
+.xline-table thead th.r { text-align: right; }
+.xline-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background .15s;
+}
+.xline-table tbody tr:last-child { border-bottom: none; }
+.xline-table tbody tr.clickable { cursor: pointer; }
+.xline-table tbody tr.clickable:hover { background: #fafafa; }
+.xline-table tbody td {
+  padding: 11px 14px;
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}
+.xline-table td.r { text-align: right; }
+.xline-line-label { font-weight: 600; color: #1a1a1a; display:flex; align-items:center; gap:8px; }
+.xline-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.xline-num { font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: #1a1a1a; }
+.xline-pct { font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
+.xline-pct.good { background: #dcfce7; color: #16a34a; }
+.xline-pct.warn { background: #fef3c7; color: #b45309; }
+.xline-pct.bad  { background: #fee2e2; color: #dc2626; }
+.xline-pct.muted{ background: #f5f5f5; color: #94a3b8; }
+.xline-status { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: #525252; }
+.xline-dot { width: 6px; height: 6px; border-radius: 50%; }
+.xline-dot.fresh   { background: #16a34a; }
+.xline-dot.aging   { background: #d97706; }
+.xline-dot.stale   { background: #dc2626; }
+.xline-dot.nodata  { background: #cbd5e1; }
+.xline-meta-cell { font-size: 10.5px; color: #6b7280; }
+.xline-empty-row td { color: #94a3b8; font-style: italic; }
+@media (max-width: 768px) {
+  .xline-table { font-size: 11px; }
+  .xline-table thead th, .xline-table tbody td { padding: 8px 10px; }
+  .xline-table .hide-sm { display: none; }
+}
 </style>
 </head>
 <body>
@@ -729,6 +790,15 @@ body {
 
 <!-- ═══ MAIN ══════════════════════════════════════════════════════════ -->
 <div class="main">
+
+  <!-- Cross-line summary -->
+  <div class="sec-label">
+    <span class="sec-label-text">Performance YTD · Estado del corte</span>
+    <div class="sec-label-line"></div>
+  </div>
+  <div id="cross-line-summary" class="xline-wrap" style="margin-bottom:48px;">
+    <div class="xline-loading" style="font-size:12px;color:#94a3b8;padding:14px 0;">Cargando resumen cross-línea…</div>
+  </div>
 
   <!-- Section label -->
   <div class="sec-label">
@@ -1020,6 +1090,138 @@ document.getElementById('nav-date').textContent =
   `${String(n.getDate()).padStart(2,'0')} ${months[n.getMonth()]} ${n.getFullYear()}`;
 
 applyUrls();
+</script>
+
+<script>
+/* ─── CROSS-LINE SUMMARY ─────────────────────────────────────────── */
+(function () {
+  'use strict';
+
+  function fmt(n) {
+    if (n === null || n === undefined || !isFinite(n)) return '—';
+    if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+    if (n >= 1e3) return (n / 1e3).toFixed(0) + 'k';
+    return Math.round(n).toLocaleString('es-AR');
+  }
+
+  function ageBadge(generatedAt) {
+    if (!generatedAt) return { cls: 'nodata', text: 'sin datos', days: null };
+    var m = String(generatedAt).match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (!m) return { cls: 'nodata', text: 'sin datos', days: null };
+    var d = new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10));
+    var days = Math.round((Date.now() - d.getTime()) / 86400000);
+    var dateLabel = m[3] + '/' + m[2];
+    if (days <= 45) return { cls: 'fresh', text: dateLabel, days: days };
+    if (days <= 90) return { cls: 'aging', text: dateLabel, days: days };
+    return { cls: 'stale', text: dateLabel, days: days };
+  }
+
+  function complianceClass(c) {
+    if (c === null || c === undefined || !isFinite(c)) return 'muted';
+    if (c >= 95) return 'good';
+    if (c >= 80) return 'warn';
+    return 'bad';
+  }
+
+  function lineColor(key) {
+    var palette = {
+      cardio: '#B01E1E', ATB: '#16A34A', OTC: '#0284C7',
+      mujer: '#DB2777', respiratorio: '#0D9488', SNC: '#7C3AED',
+      dermatologia: '#D97706'
+    };
+    return palette[key] || '#6b7280';
+  }
+
+  function render(payload) {
+    var wrap = document.getElementById('cross-line-summary');
+    if (!wrap) return;
+    var rows = (payload && payload.lines) || [];
+
+    var html = '<table class="xline-table">';
+    html += '<thead><tr>';
+    html += '<th>Línea</th>';
+    html += '<th>Estado</th>';
+    html += '<th class="r">YTD Real</th>';
+    html += '<th class="r hide-sm">YTD Budget</th>';
+    html += '<th class="r">Cumplim.</th>';
+    html += '<th class="r hide-sm">Último mes</th>';
+    html += '<th class="hide-sm">Familias c/IQVIA</th>';
+    html += '</tr></thead>';
+    html += '<tbody>';
+
+    rows.forEach(function (r) {
+      var hasData = !!r.hasData;
+      var age = ageBadge(r.generatedAt);
+      var cClass = complianceClass(r.compliance);
+      var dot = '<span class="xline-color-dot" style="background:' + lineColor(r.key) + ';"></span>';
+      var label = (r.label || r.key).replace(/_/g, ' ');
+
+      if (!hasData) {
+        html += '<tr class="xline-empty-row">';
+        html += '<td><span class="xline-line-label">' + dot + label + '</span></td>';
+        html += '<td colspan="6"><span class="xline-status"><span class="xline-dot nodata"></span>sin data.js generado</span></td>';
+        html += '</tr>';
+        return;
+      }
+
+      html += '<tr class="clickable" data-href="' + (r.href || '') + '">';
+      html += '<td><span class="xline-line-label">' + dot + label + '</span></td>';
+      html += '<td><span class="xline-status">';
+      html += '<span class="xline-dot ' + age.cls + '"></span>' + age.text;
+      html += '</span></td>';
+      html += '<td class="r"><span class="xline-num">' + fmt(r.totalsYtdActual) + '</span></td>';
+      html += '<td class="r hide-sm"><span class="xline-num">' + fmt(r.totalsYtdBudget) + '</span></td>';
+      html += '<td class="r"><span class="xline-pct ' + cClass + '">';
+      html += (r.compliance !== null && r.compliance !== undefined && isFinite(r.compliance))
+        ? r.compliance.toFixed(1) + '%' : '—';
+      html += '</span></td>';
+      html += '<td class="r hide-sm xline-meta-cell">' + (r.latestMonth || '—');
+      if (r.latestActual !== null && r.latestActual !== undefined) {
+        html += ' · <span class="xline-num" style="font-size:10.5px;">' + fmt(r.latestActual) + '</span>';
+      }
+      html += '</td>';
+      html += '<td class="hide-sm xline-meta-cell">';
+      if (r.familiesWithPm !== null && r.familiesWithPm !== undefined && r.familiesCount) {
+        html += r.familiesWithPm + ' / ' + r.familiesCount;
+      } else if (r.familiesCount) {
+        html += '—  / ' + r.familiesCount;
+      } else {
+        html += '—';
+      }
+      html += '</td>';
+      html += '</tr>';
+    });
+
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+
+    // Click navigation
+    wrap.querySelectorAll('tr.clickable').forEach(function (tr) {
+      tr.addEventListener('click', function () {
+        var href = tr.getAttribute('data-href');
+        if (href) window.location.href = href;
+      });
+    });
+  }
+
+  function load() {
+    fetch('shared/cross-line-summary.json?v=' + Date.now())
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(render)
+      .catch(function () {
+        var wrap = document.getElementById('cross-line-summary');
+        if (wrap) {
+          wrap.innerHTML = '<div style="font-size:12px;color:#94a3b8;padding:14px;">Resumen cross-línea no disponible. Corré <code>build-all.ps1</code> con <code>-CommitPush</code> para regenerarlo.</div>';
+        }
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', load);
+  } else {
+    load();
+  }
+})();
 </script>
 </body>
 </html>

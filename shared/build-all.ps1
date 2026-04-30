@@ -270,6 +270,23 @@ foreach ($k in $results.Keys) {
     Write-Host ("  {0,-14} : {1}" -f $k, $status) -ForegroundColor $color
 }
 
+# Regenerar el cross-line-summary.json del hub si al menos una linea termino bien.
+if (-not $DryRun) {
+    $anyOk = $results.Values | Where-Object { $_ -like 'ok*' }
+    if ($anyOk) {
+        $summaryScript = Join-Path $PSScriptRoot 'build-summary.py'
+        if (Test-Path -LiteralPath $summaryScript) {
+            $pyExe = if (Get-Command 'py' -ErrorAction SilentlyContinue) { 'py' } else { 'python' }
+            Write-Host ""
+            Write-Host "Regenerando shared/cross-line-summary.json..." -ForegroundColor Cyan
+            & $pyExe $summaryScript --repo $repoRoot
+            if ($LASTEXITCODE -ne 0) {
+                Write-Warning "El build-summary.py fallo (exit $LASTEXITCODE), pero los data.js si se generaron."
+            }
+        }
+    }
+}
+
 # Commit & push
 if ($CommitPush -and -not $DryRun) {
     $hadFailure = $results.Values | Where-Object { $_ -like 'FAILED*' }
@@ -284,7 +301,7 @@ if ($CommitPush -and -not $DryRun) {
     Write-Host "================================================================"
     Push-Location $repoRoot
     try {
-        git add '*/data.js' 2>&1 | Out-Null
+        git add '*/data.js' 'shared/cross-line-summary.json' 2>&1 | Out-Null
         $staged = git diff --cached --name-only
         if (-not $staged) {
             Write-Host "  Sin cambios para commitear." -ForegroundColor Yellow
