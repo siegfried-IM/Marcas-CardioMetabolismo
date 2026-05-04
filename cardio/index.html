@@ -859,7 +859,7 @@ function renderBudget(){
 // Defensive: validate that the configured default still exists in mol_perf
 // (D.defaults.market puede quedar stale tras un rename de familia y dejar
 // la tabla vacia en el primer render). Caemos al primer family si no.
-let pChart=null, pMol=((D.mol_perf&&D.mol_perf[D.defaults?.market])?D.defaults.market:(Object.keys(D.mol_perf||{})[0])), pPeriod='ytd', pMetric='ms', pYear='todos';
+let pChart=null, pMol=((D.mol_perf&&D.mol_perf[D.defaults?.market])?D.defaults.market:(Object.keys(D.mol_perf||{})[0])), pPeriod='ytd', pMetric='ms', pYears=new Set();
 
 const MOL_LABELS = D.molLabels || {};
 
@@ -875,7 +875,7 @@ function bindPerfCtrls(){
   document.querySelectorAll('#perf-period-ctrl .seg').forEach(b=>{
     b.onclick=()=>{document.querySelectorAll('#perf-period-ctrl .seg').forEach(x=>x.classList.remove('on'));
       b.classList.add('on');pPeriod=b.dataset.v;
-      if(pPeriod==='ytd'||pPeriod==='mat')pYear='todos';
+      if(pPeriod==='ytd'||pPeriod==='mat')pYears=new Set();
       renderPerfYr();renderPerf();};});
   document.querySelectorAll('#perf-metric-ctrl .seg').forEach(b=>{
     b.onclick=()=>{document.querySelectorAll('#perf-metric-ctrl .seg').forEach(x=>x.classList.remove('on'));
@@ -903,14 +903,26 @@ function renderPerfYr(){
       });
       years.push(...[...allY].sort());
     }
-    container.innerHTML=years.map(y=>`<button class="yr-btn ${y===pYear?'on':''}" onclick="setPY('${y}')">${y==='todos'?'Todos':y}</button>`).join('');
+    const isAll=pYears.size===0;
+  const yearsOnly=years.filter(y=>y!=='todos');
+  let __html=`<button class="yr-btn ${isAll?'on':''}" onclick="setPY('todos')">Todos</button>`;
+  __html+=yearsOnly.map(y=>`<button class="yr-btn ${pYears.has(y)?'on':''}" onclick="setPY('${y}')">${y}</button>`).join('');
+  container.innerHTML=__html;
     container.style.display='flex';
   } else {
     container.innerHTML='';
     container.style.display='none';
   }
 }
-function setPY(y){pYear=y;renderPerfYr();renderPerf();}
+function setPY(y){
+  if(y==='todos'){pYears.clear();}
+  else{
+    if(pYears.size===0){pYears.add(y);}
+    else if(pYears.has(y)){if(pYears.size===1)return;pYears.delete(y);}
+    else{pYears.add(y);}
+  }
+  renderPerfYr();renderPerf();
+}
 
 function renderPerf(){
   const molData=D.mol_perf[pMol]; if(!molData)return;
@@ -928,7 +940,7 @@ function renderPerf(){
       return(parseInt(ya)*4+['Q1','Q2','Q3','Q4'].indexOf(qa))-(parseInt(yb)*4+['Q1','Q2','Q3','Q4'].indexOf(qb));
     });
     periodKeys=sortQ([...allQK]);
-    if(pYear!=='todos') periodKeys=periodKeys.filter(k=>k.endsWith(pYear));
+    if(pYears.size>0) periodKeys=periodKeys.filter(k=>pYears.has(k.split(' ')[1]));
   }
   else{
     const allK=new Set();
@@ -937,7 +949,7 @@ function renderPerf(){
       const[ma,ya]=a.split(' ');const[mb,yb]=b.split(' ');
       return(parseInt(ya)*100+MONTH_ORDER_EN.indexOf(ma))-(parseInt(yb)*100+MONTH_ORDER_EN.indexOf(mb));
     });
-    if(pYear!=='todos') periodKeys=periodKeys.filter(k=>k.endsWith(pYear));
+    if(pYears.size>0) periodKeys=periodKeys.filter(k=>pYears.has(k.split(' ')[1]));
   }
   periodKeys=(periodKeys||[]).filter(Boolean);
   if(!prods.length||!periodKeys.length){
@@ -1051,7 +1063,7 @@ function renderPerf(){
 }
 
 // ── RECETAS ───────────────────────────────────────────────────────────
-let rChart=null,rProd=(D.defaults?.rec||Object.keys(D.rec_ms)[0]),rView='rec',rYear='todos';
+let rChart=null,rProd=(D.defaults?.rec||Object.keys(D.rec_ms)[0]),rView='rec',rYears=new Set();
 const REC_PRODS=Object.keys(D.rec_ms);
 
 function renderRecPills(){
@@ -1064,7 +1076,7 @@ function renderRecPills(){
 function bindRecCtrls(){
   document.querySelectorAll('#rec-view-ctrl .seg').forEach(b=>{
     b.onclick=()=>{document.querySelectorAll('#rec-view-ctrl .seg').forEach(x=>x.classList.remove('on'));
-      b.classList.add('on');rView=b.dataset.v;if(rView==='ms'||rView==='quarterly')rYear='todos';renderRec();};});
+      b.classList.add('on');rView=b.dataset.v;if(rView==='ms'||rView==='quarterly')rYears=new Set();renderRec();};});
 }
 function setRP(p){rProd=p;renderRecPills();renderRec();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
 
@@ -1077,10 +1089,22 @@ function renderRecYr(){
   }
   const data=D.recetas[rProd]||{};
   const allYears=['todos',...[...new Set(Object.keys(data).map(k=>k.split(' ')[1]))].sort()];
-  container.innerHTML=allYears.map(y=>`<button class="yr-btn ${y===rYear?'on':''}" onclick="setRY('${y}')">${y==='todos'?'Todos':y}</button>`).join('');
+  const isAll=rYears.size===0;
+  const yearsOnly=allYears.filter(y=>y!=='todos');
+  let __html=`<button class="yr-btn ${isAll?'on':''}" onclick="setRY('todos')">Todos</button>`;
+  __html+=yearsOnly.map(y=>`<button class="yr-btn ${rYears.has(y)?'on':''}" onclick="setRY('${y}')">${y}</button>`).join('');
+  container.innerHTML=__html;
   container.style.display='flex';
 }
-function setRY(y){rYear=y;renderRecYr();renderRec();}
+function setRY(y){
+  if(y==='todos'){rYears.clear();}
+  else{
+    if(rYears.size===0){rYears.add(y);}
+    else if(rYears.has(y)){if(rYears.size===1)return;rYears.delete(y);}
+    else{rYears.add(y);}
+  }
+  renderRecYr();renderRec();
+}
 
 function renderRec(){
   if(activeBrand && !REC_PRODS.includes(activeBrand)){
@@ -1187,7 +1211,7 @@ function renderRec(){
   } else {
     document.getElementById('rec-comp-panel').style.display='none';
     let keys=sortM(Object.keys(data));
-    if(rYear!=='todos') keys=keys.filter(k=>k.endsWith(rYear));
+    if(rYears.size>0) keys=keys.filter(k=>rYears.has(k.split(' ')[1]));
     labels=keys;
     const series=rView==='rec'?keys.map(k=>data[k]?.recetas||null):keys.map(k=>data[k]?.medicos||null);
     datasets=[{
@@ -1517,7 +1541,7 @@ function renderPrec(){
 
 
 // ── STOCK & VENTAS ────────────────────────────────────────────────────
-let stChart=null, stProd=(D.defaults?.brand||Object.keys(D.stock)[0]), stYear='todos';
+let stChart=null, stProd=(D.defaults?.brand||Object.keys(D.stock)[0]), stYears=new Set();
 const STOCK_PRODS=Object.keys(D.stock).filter(p=>D.stock[p]&&Object.keys(D.stock[p]).length>0);
 
 function renderStockPills(){
@@ -1531,16 +1555,26 @@ function renderStockYr(){
   const data=D.stock[stProd]||{};
   const allMonths=Object.keys(data);
   const years=['todos',...[...new Set(allMonths.map(m=>m.split(' ')[1]))].sort()];
-  document.getElementById('stock-yr').innerHTML=years.map(y=>`
-    <button class="yr-btn ${y===stYear?'on':''}" onclick="setSY('${y}')">${y==='todos'?'Todos':y}</button>`).join('');
+  const isAll=stYears.size===0;
+  let __html=`<button class="yr-btn ${isAll?'on':''}" onclick="setSY('todos')">Todos</button>`;
+  __html+=years.filter(y=>y!=='todos').map(y=>`<button class="yr-btn ${stYears.has(y)?'on':''}" onclick="setSY('${y}')">${y}</button>`).join('');
+  document.getElementById('stock-yr').innerHTML=__html;
 }
 function setSP(p){stProd=p;renderStockPills();renderStockYr();renderStock();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
-function setSY(y){stYear=y;renderStockYr();renderStock();}
+function setSY(y){
+  if(y==='todos'){stYears.clear();}
+  else{
+    if(stYears.size===0){stYears.add(y);}
+    else if(stYears.has(y)){if(stYears.size===1)return;stYears.delete(y);}
+    else{stYears.add(y);}
+  }
+  renderStockYr();renderStock();
+}
 
 function renderStock(){
   const data=D.stock[stProd]||{};
   const allMonths=Object.keys(data).sort((a,b)=>new Date(a+' 1')-new Date(b+' 1'));
-  const months=stYear==='todos'?allMonths:allMonths.filter(m=>m.endsWith(stYear));
+  const months=stYears.size===0?allMonths:allMonths.filter(m=>stYears.has(m.split(' ')[1]));
   const ventas=months.map(m=>data[m]?.ventas??null);
   const stock=months.map(m=>data[m]?.stock??null);
   const dias=months.map(m=>data[m]?.dias??null);
