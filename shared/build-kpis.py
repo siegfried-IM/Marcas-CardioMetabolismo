@@ -347,15 +347,32 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
     def strip_paren(name):
         return re.sub(r'\s*\(.*?\)\s*$', '', str(name)).strip()
 
+    def find_recms_match(key):
+        """Devuelve rec_ms[k] tras probar:
+            - exact match
+            - progressively strip last word ('DILATREND AP' -> 'DILATREND')
+            - case-insensitive
+        """
+        if not key: return None
+        candidates = [key]
+        words = key.split()
+        for i in range(len(words) - 1, 0, -1):
+            candidates.append(' '.join(words[:i]))
+        # case-insensitive map
+        rms_lower = {k.upper(): k for k in rec_ms}
+        for c in candidates:
+            if c in rec_ms and isinstance(rec_ms[c], dict):
+                return rec_ms[c]
+            cu = c.upper()
+            if cu in rms_lower:
+                k = rms_lower[cu]
+                if isinstance(rec_ms[k], dict): return rec_ms[k]
+        return None
+
     fam_sie_recetas = {}  # fam_key -> {curr, prev}
     for fam_key in sie_per_fam:
         fam_field = mol.get(fam_key, {}).get('family', '') if isinstance(mol.get(fam_key), dict) else ''
-        candidates = [fam_key, fam_field]
-        rec_ms_obj = None
-        for c in candidates:
-            if c in rec_ms and isinstance(rec_ms[c], dict):
-                rec_ms_obj = rec_ms[c]
-                break
+        rec_ms_obj = find_recms_match(fam_key) or find_recms_match(fam_field)
         if rec_ms_obj is not None:
             sie_m = rec_ms_obj.get('sie', {})
             if isinstance(sie_m, dict) and sie_m:
@@ -397,6 +414,9 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
         return round(c / p * 100, 1)
 
     # Construir lista final: union de SIE products en units + explicit rec
+    # Solo incluimos productos que tienen alguna fuente de recetas trackeada
+    # (sino quedan con rec=0 confuso). Si NO esta trackeado en rec_ms/rec_comp/
+    # recetas de la linea, se filtra.
     seen = set()
     for prod_name, u_info in sie_units_by_prod.items():
         n = norm(prod_name)
@@ -404,21 +424,26 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
         # Recetas: prefer explicit rec_comp, sino per-prod, sino fam_sie repartido
         rec_explicit = sie_rec_by_norm.get(n)
         per_prod = sie_rec_per_prod.get(prod_name)
+        has_rec_source = False
         if rec_explicit:
             r_curr = rec_explicit[1]['curr']
             r_prev = rec_explicit[1]['prev']
             family = rec_explicit[1]['family']
+            has_rec_source = True
         elif per_prod:
             r_curr = per_prod['curr']
             r_prev = per_prod['prev']
             family = u_info['family']
+            has_rec_source = True
         else:
             family = u_info['family']
             fam_key = u_info['fam_key']
             fam_rec = fam_sie_recetas.get(fam_key)
             if not fam_rec:
                 r_curr = r_prev = 0
+                has_rec_source = False
             else:
+                has_rec_source = True
                 # Si solo hay un SIE en la familia, atribuir total
                 sie_in_fam = sie_per_fam[fam_key]
                 if len(sie_in_fam) <= 1:
@@ -435,6 +460,12 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
                         # Sin units, dividir parejo
                         r_curr = fam_rec['curr'] / len(sie_in_fam)
                         r_prev = fam_rec['prev'] / len(sie_in_fam)
+
+        # Si el producto NO tiene fuente de recetas trackeada, lo skip
+        # para que la tabla quede consistente (todos los SIE en la tabla
+        # tienen al menos algun dato de recetas en la linea).
+        if not has_rec_source:
+            continue
 
         rec_curr = int(round(r_curr))
         rec_prev = int(round(r_prev))
