@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-04T19:29:23",
+  "generated_at": "2026-05-04T19:44:58",
   "as_of_month": "Mar 2026",
   "periods": [
     "ytd",
@@ -25,73 +25,121 @@
         "ytd": {
           "recetas_sie": {
             "curr": 104396,
-            "prev": 113608
+            "prev": 113608,
+            "ie": 91.9
           },
           "ms_recetas": {
             "curr": 6.24,
             "prev": 7.19
           },
+          "mercado_recetas": {
+            "curr": 1674054,
+            "prev": 1580112,
+            "ie": 105.9
+          },
           "units_sie": {
             "curr": 1126518,
-            "prev": 1139005
+            "prev": 1139005,
+            "ie": 98.9
           },
           "ms_units": {
             "curr": 8.46,
             "prev": 9.18
+          },
+          "mercado_units": {
+            "curr": 13313242,
+            "prev": 12401921,
+            "ie": 107.3
           }
         },
         "trimestre": {
           "recetas_sie": {
             "curr": 104396,
-            "prev": 107730
+            "prev": 107730,
+            "ie": 96.9
           },
           "ms_recetas": {
             "curr": 6.24,
             "prev": 6.58
           },
+          "mercado_recetas": {
+            "curr": 1674054,
+            "prev": 1636628,
+            "ie": 102.3
+          },
           "units_sie": {
             "curr": 1126518,
-            "prev": 1191133
+            "prev": 1191133,
+            "ie": 94.6
           },
           "ms_units": {
             "curr": 8.46,
             "prev": 8.7
+          },
+          "mercado_units": {
+            "curr": 13313242,
+            "prev": 13696870,
+            "ie": 97.2
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 212126,
-            "prev": 220585
+            "prev": 220585,
+            "ie": 96.2
           },
           "ms_recetas": {
             "curr": 6.41,
             "prev": 6.88
           },
+          "mercado_recetas": {
+            "curr": 3310681,
+            "prev": 3206534,
+            "ie": 103.2
+          },
           "units_sie": {
             "curr": 2317651,
-            "prev": 2426322
+            "prev": 2426322,
+            "ie": 95.5
           },
           "ms_units": {
             "curr": 8.58,
             "prev": 9.05
+          },
+          "mercado_units": {
+            "curr": 27010112,
+            "prev": 26797346,
+            "ie": 100.8
           }
         },
         "mat": {
           "recetas_sie": {
             "curr": 432711,
-            "prev": 486225
+            "prev": 486225,
+            "ie": 89.0
           },
           "ms_recetas": {
             "curr": 6.64,
             "prev": 7.62
           },
+          "mercado_recetas": {
+            "curr": 6517215,
+            "prev": 6382061,
+            "ie": 102.1
+          },
           "units_sie": {
             "curr": 4743973,
-            "prev": 5030444
+            "prev": 5030444,
+            "ie": 94.3
           },
           "ms_units": {
             "curr": 8.82,
             "prev": 9.57
+          },
+          "mercado_units": {
+            "curr": 53807458,
+            "prev": 52579819,
+            "ie": 102.3
           }
         }
       }
@@ -107,73 +155,121 @@
         "ytd": {
           "recetas_sie": {
             "curr": 51827,
-            "prev": 54951
+            "prev": 54951,
+            "ie": 94.3
           },
           "ms_recetas": {
             "curr": 66.69,
             "prev": 49.59
           },
+          "mercado_recetas": {
+            "curr": 77712,
+            "prev": 110815,
+            "ie": 70.1
+          },
           "units_sie": {
             "curr": 1272326,
-            "prev": 1224082
+            "prev": 1224082,
+            "ie": 103.9
           },
           "ms_units": {
             "curr": 60.69,
             "prev": 59.84
+          },
+          "mercado_units": {
+            "curr": 2096434,
+            "prev": 2045651,
+            "ie": 102.5
           }
         },
         "trimestre": {
           "recetas_sie": {
             "curr": 51827,
-            "prev": 49887
+            "prev": 49887,
+            "ie": 103.9
           },
           "ms_recetas": {
             "curr": 66.69,
             "prev": 49.45
           },
+          "mercado_recetas": {
+            "curr": 77712,
+            "prev": 100875,
+            "ie": 77.0
+          },
           "units_sie": {
             "curr": 1272326,
-            "prev": 1258319
+            "prev": 1258319,
+            "ie": 101.1
           },
           "ms_units": {
             "curr": 60.69,
             "prev": 60.53
+          },
+          "mercado_units": {
+            "curr": 2096434,
+            "prev": 2078736,
+            "ie": 100.9
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 101714,
-            "prev": 102454
+            "prev": 102454,
+            "ie": 99.3
           },
           "ms_recetas": {
             "curr": 56.95,
             "prev": 50.44
           },
+          "mercado_recetas": {
+            "curr": 178587,
+            "prev": 203131,
+            "ie": 87.9
+          },
           "units_sie": {
             "curr": 2530645,
-            "prev": 2550115
+            "prev": 2550115,
+            "ie": 99.2
           },
           "ms_units": {
             "curr": 60.61,
             "prev": 56.38
+          },
+          "mercado_units": {
+            "curr": 4175170,
+            "prev": 4523022,
+            "ie": 92.3
           }
         },
         "mat": {
           "recetas_sie": {
             "curr": 204168,
-            "prev": 234327
+            "prev": 234327,
+            "ie": 87.1
           },
           "ms_recetas": {
             "curr": 53.49,
             "prev": 49.99
           },
+          "mercado_recetas": {
+            "curr": 381718,
+            "prev": 468717,
+            "ie": 81.4
+          },
           "units_sie": {
             "curr": 5080760,
-            "prev": 4861434
+            "prev": 4861434,
+            "ie": 104.5
           },
           "ms_units": {
             "curr": 58.41,
             "prev": 56.2
+          },
+          "mercado_units": {
+            "curr": 8698192,
+            "prev": 8649566,
+            "ie": 100.6
           }
         }
       }
@@ -189,73 +285,121 @@
         "ytd": {
           "recetas_sie": {
             "curr": 61379,
-            "prev": 81115
+            "prev": 81115,
+            "ie": 75.7
           },
           "ms_recetas": {
             "curr": 11.31,
             "prev": 23.56
           },
+          "mercado_recetas": {
+            "curr": 542800,
+            "prev": 344316,
+            "ie": 157.6
+          },
           "units_sie": {
             "curr": null,
-            "prev": 9021742
+            "prev": 9021742,
+            "ie": null
           },
           "ms_units": {
             "curr": null,
             "prev": 36.6
+          },
+          "mercado_units": {
+            "curr": null,
+            "prev": 24650679,
+            "ie": null
           }
         },
         "trimestre": {
           "recetas_sie": {
             "curr": 61379,
-            "prev": 82792
+            "prev": 82792,
+            "ie": 74.1
           },
           "ms_recetas": {
             "curr": 11.31,
             "prev": 25.94
           },
+          "mercado_recetas": {
+            "curr": 542800,
+            "prev": 319189,
+            "ie": 170.1
+          },
           "units_sie": {
             "curr": null,
-            "prev": 9625233
+            "prev": 9625233,
+            "ie": null
           },
           "ms_units": {
             "curr": null,
             "prev": 36.63
+          },
+          "mercado_units": {
+            "curr": null,
+            "prev": 26275895,
+            "ie": null
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 144171,
-            "prev": 163093
+            "prev": 163093,
+            "ie": 88.4
           },
           "ms_recetas": {
             "curr": 16.73,
             "prev": 25.19
           },
+          "mercado_recetas": {
+            "curr": 861989,
+            "prev": 647419,
+            "ie": 133.1
+          },
           "units_sie": {
             "curr": 15819492,
-            "prev": 19096704
+            "prev": 19096704,
+            "ie": 82.8
           },
           "ms_units": {
             "curr": 36.95,
             "prev": 37.01
+          },
+          "mercado_units": {
+            "curr": 42811519,
+            "prev": 51597671,
+            "ie": 83.0
           }
         },
         "mat": {
           "recetas_sie": {
             "curr": 307264,
-            "prev": 292961
+            "prev": 292961,
+            "ie": 104.9
           },
           "ms_recetas": {
             "curr": 20.36,
             "prev": 20.6
           },
+          "mercado_recetas": {
+            "curr": 1509408,
+            "prev": 1422351,
+            "ie": 106.1
+          },
           "units_sie": {
             "curr": 34916196,
-            "prev": 37688565
+            "prev": 37688565,
+            "ie": 92.6
           },
           "ms_units": {
             "curr": 36.98,
             "prev": 36.82
+          },
+          "mercado_units": {
+            "curr": 94409190,
+            "prev": 102366077,
+            "ie": 92.2
           }
         }
       }
@@ -271,73 +415,121 @@
         "ytd": {
           "recetas_sie": {
             "curr": 35122,
-            "prev": 39828
+            "prev": 39828,
+            "ie": 88.2
           },
           "ms_recetas": {
             "curr": 10.9,
             "prev": 14.96
           },
+          "mercado_recetas": {
+            "curr": 322365,
+            "prev": 266203,
+            "ie": 121.1
+          },
           "units_sie": {
             "curr": null,
-            "prev": 264566
+            "prev": 264566,
+            "ie": null
           },
           "ms_units": {
             "curr": null,
             "prev": 7.79
+          },
+          "mercado_units": {
+            "curr": null,
+            "prev": 3394735,
+            "ie": null
           }
         },
         "trimestre": {
           "recetas_sie": {
             "curr": 35122,
-            "prev": 35400
+            "prev": 35400,
+            "ie": 99.2
           },
           "ms_recetas": {
             "curr": 10.9,
             "prev": 12.91
           },
+          "mercado_recetas": {
+            "curr": 322365,
+            "prev": 274170,
+            "ie": 117.6
+          },
           "units_sie": {
             "curr": null,
-            "prev": 258394
+            "prev": 258394,
+            "ie": null
           },
           "ms_units": {
             "curr": null,
             "prev": 6.91
+          },
+          "mercado_units": {
+            "curr": null,
+            "prev": 3737266,
+            "ie": null
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 70522,
-            "prev": 78011
+            "prev": 78011,
+            "ie": 90.4
           },
           "ms_recetas": {
             "curr": 11.82,
             "prev": 14.56
           },
+          "mercado_recetas": {
+            "curr": 596535,
+            "prev": 535951,
+            "ie": 111.3
+          },
           "units_sie": {
             "curr": null,
-            "prev": 558069
+            "prev": 558069,
+            "ie": null
           },
           "ms_units": {
             "curr": null,
             "prev": 7.61
+          },
+          "mercado_units": {
+            "curr": null,
+            "prev": 7335966,
+            "ie": null
           }
         },
         "mat": {
           "recetas_sie": {
             "curr": 148533,
-            "prev": 167351
+            "prev": 167351,
+            "ie": 88.8
           },
           "ms_recetas": {
             "curr": 13.12,
             "prev": 15.98
           },
+          "mercado_recetas": {
+            "curr": 1132487,
+            "prev": 1047226,
+            "ie": 108.1
+          },
           "units_sie": {
             "curr": 917988,
-            "prev": 1134371
+            "prev": 1134371,
+            "ie": 80.9
           },
           "ms_units": {
             "curr": 7.43,
             "prev": 7.84
+          },
+          "mercado_units": {
+            "curr": 12347765,
+            "prev": 14460601,
+            "ie": 85.4
           }
         }
       }
@@ -353,73 +545,121 @@
         "ytd": {
           "recetas_sie": {
             "curr": 95843,
-            "prev": 101736
+            "prev": 101736,
+            "ie": 94.2
           },
           "ms_recetas": {
             "curr": 18.96,
             "prev": 18.76
           },
+          "mercado_recetas": {
+            "curr": 505589,
+            "prev": 542414,
+            "ie": 93.2
+          },
           "units_sie": {
             "curr": 1180415,
-            "prev": 1251218
+            "prev": 1251218,
+            "ie": 94.3
           },
           "ms_units": {
             "curr": 40.96,
             "prev": 42.74
+          },
+          "mercado_units": {
+            "curr": 2881902,
+            "prev": 2927575,
+            "ie": 98.4
           }
         },
         "trimestre": {
           "recetas_sie": {
             "curr": 95843,
-            "prev": 130416
+            "prev": 130416,
+            "ie": 73.5
           },
           "ms_recetas": {
             "curr": 18.96,
             "prev": 21.14
           },
+          "mercado_recetas": {
+            "curr": 505589,
+            "prev": 617021,
+            "ie": 81.9
+          },
           "units_sie": {
             "curr": 1180415,
-            "prev": 1616626
+            "prev": 1616626,
+            "ie": 73.0
           },
           "ms_units": {
             "curr": 40.96,
             "prev": 43.44
+          },
+          "mercado_units": {
+            "curr": 2881902,
+            "prev": 3721659,
+            "ie": 77.4
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 226259,
-            "prev": 328121
+            "prev": 328121,
+            "ie": 69.0
           },
           "ms_recetas": {
             "curr": 20.15,
             "prev": 23.49
           },
+          "mercado_recetas": {
+            "curr": 1122610,
+            "prev": 1396661,
+            "ie": 80.4
+          },
           "units_sie": {
             "curr": 2797041,
-            "prev": 4854626
+            "prev": 4854626,
+            "ie": 57.6
           },
           "ms_units": {
             "curr": 42.36,
             "prev": 48.16
+          },
+          "mercado_units": {
+            "curr": 6603561,
+            "prev": 10080228,
+            "ie": 65.5
           }
         },
         "mat": {
           "recetas_sie": {
             "curr": 554380,
-            "prev": null
+            "prev": null,
+            "ie": null
           },
           "ms_recetas": {
             "curr": 22.01,
             "prev": null
           },
+          "mercado_recetas": {
+            "curr": 2519271,
+            "prev": null,
+            "ie": null
+          },
           "units_sie": {
             "curr": 7651667,
-            "prev": 7514301
+            "prev": 7514301,
+            "ie": 101.8
           },
           "ms_units": {
             "curr": 45.86,
             "prev": 46.17
+          },
+          "mercado_units": {
+            "curr": 16683789,
+            "prev": 16275279,
+            "ie": 102.5
           }
         }
       }
@@ -435,73 +675,121 @@
         "ytd": {
           "recetas_sie": {
             "curr": 9344,
-            "prev": 10879
+            "prev": 10879,
+            "ie": 85.9
           },
           "ms_recetas": {
             "curr": 8.21,
             "prev": 9.5
           },
+          "mercado_recetas": {
+            "curr": 113852,
+            "prev": 114568,
+            "ie": 99.4
+          },
           "units_sie": {
             "curr": 504866,
-            "prev": 497062
+            "prev": 497062,
+            "ie": 101.6
           },
           "ms_units": {
             "curr": 7.79,
             "prev": 9.47
+          },
+          "mercado_units": {
+            "curr": 6482118,
+            "prev": 5250003,
+            "ie": 123.5
           }
         },
         "trimestre": {
           "recetas_sie": {
             "curr": 9344,
-            "prev": 10194
+            "prev": 10194,
+            "ie": 91.7
           },
           "ms_recetas": {
             "curr": 8.21,
             "prev": 8.78
           },
+          "mercado_recetas": {
+            "curr": 113852,
+            "prev": 116063,
+            "ie": 98.1
+          },
           "units_sie": {
             "curr": 504866,
-            "prev": 501015
+            "prev": 501015,
+            "ie": 100.8
           },
           "ms_units": {
             "curr": 7.79,
             "prev": 8.44
+          },
+          "mercado_units": {
+            "curr": 6482118,
+            "prev": 5938965,
+            "ie": 109.1
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 19538,
-            "prev": 21961
+            "prev": 21961,
+            "ie": 89.0
           },
           "ms_recetas": {
             "curr": 8.5,
             "prev": 9.42
           },
+          "mercado_recetas": {
+            "curr": 229914,
+            "prev": 233198,
+            "ie": 98.6
+          },
           "units_sie": {
             "curr": 1005881,
-            "prev": 1006688
+            "prev": 1006688,
+            "ie": 99.9
           },
           "ms_units": {
             "curr": 8.1,
             "prev": 8.64
+          },
+          "mercado_units": {
+            "curr": 12421083,
+            "prev": 11653173,
+            "ie": 106.6
           }
         },
         "mat": {
           "recetas_sie": {
             "curr": 41499,
-            "prev": 46450
+            "prev": 46450,
+            "ie": 89.3
           },
           "ms_recetas": {
             "curr": 8.96,
             "prev": 9.79
           },
+          "mercado_recetas": {
+            "curr": 463113,
+            "prev": 474488,
+            "ie": 97.6
+          },
           "units_sie": {
             "curr": 2012569,
-            "prev": 2005725
+            "prev": 2005725,
+            "ie": 100.3
           },
           "ms_units": {
             "curr": 8.36,
             "prev": 9.82
+          },
+          "mercado_units": {
+            "curr": 24074256,
+            "prev": 20419455,
+            "ie": 117.9
           }
         }
       }
@@ -515,8 +803,10 @@
       "family": "SOLO",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 2242830,
-      "units_prev": 3342270
+      "units_prev": 3342270,
+      "units_ie": 67.1
     },
     {
       "name": "SIDERBLUT COMPLEX (SIE)",
@@ -525,8 +815,10 @@
       "family": "COMPLEX",
       "rec_curr": 8477,
       "rec_prev": 12450,
+      "rec_ie": 68.1,
       "units_curr": 1795080,
-      "units_prev": 2597490
+      "units_prev": 2597490,
+      "units_ie": 69.1
     },
     {
       "name": "SIDERBLUT POLI (SIE)",
@@ -535,8 +827,10 @@
       "family": "SOLO",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 747750,
-      "units_prev": 1063050
+      "units_prev": 1063050,
+      "units_ie": 70.3
     },
     {
       "name": "FER-IN-SOL (SIE)",
@@ -545,8 +839,10 @@
       "family": "SOLO",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 741600,
-      "units_prev": 1125840
+      "units_prev": 1125840,
+      "units_ie": 65.9
     },
     {
       "name": "BACTRIM FORTE (SIE)",
@@ -555,8 +851,10 @@
       "family": "BACTRIM",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 555758,
-      "units_prev": 509838
+      "units_prev": 509838,
+      "units_ie": 109.0
     },
     {
       "name": "CEFALEXINA ARGENTI (SIE)",
@@ -565,8 +863,10 @@
       "family": "CEFALEXINA ARG",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 499640,
-      "units_prev": 486934
+      "units_prev": 486934,
+      "units_ie": 102.6
     },
     {
       "name": "ACEMUK (SIE)",
@@ -575,8 +875,10 @@
       "family": "ACEMUK",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 405173,
-      "units_prev": 511609
+      "units_prev": 511609,
+      "units_ie": 79.2
     },
     {
       "name": "DILATREND (SIE)",
@@ -585,8 +887,10 @@
       "family": "DILATREND",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 326784,
-      "units_prev": 360440
+      "units_prev": 360440,
+      "units_ie": 90.7
     },
     {
       "name": "MAGNUS (SIE)",
@@ -595,8 +899,10 @@
       "family": "MAGNUS",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 202202,
-      "units_prev": 202409
+      "units_prev": 202409,
+      "units_ie": 99.9
     },
     {
       "name": "HEXALER NASAL (SIE)",
@@ -605,8 +911,10 @@
       "family": "HEXALER BRONQUIAL",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 199240,
-      "units_prev": 170960
+      "units_prev": 170960,
+      "units_ie": 116.5
     },
     {
       "name": "SIDERBLUT FOLICO (SIE)",
@@ -615,8 +923,10 @@
       "family": "COMPLEX",
       "rec_curr": 344,
       "rec_prev": 546,
+      "rec_ie": 63.0,
       "units_curr": 194970,
-      "units_prev": 240600
+      "units_prev": 240600,
+      "units_ie": 81.0
     },
     {
       "name": "SINTROM (SIE)",
@@ -625,8 +935,10 @@
       "family": "SINTROM",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 179712,
-      "units_prev": 175385
+      "units_prev": 175385,
+      "units_ie": 102.5
     },
     {
       "name": "TETRALGIN (SIE)",
@@ -635,8 +947,10 @@
       "family": "TETRALGIN",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 145172,
-      "units_prev": 144338
+      "units_prev": 144338,
+      "units_ie": 100.6
     },
     {
       "name": "ISIS FREE S/ESTROG (SIE)",
@@ -645,8 +959,10 @@
       "family": "SIN ESTROGENO",
       "rec_curr": 11709,
       "rec_prev": 16060,
+      "rec_ie": 72.9,
       "units_curr": 119553,
-      "units_prev": 152509
+      "units_prev": 152509,
+      "units_ie": 78.4
     },
     {
       "name": "DIOVAN (SIE)",
@@ -655,8 +971,10 @@
       "family": "DIOVAN",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 123387,
-      "units_prev": 126883
+      "units_prev": 126883,
+      "units_ie": 97.2
     },
     {
       "name": "DECADRON (SIE)",
@@ -665,8 +983,10 @@
       "family": "DECADRON",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 111754,
-      "units_prev": 108526
+      "units_prev": 108526,
+      "units_ie": 103.0
     },
     {
       "name": "HEXALER CORT (SIE)",
@@ -675,8 +995,10 @@
       "family": "HEXALER CORT",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 109682,
-      "units_prev": 124299
+      "units_prev": 124299,
+      "units_ie": 88.2
     },
     {
       "name": "SIDERBLUT GOTAS (SIE)",
@@ -685,8 +1007,10 @@
       "family": "SOLO",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 86740,
-      "units_prev": 119760
+      "units_prev": 119760,
+      "units_ie": 72.4
     },
     {
       "name": "METGLUCON AP (SIE)",
@@ -695,8 +1019,10 @@
       "family": "METGLUCON AP",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 86031,
-      "units_prev": 86003
+      "units_prev": 86003,
+      "units_ie": 100.0
     },
     {
       "name": "TERLOC (SIE)",
@@ -705,8 +1031,10 @@
       "family": "TERLOC",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 82749,
-      "units_prev": 82030
+      "units_prev": 82030,
+      "units_ie": 100.9
     },
     {
       "name": "DIOVAN-D (SIE)",
@@ -715,8 +1043,10 @@
       "family": "DIOVAN D",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 79295,
-      "units_prev": 81844
+      "units_prev": 81844,
+      "units_ie": 96.9
     },
     {
       "name": "DUO-DECADRON (SIE)",
@@ -725,8 +1055,10 @@
       "family": "DECADRON",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 77152,
-      "units_prev": 71148
+      "units_prev": 71148,
+      "units_ie": 108.4
     },
     {
       "name": "MOMETAX (SIE)",
@@ -735,8 +1067,10 @@
       "family": "HEXALER BRONQUIAL",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 74674,
-      "units_prev": 69880
+      "units_prev": 69880,
+      "units_ie": 106.9
     },
     {
       "name": "BACTRIM (SIE)",
@@ -745,8 +1079,10 @@
       "family": "BACTRIM",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 69542,
-      "units_prev": 71960
+      "units_prev": 71960,
+      "units_ie": 96.6
     },
     {
       "name": "BACTRIM JARABE (SIE)",
@@ -755,8 +1091,10 @@
       "family": "BACTRIM",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 68806,
-      "units_prev": 74656
+      "units_prev": 74656,
+      "units_ie": 92.2
     },
     {
       "name": "ISIS MINI (SIE)",
@@ -765,8 +1103,10 @@
       "family": "BAJA DOSIS 21+7",
       "rec_curr": 5822,
       "rec_prev": 10533,
+      "rec_ie": 55.3,
       "units_curr": 59402,
-      "units_prev": 98891
+      "units_prev": 98891,
+      "units_ie": 60.1
     },
     {
       "name": "ACANTEX (SIE)",
@@ -775,8 +1115,10 @@
       "family": "ACANTEX",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 59584,
-      "units_prev": 62257
+      "units_prev": 62257,
+      "units_ie": 95.7
     },
     {
       "name": "ENTRESTO (SIE)",
@@ -785,8 +1127,10 @@
       "family": "ENTRESTO",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 52426,
-      "units_prev": 52504
+      "units_prev": 52504,
+      "units_ie": 99.9
     },
     {
       "name": "CALCIO BASE (SIE)",
@@ -795,8 +1139,10 @@
       "family": "BASE",
       "rec_curr": 7263,
       "rec_prev": 11879,
+      "rec_ie": 61.1,
       "units_curr": 44933,
-      "units_prev": 65972
+      "units_prev": 65972,
+      "units_ie": 68.1
     },
     {
       "name": "VALIUM (SIE)",
@@ -805,8 +1151,10 @@
       "family": "DIAZEPAM",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 52033,
-      "units_prev": 129902
+      "units_prev": 129902,
+      "units_ie": 40.1
     },
     {
       "name": "ROXOLAN (SIE)",
@@ -815,8 +1163,10 @@
       "family": "ROXOLAN",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 50593,
-      "units_prev": 45021
+      "units_prev": 45021,
+      "units_ie": 112.4
     },
     {
       "name": "EXFORGE (SIE)",
@@ -825,8 +1175,10 @@
       "family": "EXFORGE",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 47282,
-      "units_prev": 47235
+      "units_prev": 47235,
+      "units_ie": 100.1
     },
     {
       "name": "ALIDIAL (SIE)",
@@ -835,8 +1187,10 @@
       "family": "ALIDIAL",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 43748,
-      "units_prev": 34686
+      "units_prev": 34686,
+      "units_ie": 126.1
     },
     {
       "name": "ISIS MINI 24 (SIE)",
@@ -845,8 +1199,10 @@
       "family": "BAJA DOSIS 24",
       "rec_curr": 3981,
       "rec_prev": 6670,
+      "rec_ie": 59.7,
       "units_curr": 38909,
-      "units_prev": 59196
+      "units_prev": 59196,
+      "units_ie": 65.7
     },
     {
       "name": "TETRALGIN NOVO (SIE)",
@@ -855,8 +1211,10 @@
       "family": "TETRALGIN",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 41078,
-      "units_prev": 40942
+      "units_prev": 40942,
+      "units_ie": 100.3
     },
     {
       "name": "TRIP D3 (SIE)",
@@ -865,8 +1223,10 @@
       "family": "D3",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 37073,
-      "units_prev": 46620
+      "units_prev": 46620,
+      "units_ie": 79.5
     },
     {
       "name": "FLEXINA 600 (SIE)",
@@ -875,8 +1235,10 @@
       "family": "FLEXINA",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 32222,
-      "units_prev": 27402
+      "units_prev": 27402,
+      "units_ie": 117.6
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 28 /.03",
@@ -885,8 +1247,10 @@
       "family": "ALTA DOSIS",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 32123,
-      "units_prev": 43801
+      "units_prev": 43801,
+      "units_ie": 73.3
     },
     {
       "name": "MADOPAR (SIE)",
@@ -895,8 +1259,10 @@
       "family": "BENSERAZIDE_LEVODOPA",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 26837,
-      "units_prev": 75653
+      "units_prev": 75653,
+      "units_ie": 35.5
     },
     {
       "name": "AIREAL PLUS (SIE)",
@@ -905,8 +1271,10 @@
       "family": "AIREAL PLUS",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 25558,
-      "units_prev": 15185
+      "units_prev": 15185,
+      "units_ie": 168.3
     },
     {
       "name": "CLIMATIX (SIE)",
@@ -915,8 +1283,10 @@
       "family": "CLIMATIX",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 24034,
-      "units_prev": 32171
+      "units_prev": 32171,
+      "units_ie": 74.7
     },
     {
       "name": "DECADRON. (SIE)",
@@ -925,8 +1295,10 @@
       "family": "DECADRON",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 22594,
-      "units_prev": 23392
+      "units_prev": 23392,
+      "units_ie": 96.6
     },
     {
       "name": "EXFORGE D (SIE)",
@@ -935,8 +1307,10 @@
       "family": "EXFORGE D",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 21820,
-      "units_prev": 24795
+      "units_prev": 24795,
+      "units_ie": 88.0
     },
     {
       "name": "AIREAL (SIE)",
@@ -945,8 +1319,10 @@
       "family": "AIREAL",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 21074,
-      "units_prev": 18176
+      "units_prev": 18176,
+      "units_ie": 115.9
     },
     {
       "name": "ALUMPAK VL (SIE)",
@@ -955,8 +1331,10 @@
       "family": "ALUMPAK",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 19625,
-      "units_prev": 15983
+      "units_prev": 15983,
+      "units_ie": 122.8
     },
     {
       "name": "TRIP D3 SIE",
@@ -965,8 +1343,10 @@
       "family": "D3",
       "rec_curr": 18829,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 0,
-      "units_prev": 0
+      "units_prev": 0,
+      "units_ie": null
     },
     {
       "name": "HEXALER (SIE)",
@@ -975,8 +1355,10 @@
       "family": "HEXALER",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 17993,
-      "units_prev": 21240
+      "units_prev": 21240,
+      "units_ie": 84.7
     },
     {
       "name": "ACEMUK DIA Y NOCHE (SIE)",
@@ -985,8 +1367,10 @@
       "family": "ACEMUK DIA Y NOCHE",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 17071,
-      "units_prev": 16366
+      "units_prev": 16366,
+      "units_ie": 104.3
     },
     {
       "name": "ACERPES 5% (SIE)",
@@ -995,8 +1379,10 @@
       "family": "ACERPES",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 16490,
-      "units_prev": 15316
+      "units_prev": 15316,
+      "units_ie": 107.7
     },
     {
       "name": "ACEMUK VL (SIE)",
@@ -1005,8 +1391,10 @@
       "family": "ACEMUK",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 16280,
-      "units_prev": 23160
+      "units_prev": 23160,
+      "units_ie": 70.3
     },
     {
       "name": "DILATREND AP (SIE)",
@@ -1015,8 +1403,10 @@
       "family": "DILATREND AP",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 13092,
-      "units_prev": 12886
+      "units_prev": 12886,
+      "units_ie": 101.6
     },
     {
       "name": "ACEMUK L (SIE)",
@@ -1025,8 +1415,10 @@
       "family": "ACEMUK L",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 12750,
-      "units_prev": 13352
+      "units_prev": 13352,
+      "units_ie": 95.5
     },
     {
       "name": "MAGNUS 36 (SIE)",
@@ -1035,8 +1427,10 @@
       "family": "MAGNUS",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 11933,
-      "units_prev": 12478
+      "units_prev": 12478,
+      "units_ie": 95.6
     },
     {
       "name": "SIDERBLUT IM (SIE)",
@@ -1045,8 +1439,10 @@
       "family": "SOLO",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 10965,
-      "units_prev": 16855
+      "units_prev": 16855,
+      "units_ie": 65.1
     },
     {
       "name": "TELPRES (SIE)",
@@ -1055,8 +1451,10 @@
       "family": "TELPRES",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 10695,
-      "units_prev": 15474
+      "units_prev": 15474,
+      "units_ie": 69.1
     },
     {
       "name": "ROXOLAN PLUS (SIE)",
@@ -1065,8 +1463,10 @@
       "family": "ROXOLAN",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 10137,
-      "units_prev": 5080
+      "units_prev": 5080,
+      "units_ie": 199.5
     },
     {
       "name": "MACROMAX PEDIATR (SIE)",
@@ -1075,8 +1475,10 @@
       "family": "MACROMAX",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 9726,
-      "units_prev": 9129
+      "units_prev": 9129,
+      "units_ie": 106.5
     },
     {
       "name": "ARTRO RED (SIE)",
@@ -1085,8 +1487,10 @@
       "family": "ARTRO RED",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 9577,
-      "units_prev": 13660
+      "units_prev": 13660,
+      "units_ie": 70.1
     },
     {
       "name": "ACI-TIP (SIE)",
@@ -1095,8 +1499,10 @@
       "family": "ACI-TIP",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 9495,
-      "units_prev": 8841
+      "units_prev": 8841,
+      "units_ie": 107.4
     },
     {
       "name": "MACROMAX (SIE)",
@@ -1105,8 +1511,10 @@
       "family": "MACROMAX",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 9270,
-      "units_prev": 9308
+      "units_prev": 9308,
+      "units_ie": 99.6
     },
     {
       "name": "SILTRAN MET (SIE)",
@@ -1115,8 +1523,10 @@
       "family": "SILTRAN MET",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 9042,
-      "units_prev": 4843
+      "units_prev": 4843,
+      "units_ie": 186.7
     },
     {
       "name": "ACEMUK BIOTIC DUO (SIE)",
@@ -1125,8 +1535,10 @@
       "family": "ACEMUK BIOTIC DUO",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 9037,
-      "units_prev": 11826
+      "units_prev": 11826,
+      "units_ie": 76.4
     },
     {
       "name": "ALUMPAK (SIE)",
@@ -1135,8 +1547,10 @@
       "family": "ALUMPAK",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 8724,
-      "units_prev": 7381
+      "units_prev": 7381,
+      "units_ie": 118.2
     },
     {
       "name": "ACERPES (SIE)",
@@ -1145,8 +1559,10 @@
       "family": "ACERPES",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 8348,
-      "units_prev": 8312
+      "units_prev": 8312,
+      "units_ie": 100.4
     },
     {
       "name": "SILTRAN (SIE)",
@@ -1155,8 +1571,10 @@
       "family": "SILTRAN",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 8192,
-      "units_prev": 4346
+      "units_prev": 4346,
+      "units_ie": 188.5
     },
     {
       "name": "PIXABAN (SIE)",
@@ -1165,8 +1583,10 @@
       "family": "PIXABAN",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 6646,
-      "units_prev": 4870
+      "units_prev": 4870,
+      "units_ie": 136.5
     },
     {
       "name": "EMPAX (SIE)",
@@ -1175,8 +1595,10 @@
       "family": "EMPAX",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 6617,
-      "units_prev": 513
+      "units_prev": 513,
+      "units_ie": 1289.9
     },
     {
       "name": "PGB (SIE)",
@@ -1185,8 +1607,10 @@
       "family": "PREGABALIN",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 6552,
-      "units_prev": 16949
+      "units_prev": 16949,
+      "units_ie": 38.7
     },
     {
       "name": "HEXALER BRONQ. DUO (SIE)",
@@ -1195,8 +1619,10 @@
       "family": "HEXALER BRONQUIAL DU",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 5797,
-      "units_prev": 6495
+      "units_prev": 6495,
+      "units_ie": 89.3
     },
     {
       "name": "MELERIL (SIE)",
@@ -1205,8 +1631,10 @@
       "family": "THIORIDAZINE",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 4518,
-      "units_prev": 14050
+      "units_prev": 14050,
+      "units_ie": 32.2
     },
     {
       "name": "CALCIO BASE D (SIE)",
@@ -1215,8 +1643,10 @@
       "family": "BASE D",
       "rec_curr": 615,
       "rec_prev": 1072,
+      "rec_ie": 57.4,
       "units_curr": 3862,
-      "units_prev": 5469
+      "units_prev": 5469,
+      "units_ie": 70.6
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 84 /.03",
@@ -1225,8 +1655,10 @@
       "family": "ALTA DOSIS",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 4446,
-      "units_prev": 6183
+      "units_prev": 6183,
+      "units_ie": 71.9
     },
     {
       "name": "ISIS (SIE)",
@@ -1235,8 +1667,10 @@
       "family": "ALTA DOSIS",
       "rec_curr": 4124,
       "rec_prev": 6120,
+      "rec_ie": 67.4,
       "units_curr": 0,
-      "units_prev": 0
+      "units_prev": 0,
+      "units_ie": null
     },
     {
       "name": "ACEMUK GRIP (SIE)",
@@ -1245,8 +1679,10 @@
       "family": "ACEMUK GRIP",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 3719,
-      "units_prev": 5690
+      "units_prev": 5690,
+      "units_ie": 65.4
     },
     {
       "name": "DAURAN (SIE)",
@@ -1255,8 +1691,10 @@
       "family": "DAURAN",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 3705,
-      "units_prev": 1305
+      "units_prev": 1305,
+      "units_ie": 283.9
     },
     {
       "name": "TRIP +45 (SIE)",
@@ -1265,8 +1703,10 @@
       "family": "45",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 3530,
-      "units_prev": 0
+      "units_prev": 0,
+      "units_ie": null
     },
     {
       "name": "DILATREND D (SIE)",
@@ -1275,8 +1715,10 @@
       "family": "DILATREND D",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 3394,
-      "units_prev": 3798
+      "units_prev": 3798,
+      "units_ie": 89.4
     },
     {
       "name": "DIOVAN IC (SIE)",
@@ -1285,8 +1727,10 @@
       "family": "DIOVAN",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 2902,
-      "units_prev": 2553
+      "units_prev": 2553,
+      "units_ie": 113.7
     },
     {
       "name": "ALIDIAL L (SIE)",
@@ -1295,8 +1739,10 @@
       "family": "ALIDIAL",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 2425,
-      "units_prev": 0
+      "units_prev": 0,
+      "units_ie": null
     },
     {
       "name": "MADOPAR HBS (SIE)",
@@ -1305,8 +1751,10 @@
       "family": "BENSERAZIDE_LEVODOPA",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 2348,
-      "units_prev": 5451
+      "units_prev": 5451,
+      "units_ie": 43.1
     },
     {
       "name": "HEXALER BRONQUIAL (SIE)",
@@ -1315,8 +1763,10 @@
       "family": "HEXALER BRONQUIAL",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 2141,
-      "units_prev": 2417
+      "units_prev": 2417,
+      "units_ie": 88.6
     },
     {
       "name": "QTP (SIE)",
@@ -1325,8 +1775,10 @@
       "family": "QUETIAPINE",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 2132,
-      "units_prev": 4933
+      "units_prev": 4933,
+      "units_ie": 43.2
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 56 /.03",
@@ -1335,8 +1787,10 @@
       "family": "ALTA DOSIS",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 2114,
-      "units_prev": 3636
+      "units_prev": 3636,
+      "units_ie": 58.1
     },
     {
       "name": "HEXALER PLUS (SIE)",
@@ -1345,8 +1799,10 @@
       "family": "HEXALER PLUS",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 1987,
-      "units_prev": 2305
+      "units_prev": 2305,
+      "units_ie": 86.2
     },
     {
       "name": "TRIP D3 PLUS (SIE)",
@@ -1355,8 +1811,10 @@
       "family": "D3 PLUS",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 1813,
-      "units_prev": 0
+      "units_prev": 0,
+      "units_ie": null
     },
     {
       "name": "EMERAL (SIE)",
@@ -1365,8 +1823,10 @@
       "family": "ALPRAZOLAM",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 1812,
-      "units_prev": 5583
+      "units_prev": 5583,
+      "units_ie": 32.5
     },
     {
       "name": "TRIP MAGNESIO (SIE)",
@@ -1375,8 +1835,10 @@
       "family": "MAGNESIO",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 1743,
-      "units_prev": 0
+      "units_prev": 0,
+      "units_ie": null
     },
     {
       "name": "VISDON (SIE)",
@@ -1385,8 +1847,10 @@
       "family": "VILAZODONE",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 1624,
-      "units_prev": 4739
+      "units_prev": 4739,
+      "units_ie": 34.3
     },
     {
       "name": "VALQUIR (SIE)",
@@ -1395,8 +1859,10 @@
       "family": "VORTIOXETINE",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 1375,
-      "units_prev": 1752
+      "units_prev": 1752,
+      "units_ie": 78.5
     },
     {
       "name": "LEVITAL (SIE)",
@@ -1405,8 +1871,10 @@
       "family": "LEVETIRACETAM",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 1236,
-      "units_prev": 3059
+      "units_prev": 3059,
+      "units_ie": 40.4
     },
     {
       "name": "EMPAX MET (SIE)",
@@ -1415,8 +1883,10 @@
       "family": "EMPAX MET",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 1139,
-      "units_prev": 46
+      "units_prev": 46,
+      "units_ie": 2476.1
     },
     {
       "name": "LURAP (SIE)",
@@ -1425,8 +1895,10 @@
       "family": "LURASIDONE",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 1058,
-      "units_prev": 2495
+      "units_prev": 2495,
+      "units_ie": 42.4
     },
     {
       "name": "DELTROX NF (SIE)",
@@ -1435,8 +1907,10 @@
       "family": "DELTROX",
       "rec_curr": 250,
       "rec_prev": 132,
+      "rec_ie": 189.4,
       "units_curr": 789,
-      "units_prev": 953
+      "units_prev": 953,
+      "units_ie": 82.8
     },
     {
       "name": "METGLUCON DUO (SIE)",
@@ -1445,8 +1919,10 @@
       "family": "METGLUCON DUO",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 743,
-      "units_prev": 985
+      "units_prev": 985,
+      "units_ie": 75.4
     },
     {
       "name": "DECADRON SHOCK (SIE)",
@@ -1455,8 +1931,10 @@
       "family": "DECADRON",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 566,
-      "units_prev": 506
+      "units_prev": 506,
+      "units_ie": 111.9
     },
     {
       "name": "METGLUCON (SIE)",
@@ -1465,8 +1943,10 @@
       "family": "METGLUCON AP",
       "rec_curr": 0,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 135,
-      "units_prev": 166
+      "units_prev": 166,
+      "units_ie": 81.3
     },
     {
       "name": "CALCITOL D3 SIE",
@@ -1475,8 +1955,10 @@
       "family": "D3",
       "rec_curr": 19,
       "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 0,
-      "units_prev": 0
+      "units_prev": 0,
+      "units_ie": null
     }
   ]
 }

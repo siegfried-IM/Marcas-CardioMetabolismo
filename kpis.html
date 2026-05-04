@@ -187,22 +187,23 @@ body {
 
 .tile-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
 }
 .tile {
-  padding: 16px 18px;
+  padding: 14px 14px;
   display: flex; flex-direction: column; gap: 3px;
   border-right: 1px solid var(--gray-100);
   min-width: 0;
 }
 .tile:last-child { border-right: none; }
 .tile-lbl {
-  font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
   color: var(--gray-400);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .tile-val {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 19px; font-weight: 700; color: var(--gray-900);
+  font-size: 17px; font-weight: 700; color: var(--gray-900);
   letter-spacing: -.01em; line-height: 1.2; margin-top: 2px;
 }
 .tile-delta {
@@ -225,6 +226,24 @@ body {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px; color: var(--gray-400); margin-top: 2px; letter-spacing: .04em;
 }
+.tile.ie {
+  background: linear-gradient(180deg, var(--gray-50), var(--white));
+}
+.tile.ie .tile-val {
+  font-size: 22px;
+}
+.ie-pill {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 999px;
+  margin-top: 2px;
+  letter-spacing: .04em;
+}
+.ie-pill.up   { background: #DCFCE7; color: #15803D; }
+.ie-pill.down { background: #FEE2E2; color: var(--red-light); }
+.ie-pill.flat { background: var(--gray-100); color: var(--gray-500); }
+.ie-pill.na   { background: var(--gray-100); color: var(--gray-400); }
 
 /* PRODUCT VIEW */
 .products-toolbar {
@@ -301,6 +320,10 @@ table.products tbody tr:hover { background: var(--gray-50); }
   border: 1px solid #FECACA; border-radius: 10px;
 }
 
+@media (max-width: 1200px) {
+  .tile-grid { grid-template-columns: repeat(3, 1fr); }
+  .tile { border-bottom: 1px solid var(--gray-100); }
+}
 @media (max-width: 900px) {
   .line-card { grid-template-columns: 1fr; border-left-width: 4px; }
   .line-info { border-right: none; border-bottom: 1px solid var(--gray-100); }
@@ -388,9 +411,9 @@ table.products tbody tr:hover { background: var(--gray-50); }
             <th data-key="lineName">Línea</th>
             <th data-key="family">Familia</th>
             <th data-key="rec_curr" data-sort="desc">Recetas</th>
-            <th data-key="rec_var">Var Rec.</th>
+            <th data-key="rec_ie">IE Rec.</th>
             <th data-key="units_curr">Units IQVIA</th>
-            <th data-key="units_var">Var U.</th>
+            <th data-key="units_ie">IE Units</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -407,16 +430,25 @@ document.getElementById('nav-date').textContent =
   `${String(n.getDate()).padStart(2,'0')} ${months[n.getMonth()]} ${n.getFullYear()}`;
 
 const TILES = [
-  { id:'recetas_sie', label:'Recetas SIE',     fmt:'int', deltaMode:'pct' },
-  { id:'ms_recetas',  label:'MS Recetas',      fmt:'pct', deltaMode:'pp'  },
-  { id:'units_sie',   label:'Units IQVIA SIE', fmt:'int', deltaMode:'pct' },
-  { id:'ms_units',    label:'MS Units',        fmt:'pct', deltaMode:'pp'  },
+  { id:'recetas_sie', label:'Recetas SIE',  fmt:'int', deltaMode:'pct', showIE:true  },
+  { id:'ms_recetas',  label:'MS Recetas',   fmt:'pct', deltaMode:'pp',  showIE:false },
+  { id:'ie_recetas',  label:'IE Recetas',   fmt:'ie',  deltaMode:null,  pulledFrom:'recetas_sie', isIE:true },
+  { id:'units_sie',   label:'Units IQVIA',  fmt:'int', deltaMode:'pct', showIE:true  },
+  { id:'ms_units',    label:'MS Units',     fmt:'pct', deltaMode:'pp',  showIE:false },
+  { id:'ie_units',    label:'IE Units',     fmt:'ie',  deltaMode:null,  pulledFrom:'units_sie', isIE:true },
 ];
 
 const fmt = {
   int: v => v == null ? '—' : v.toLocaleString('es-AR'),
   pct: v => v == null ? '—' : v.toFixed(1) + '%',
+  ie:  v => v == null ? '—' : v.toFixed(0),
 };
+function ieClass(ie) {
+  if (ie == null) return 'na';
+  if (ie >= 102) return 'up';
+  if (ie <= 98)  return 'down';
+  return 'flat';
+}
 
 let DATA = null;
 let state = { view:'lines', period:'ytd', prodLine:'', prodSearch:'', sortKey:'rec_curr', sortDir:'desc' };
@@ -449,6 +481,20 @@ function renderLines() {
   host.innerHTML = DATA.lines.map(line => {
     const k = line.kpis[period] || {};
     const tiles = TILES.map(t => {
+      // IE tile: pull IE from another KPI block
+      if (t.isIE) {
+        const src = k[t.pulledFrom] || {};
+        const ie = src.ie;
+        const cls = ieClass(ie);
+        return `
+          <div class="tile ie">
+            <div class="tile-lbl">${t.label}</div>
+            <div class="tile-val">${fmt.ie(ie)}</div>
+            <div class="tile-delta ${cls}">${ie==null ? 'sin comparable' : (ie >= 100 ? 'crece' : 'cae') + ' vs prev'}</div>
+            <div class="tile-prev">base 100 = sin cambio</div>
+          </div>`;
+      }
+      // Normal tile
       const o = k[t.id] || { curr: null, prev: null };
       const cls = deltaClass(o.curr, o.prev, t.deltaMode);
       const dTxt = deltaText(o.curr, o.prev, t.deltaMode);
@@ -515,19 +561,19 @@ function renderProducts() {
   } else {
     tbody.innerHTML = rows.map(r => {
       const ln = lineMap[r.line] || {};
-      const recVarCls = deltaClass(r.rec_curr, r.rec_prev, 'pct');
-      const uVarCls   = deltaClass(r.units_curr, r.units_prev, 'pct');
-      const recVarTxt = (r.rec_var == null) ? '—' : (r.rec_var >= 0 ? '+' : '') + r.rec_var.toFixed(1) + '%';
-      const uVarTxt   = (r.units_var == null) ? '—' : (r.units_var >= 0 ? '+' : '') + r.units_var.toFixed(1) + '%';
+      const recIeCls = ieClass(r.rec_ie);
+      const uIeCls   = ieClass(r.units_ie);
+      const recIeTxt = (r.rec_ie == null) ? '—' : r.rec_ie.toFixed(0);
+      const uIeTxt   = (r.units_ie == null) ? '—' : r.units_ie.toFixed(0);
       return `
         <tr>
           <td>${r.name}</td>
           <td><span class="pill-line" style="background:${(ln.color||'#999')}22;color:${ln.color||'#666'};">${ln.name||r.line}</span></td>
           <td style="color:var(--gray-500);">${r.family||''}</td>
           <td class="num">${fmt.int(r.rec_curr)}</td>
-          <td class="delta ${recVarCls}">${recVarTxt}</td>
+          <td class="delta ${recIeCls}">${recIeTxt}</td>
           <td class="num">${fmt.int(r.units_curr)}</td>
-          <td class="delta ${uVarCls}">${uVarTxt}</td>
+          <td class="delta ${uIeCls}">${uIeTxt}</td>
         </tr>`;
     }).join('');
   }

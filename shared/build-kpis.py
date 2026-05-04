@@ -300,21 +300,31 @@ def collect_products(D, window_curr, window_prev, line_key, line_name):
     units_by_norm = {norm(k): (k, v) for k, v in sie_units_by_prod.items()}
     rec_by_norm   = {norm(k): (k, v) for k, v in sie_rec_by_prod.items()}
 
+    def safe_ie(c, p):
+        if c is None or p is None or p <= 0: return None
+        return round(c / p * 100, 1)
+
     all_keys = set(units_by_norm) | set(rec_by_norm)
     for k in all_keys:
         u_orig, u = units_by_norm.get(k, (None, None))
         r_orig, r = rec_by_norm.get(k, (None, None))
         name = u_orig or r_orig
         family = (r['family'] if r else u['family']) if (r or u) else ''
+        rec_curr = int(round(r['curr'])) if r else 0
+        rec_prev = int(round(r['prev'])) if r else 0
+        u_curr   = int(round(u['curr'])) if u else 0
+        u_prev   = int(round(u['prev'])) if u else 0
         out.append({
             'name': name,
             'line': line_key,
             'lineName': line_name,
             'family': family,
-            'rec_curr':   int(round(r['curr'])) if r else 0,
-            'rec_prev':   int(round(r['prev'])) if r else 0,
-            'units_curr': int(round(u['curr'])) if u else 0,
-            'units_prev': int(round(u['prev'])) if u else 0,
+            'rec_curr': rec_curr,
+            'rec_prev': rec_prev,
+            'rec_ie':   safe_ie(rec_curr, rec_prev),
+            'units_curr': u_curr,
+            'units_prev': u_prev,
+            'units_ie':   safe_ie(u_curr, u_prev),
         })
     return out
 
@@ -383,13 +393,23 @@ def main():
             def safe_ms(num, den):
                 if num is None or den is None or den == 0: return None
                 return round(num/den*100, 2)
+            def safe_ie(c, p):
+                """IE = (curr/prev)*100. None si prev<=0 o falta."""
+                if c is None or p is None or p <= 0: return None
+                return round(c / p * 100, 1)
             kpis[period] = {
-                'recetas_sie':   {'curr': rec['sie_curr'],   'prev': rec['sie_prev']},
+                'recetas_sie':   {'curr': rec['sie_curr'],   'prev': rec['sie_prev'],
+                                  'ie': safe_ie(rec['sie_curr'], rec['sie_prev'])},
                 'ms_recetas':    {'curr': safe_ms(rec['sie_curr'], rec['mkt_curr']),
                                   'prev': safe_ms(rec['sie_prev'], rec['mkt_prev'])},
-                'units_sie':     {'curr': iqvia['sie_curr'], 'prev': iqvia['sie_prev']},
+                'mercado_recetas': {'curr': rec['mkt_curr'], 'prev': rec['mkt_prev'],
+                                    'ie': safe_ie(rec['mkt_curr'], rec['mkt_prev'])},
+                'units_sie':     {'curr': iqvia['sie_curr'], 'prev': iqvia['sie_prev'],
+                                  'ie': safe_ie(iqvia['sie_curr'], iqvia['sie_prev'])},
                 'ms_units':      {'curr': safe_ms(iqvia['sie_curr'], iqvia['mkt_curr']),
                                   'prev': safe_ms(iqvia['sie_prev'], iqvia['mkt_prev'])},
+                'mercado_units': {'curr': iqvia['mkt_curr'], 'prev': iqvia['mkt_prev'],
+                                  'ie': safe_ie(iqvia['mkt_curr'], iqvia['mkt_prev'])},
             }
         out['lines'].append({
             'key':   line['key'],
