@@ -898,7 +898,7 @@ function renderBudget(){
 }
 
 // ── PERFORMANCE (MS% + UNITS only) ────────────────────────────────────
-let pChart=null, pMol='SIN ESTROGENO', pPeriod='ytd', pMetric='ms', pYear='todos';
+let pChart=null, pMol='SIN ESTROGENO', pPeriod='ytd', pMetric='ms', pYears=new Set(); // empty = todos
 
 const MOL_LABELS = {"SIN ESTROGENO": "SIN ESTROGENO", "ALTA DOSIS": "ALTA DOSIS", "BAJA DOSIS 21+7": "BAJA DOSIS 21+7", "BAJA DOSIS 24": "BAJA DOSIS 24", "COMPLEX": "COMPLEX", "SOLO": "SOLO", "D3": "D3", "D3 PLUS": "D3 PLUS", "45": "45", "MAGNESIO": "MAGNESIO", "DELTROX": "DELTROX", "BASE": "BASE", "BASE D": "BASE D", "CLIMATIX": "CLIMATIX"};
 
@@ -929,21 +929,31 @@ function renderPerfYr(){
   const container = document.getElementById('perf-yr');
   if(!container) return;
   const molData=D.mol_perf[pMol];
-  const years=['todos'];
+  const allY=new Set();
   if(molData){
-    const allY=new Set();
     (molData.products||[]).forEach(p=>{
       if(pPeriod==='monthly') Object.keys(p.monthly_vals||{}).forEach(k=>allY.add(k.split(' ')[1]));
       else if(pPeriod==='quarterly') Object.keys(p.quarterly_vals||{}).forEach(k=>allY.add(k.split(' ')[1]));
       else if(pPeriod==='ytd') Object.keys(p.ytd||{}).forEach(k=>allY.add(k.split(' ')[1]));
       else if(pPeriod==='mat') Object.keys(p.mat||{}).forEach(k=>allY.add(k.split(' ')[1]));
     });
-    years.push(...[...allY].sort());
   }
-  container.innerHTML=years.map(y=>`<button class="yr-btn ${y===pYear?'on':''}" onclick="setPY('${y}')">${y==='todos'?'Todos':y}</button>`).join('');
+  const years=[...allY].sort();
+  const isAll=pYears.size===0;
+  let html=`<button class="yr-btn ${isAll?'on':''}" onclick="setPY('todos')">Todos</button>`;
+  html+=years.map(y=>`<button class="yr-btn ${pYears.has(y)?'on':''}" onclick="setPY('${y}')">${y}</button>`).join('');
+  container.innerHTML=html;
   container.style.display='flex';
 }
-function setPY(y){pYear=y;renderPerfYr();renderPerf();}
+function setPY(y){
+  if(y==='todos'){pYears.clear();}
+  else{
+    if(pYears.size===0){pYears.add(y);}
+    else if(pYears.has(y)){if(pYears.size===1)return;pYears.delete(y);}
+    else{pYears.add(y);}
+  }
+  renderPerfYr();renderPerf();
+}
 
 function renderPerf(){
   const molData=D.mol_perf[pMol]; if(!molData)return;
@@ -961,11 +971,8 @@ function renderPerf(){
       const[ma,ya]=a.split(' ');const[mb,yb]=b.split(' ');
       return (parseInt(ya)*100+MONTH_ORDER_EN.indexOf(ma))-(parseInt(yb)*100+MONTH_ORDER_EN.indexOf(mb));
     });
-    // En YTD/MAT solo hay 1 corte por año; el filtro significa "hasta el año X"
-    if(pYear!=='todos'){
-      const yMax=parseInt(pYear);
-      periodKeys=periodKeys.filter(k=>parseInt(k.split(' ')[1])<=yMax);
-    }
+    // En YTD/MAT solo hay 1 corte por año; con multi-select filtramos a esos anios.
+    if(pYears.size>0) periodKeys=periodKeys.filter(k=>pYears.has(k.split(' ')[1]));
   }
   else if(pPeriod==='quarterly'){
     // Build quarterly keys from product data
@@ -976,7 +983,7 @@ function renderPerf(){
       return(parseInt(ya)*4+['Q1','Q2','Q3','Q4'].indexOf(qa))-(parseInt(yb)*4+['Q1','Q2','Q3','Q4'].indexOf(qb));
     });
     periodKeys=sortQ([...allQK]);
-    if(pYear!=='todos') periodKeys=periodKeys.filter(k=>k.endsWith(pYear));
+    if(pYears.size>0) periodKeys=periodKeys.filter(k=>pYears.has(k.split(' ')[1]));
   }
   else{
     const allK=new Set();
@@ -985,7 +992,7 @@ function renderPerf(){
       const[ma,ya]=a.split(' ');const[mb,yb]=b.split(' ');
       return(parseInt(ya)*100+MONTH_ORDER_EN.indexOf(ma))-(parseInt(yb)*100+MONTH_ORDER_EN.indexOf(mb));
     });
-    if(pYear!=='todos') periodKeys=periodKeys.filter(k=>k.endsWith(pYear));
+    if(pYears.size>0) periodKeys=periodKeys.filter(k=>pYears.has(k.split(' ')[1]));
   }
   // Helper: aggregate monthly vals to quarters
   const Q_MONTHS={'Q1':['Jan','Feb','Mar'],'Q2':['Apr','May','Jun'],'Q3':['Jul','Aug','Sep'],'Q4':['Oct','Nov','Dec']};
@@ -1082,7 +1089,7 @@ function renderPerf(){
 }
 
 // ── RECETAS ───────────────────────────────────────────────────────────
-let rChart=null,rProd='SIN ESTROGENO',rView='rec',rYear='todos';
+let rChart=null,rProd='SIN ESTROGENO',rView='rec',rYears=new Set(); // empty = todos
 const REC_PRODS=orderedProdKeys(D.rec_ms);
 
 function renderRecPills(){
@@ -1095,7 +1102,7 @@ function renderRecPills(){
 function bindRecCtrls(){
   document.querySelectorAll('#rec-view-ctrl .seg').forEach(b=>{
     b.onclick=()=>{document.querySelectorAll('#rec-view-ctrl .seg').forEach(x=>x.classList.remove('on'));
-      b.classList.add('on');rView=b.dataset.v;if(rView==='ms'||rView==='quarterly')rYear='todos';renderRec();};});
+      b.classList.add('on');rView=b.dataset.v;if(rView==='ms'||rView==='quarterly')rYears.clear();renderRec();};});
 }
 function setRP(p){rProd=p;renderRecPills();renderRec();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
 
@@ -1107,11 +1114,22 @@ function renderRecYr(){
     container.innerHTML=''; container.style.display='none'; return;
   }
   const data=D.recetas[rProd]||{};
-  const allYears=['todos',...[...new Set(Object.keys(data).map(k=>k.split(' ')[1]))].sort()];
-  container.innerHTML=allYears.map(y=>`<button class="yr-btn ${y===rYear?'on':''}" onclick="setRY('${y}')">${y==='todos'?'Todos':y}</button>`).join('');
+  const years=[...new Set(Object.keys(data).map(k=>k.split(' ')[1]))].sort();
+  const isAll=rYears.size===0;
+  let html=`<button class="yr-btn ${isAll?'on':''}" onclick="setRY('todos')">Todos</button>`;
+  html+=years.map(y=>`<button class="yr-btn ${rYears.has(y)?'on':''}" onclick="setRY('${y}')">${y}</button>`).join('');
+  container.innerHTML=html;
   container.style.display='flex';
 }
-function setRY(y){rYear=y;renderRecYr();renderRec();}
+function setRY(y){
+  if(y==='todos'){rYears.clear();}
+  else{
+    if(rYears.size===0){rYears.add(y);}
+    else if(rYears.has(y)){if(rYears.size===1)return;rYears.delete(y);}
+    else{rYears.add(y);}
+  }
+  renderRecYr();renderRec();
+}
 
 function renderRec(){
   const data=D.recetas[rProd]||{};
@@ -1205,7 +1223,7 @@ function renderRec(){
   } else {
     // Vistas Recetas / Médicos (unidades absolutas) + competidores
     let keys=sortM(Object.keys(data));
-    if(rYear!=='todos') keys=keys.filter(k=>k.endsWith(rYear));
+    if(rYears.size>0) keys=keys.filter(k=>rYears.has(k.split(' ')[1]));
     labels=keys;
     const metricField = rView==='rec' ? 'monthly' : 'monthly_medicos';
     const totalField  = rView==='rec' ? 'total'   : 'total_medicos';
@@ -1567,7 +1585,7 @@ function renderPrec(){
 
 
 // ── STOCK & VENTAS ────────────────────────────────────────────────────
-let stChart=null, stProd='SIN ESTROGENO', stYear='todos';
+let stChart=null, stProd='SIN ESTROGENO', stYears=new Set(); // empty = todos
 const STOCK_PRODS=orderedProdKeys(D.stock).filter(p=>D.stock[p]&&Object.keys(D.stock[p]).length>0);
 
 function renderStockPills(){
@@ -1580,17 +1598,29 @@ function renderStockPills(){
 function renderStockYr(){
   const data=D.stock[stProd]||{};
   const allMonths=Object.keys(data);
-  const years=['todos',...[...new Set(allMonths.map(m=>m.split(' ')[1]))].sort()];
-  document.getElementById('stock-yr').innerHTML=years.map(y=>`
-    <button class="yr-btn ${y===stYear?'on':''}" onclick="setSY('${y}')">${y==='todos'?'Todos':y}</button>`).join('');
+  const years=[...new Set(allMonths.map(m=>m.split(' ')[1]))].sort();
+  const isAll=stYears.size===0;
+  let html=`<button class="yr-btn ${isAll?'on':''}" onclick="setSY('todos')" title="Mostrar todos los anios">Todos</button>`;
+  html+=years.map(y=>`<button class="yr-btn ${stYears.has(y)?'on':''}" onclick="setSY('${y}')" title="Click para alternar; podes seleccionar varios">${y}</button>`).join('');
+  document.getElementById('stock-yr').innerHTML=html;
 }
 function setSP(p){stProd=p;renderStockPills();renderStockYr();renderStock();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
-function setSY(y){stYear=y;renderStockYr();renderStock();}
+// Multi-select: click "Todos" -> vacio (todos visibles); click year -> toggle.
+// Keep at least 1 active si no quedan otros.
+function setSY(y){
+  if(y==='todos'){stYears.clear();}
+  else{
+    if(stYears.size===0){stYears.add(y);}
+    else if(stYears.has(y)){if(stYears.size===1)return;stYears.delete(y);}
+    else{stYears.add(y);}
+  }
+  renderStockYr();renderStock();
+}
 
 function renderStock(){
   const data=D.stock[stProd]||{};
   const allMonths=Object.keys(data).sort((a,b)=>new Date(a+' 1')-new Date(b+' 1'));
-  const months=stYear==='todos'?allMonths:allMonths.filter(m=>m.endsWith(stYear));
+  const months=stYears.size===0?allMonths:allMonths.filter(m=>stYears.has(m.split(' ')[1]));
   const ventas=months.map(m=>data[m]?.ventas??null);
   const stock=months.map(m=>data[m]?.stock??null);
   const dias=months.map(m=>data[m]?.dias??null);
