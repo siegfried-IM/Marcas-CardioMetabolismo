@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-04T19:44:58",
+  "generated_at": "2026-05-04T19:47:49",
   "as_of_month": "Mar 2026",
   "periods": [
     "ytd",
@@ -668,9 +668,9 @@
       "key": "otx",
       "name": "OTC",
       "icon": "🩹",
-      "color": "#2563EB",
+      "color": "#0284C7",
       "href": "OTC/",
-      "owner": "Antonella Mariani",
+      "owner": "Tatiana Peker",
       "kpis": {
         "ytd": {
           "recetas_sie": {

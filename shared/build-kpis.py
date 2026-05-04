@@ -54,8 +54,8 @@ LINES = [
     {'key':'resp',    'name':'Respiratoria',     'icon':'🫁', 'color':'#0D9488',
      'href':'respiratorio/',  'owner':'Antonella Mariani',
      'source':('data.js','respiratorio/data.js')},
-    {'key':'otx',     'name':'OTC',              'icon':'🩹', 'color':'#2563EB',
-     'href':'OTC/',           'owner':'Antonella Mariani',
+    {'key':'otx',     'name':'OTC',              'icon':'🩹', 'color':'#0284C7',
+     'href':'OTC/',           'owner':'Tatiana Peker',
      'source':('data.js','OTC/data.js')},
 ]
 
