@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-04T20:08:52",
+  "generated_at": "2026-05-04T20:19:51",
   "as_of_month": "Mar 2026",
   "periods": [
     "ytd",
@@ -813,9 +813,9 @@
       "line": "antibio",
       "lineName": "Antibióticos",
       "family": "BACTRIM",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 5084,
+      "rec_prev": 6005,
+      "rec_ie": 84.7,
       "units_curr": 555758,
       "units_prev": 509838,
       "units_ie": 109.0
@@ -837,9 +837,9 @@
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "ACEMUK",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 47336,
+      "rec_prev": 61136,
+      "rec_ie": 77.4,
       "units_curr": 405173,
       "units_prev": 511609,
       "units_ie": 79.2
@@ -849,9 +849,9 @@
       "line": "cardio",
       "lineName": "CardioMetabólica",
       "family": "DILATREND",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 25913,
+      "rec_prev": 31772,
+      "rec_ie": 81.6,
       "units_curr": 326784,
       "units_prev": 360440,
       "units_ie": 90.7
@@ -861,9 +861,9 @@
       "line": "otx",
       "lineName": "OTC",
       "family": "MAGNUS",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 2917,
+      "rec_prev": 3543,
+      "rec_ie": 82.3,
       "units_curr": 202202,
       "units_prev": 202409,
       "units_ie": 99.9
@@ -905,6 +905,30 @@
       "units_ie": 121.1
     },
     {
+      "name": "DIOVAN (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DIOVAN",
+      "rec_curr": 34632,
+      "rec_prev": 39464,
+      "rec_ie": 87.8,
+      "units_curr": 123387,
+      "units_prev": 126883,
+      "units_ie": 97.2
+    },
+    {
+      "name": "VALIUM (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "",
+      "rec_curr": 18243,
+      "rec_prev": 21883,
+      "rec_ie": 83.4,
+      "units_curr": 134500,
+      "units_prev": 130042,
+      "units_ie": 103.4
+    },
+    {
       "name": "TETRALGIN (SIE)",
       "line": "otx",
       "lineName": "OTC",
@@ -917,37 +941,13 @@
       "units_ie": 100.6
     },
     {
-      "name": "VALIUM (SIE)",
-      "line": "snc",
-      "lineName": "S.N.C.",
-      "family": "",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 134500,
-      "units_prev": 130042,
-      "units_ie": 103.4
-    },
-    {
-      "name": "DIOVAN (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "DIOVAN",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 123387,
-      "units_prev": 126883,
-      "units_ie": 97.2
-    },
-    {
       "name": "DECADRON (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "DECADRON",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 578,
+      "rec_prev": 577,
+      "rec_ie": 100.2,
       "units_curr": 111754,
       "units_prev": 108526,
       "units_ie": 103.0
@@ -963,6 +963,18 @@
       "units_curr": 109682,
       "units_prev": 124299,
       "units_ie": 88.2
+    },
+    {
+      "name": "TERLOC (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "TERLOC",
+      "rec_curr": 14053,
+      "rec_prev": 17468,
+      "rec_ie": 80.4,
+      "units_curr": 82749,
+      "units_prev": 82030,
+      "units_ie": 100.9
     },
     {
       "name": "SIDERBLUT (SIE)",
@@ -1001,16 +1013,16 @@
       "units_ie": 100.0
     },
     {
-      "name": "TERLOC (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "TERLOC",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 82749,
-      "units_prev": 82030,
-      "units_ie": 100.9
+      "name": "MADOPAR (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "",
+      "rec_curr": 8312,
+      "rec_prev": 9290,
+      "rec_ie": 89.5,
+      "units_curr": 74983,
+      "units_prev": 75716,
+      "units_ie": 99.0
     },
     {
       "name": "SIDERBLUT COMPLEX (SIE)",
@@ -1037,13 +1049,25 @@
       "units_ie": 96.9
     },
     {
+      "name": "TRIP D3 (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "D3",
+      "rec_curr": 18794,
+      "rec_prev": 15649,
+      "rec_ie": 120.1,
+      "units_curr": 58991,
+      "units_prev": 46621,
+      "units_ie": 126.5
+    },
+    {
       "name": "DUO-DECADRON (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "DECADRON",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 399,
+      "rec_prev": 398,
+      "rec_ie": 100.3,
       "units_curr": 77152,
       "units_prev": 71148,
       "units_ie": 108.4
@@ -1059,18 +1083,6 @@
       "units_curr": 69036,
       "units_prev": 65973,
       "units_ie": 104.6
-    },
-    {
-      "name": "MADOPAR (SIE)",
-      "line": "snc",
-      "lineName": "S.N.C.",
-      "family": "",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 74983,
-      "units_prev": 75716,
-      "units_ie": 99.0
     },
     {
       "name": "MOMETAX (SIE)",
@@ -1089,9 +1101,9 @@
       "line": "antibio",
       "lineName": "Antibióticos",
       "family": "BACTRIM",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 636,
+      "rec_prev": 751,
+      "rec_ie": 84.7,
       "units_curr": 69542,
       "units_prev": 71960,
       "units_ie": 96.6
@@ -1101,9 +1113,9 @@
       "line": "antibio",
       "lineName": "Antibióticos",
       "family": "BACTRIM",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 629,
+      "rec_prev": 743,
+      "rec_ie": 84.7,
       "units_curr": 68806,
       "units_prev": 74656,
       "units_ie": 92.2
@@ -1113,24 +1125,36 @@
       "line": "antibio",
       "lineName": "Antibióticos",
       "family": "ACANTEX",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 4199,
+      "rec_prev": 4388,
+      "rec_ie": 95.7,
       "units_curr": 59584,
       "units_prev": 62257,
       "units_ie": 95.7
     },
     {
-      "name": "TRIP D3 (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "D3",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 58991,
-      "units_prev": 46621,
-      "units_ie": 126.5
+      "name": "ROXOLAN (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "ROXOLAN",
+      "rec_curr": 10901,
+      "rec_prev": 9268,
+      "rec_ie": 117.6,
+      "units_curr": 50593,
+      "units_prev": 45021,
+      "units_ie": 112.4
+    },
+    {
+      "name": "ENTRESTO (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "ENTRESTO",
+      "rec_curr": 8649,
+      "rec_prev": 9021,
+      "rec_ie": 95.9,
+      "units_curr": 52426,
+      "units_prev": 52504,
+      "units_ie": 99.9
     },
     {
       "name": "FER-IN-SOL (SIE)",
@@ -1157,37 +1181,25 @@
       "units_ie": 98.7
     },
     {
-      "name": "ENTRESTO (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "ENTRESTO",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 52426,
-      "units_prev": 52504,
-      "units_ie": 99.9
-    },
-    {
-      "name": "ROXOLAN (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "ROXOLAN",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 50593,
-      "units_prev": 45021,
-      "units_ie": 112.4
+      "name": "ALIDIAL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ALIDIAL",
+      "rec_curr": 11228,
+      "rec_prev": 9360,
+      "rec_ie": 120.0,
+      "units_curr": 43748,
+      "units_prev": 34686,
+      "units_ie": 126.1
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 28 /.03",
       "line": "mujer",
       "lineName": "Línea Mujer",
       "family": "ALTA DOSIS",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 3828,
+      "rec_prev": 5681,
+      "rec_ie": 67.4,
       "units_curr": 48723,
       "units_prev": 43830,
       "units_ie": 111.2
@@ -1205,18 +1217,6 @@
       "units_ie": 100.1
     },
     {
-      "name": "ALIDIAL (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ALIDIAL",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 43748,
-      "units_prev": 34686,
-      "units_ie": 126.1
-    },
-    {
       "name": "TETRALGIN NOVO (SIE)",
       "line": "otx",
       "lineName": "OTC",
@@ -1227,6 +1227,18 @@
       "units_curr": 41078,
       "units_prev": 40942,
       "units_ie": 100.3
+    },
+    {
+      "name": "HEXALER (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER",
+      "rec_curr": 21277,
+      "rec_prev": 17721,
+      "rec_ie": 120.1,
+      "units_curr": 17993,
+      "units_prev": 21240,
+      "units_ie": 84.7
     },
     {
       "name": "CLIMATIX (SIE)",
@@ -1245,12 +1257,24 @@
       "line": "otx",
       "lineName": "OTC",
       "family": "FLEXINA",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 3824,
+      "rec_prev": 4052,
+      "rec_ie": 94.4,
       "units_curr": 32222,
       "units_prev": 27402,
       "units_ie": 117.6
+    },
+    {
+      "name": "AIREAL PLUS (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "AIREAL PLUS",
+      "rec_curr": 6458,
+      "rec_prev": 4035,
+      "rec_ie": 160.0,
+      "units_curr": 25558,
+      "units_prev": 15185,
+      "units_ie": 168.3
     },
     {
       "name": "SIDERBLUT POLI (SIE)",
@@ -1265,28 +1289,40 @@
       "units_ie": 112.1
     },
     {
-      "name": "AIREAL PLUS (SIE)",
+      "name": "AIREAL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "AIREAL PLUS",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 25558,
-      "units_prev": 15185,
-      "units_ie": 168.3
+      "family": "AIREAL",
+      "rec_curr": 5924,
+      "rec_prev": 5415,
+      "rec_ie": 109.4,
+      "units_curr": 21074,
+      "units_prev": 18176,
+      "units_ie": 115.9
     },
     {
       "name": "DECADRON. (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "DECADRON",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 117,
+      "rec_prev": 117,
+      "rec_ie": 100.0,
       "units_curr": 22594,
       "units_prev": 23392,
       "units_ie": 96.6
+    },
+    {
+      "name": "PGB (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "",
+      "rec_curr": 3735,
+      "rec_prev": 3859,
+      "rec_ie": 96.8,
+      "units_curr": 18259,
+      "units_prev": 16968,
+      "units_ie": 107.6
     },
     {
       "name": "EXFORGE D (SIE)",
@@ -1299,18 +1335,6 @@
       "units_curr": 21820,
       "units_prev": 24795,
       "units_ie": 88.0
-    },
-    {
-      "name": "AIREAL (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "AIREAL",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 21074,
-      "units_prev": 18176,
-      "units_ie": 115.9
     },
     {
       "name": "ALUMPAK VL (SIE)",
@@ -1337,28 +1361,28 @@
       "units_ie": null
     },
     {
-      "name": "PGB (SIE)",
-      "line": "snc",
-      "lineName": "S.N.C.",
-      "family": "",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 18259,
-      "units_prev": 16968,
-      "units_ie": 107.6
-    },
-    {
-      "name": "HEXALER (SIE)",
+      "name": "ACEMUK VL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "HEXALER",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 17993,
-      "units_prev": 21240,
-      "units_ie": 84.7
+      "family": "ACEMUK",
+      "rec_curr": 1902,
+      "rec_prev": 2456,
+      "rec_ie": 77.4,
+      "units_curr": 16280,
+      "units_prev": 23160,
+      "units_ie": 70.3
+    },
+    {
+      "name": "ACERPES 5% (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "ACERPES",
+      "rec_curr": 807,
+      "rec_prev": 715,
+      "rec_ie": 112.9,
+      "units_curr": 16490,
+      "units_prev": 15316,
+      "units_ie": 107.7
     },
     {
       "name": "ACEMUK DIA Y NOCHE (SIE)",
@@ -1371,30 +1395,6 @@
       "units_curr": 17071,
       "units_prev": 16366,
       "units_ie": 104.3
-    },
-    {
-      "name": "ACERPES 5% (SIE)",
-      "line": "otx",
-      "lineName": "OTC",
-      "family": "ACERPES",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 16490,
-      "units_prev": 15316,
-      "units_ie": 107.7
-    },
-    {
-      "name": "ACEMUK VL (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 16280,
-      "units_prev": 23160,
-      "units_ie": 70.3
     },
     {
       "name": "MELERIL (SIE)",
@@ -1421,6 +1421,18 @@
       "units_ie": 101.6
     },
     {
+      "name": "TELPRES (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "TELPRES",
+      "rec_curr": 2186,
+      "rec_prev": 2628,
+      "rec_ie": 83.2,
+      "units_curr": 10695,
+      "units_prev": 15474,
+      "units_ie": 69.1
+    },
+    {
       "name": "ACEMUK L (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
@@ -1433,16 +1445,40 @@
       "units_ie": 95.5
     },
     {
+      "name": "ROXOLAN PLUS (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "ROXOLAN",
+      "rec_curr": 2184,
+      "rec_prev": 1857,
+      "rec_ie": 117.6,
+      "units_curr": 10137,
+      "units_prev": 5080,
+      "units_ie": 199.5
+    },
+    {
       "name": "MAGNUS 36 (SIE)",
       "line": "otx",
       "lineName": "OTC",
       "family": "MAGNUS",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 172,
+      "rec_prev": 209,
+      "rec_ie": 82.3,
       "units_curr": 11933,
       "units_prev": 12478,
       "units_ie": 95.6
+    },
+    {
+      "name": "ARTRO RED (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "ARTRO RED",
+      "rec_curr": 1215,
+      "rec_prev": 1998,
+      "rec_ie": 60.8,
+      "units_curr": 9577,
+      "units_prev": 13660,
+      "units_ie": 70.1
     },
     {
       "name": "SIDERBLUT FOLICO (SIE)",
@@ -1457,28 +1493,16 @@
       "units_ie": 129.1
     },
     {
-      "name": "TELPRES (SIE)",
+      "name": "SILTRAN (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
-      "family": "TELPRES",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 10695,
-      "units_prev": 15474,
-      "units_ie": 69.1
-    },
-    {
-      "name": "ROXOLAN PLUS (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "ROXOLAN",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 10137,
-      "units_prev": 5080,
-      "units_ie": 199.5
+      "family": "SILTRAN",
+      "rec_curr": 1735,
+      "rec_prev": 901,
+      "rec_ie": 192.6,
+      "units_curr": 8192,
+      "units_prev": 4346,
+      "units_ie": 188.5
     },
     {
       "name": "MACROMAX PEDIATR (SIE)",
@@ -1491,18 +1515,6 @@
       "units_curr": 9726,
       "units_prev": 9129,
       "units_ie": 106.5
-    },
-    {
-      "name": "ARTRO RED (SIE)",
-      "line": "otx",
-      "lineName": "OTC",
-      "family": "ARTRO RED",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 9577,
-      "units_prev": 13660,
-      "units_ie": 70.1
     },
     {
       "name": "ACI-TIP (SIE)",
@@ -1553,6 +1565,30 @@
       "units_ie": 76.4
     },
     {
+      "name": "EMPAX (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "EMPAX",
+      "rec_curr": 2260,
+      "rec_prev": 6,
+      "rec_ie": 37666.7,
+      "units_curr": 6617,
+      "units_prev": 513,
+      "units_ie": 1289.9
+    },
+    {
+      "name": "ACERPES (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "ACERPES",
+      "rec_curr": 409,
+      "rec_prev": 362,
+      "rec_ie": 113.0,
+      "units_curr": 8348,
+      "units_prev": 8312,
+      "units_ie": 100.4
+    },
+    {
       "name": "ALUMPAK (SIE)",
       "line": "otx",
       "lineName": "OTC",
@@ -1565,28 +1601,28 @@
       "units_ie": 118.2
     },
     {
-      "name": "ACERPES (SIE)",
-      "line": "otx",
-      "lineName": "OTC",
-      "family": "ACERPES",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 8348,
-      "units_prev": 8312,
-      "units_ie": 100.4
+      "name": "QTP (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "",
+      "rec_curr": 1549,
+      "rec_prev": 1474,
+      "rec_ie": 105.1,
+      "units_curr": 5824,
+      "units_prev": 4937,
+      "units_ie": 118.0
     },
     {
-      "name": "SILTRAN (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "SILTRAN",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 8192,
-      "units_prev": 4346,
-      "units_ie": 188.5
+      "name": "MADOPAR HBS (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "",
+      "rec_curr": 612,
+      "rec_prev": 550,
+      "rec_ie": 111.3,
+      "units_curr": 6751,
+      "units_prev": 5452,
+      "units_ie": 123.8
     },
     {
       "name": "SIDERBLUT GOTAS (SIE)",
@@ -1601,18 +1637,6 @@
       "units_ie": 115.9
     },
     {
-      "name": "MADOPAR HBS (SIE)",
-      "line": "snc",
-      "lineName": "S.N.C.",
-      "family": "",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 6751,
-      "units_prev": 5452,
-      "units_ie": 123.8
-    },
-    {
       "name": "PIXABAN (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -1623,18 +1647,6 @@
       "units_curr": 6646,
       "units_prev": 4870,
       "units_ie": 136.5
-    },
-    {
-      "name": "EMPAX (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "EMPAX",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 6617,
-      "units_prev": 513,
-      "units_ie": 1289.9
     },
     {
       "name": "CALCIO BASE D (SIE)",
@@ -1649,16 +1661,16 @@
       "units_ie": 104.9
     },
     {
-      "name": "QTP (SIE)",
+      "name": "VISDON (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
       "family": "",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 5824,
-      "units_prev": 4937,
-      "units_ie": 118.0
+      "rec_curr": 1325,
+      "rec_prev": 1334,
+      "rec_ie": 99.3,
+      "units_curr": 4636,
+      "units_prev": 4742,
+      "units_ie": 97.8
     },
     {
       "name": "HEXALER BRONQ. DUO (SIE)",
@@ -1697,16 +1709,16 @@
       "units_ie": 95.8
     },
     {
-      "name": "VISDON (SIE)",
-      "line": "snc",
-      "lineName": "S.N.C.",
-      "family": "",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 4636,
-      "units_prev": 4742,
-      "units_ie": 97.8
+      "name": "DAURAN (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DAURAN",
+      "rec_curr": 1068,
+      "rec_prev": 295,
+      "rec_ie": 362.0,
+      "units_curr": 3705,
+      "units_prev": 1305,
+      "units_ie": 283.9
     },
     {
       "name": "ISIS (SIE)",
@@ -1721,13 +1733,25 @@
       "units_ie": null
     },
     {
+      "name": "LEVITAL (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "",
+      "rec_curr": 621,
+      "rec_prev": 418,
+      "rec_ie": 148.6,
+      "units_curr": 3486,
+      "units_prev": 3059,
+      "units_ie": 114.0
+    },
+    {
       "name": "VALQUIR (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
       "family": "",
       "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_prev": 396,
+      "rec_ie": 0.0,
       "units_curr": 3963,
       "units_prev": 1754,
       "units_ie": 225.9
@@ -1745,28 +1769,28 @@
       "units_ie": 65.4
     },
     {
-      "name": "DAURAN (SIE)",
+      "name": "DIOVAN IC (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
-      "family": "DAURAN",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 3705,
-      "units_prev": 1305,
-      "units_ie": 283.9
+      "family": "DIOVAN",
+      "rec_curr": 815,
+      "rec_prev": 928,
+      "rec_ie": 87.8,
+      "units_curr": 2902,
+      "units_prev": 2553,
+      "units_ie": 113.7
     },
     {
-      "name": "LEVITAL (SIE)",
+      "name": "LURAP (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
       "family": "",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 3486,
-      "units_prev": 3059,
-      "units_ie": 114.0
+      "rec_curr": 725,
+      "rec_prev": 624,
+      "rec_ie": 116.2,
+      "units_curr": 2806,
+      "units_prev": 2495,
+      "units_ie": 112.5
     },
     {
       "name": "DILATREND D (SIE)",
@@ -1793,6 +1817,18 @@
       "units_ie": 97.2
     },
     {
+      "name": "ALIDIAL L (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ALIDIAL",
+      "rec_curr": 622,
+      "rec_prev": 519,
+      "rec_ie": 119.8,
+      "units_curr": 2425,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
       "name": "TRIP D3 PLUS (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -1803,30 +1839,6 @@
       "units_curr": 2962,
       "units_prev": 0,
       "units_ie": null
-    },
-    {
-      "name": "DIOVAN IC (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "DIOVAN",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 2902,
-      "units_prev": 2553,
-      "units_ie": 113.7
-    },
-    {
-      "name": "LURAP (SIE)",
-      "line": "snc",
-      "lineName": "S.N.C.",
-      "family": "",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 2806,
-      "units_prev": 2495,
-      "units_ie": 112.5
     },
     {
       "name": "TRIP MAGNESIO (SIE)",
@@ -1841,25 +1853,13 @@
       "units_ie": null
     },
     {
-      "name": "ALIDIAL L (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ALIDIAL",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 2425,
-      "units_prev": 0,
-      "units_ie": null
-    },
-    {
       "name": "ISIS TABL RECUBIE 3.00MG x 84 /.03",
       "line": "mujer",
       "lineName": "Línea Mujer",
       "family": "ALTA DOSIS",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 176,
+      "rec_prev": 261,
+      "rec_ie": 67.4,
       "units_curr": 2238,
       "units_prev": 2061,
       "units_ie": 108.6
@@ -1893,9 +1893,9 @@
       "line": "mujer",
       "lineName": "Línea Mujer",
       "family": "ALTA DOSIS",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 120,
+      "rec_prev": 178,
+      "rec_ie": 67.4,
       "units_curr": 1524,
       "units_prev": 1820,
       "units_ie": 83.7
@@ -1941,9 +1941,9 @@
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "DECADRON",
-      "rec_curr": 0,
-      "rec_prev": 0,
-      "rec_ie": null,
+      "rec_curr": 3,
+      "rec_prev": 3,
+      "rec_ie": 100.0,
       "units_curr": 566,
       "units_prev": 506,
       "units_ie": 111.9

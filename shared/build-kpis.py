@@ -268,14 +268,31 @@ def compute_iqvia_kpi(D, window_curr, window_prev):
     }
 
 
-def collect_products(D, window_curr, window_prev, line_key, line_name):
-    """Devuelve lista de productos SIE con metricas por la ventana actual."""
+def collect_products(D, window_curr, window_prev, line_key, line_name,
+                     rec_window_curr=None, rec_window_prev=None):
+    """Devuelve lista de productos SIE con metricas por la ventana actual.
+
+    Estrategia para recetas por producto SIE:
+      1) rec_comp[fam][brand].is_sie=true con monthly  -> brand-level (mujer
+         post-D3 patch).
+      2) Si el SIE producto es el unico SIE en su family/mol_perf key, usar
+         rec_ms[fam].sie como aproximacion family-level.
+      3) Si hay multiples SIE en la familia, repartir proporcionalmente por
+         units en la ventana, OR atribuir total al primero.
+
+    rec_window_* son ventanas paralelas para recetas (puede tener cutoff
+    distinto que units). Si None, usa window_curr/prev."""
+    if rec_window_curr is None: rec_window_curr = window_curr
+    if rec_window_prev is None: rec_window_prev = window_prev
+
     out = []
     mol = D.get('mol_perf', {})
     rec_comp = D.get('rec_comp', {})
+    rec_ms = D.get('rec_ms', {})
 
-    # Para cada producto SIE en mol_perf:
-    sie_units_by_prod = {}    # prod_name -> {curr, prev, family}
+    # 1) Recoger SIE products de mol_perf con units
+    sie_units_by_prod = {}    # prod_name -> {curr, prev, family, fam_key}
+    sie_per_fam = defaultdict(list)  # fam_key -> [prod_name, ...] de productos SIE
     for m_key, obj in mol.items():
         if not isinstance(obj, dict): continue
         family = obj.get('family', m_key)
@@ -286,52 +303,145 @@ def collect_products(D, window_curr, window_prev, line_key, line_name):
             mv = p.get('monthly_vals', {})
             curr = sum_window(mv, window_curr)
             prev = sum_window(mv, window_prev)
-            # Suma si el producto aparece en multiples moleculas (raro)
             if name in sie_units_by_prod:
                 sie_units_by_prod[name]['curr'] += curr
                 sie_units_by_prod[name]['prev'] += prev
             else:
                 sie_units_by_prod[name] = {
-                    'curr': curr, 'prev': prev, 'family': family
+                    'curr': curr, 'prev': prev,
+                    'family': family, 'fam_key': m_key
                 }
+                sie_per_fam[m_key].append(name)
 
-    # Recetas SIE por producto: rec_comp[FAM][BRAND] con is_sie=true
-    sie_rec_by_prod = {}    # prod_name -> {curr, prev, family}
+    # 2) Recetas explicitas por brand (rec_comp[fam][brand].is_sie=true)
+    sie_rec_explicit = {}    # prod_name -> {curr, prev, family}
     for fam, brands in rec_comp.items():
         if not isinstance(brands, dict): continue
         for brand, b in brands.items():
             if not isinstance(b, dict): continue
             if not b.get('is_sie'): continue
             mv = b.get('monthly', {})
-            curr = sum_window(mv, window_curr)
-            prev = sum_window(mv, window_prev)
-            sie_rec_by_prod[brand] = {
+            curr = sum_window(mv, rec_window_curr)
+            prev = sum_window(mv, rec_window_prev)
+            sie_rec_explicit[brand] = {
                 'curr': curr, 'prev': prev, 'family': fam
             }
 
-    # Merge: clave = nombre normalizado
+    # Helper: normalizar nombre para matching mol_perf <-> rec_comp
     def norm(s):
         return re.sub(r'\s*\(.*?\)\s*', ' ', str(s)).strip().upper()
 
-    units_by_norm = {norm(k): (k, v) for k, v in sie_units_by_prod.items()}
-    rec_by_norm   = {norm(k): (k, v) for k, v in sie_rec_by_prod.items()}
+    sie_rec_by_norm = {norm(k): (k, v) for k, v in sie_rec_explicit.items()}
+
+    # 3) Para SIE products que NO tienen explicit rec_comp, usar rec_ms[fam].sie
+    #    Si la familia tiene multiples SIE products, repartimos por
+    #    units share dentro de la familia.
+    #
+    #    Para matchear fam_key (mol_perf key) contra rec_ms key, probamos:
+    #      a) Exact: fam_key in rec_ms
+    #      b) Family field: mol[fam_key].family in rec_ms
+    #      c) Per-product: para cada SIE prod en la familia, probar
+    #         normalizaciones del nombre (e.g. 'VALIUM (SIE)' -> 'VALIUM SIE')
+    sie_rec_per_prod = {}  # prod_name -> {curr, prev} via family-level lookup
+
+    def strip_paren(name):
+        return re.sub(r'\s*\(.*?\)\s*$', '', str(name)).strip()
+
+    fam_sie_recetas = {}  # fam_key -> {curr, prev}
+    for fam_key in sie_per_fam:
+        fam_field = mol.get(fam_key, {}).get('family', '') if isinstance(mol.get(fam_key), dict) else ''
+        candidates = [fam_key, fam_field]
+        rec_ms_obj = None
+        for c in candidates:
+            if c in rec_ms and isinstance(rec_ms[c], dict):
+                rec_ms_obj = rec_ms[c]
+                break
+        if rec_ms_obj is not None:
+            sie_m = rec_ms_obj.get('sie', {})
+            if isinstance(sie_m, dict) and sie_m:
+                curr = sum_window(sie_m, rec_window_curr)
+                prev = sum_window(sie_m, rec_window_prev)
+                fam_sie_recetas[fam_key] = {'curr': curr, 'prev': prev}
+                continue
+
+        # Fallback: try per-SIE-product matching (caso SNC: rec_ms keyed por
+        # 'VALIUM SIE', 'MADOPAR SIE', 'PGB MULTIDOSIS SIE', mol_perf keyed por molecule)
+        for prod_name in sie_per_fam[fam_key]:
+            base = strip_paren(prod_name)
+            base_upper = base.upper()
+            # Exact attempts first
+            attempts = [f'{base} SIE', base, f'{base_upper} SIE']
+            matched = False
+            for cand in attempts:
+                if cand in rec_ms and isinstance(rec_ms[cand], dict):
+                    sie_m = rec_ms[cand].get('sie', {})
+                    if isinstance(sie_m, dict) and sie_m:
+                        curr = sum_window(sie_m, rec_window_curr)
+                        prev = sum_window(sie_m, rec_window_prev)
+                        sie_rec_per_prod[prod_name] = {'curr': curr, 'prev': prev}
+                        matched = True
+                        break
+            if matched: continue
+            # Loose: rec_ms key starts with base + ' ' (e.g., 'PGB MULTIDOSIS SIE')
+            for k in rec_ms:
+                if isinstance(rec_ms[k], dict) and k.upper().startswith(base_upper + ' '):
+                    sie_m = rec_ms[k].get('sie', {})
+                    if isinstance(sie_m, dict) and sie_m:
+                        curr = sum_window(sie_m, rec_window_curr)
+                        prev = sum_window(sie_m, rec_window_prev)
+                        sie_rec_per_prod[prod_name] = {'curr': curr, 'prev': prev}
+                        break
 
     def safe_ie(c, p):
         if c is None or p is None or p <= 0: return None
         return round(c / p * 100, 1)
 
-    all_keys = set(units_by_norm) | set(rec_by_norm)
-    for k in all_keys:
-        u_orig, u = units_by_norm.get(k, (None, None))
-        r_orig, r = rec_by_norm.get(k, (None, None))
-        name = u_orig or r_orig
-        family = (r['family'] if r else u['family']) if (r or u) else ''
-        rec_curr = int(round(r['curr'])) if r else 0
-        rec_prev = int(round(r['prev'])) if r else 0
-        u_curr   = int(round(u['curr'])) if u else 0
-        u_prev   = int(round(u['prev'])) if u else 0
+    # Construir lista final: union de SIE products en units + explicit rec
+    seen = set()
+    for prod_name, u_info in sie_units_by_prod.items():
+        n = norm(prod_name)
+        seen.add(n)
+        # Recetas: prefer explicit rec_comp, sino per-prod, sino fam_sie repartido
+        rec_explicit = sie_rec_by_norm.get(n)
+        per_prod = sie_rec_per_prod.get(prod_name)
+        if rec_explicit:
+            r_curr = rec_explicit[1]['curr']
+            r_prev = rec_explicit[1]['prev']
+            family = rec_explicit[1]['family']
+        elif per_prod:
+            r_curr = per_prod['curr']
+            r_prev = per_prod['prev']
+            family = u_info['family']
+        else:
+            family = u_info['family']
+            fam_key = u_info['fam_key']
+            fam_rec = fam_sie_recetas.get(fam_key)
+            if not fam_rec:
+                r_curr = r_prev = 0
+            else:
+                # Si solo hay un SIE en la familia, atribuir total
+                sie_in_fam = sie_per_fam[fam_key]
+                if len(sie_in_fam) <= 1:
+                    r_curr = fam_rec['curr']
+                    r_prev = fam_rec['prev']
+                else:
+                    # Repartir por units share en la ventana curr
+                    total_units = sum(sie_units_by_prod[n2]['curr'] for n2 in sie_in_fam)
+                    if total_units > 0:
+                        share = u_info['curr'] / total_units
+                        r_curr = fam_rec['curr'] * share
+                        r_prev = fam_rec['prev'] * share
+                    else:
+                        # Sin units, dividir parejo
+                        r_curr = fam_rec['curr'] / len(sie_in_fam)
+                        r_prev = fam_rec['prev'] / len(sie_in_fam)
+
+        rec_curr = int(round(r_curr))
+        rec_prev = int(round(r_prev))
+        u_curr = int(round(u_info['curr']))
+        u_prev = int(round(u_info['prev']))
         out.append({
-            'name': name,
+            'name': prod_name,
             'line': line_key,
             'lineName': line_name,
             'family': family,
@@ -341,6 +451,25 @@ def collect_products(D, window_curr, window_prev, line_key, line_name):
             'units_curr': u_curr,
             'units_prev': u_prev,
             'units_ie':   safe_ie(u_curr, u_prev),
+        })
+
+    # Tambien incluir SIE products que tienen explicit rec_comp pero no estan
+    # en mol_perf (poco frecuente)
+    for n, (orig_name, info) in sie_rec_by_norm.items():
+        if n in seen: continue
+        rec_curr = int(round(info['curr']))
+        rec_prev = int(round(info['prev']))
+        out.append({
+            'name': orig_name,
+            'line': line_key,
+            'lineName': line_name,
+            'family': info['family'],
+            'rec_curr': rec_curr,
+            'rec_prev': rec_prev,
+            'rec_ie':   safe_ie(rec_curr, rec_prev),
+            'units_curr': 0,
+            'units_prev': 0,
+            'units_ie':   None,
         })
     return out
 
@@ -461,9 +590,10 @@ def main():
             rec_ytd_curr, rec_ytd_prev = rec_windows['ytd']
         else:
             rec_ytd_curr = rec_ytd_prev = []
-        # Para collect_products usamos la mejor disponible: prefer iqvia_windows si existe
+        # Para units usamos iq_windows; para recetas, rec_windows (puede tener cutoff distinto)
         ytd_curr, ytd_prev = (iq_ytd_curr, iq_ytd_prev) if iq_ytd_curr else (rec_ytd_curr, rec_ytd_prev)
-        prods = collect_products(D, ytd_curr, ytd_prev, line['key'], line['name'])
+        prods = collect_products(D, ytd_curr, ytd_prev, line['key'], line['name'],
+                                  rec_window_curr=rec_ytd_curr, rec_window_prev=rec_ytd_prev)
         prods = [p for p in prods if p['rec_curr'] > 0 or p['units_curr'] > 0]
         # Tambien metemos el resumen YTD para tabla por producto
         out['products'].extend(prods)

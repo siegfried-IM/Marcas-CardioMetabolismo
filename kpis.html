@@ -424,9 +424,9 @@ table.products tbody tr:hover { background: var(--gray-50); }
             <th data-key="name">Producto</th>
             <th data-key="lineName">Línea</th>
             <th data-key="family">Familia</th>
-            <th data-key="rec_curr" data-sort="desc">Recetas</th>
+            <th data-key="rec_curr">Recetas</th>
             <th data-key="rec_ie">IE Rec.</th>
-            <th data-key="units_curr">Units IQVIA</th>
+            <th data-key="units_curr" data-sort="desc">Units IQVIA</th>
             <th data-key="units_ie">IE Units</th>
           </tr>
         </thead>
@@ -465,7 +465,7 @@ function ieClass(ie) {
 }
 
 let DATA = null;
-let state = { view:'lines', period:'ytd', prodLine:'', prodSearch:'', sortKey:'rec_curr', sortDir:'desc' };
+let state = { view:'lines', period:'ytd', prodLine:'', prodSearch:'', sortKey:'units_curr', sortDir:'desc' };
 
 function deltaClass(curr, prev, mode) {
   if (curr == null || prev == null) return 'na';
@@ -593,9 +593,9 @@ function renderProducts() {
           <td>${r.name}</td>
           <td><span class="pill-line" style="background:${(ln.color||'#999')}22;color:${ln.color||'#666'};">${ln.name||r.line}</span></td>
           <td style="color:var(--gray-500);">${r.family||''}</td>
-          <td class="num">${fmt.int(r.rec_curr)}</td>
+          <td class="num">${r.rec_curr ? fmt.int(r.rec_curr) : '—'}</td>
           <td class="delta ${recIeCls}">${recIeTxt}</td>
-          <td class="num">${fmt.int(r.units_curr)}</td>
+          <td class="num">${r.units_curr ? fmt.int(r.units_curr) : '—'}</td>
           <td class="delta ${uIeCls}">${uIeTxt}</td>
         </tr>`;
     }).join('');
