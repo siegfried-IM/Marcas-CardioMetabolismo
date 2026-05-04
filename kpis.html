@@ -445,8 +445,8 @@ const fmt = {
 };
 function ieClass(ie) {
   if (ie == null) return 'na';
-  if (ie >= 102) return 'up';
-  if (ie <= 98)  return 'down';
+  if (ie > 100) return 'up';
+  if (ie < 100) return 'down';
   return 'flat';
 }
 
