@@ -94,12 +94,39 @@ body {
   line-height: 1;
 }
 .nav-date {
-  margin-left: auto;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
   color: rgba(255,255,255,.6);
   letter-spacing: .1em;
   font-weight: 500;
+}
+.nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.nav-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,.85);
+  text-decoration: none;
+  letter-spacing: .04em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  transition: all .15s;
+}
+.nav-link:hover {
+  background: rgba(255,255,255,.16);
+  border-color: rgba(255,255,255,.32);
+  color: var(--white);
+}
+.nav-link.active {
+  background: var(--white);
+  color: var(--red);
+  border-color: var(--white);
 }
 
 /* ─── HERO BAND ──────────────────────────────────────────────────── */
@@ -686,307 +713,6 @@ body {
   margin-bottom: 2px;
 }
 
-/* ─── KPI BOARD ──────────────────────────────────────────────────── */
-.kpi-board {
-  margin-top: 56px;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.kpi-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 22px 16px;
-  border-bottom: 1px solid var(--gray-200);
-  background: linear-gradient(180deg, var(--gray-50), var(--white));
-  flex-wrap: wrap;
-  gap: 14px;
-}
-.kpi-head-left { display: flex; flex-direction: column; gap: 2px; }
-.kpi-head-eyebrow {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .2em;
-  color: var(--red);
-  text-transform: uppercase;
-}
-.kpi-head-title {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -.01em;
-  color: var(--gray-900);
-}
-.kpi-head-meta {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  color: var(--gray-500);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  margin-top: 4px;
-}
-.kpi-head-meta .beta-pill {
-  display: inline-block;
-  background: #FEF3C7;
-  color: #92400E;
-  font-size: 9px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  margin-left: 8px;
-  font-weight: 700;
-  letter-spacing: .15em;
-}
-.kpi-controls {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.kpi-toggle {
-  display: inline-flex;
-  background: var(--gray-100);
-  border: 1px solid var(--gray-200);
-  border-radius: 8px;
-  padding: 3px;
-  gap: 2px;
-}
-.kpi-toggle button {
-  background: transparent;
-  border: none;
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 6px;
-  color: var(--gray-500);
-  cursor: pointer;
-  letter-spacing: .04em;
-  transition: all .15s;
-}
-.kpi-toggle button:hover { color: var(--gray-700); }
-.kpi-toggle button.active {
-  background: var(--white);
-  color: var(--red);
-  box-shadow: 0 1px 2px rgba(0,0,0,.06);
-}
-.kpi-period-tabs {
-  display: inline-flex;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.kpi-period-tabs button {
-  background: transparent;
-  border: none;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .12em;
-  padding: 8px 16px;
-  color: var(--gray-500);
-  cursor: pointer;
-  border-right: 1px solid var(--gray-200);
-  transition: all .15s;
-}
-.kpi-period-tabs button:last-child { border-right: none; }
-.kpi-period-tabs button:hover { background: var(--gray-50); color: var(--gray-700); }
-.kpi-period-tabs button.active {
-  background: var(--red);
-  color: var(--white);
-}
-
-/* ─── Line view ───────────────────────────────────────────────── */
-.kpi-lines {
-  padding: 0;
-}
-.kpi-line-row {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  border-bottom: 1px solid var(--gray-100);
-  transition: background .15s;
-}
-.kpi-line-row:last-child { border-bottom: none; }
-.kpi-line-row:hover { background: var(--off-white); }
-.kpi-line-info {
-  padding: 18px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  border-right: 1px solid var(--gray-100);
-  border-left: 4px solid var(--line-color, var(--red));
-}
-.kpi-line-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--gray-900);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  letter-spacing: -.01em;
-}
-.kpi-line-owner {
-  font-size: 11px;
-  color: var(--gray-500);
-  font-weight: 500;
-}
-.kpi-line-link {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
-  color: var(--red);
-  text-decoration: none;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  margin-top: 4px;
-  font-weight: 600;
-  align-self: flex-start;
-}
-.kpi-line-link:hover { color: var(--red-dark); text-decoration: underline; }
-.kpi-tile-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-}
-.kpi-tile {
-  padding: 14px 18px;
-  border-right: 1px solid var(--gray-100);
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-.kpi-tile:last-child { border-right: none; }
-.kpi-tile-label {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--gray-400);
-}
-.kpi-tile-value {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--gray-900);
-  letter-spacing: -.01em;
-  line-height: 1.2;
-  margin-top: 2px;
-}
-.kpi-tile-delta {
-  font-size: 11px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 1px;
-}
-.kpi-tile-delta.up    { color: #15803D; }
-.kpi-tile-delta.down  { color: var(--red-light); }
-.kpi-tile-delta.flat  { color: var(--gray-400); }
-.kpi-tile-delta::before {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  line-height: 1;
-}
-.kpi-tile-delta.up::before   { content: '▲'; }
-.kpi-tile-delta.down::before { content: '▼'; }
-.kpi-tile-delta.flat::before { content: '─'; }
-.kpi-tile-prev {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  color: var(--gray-400);
-  margin-top: 2px;
-  letter-spacing: .04em;
-}
-
-/* ─── Product view ──────────────────────────────────────────── */
-.kpi-products-toolbar {
-  display: flex;
-  gap: 12px;
-  padding: 14px 22px;
-  border-bottom: 1px solid var(--gray-100);
-  background: var(--gray-50);
-  align-items: center;
-  flex-wrap: wrap;
-}
-.kpi-products-toolbar select,
-.kpi-products-toolbar input {
-  font-family: inherit;
-  font-size: 12px;
-  padding: 7px 10px;
-  border: 1px solid var(--gray-200);
-  border-radius: 6px;
-  background: var(--white);
-  color: var(--gray-700);
-  outline: none;
-}
-.kpi-products-toolbar input { min-width: 200px; }
-.kpi-products-toolbar input:focus,
-.kpi-products-toolbar select:focus {
-  border-color: var(--red);
-  box-shadow: 0 0 0 3px rgba(176,30,30,.08);
-}
-.kpi-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.kpi-table th, .kpi-table td {
-  padding: 11px 14px;
-  text-align: right;
-  font-size: 12px;
-  border-bottom: 1px solid var(--gray-100);
-}
-.kpi-table th {
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--gray-400);
-  background: var(--gray-50);
-  border-bottom: 1px solid var(--gray-200);
-  position: sticky; top: 0; z-index: 1;
-}
-.kpi-table th:first-child, .kpi-table td:first-child,
-.kpi-table th:nth-child(2), .kpi-table td:nth-child(2),
-.kpi-table th:nth-child(3), .kpi-table td:nth-child(3) {
-  text-align: left;
-}
-.kpi-table td:first-child {
-  font-weight: 700;
-  color: var(--gray-900);
-}
-.kpi-table .pill-line {
-  display: inline-block;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 4px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.kpi-table tbody tr:hover { background: var(--gray-50); }
-.kpi-table .num {
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 600;
-  color: var(--gray-700);
-}
-.kpi-table .delta {
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 600;
-  font-size: 11px;
-}
-.kpi-table .delta.up   { color: #15803D; }
-.kpi-table .delta.down { color: var(--red-light); }
-.kpi-table .delta.flat { color: var(--gray-400); }
-
-@media (max-width: 900px) {
-  .kpi-line-row { grid-template-columns: 1fr; }
-  .kpi-line-info { border-right: none; border-bottom: 1px solid var(--gray-100); }
-  .kpi-tile-row { grid-template-columns: repeat(2, 1fr); }
-  .kpi-tile { border-bottom: 1px solid var(--gray-100); }
-}
 </style>
 </head>
 <body>
@@ -1001,7 +727,11 @@ body {
     <span class="nav-title">Hub de Marketing</span>
     <span class="nav-sub">Marcas · Argentina</span>
   </div>
-  <div class="nav-date" id="nav-date">—</div>
+  <div class="nav-actions">
+    <a class="nav-link active" href="./">Tableros</a>
+    <a class="nav-link" href="kpis.html">KPIs</a>
+    <div class="nav-date" id="nav-date">—</div>
+  </div>
 </nav>
 
 <!-- ═══ HERO ══════════════════════════════════════════════════════════ -->
@@ -1163,67 +893,6 @@ body {
     </a>
 
   </div><!-- /grid -->
-
-  <!-- ═══ KPI BOARD (BETA — data mockeada) ════════════════════════════ -->
-  <div class="sec-label" style="margin-top:48px;">
-    <span class="sec-label-text">Indicadores Clave</span>
-    <div class="sec-label-line"></div>
-  </div>
-
-  <div class="kpi-board" id="kpi-board">
-    <div class="kpi-head">
-      <div class="kpi-head-left">
-        <div class="kpi-head-eyebrow">Performance · Cierre Mar 2026</div>
-        <div class="kpi-head-title">KPIs por Línea & Producto</div>
-        <div class="kpi-head-meta">
-          Última actualización: <span id="kpi-asof">04 May 2026</span>
-          <span class="beta-pill">BETA · DATA MOCKEADA</span>
-        </div>
-      </div>
-      <div class="kpi-controls">
-        <div class="kpi-toggle" role="tablist" aria-label="Vista">
-          <button data-view="lines"    class="active">Por Línea</button>
-          <button data-view="products">Por Producto</button>
-        </div>
-        <div class="kpi-period-tabs" role="tablist" aria-label="Período">
-          <button data-period="ytd"       class="active">YTD</button>
-          <button data-period="trimestre">Trimestre</button>
-          <button data-period="semestre">Semestre</button>
-          <button data-period="mat">MAT</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Vista por Línea -->
-    <div class="kpi-lines" id="kpi-view-lines"></div>
-
-    <!-- Vista por Producto -->
-    <div id="kpi-view-products" style="display:none;">
-      <div class="kpi-products-toolbar">
-        <select id="kpi-prod-line">
-          <option value="">Todas las líneas</option>
-        </select>
-        <input id="kpi-prod-search" type="search" placeholder="Buscar producto…" />
-      </div>
-      <div style="overflow-x:auto;">
-        <table class="kpi-table" id="kpi-prod-table">
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Línea</th>
-              <th>Familia</th>
-              <th>Recetas</th>
-              <th>MS Rec.</th>
-              <th>Ventas $</th>
-              <th>Ventas U.</th>
-              <th>Var vs prev</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
 </div><!-- /main -->
 
 <!-- ═══ FOOTER ════════════════════════════════════════════════════════ -->
@@ -1383,241 +1052,6 @@ document.getElementById('nav-date').textContent =
   `${String(n.getDate()).padStart(2,'0')} ${months[n.getMonth()]} ${n.getFullYear()}`;
 
 applyUrls();
-
-/* ─── KPI BOARD (BETA · MOCK) ──────────────────────────────────────
-   Data esquematizada para iterar diseño. En la próxima fase la
-   construye un script Python desde stock/recetas/mol_perf de cada
-   línea y la sirve como kpis.json.
-*/
-const KPI_DATA = {
-  asOf: '04 May 2026',
-  lines: [
-    {
-      key:'cardio',  name:'CardioMetabólica', icon:'❤️', color:'#B01E1E', href:'cardio/',  owner:'Diego Fernández',
-      kpis: {
-        recetas:   { ytd:[ 38234, 35112, 'rec'],   trimestre:[19567, 18234,'rec'], semestre:[73145, 71823,'rec'], mat:[145234, 138567,'rec'] },
-        ms:        { ytd:[ 24.3,  23.8,  'pp'],    trimestre:[24.5, 24.0, 'pp'],   semestre:[24.2, 23.7, 'pp'],   mat:[24.1, 23.5, 'pp'] },
-        ventas_pe: { ytd:[ 1230,  1075,  'M$'],    trimestre:[612, 558, 'M$'],     semestre:[2356, 2189, 'M$'],   mat:[4670, 4318, 'M$'] },
-        ventas_un: { ytd:[ 12345, 11432, 'u'],     trimestre:[6234, 5823, 'u'],    semestre:[24123, 22987, 'u'],  mat:[47812, 45634, 'u'] },
-        stock_dias:{ ytd:[ 45, 52, 'd'],           trimestre:[45, 48, 'd'],         semestre:[45, 50, 'd'],        mat:[45, 55, 'd'] },
-      }
-    },
-    {
-      key:'antibio', name:'Antibióticos', icon:'🦠', color:'#16A34A', href:'ATB/', owner:'Antonella Mariani',
-      kpis: {
-        recetas:   { ytd:[ 22134, 23567, 'rec'],   trimestre:[11045, 11823,'rec'], semestre:[42345, 44123,'rec'], mat:[84567, 87234, 'rec'] },
-        ms:        { ytd:[ 18.5,  18.9,  'pp'],    trimestre:[18.3, 18.7, 'pp'],   semestre:[18.4, 18.8, 'pp'],   mat:[18.6, 18.9, 'pp'] },
-        ventas_pe: { ytd:[  745,   678,  'M$'],    trimestre:[378, 348, 'M$'],     semestre:[1432, 1356, 'M$'],   mat:[2845, 2723, 'M$'] },
-        ventas_un: { ytd:[  8456, 8923,  'u'],     trimestre:[4234, 4512, 'u'],    semestre:[16234, 17012,'u'],   mat:[32145, 33456,'u'] },
-        stock_dias:{ ytd:[  62, 58, 'd'],          trimestre:[62, 60, 'd'],        semestre:[62, 59, 'd'],        mat:[62, 56, 'd'] },
-      }
-    },
-    {
-      key:'mujer',   name:'Línea Mujer', icon:'🌸', color:'#DB2777', href:'mujer/', owner:'María Hernández',
-      kpis: {
-        recetas:   { ytd:[ 41234, 38912, 'rec'],   trimestre:[20734, 19567,'rec'], semestre:[78234, 75123,'rec'], mat:[152345, 144567,'rec'] },
-        ms:        { ytd:[ 11.2,  10.8,  'pp'],    trimestre:[11.4, 10.9, 'pp'],   semestre:[11.3, 10.8, 'pp'],   mat:[11.0, 10.6, 'pp'] },
-        ventas_pe: { ytd:[ 1487,  1312,  'M$'],    trimestre:[748, 672, 'M$'],     semestre:[2867, 2634, 'M$'],   mat:[5634, 5234, 'M$'] },
-        ventas_un: { ytd:[ 14523, 13456, 'u'],     trimestre:[7345, 6712, 'u'],    semestre:[28145, 26345,'u'],   mat:[55234, 51823,'u'] },
-        stock_dias:{ ytd:[ 38, 41, 'd'],           trimestre:[38, 40, 'd'],        semestre:[38, 42, 'd'],        mat:[38, 44, 'd'] },
-      }
-    },
-    {
-      key:'snc',     name:'S.N.C.', icon:'🧠', color:'#7C3AED', href:'SNC/', owner:'Juan Filidoro',
-      kpis: {
-        recetas:   { ytd:[ 18567, 17234, 'rec'],   trimestre:[ 9345, 8567,'rec'],  semestre:[35234, 33123,'rec'], mat:[68234, 64567, 'rec'] },
-        ms:        { ytd:[  9.4,   9.1,  'pp'],    trimestre:[ 9.5,  9.2, 'pp'],   semestre:[ 9.3,  9.0, 'pp'],   mat:[ 9.2,  8.9, 'pp'] },
-        ventas_pe: { ytd:[  423,   378,  'M$'],    trimestre:[212, 192, 'M$'],     semestre:[ 812,  745, 'M$'],   mat:[1623, 1489, 'M$'] },
-        ventas_un: { ytd:[  4567, 4234,  'u'],     trimestre:[2312, 2123, 'u'],    semestre:[ 8845, 8345, 'u'],   mat:[17234, 16234,'u'] },
-        stock_dias:{ ytd:[ 51, 49, 'd'],           trimestre:[51, 50, 'd'],        semestre:[51, 48, 'd'],        mat:[51, 47, 'd'] },
-      }
-    },
-    {
-      key:'resp',    name:'Respiratoria', icon:'🫁', color:'#0D9488', href:'respiratorio/', owner:'Antonella Mariani',
-      kpis: {
-        recetas:   { ytd:[ 14234, 13567, 'rec'],   trimestre:[ 7145, 6845,'rec'],  semestre:[27345, 26234,'rec'], mat:[53234, 50567, 'rec'] },
-        ms:        { ytd:[ 14.8,  14.3,  'pp'],    trimestre:[14.9, 14.4, 'pp'],   semestre:[14.7, 14.2, 'pp'],   mat:[14.5, 14.0, 'pp'] },
-        ventas_pe: { ytd:[  312,   289,  'M$'],    trimestre:[156, 145, 'M$'],     semestre:[ 612,  578, 'M$'],   mat:[1212, 1145, 'M$'] },
-        ventas_un: { ytd:[  3234, 3045,  'u'],     trimestre:[1623, 1534, 'u'],    semestre:[ 6234, 5912, 'u'],   mat:[12234, 11556,'u'] },
-        stock_dias:{ ytd:[ 47, 44, 'd'],           trimestre:[47, 45, 'd'],        semestre:[47, 43, 'd'],        mat:[47, 41, 'd'] },
-      }
-    },
-    {
-      key:'otx',     name:'OTC', icon:'🩹', color:'#2563EB', href:'OTC/', owner:'Antonella Mariani',
-      kpis: {
-        recetas:   { ytd:[ 11234, 12345, 'rec'],   trimestre:[ 5645, 6212,'rec'],  semestre:[21567, 23234,'rec'], mat:[42345, 45567, 'rec'] },
-        ms:        { ytd:[  6.2,   6.5,  'pp'],    trimestre:[ 6.1,  6.4, 'pp'],   semestre:[ 6.3,  6.6, 'pp'],   mat:[ 6.4,  6.7, 'pp'] },
-        ventas_pe: { ytd:[  234,   245,  'M$'],    trimestre:[118, 123, 'M$'],     semestre:[ 456,  478, 'M$'],   mat:[ 912,  956, 'M$'] },
-        ventas_un: { ytd:[  4234, 4456,  'u'],     trimestre:[2123, 2234, 'u'],    semestre:[ 8234, 8645, 'u'],   mat:[16234, 17034,'u'] },
-        stock_dias:{ ytd:[ 56, 53, 'd'],           trimestre:[56, 54, 'd'],        semestre:[56, 52, 'd'],        mat:[56, 50, 'd'] },
-      }
-    },
-    {
-      key:'derma',   name:'Dermatología', icon:'🧴', color:'#D97706', href:'dermatologia/', owner:'Equipo Dermato',
-      kpis: {
-        recetas:   { ytd:[  6234, 5823, 'rec'],    trimestre:[ 3145, 2945,'rec'],  semestre:[12134, 11456,'rec'], mat:[23456, 22134, 'rec'] },
-        ms:        { ytd:[  4.1,  3.8,  'pp'],     trimestre:[ 4.2,  3.9, 'pp'],   semestre:[ 4.0,  3.7, 'pp'],   mat:[ 3.9,  3.6, 'pp'] },
-        ventas_pe: { ytd:[  178,  156,  'M$'],     trimestre:[ 89,  78, 'M$'],     semestre:[ 345,  312, 'M$'],   mat:[ 678,  612, 'M$'] },
-        ventas_un: { ytd:[  2134, 1956, 'u'],      trimestre:[1067, 978, 'u'],     semestre:[ 4234, 3845, 'u'],   mat:[ 8234, 7456,'u'] },
-        stock_dias:{ ytd:[ 41, 39, 'd'],           trimestre:[41, 40, 'd'],        semestre:[41, 38, 'd'],        mat:[41, 37, 'd'] },
-      }
-    },
-  ],
-
-  // Top productos cross-line (mock para previsualizar la grilla)
-  products: [
-    { name:'TRIP D3 SIE',     line:'mujer',   family:'D3',                    rec:18829, ms: 5.6, vpe:312, vun:2845, varPct: 8.3 },
-    { name:'CALCITRIOL SIE',  line:'mujer',   family:'D3',                    rec: 6911, ms:73.3, vpe:118, vun:1234, varPct: 4.1 },
-    { name:'ISIS MD',         line:'mujer',   family:'BAJA DOSIS 21+7',       rec:14567, ms:18.5, vpe:234, vun:1923, varPct:12.4 },
-    { name:'FUMARENA',        line:'cardio',  family:'ANTIHIPERTENSIVOS',     rec:23456, ms:14.2, vpe:578, vun:4234, varPct:11.8 },
-    { name:'ENALAPRIL SIE',   line:'cardio',  family:'IECA',                  rec:12345, ms: 9.4, vpe:312, vun:3456, varPct: 6.2 },
-    { name:'AMLODIPINA SIE',  line:'cardio',  family:'CALCIOANTAGONISTAS',    rec: 8967, ms: 7.2, vpe:189, vun:2123, varPct: 3.4 },
-    { name:'CLAVULOX SIE',    line:'antibio', family:'AMOXI/CLAV',            rec:11234, ms:11.5, vpe:267, vun:2345, varPct:-2.3 },
-    { name:'AZITROMICINA SIE',line:'antibio', family:'MACRÓLIDOS',            rec: 6789, ms: 8.4, vpe:189, vun:1834, varPct: 1.5 },
-    { name:'PGB MULTIDOSIS',  line:'snc',     family:'PREGABALINA',           rec: 9456, ms:11.3, vpe:178, vun:1567, varPct: 7.8 },
-    { name:'VISDON',          line:'snc',     family:'BENZODIAZEPINAS',       rec: 4234, ms: 9.1, vpe: 89, vun: 945, varPct: 2.1 },
-    { name:'TUKOL',           line:'resp',    family:'ANTITUSIVOS',           rec: 3456, ms: 7.4, vpe: 67, vun: 723, varPct: 5.3 },
-    { name:'BISOLVON SIE',    line:'resp',    family:'MUCOLÍTICOS',           rec: 2345, ms: 5.2, vpe: 45, vun: 512, varPct: 8.7 },
-    { name:'IBUPROFENO SIE',  line:'otx',     family:'ANALGÉSICOS',           rec: 5234, ms: 4.8, vpe: 89, vun: 1234, varPct:-4.2 },
-    { name:'PARACETAMOL SIE', line:'otx',     family:'ANALGÉSICOS',           rec: 4123, ms: 3.9, vpe: 67, vun: 1023, varPct:-1.8 },
-  ],
-};
-
-const KPI_TILES = [
-  { id:'recetas',    label:'Recetas SIE',    fmt:'int', unit:'recetas' },
-  { id:'ms',         label:'MS Recetas',     fmt:'pct1', unit:'pp' },
-  { id:'ventas_pe',  label:'Ventas IQVIA $', fmt:'curM' },
-  { id:'ventas_un',  label:'Ventas Units',   fmt:'int' },
-  { id:'stock_dias', label:'Stock (días)',   fmt:'int', unit:'d', invertGood:true },
-];
-
-function fmtVal(v, fmt) {
-  if (v == null || isNaN(v)) return '—';
-  if (fmt === 'pct1') return v.toFixed(1) + '%';
-  if (fmt === 'curM') return '$' + v.toLocaleString('es-AR') + ' M';
-  if (fmt === 'int')  return v.toLocaleString('es-AR');
-  return v.toString();
-}
-function pctChange(curr, prev) {
-  if (prev == null || prev === 0) return null;
-  return (curr - prev) / prev * 100;
-}
-function deltaClass(pct, invertGood) {
-  if (pct == null || Math.abs(pct) < 0.05) return 'flat';
-  const positive = pct > 0;
-  const isGood = invertGood ? !positive : positive;
-  return isGood ? 'up' : 'down';
-}
-
-let kpiState = { view:'lines', period:'ytd', prodLine:'', prodSearch:'' };
-
-function renderKpiLines() {
-  const host = document.getElementById('kpi-view-lines');
-  const period = kpiState.period;
-  host.innerHTML = KPI_DATA.lines.map(line => {
-    const tiles = KPI_TILES.map(t => {
-      const series = line.kpis[t.id];
-      if (!series || !series[period]) return '';
-      const [curr, prev, unit] = series[period];
-      const pct = (t.id === 'ms')
-        ? (curr - prev)              // pp diff for share
-        : pctChange(curr, prev);
-      const dCls = deltaClass(pct, t.invertGood);
-      const deltaTxt = (t.id === 'ms')
-        ? (pct >= 0 ? '+' : '') + pct.toFixed(1) + ' pp'
-        : (pct == null ? '—' : (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%');
-      return `
-        <div class="kpi-tile">
-          <div class="kpi-tile-label">${t.label}</div>
-          <div class="kpi-tile-value">${fmtVal(curr, t.fmt)}</div>
-          <div class="kpi-tile-delta ${dCls}">${deltaTxt}</div>
-          <div class="kpi-tile-prev">vs ${fmtVal(prev, t.fmt)}</div>
-        </div>`;
-    }).join('');
-    return `
-      <div class="kpi-line-row" style="--line-color:${line.color};">
-        <div class="kpi-line-info">
-          <div class="kpi-line-name">${line.icon} ${line.name}</div>
-          <div class="kpi-line-owner">${line.owner}</div>
-          <a class="kpi-line-link" href="${line.href}">Abrir tablero →</a>
-        </div>
-        <div class="kpi-tile-row">${tiles}</div>
-      </div>`;
-  }).join('');
-}
-
-function renderKpiProducts() {
-  // Filter
-  let rows = KPI_DATA.products;
-  if (kpiState.prodLine) rows = rows.filter(r => r.line === kpiState.prodLine);
-  if (kpiState.prodSearch) {
-    const s = kpiState.prodSearch.toLowerCase();
-    rows = rows.filter(r => r.name.toLowerCase().includes(s) || r.family.toLowerCase().includes(s));
-  }
-  const lineMap = Object.fromEntries(KPI_DATA.lines.map(l => [l.key, l]));
-  const tbody = document.querySelector('#kpi-prod-table tbody');
-  tbody.innerHTML = rows.map(r => {
-    const ln = lineMap[r.line] || {};
-    const dCls = deltaClass(r.varPct);
-    const dTxt = (r.varPct >= 0 ? '+' : '') + r.varPct.toFixed(1) + '%';
-    return `
-      <tr>
-        <td>${r.name}</td>
-        <td><span class="pill-line" style="background:${ln.color}22;color:${ln.color};">${ln.name||r.line}</span></td>
-        <td style="color:var(--gray-500);">${r.family}</td>
-        <td class="num">${r.rec.toLocaleString('es-AR')}</td>
-        <td class="num">${r.ms.toFixed(1)}%</td>
-        <td class="num">$${r.vpe.toLocaleString('es-AR')} M</td>
-        <td class="num">${r.vun.toLocaleString('es-AR')}</td>
-        <td class="delta ${dCls}">${dTxt}</td>
-      </tr>`;
-  }).join('') || '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--gray-400);">Sin productos para los filtros aplicados</td></tr>';
-
-  // Build line selector once
-  const sel = document.getElementById('kpi-prod-line');
-  if (sel.options.length <= 1) {
-    KPI_DATA.lines.forEach(l => {
-      const o = document.createElement('option');
-      o.value = l.key; o.textContent = l.name;
-      sel.appendChild(o);
-    });
-  }
-}
-
-function renderKpi() {
-  document.getElementById('kpi-view-lines').style.display    = kpiState.view==='lines'    ? '' : 'none';
-  document.getElementById('kpi-view-products').style.display = kpiState.view==='products' ? '' : 'none';
-  if (kpiState.view === 'lines')    renderKpiLines();
-  else                              renderKpiProducts();
-}
-
-// Toggle: view
-document.querySelectorAll('.kpi-toggle button').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.kpi-toggle button').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    kpiState.view = b.dataset.view;
-    renderKpi();
-  });
-});
-// Toggle: period
-document.querySelectorAll('.kpi-period-tabs button').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.kpi-period-tabs button').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    kpiState.period = b.dataset.period;
-    renderKpi();
-  });
-});
-// Product filters
-document.getElementById('kpi-prod-line').addEventListener('change', e => {
-  kpiState.prodLine = e.target.value; renderKpiProducts();
-});
-document.getElementById('kpi-prod-search').addEventListener('input', e => {
-  kpiState.prodSearch = e.target.value; renderKpiProducts();
-});
-document.getElementById('kpi-asof').textContent = KPI_DATA.asOf;
-renderKpi();
 </script>
 
 </body>

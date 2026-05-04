@@ -1,0 +1,1482 @@
+{
+  "generated_at": "2026-05-04T19:29:23",
+  "as_of_month": "Mar 2026",
+  "periods": [
+    "ytd",
+    "trimestre",
+    "semestre",
+    "mat"
+  ],
+  "period_labels": {
+    "ytd": "YTD 2026 (Ene–Mar)",
+    "trimestre": "Últ. 3 meses (Jan 2026 – Mar 2026)",
+    "semestre": "Últ. 6 meses (Oct 2025 – Mar 2026)",
+    "mat": "MAT 12 meses (Apr 2025 – Mar 2026)"
+  },
+  "lines": [
+    {
+      "key": "cardio",
+      "name": "CardioMetabólica",
+      "icon": "❤️",
+      "color": "#B01E1E",
+      "href": "cardio/",
+      "owner": "Diego Fernández",
+      "kpis": {
+        "ytd": {
+          "recetas_sie": {
+            "curr": 104396,
+            "prev": 113608
+          },
+          "ms_recetas": {
+            "curr": 6.24,
+            "prev": 7.19
+          },
+          "units_sie": {
+            "curr": 1126518,
+            "prev": 1139005
+          },
+          "ms_units": {
+            "curr": 8.46,
+            "prev": 9.18
+          }
+        },
+        "trimestre": {
+          "recetas_sie": {
+            "curr": 104396,
+            "prev": 107730
+          },
+          "ms_recetas": {
+            "curr": 6.24,
+            "prev": 6.58
+          },
+          "units_sie": {
+            "curr": 1126518,
+            "prev": 1191133
+          },
+          "ms_units": {
+            "curr": 8.46,
+            "prev": 8.7
+          }
+        },
+        "semestre": {
+          "recetas_sie": {
+            "curr": 212126,
+            "prev": 220585
+          },
+          "ms_recetas": {
+            "curr": 6.41,
+            "prev": 6.88
+          },
+          "units_sie": {
+            "curr": 2317651,
+            "prev": 2426322
+          },
+          "ms_units": {
+            "curr": 8.58,
+            "prev": 9.05
+          }
+        },
+        "mat": {
+          "recetas_sie": {
+            "curr": 432711,
+            "prev": 486225
+          },
+          "ms_recetas": {
+            "curr": 6.64,
+            "prev": 7.62
+          },
+          "units_sie": {
+            "curr": 4743973,
+            "prev": 5030444
+          },
+          "ms_units": {
+            "curr": 8.82,
+            "prev": 9.57
+          }
+        }
+      }
+    },
+    {
+      "key": "antibio",
+      "name": "Antibióticos",
+      "icon": "🦠",
+      "color": "#16A34A",
+      "href": "ATB/",
+      "owner": "Antonella Mariani",
+      "kpis": {
+        "ytd": {
+          "recetas_sie": {
+            "curr": 51827,
+            "prev": 54951
+          },
+          "ms_recetas": {
+            "curr": 66.69,
+            "prev": 49.59
+          },
+          "units_sie": {
+            "curr": 1272326,
+            "prev": 1224082
+          },
+          "ms_units": {
+            "curr": 60.69,
+            "prev": 59.84
+          }
+        },
+        "trimestre": {
+          "recetas_sie": {
+            "curr": 51827,
+            "prev": 49887
+          },
+          "ms_recetas": {
+            "curr": 66.69,
+            "prev": 49.45
+          },
+          "units_sie": {
+            "curr": 1272326,
+            "prev": 1258319
+          },
+          "ms_units": {
+            "curr": 60.69,
+            "prev": 60.53
+          }
+        },
+        "semestre": {
+          "recetas_sie": {
+            "curr": 101714,
+            "prev": 102454
+          },
+          "ms_recetas": {
+            "curr": 56.95,
+            "prev": 50.44
+          },
+          "units_sie": {
+            "curr": 2530645,
+            "prev": 2550115
+          },
+          "ms_units": {
+            "curr": 60.61,
+            "prev": 56.38
+          }
+        },
+        "mat": {
+          "recetas_sie": {
+            "curr": 204168,
+            "prev": 234327
+          },
+          "ms_recetas": {
+            "curr": 53.49,
+            "prev": 49.99
+          },
+          "units_sie": {
+            "curr": 5080760,
+            "prev": 4861434
+          },
+          "ms_units": {
+            "curr": 58.41,
+            "prev": 56.2
+          }
+        }
+      }
+    },
+    {
+      "key": "mujer",
+      "name": "Línea Mujer",
+      "icon": "🌸",
+      "color": "#DB2777",
+      "href": "mujer/",
+      "owner": "María Hernández",
+      "kpis": {
+        "ytd": {
+          "recetas_sie": {
+            "curr": 61379,
+            "prev": 81115
+          },
+          "ms_recetas": {
+            "curr": 11.31,
+            "prev": 23.56
+          },
+          "units_sie": {
+            "curr": null,
+            "prev": 9021742
+          },
+          "ms_units": {
+            "curr": null,
+            "prev": 36.6
+          }
+        },
+        "trimestre": {
+          "recetas_sie": {
+            "curr": 61379,
+            "prev": 82792
+          },
+          "ms_recetas": {
+            "curr": 11.31,
+            "prev": 25.94
+          },
+          "units_sie": {
+            "curr": null,
+            "prev": 9625233
+          },
+          "ms_units": {
+            "curr": null,
+            "prev": 36.63
+          }
+        },
+        "semestre": {
+          "recetas_sie": {
+            "curr": 144171,
+            "prev": 163093
+          },
+          "ms_recetas": {
+            "curr": 16.73,
+            "prev": 25.19
+          },
+          "units_sie": {
+            "curr": 15819492,
+            "prev": 19096704
+          },
+          "ms_units": {
+            "curr": 36.95,
+            "prev": 37.01
+          }
+        },
+        "mat": {
+          "recetas_sie": {
+            "curr": 307264,
+            "prev": 292961
+          },
+          "ms_recetas": {
+            "curr": 20.36,
+            "prev": 20.6
+          },
+          "units_sie": {
+            "curr": 34916196,
+            "prev": 37688565
+          },
+          "ms_units": {
+            "curr": 36.98,
+            "prev": 36.82
+          }
+        }
+      }
+    },
+    {
+      "key": "snc",
+      "name": "S.N.C.",
+      "icon": "🧠",
+      "color": "#7C3AED",
+      "href": "SNC/",
+      "owner": "Juan Filidoro",
+      "kpis": {
+        "ytd": {
+          "recetas_sie": {
+            "curr": 35122,
+            "prev": 39828
+          },
+          "ms_recetas": {
+            "curr": 10.9,
+            "prev": 14.96
+          },
+          "units_sie": {
+            "curr": null,
+            "prev": 264566
+          },
+          "ms_units": {
+            "curr": null,
+            "prev": 7.79
+          }
+        },
+        "trimestre": {
+          "recetas_sie": {
+            "curr": 35122,
+            "prev": 35400
+          },
+          "ms_recetas": {
+            "curr": 10.9,
+            "prev": 12.91
+          },
+          "units_sie": {
+            "curr": null,
+            "prev": 258394
+          },
+          "ms_units": {
+            "curr": null,
+            "prev": 6.91
+          }
+        },
+        "semestre": {
+          "recetas_sie": {
+            "curr": 70522,
+            "prev": 78011
+          },
+          "ms_recetas": {
+            "curr": 11.82,
+            "prev": 14.56
+          },
+          "units_sie": {
+            "curr": null,
+            "prev": 558069
+          },
+          "ms_units": {
+            "curr": null,
+            "prev": 7.61
+          }
+        },
+        "mat": {
+          "recetas_sie": {
+            "curr": 148533,
+            "prev": 167351
+          },
+          "ms_recetas": {
+            "curr": 13.12,
+            "prev": 15.98
+          },
+          "units_sie": {
+            "curr": 917988,
+            "prev": 1134371
+          },
+          "ms_units": {
+            "curr": 7.43,
+            "prev": 7.84
+          }
+        }
+      }
+    },
+    {
+      "key": "resp",
+      "name": "Respiratoria",
+      "icon": "🫁",
+      "color": "#0D9488",
+      "href": "respiratorio/",
+      "owner": "Antonella Mariani",
+      "kpis": {
+        "ytd": {
+          "recetas_sie": {
+            "curr": 95843,
+            "prev": 101736
+          },
+          "ms_recetas": {
+            "curr": 18.96,
+            "prev": 18.76
+          },
+          "units_sie": {
+            "curr": 1180415,
+            "prev": 1251218
+          },
+          "ms_units": {
+            "curr": 40.96,
+            "prev": 42.74
+          }
+        },
+        "trimestre": {
+          "recetas_sie": {
+            "curr": 95843,
+            "prev": 130416
+          },
+          "ms_recetas": {
+            "curr": 18.96,
+            "prev": 21.14
+          },
+          "units_sie": {
+            "curr": 1180415,
+            "prev": 1616626
+          },
+          "ms_units": {
+            "curr": 40.96,
+            "prev": 43.44
+          }
+        },
+        "semestre": {
+          "recetas_sie": {
+            "curr": 226259,
+            "prev": 328121
+          },
+          "ms_recetas": {
+            "curr": 20.15,
+            "prev": 23.49
+          },
+          "units_sie": {
+            "curr": 2797041,
+            "prev": 4854626
+          },
+          "ms_units": {
+            "curr": 42.36,
+            "prev": 48.16
+          }
+        },
+        "mat": {
+          "recetas_sie": {
+            "curr": 554380,
+            "prev": null
+          },
+          "ms_recetas": {
+            "curr": 22.01,
+            "prev": null
+          },
+          "units_sie": {
+            "curr": 7651667,
+            "prev": 7514301
+          },
+          "ms_units": {
+            "curr": 45.86,
+            "prev": 46.17
+          }
+        }
+      }
+    },
+    {
+      "key": "otx",
+      "name": "OTC",
+      "icon": "🩹",
+      "color": "#2563EB",
+      "href": "OTC/",
+      "owner": "Antonella Mariani",
+      "kpis": {
+        "ytd": {
+          "recetas_sie": {
+            "curr": 9344,
+            "prev": 10879
+          },
+          "ms_recetas": {
+            "curr": 8.21,
+            "prev": 9.5
+          },
+          "units_sie": {
+            "curr": 504866,
+            "prev": 497062
+          },
+          "ms_units": {
+            "curr": 7.79,
+            "prev": 9.47
+          }
+        },
+        "trimestre": {
+          "recetas_sie": {
+            "curr": 9344,
+            "prev": 10194
+          },
+          "ms_recetas": {
+            "curr": 8.21,
+            "prev": 8.78
+          },
+          "units_sie": {
+            "curr": 504866,
+            "prev": 501015
+          },
+          "ms_units": {
+            "curr": 7.79,
+            "prev": 8.44
+          }
+        },
+        "semestre": {
+          "recetas_sie": {
+            "curr": 19538,
+            "prev": 21961
+          },
+          "ms_recetas": {
+            "curr": 8.5,
+            "prev": 9.42
+          },
+          "units_sie": {
+            "curr": 1005881,
+            "prev": 1006688
+          },
+          "ms_units": {
+            "curr": 8.1,
+            "prev": 8.64
+          }
+        },
+        "mat": {
+          "recetas_sie": {
+            "curr": 41499,
+            "prev": 46450
+          },
+          "ms_recetas": {
+            "curr": 8.96,
+            "prev": 9.79
+          },
+          "units_sie": {
+            "curr": 2012569,
+            "prev": 2005725
+          },
+          "ms_units": {
+            "curr": 8.36,
+            "prev": 9.82
+          }
+        }
+      }
+    }
+  ],
+  "products": [
+    {
+      "name": "SIDERBLUT (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "SOLO",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 2242830,
+      "units_prev": 3342270
+    },
+    {
+      "name": "SIDERBLUT COMPLEX (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "COMPLEX",
+      "rec_curr": 8477,
+      "rec_prev": 12450,
+      "units_curr": 1795080,
+      "units_prev": 2597490
+    },
+    {
+      "name": "SIDERBLUT POLI (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "SOLO",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 747750,
+      "units_prev": 1063050
+    },
+    {
+      "name": "FER-IN-SOL (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "SOLO",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 741600,
+      "units_prev": 1125840
+    },
+    {
+      "name": "BACTRIM FORTE (SIE)",
+      "line": "antibio",
+      "lineName": "Antibióticos",
+      "family": "BACTRIM",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 555758,
+      "units_prev": 509838
+    },
+    {
+      "name": "CEFALEXINA ARGENTI (SIE)",
+      "line": "antibio",
+      "lineName": "Antibióticos",
+      "family": "CEFALEXINA ARG",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 499640,
+      "units_prev": 486934
+    },
+    {
+      "name": "ACEMUK (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 405173,
+      "units_prev": 511609
+    },
+    {
+      "name": "DILATREND (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DILATREND",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 326784,
+      "units_prev": 360440
+    },
+    {
+      "name": "MAGNUS (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "MAGNUS",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 202202,
+      "units_prev": 202409
+    },
+    {
+      "name": "HEXALER NASAL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER BRONQUIAL",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 199240,
+      "units_prev": 170960
+    },
+    {
+      "name": "SIDERBLUT FOLICO (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "COMPLEX",
+      "rec_curr": 344,
+      "rec_prev": 546,
+      "units_curr": 194970,
+      "units_prev": 240600
+    },
+    {
+      "name": "SINTROM (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "SINTROM",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 179712,
+      "units_prev": 175385
+    },
+    {
+      "name": "TETRALGIN (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "TETRALGIN",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 145172,
+      "units_prev": 144338
+    },
+    {
+      "name": "ISIS FREE S/ESTROG (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "SIN ESTROGENO",
+      "rec_curr": 11709,
+      "rec_prev": 16060,
+      "units_curr": 119553,
+      "units_prev": 152509
+    },
+    {
+      "name": "DIOVAN (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DIOVAN",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 123387,
+      "units_prev": 126883
+    },
+    {
+      "name": "DECADRON (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 111754,
+      "units_prev": 108526
+    },
+    {
+      "name": "HEXALER CORT (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER CORT",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 109682,
+      "units_prev": 124299
+    },
+    {
+      "name": "SIDERBLUT GOTAS (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "SOLO",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 86740,
+      "units_prev": 119760
+    },
+    {
+      "name": "METGLUCON AP (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "METGLUCON AP",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 86031,
+      "units_prev": 86003
+    },
+    {
+      "name": "TERLOC (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "TERLOC",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 82749,
+      "units_prev": 82030
+    },
+    {
+      "name": "DIOVAN-D (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DIOVAN D",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 79295,
+      "units_prev": 81844
+    },
+    {
+      "name": "DUO-DECADRON (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 77152,
+      "units_prev": 71148
+    },
+    {
+      "name": "MOMETAX (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER BRONQUIAL",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 74674,
+      "units_prev": 69880
+    },
+    {
+      "name": "BACTRIM (SIE)",
+      "line": "antibio",
+      "lineName": "Antibióticos",
+      "family": "BACTRIM",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 69542,
+      "units_prev": 71960
+    },
+    {
+      "name": "BACTRIM JARABE (SIE)",
+      "line": "antibio",
+      "lineName": "Antibióticos",
+      "family": "BACTRIM",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 68806,
+      "units_prev": 74656
+    },
+    {
+      "name": "ISIS MINI (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "BAJA DOSIS 21+7",
+      "rec_curr": 5822,
+      "rec_prev": 10533,
+      "units_curr": 59402,
+      "units_prev": 98891
+    },
+    {
+      "name": "ACANTEX (SIE)",
+      "line": "antibio",
+      "lineName": "Antibióticos",
+      "family": "ACANTEX",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 59584,
+      "units_prev": 62257
+    },
+    {
+      "name": "ENTRESTO (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "ENTRESTO",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 52426,
+      "units_prev": 52504
+    },
+    {
+      "name": "CALCIO BASE (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "BASE",
+      "rec_curr": 7263,
+      "rec_prev": 11879,
+      "units_curr": 44933,
+      "units_prev": 65972
+    },
+    {
+      "name": "VALIUM (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "DIAZEPAM",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 52033,
+      "units_prev": 129902
+    },
+    {
+      "name": "ROXOLAN (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "ROXOLAN",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 50593,
+      "units_prev": 45021
+    },
+    {
+      "name": "EXFORGE (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "EXFORGE",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 47282,
+      "units_prev": 47235
+    },
+    {
+      "name": "ALIDIAL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ALIDIAL",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 43748,
+      "units_prev": 34686
+    },
+    {
+      "name": "ISIS MINI 24 (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "BAJA DOSIS 24",
+      "rec_curr": 3981,
+      "rec_prev": 6670,
+      "units_curr": 38909,
+      "units_prev": 59196
+    },
+    {
+      "name": "TETRALGIN NOVO (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "TETRALGIN",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 41078,
+      "units_prev": 40942
+    },
+    {
+      "name": "TRIP D3 (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "D3",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 37073,
+      "units_prev": 46620
+    },
+    {
+      "name": "FLEXINA 600 (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "FLEXINA",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 32222,
+      "units_prev": 27402
+    },
+    {
+      "name": "ISIS TABL RECUBIE 3.00MG x 28 /.03",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "ALTA DOSIS",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 32123,
+      "units_prev": 43801
+    },
+    {
+      "name": "MADOPAR (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "BENSERAZIDE_LEVODOPA",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 26837,
+      "units_prev": 75653
+    },
+    {
+      "name": "AIREAL PLUS (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "AIREAL PLUS",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 25558,
+      "units_prev": 15185
+    },
+    {
+      "name": "CLIMATIX (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "CLIMATIX",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 24034,
+      "units_prev": 32171
+    },
+    {
+      "name": "DECADRON. (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 22594,
+      "units_prev": 23392
+    },
+    {
+      "name": "EXFORGE D (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "EXFORGE D",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 21820,
+      "units_prev": 24795
+    },
+    {
+      "name": "AIREAL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "AIREAL",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 21074,
+      "units_prev": 18176
+    },
+    {
+      "name": "ALUMPAK VL (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "ALUMPAK",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 19625,
+      "units_prev": 15983
+    },
+    {
+      "name": "TRIP D3 SIE",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "D3",
+      "rec_curr": 18829,
+      "rec_prev": 0,
+      "units_curr": 0,
+      "units_prev": 0
+    },
+    {
+      "name": "HEXALER (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 17993,
+      "units_prev": 21240
+    },
+    {
+      "name": "ACEMUK DIA Y NOCHE (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK DIA Y NOCHE",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 17071,
+      "units_prev": 16366
+    },
+    {
+      "name": "ACERPES 5% (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "ACERPES",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 16490,
+      "units_prev": 15316
+    },
+    {
+      "name": "ACEMUK VL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 16280,
+      "units_prev": 23160
+    },
+    {
+      "name": "DILATREND AP (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DILATREND AP",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 13092,
+      "units_prev": 12886
+    },
+    {
+      "name": "ACEMUK L (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK L",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 12750,
+      "units_prev": 13352
+    },
+    {
+      "name": "MAGNUS 36 (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "MAGNUS",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 11933,
+      "units_prev": 12478
+    },
+    {
+      "name": "SIDERBLUT IM (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "SOLO",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 10965,
+      "units_prev": 16855
+    },
+    {
+      "name": "TELPRES (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "TELPRES",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 10695,
+      "units_prev": 15474
+    },
+    {
+      "name": "ROXOLAN PLUS (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "ROXOLAN",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 10137,
+      "units_prev": 5080
+    },
+    {
+      "name": "MACROMAX PEDIATR (SIE)",
+      "line": "antibio",
+      "lineName": "Antibióticos",
+      "family": "MACROMAX",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 9726,
+      "units_prev": 9129
+    },
+    {
+      "name": "ARTRO RED (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "ARTRO RED",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 9577,
+      "units_prev": 13660
+    },
+    {
+      "name": "ACI-TIP (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "ACI-TIP",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 9495,
+      "units_prev": 8841
+    },
+    {
+      "name": "MACROMAX (SIE)",
+      "line": "antibio",
+      "lineName": "Antibióticos",
+      "family": "MACROMAX",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 9270,
+      "units_prev": 9308
+    },
+    {
+      "name": "SILTRAN MET (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "SILTRAN MET",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 9042,
+      "units_prev": 4843
+    },
+    {
+      "name": "ACEMUK BIOTIC DUO (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK BIOTIC DUO",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 9037,
+      "units_prev": 11826
+    },
+    {
+      "name": "ALUMPAK (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "ALUMPAK",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 8724,
+      "units_prev": 7381
+    },
+    {
+      "name": "ACERPES (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "ACERPES",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 8348,
+      "units_prev": 8312
+    },
+    {
+      "name": "SILTRAN (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "SILTRAN",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 8192,
+      "units_prev": 4346
+    },
+    {
+      "name": "PIXABAN (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "PIXABAN",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 6646,
+      "units_prev": 4870
+    },
+    {
+      "name": "EMPAX (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "EMPAX",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 6617,
+      "units_prev": 513
+    },
+    {
+      "name": "PGB (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "PREGABALIN",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 6552,
+      "units_prev": 16949
+    },
+    {
+      "name": "HEXALER BRONQ. DUO (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER BRONQUIAL DU",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 5797,
+      "units_prev": 6495
+    },
+    {
+      "name": "MELERIL (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "THIORIDAZINE",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 4518,
+      "units_prev": 14050
+    },
+    {
+      "name": "CALCIO BASE D (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "BASE D",
+      "rec_curr": 615,
+      "rec_prev": 1072,
+      "units_curr": 3862,
+      "units_prev": 5469
+    },
+    {
+      "name": "ISIS TABL RECUBIE 3.00MG x 84 /.03",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "ALTA DOSIS",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 4446,
+      "units_prev": 6183
+    },
+    {
+      "name": "ISIS (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "ALTA DOSIS",
+      "rec_curr": 4124,
+      "rec_prev": 6120,
+      "units_curr": 0,
+      "units_prev": 0
+    },
+    {
+      "name": "ACEMUK GRIP (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK GRIP",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 3719,
+      "units_prev": 5690
+    },
+    {
+      "name": "DAURAN (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DAURAN",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 3705,
+      "units_prev": 1305
+    },
+    {
+      "name": "TRIP +45 (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "45",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 3530,
+      "units_prev": 0
+    },
+    {
+      "name": "DILATREND D (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DILATREND D",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 3394,
+      "units_prev": 3798
+    },
+    {
+      "name": "DIOVAN IC (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DIOVAN",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 2902,
+      "units_prev": 2553
+    },
+    {
+      "name": "ALIDIAL L (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ALIDIAL",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 2425,
+      "units_prev": 0
+    },
+    {
+      "name": "MADOPAR HBS (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "BENSERAZIDE_LEVODOPA",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 2348,
+      "units_prev": 5451
+    },
+    {
+      "name": "HEXALER BRONQUIAL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER BRONQUIAL",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 2141,
+      "units_prev": 2417
+    },
+    {
+      "name": "QTP (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "QUETIAPINE",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 2132,
+      "units_prev": 4933
+    },
+    {
+      "name": "ISIS TABL RECUBIE 3.00MG x 56 /.03",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "ALTA DOSIS",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 2114,
+      "units_prev": 3636
+    },
+    {
+      "name": "HEXALER PLUS (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER PLUS",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 1987,
+      "units_prev": 2305
+    },
+    {
+      "name": "TRIP D3 PLUS (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "D3 PLUS",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 1813,
+      "units_prev": 0
+    },
+    {
+      "name": "EMERAL (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "ALPRAZOLAM",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 1812,
+      "units_prev": 5583
+    },
+    {
+      "name": "TRIP MAGNESIO (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "MAGNESIO",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 1743,
+      "units_prev": 0
+    },
+    {
+      "name": "VISDON (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "VILAZODONE",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 1624,
+      "units_prev": 4739
+    },
+    {
+      "name": "VALQUIR (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "VORTIOXETINE",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 1375,
+      "units_prev": 1752
+    },
+    {
+      "name": "LEVITAL (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "LEVETIRACETAM",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 1236,
+      "units_prev": 3059
+    },
+    {
+      "name": "EMPAX MET (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "EMPAX MET",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 1139,
+      "units_prev": 46
+    },
+    {
+      "name": "LURAP (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "LURASIDONE",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 1058,
+      "units_prev": 2495
+    },
+    {
+      "name": "DELTROX NF (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "DELTROX",
+      "rec_curr": 250,
+      "rec_prev": 132,
+      "units_curr": 789,
+      "units_prev": 953
+    },
+    {
+      "name": "METGLUCON DUO (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "METGLUCON DUO",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 743,
+      "units_prev": 985
+    },
+    {
+      "name": "DECADRON SHOCK (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 566,
+      "units_prev": 506
+    },
+    {
+      "name": "METGLUCON (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "METGLUCON AP",
+      "rec_curr": 0,
+      "rec_prev": 0,
+      "units_curr": 135,
+      "units_prev": 166
+    },
+    {
+      "name": "CALCITOL D3 SIE",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "D3",
+      "rec_curr": 19,
+      "rec_prev": 0,
+      "units_curr": 0,
+      "units_prev": 0
+    }
+  ]
+}

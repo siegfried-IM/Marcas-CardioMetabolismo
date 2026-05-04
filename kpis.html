@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KPIs SIE — Hub de Marcas Siegfried</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:       #B01E1E;
+  --red-dark:  #8B1515;
+  --red-deep:  #6B0F0F;
+  --red-light: #DC2626;
+  --red-pale:  #FEF2F2;
+  --red-tint:  #FFF7F7;
+  --white:     #FFFFFF;
+  --off-white: #FAFAFA;
+  --gray-50:   #F9FAFB;
+  --gray-100:  #F3F4F6;
+  --gray-200:  #E5E7EB;
+  --gray-300:  #D1D5DB;
+  --gray-400:  #9CA3AF;
+  --gray-500:  #6B7280;
+  --gray-700:  #374151;
+  --gray-900:  #111827;
+  --green:     #15803D;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--gray-900);
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+/* NAV (clon del hub) */
+.nav {
+  background: var(--red);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(139,21,21,.35);
+}
+.nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; flex-shrink: 0; }
+.nav-logo-mark {
+  display:inline-flex; align-items:center; justify-content:center;
+  width: 32px; height:32px; border-radius: 6px;
+  background: var(--white); color: var(--red);
+  font-family: 'IBM Plex Mono', monospace; font-weight:700; font-size: 14px;
+  letter-spacing: -.02em;
+}
+.nav-divider { width: 1px; height: 28px; background: rgba(255,255,255,.25); margin: 0 20px; flex-shrink: 0; }
+.nav-info { display: flex; flex-direction: column; gap: 1px; }
+.nav-title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,.95); letter-spacing: .02em; line-height: 1; }
+.nav-sub { font-size: 10px; color: rgba(255,255,255,.6); letter-spacing: .06em; font-weight: 400; line-height: 1; }
+.nav-actions { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+.nav-link {
+  font-size: 12px; font-weight: 600; color: rgba(255,255,255,.85);
+  text-decoration: none; letter-spacing: .04em; padding: 6px 12px;
+  border-radius: 6px; border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06); transition: all .15s;
+}
+.nav-link:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.32); color: var(--white); }
+.nav-link.active { background: var(--white); color: var(--red); border-color: var(--white); }
+.nav-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: rgba(255,255,255,.6); letter-spacing: .1em; font-weight: 500;
+}
+
+/* HERO compacto */
+.hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 32px 32px 28px;
+}
+.hero-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap;
+}
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 700; color: var(--red);
+  letter-spacing: .2em; text-transform: uppercase; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before { content:''; display:inline-block; width:24px; height:2px; background: var(--red); }
+.hero-title {
+  font-size: 30px; font-weight: 700; letter-spacing: -.03em;
+  color: var(--gray-900); line-height: 1.1; margin-bottom: 8px;
+}
+.hero-title span { color: var(--red); }
+.hero-desc { font-size: 13px; color: var(--gray-500); line-height: 1.65; max-width: 520px; }
+
+.hero-meta { display: flex; gap: 24px; flex-shrink: 0; }
+.hero-meta-block { text-align: right; }
+.hero-meta-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 16px; font-weight: 700; color: var(--gray-900); letter-spacing: -.01em;
+}
+.hero-meta-lbl {
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  color: var(--gray-400); letter-spacing: .12em; margin-top: 4px;
+}
+
+/* MAIN */
+.main { max-width: 1280px; margin: 0 auto; padding: 28px 32px 80px; }
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.toggle, .period-tabs {
+  display: inline-flex;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,.03);
+}
+.toggle button, .period-tabs button {
+  background: transparent; border: none; cursor: pointer;
+  font-family: inherit; font-weight: 600; transition: all .15s;
+  border-right: 1px solid var(--gray-100);
+}
+.toggle button:last-child, .period-tabs button:last-child { border-right: none; }
+.toggle button {
+  font-size: 11px; padding: 9px 16px; color: var(--gray-500); letter-spacing: .04em;
+}
+.toggle button:hover { background: var(--gray-50); color: var(--gray-700); }
+.toggle button.active { background: var(--red); color: var(--white); }
+.period-tabs button {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; padding: 9px 18px; color: var(--gray-500); letter-spacing: .14em;
+}
+.period-tabs button:hover { background: var(--gray-50); color: var(--gray-700); }
+.period-tabs button.active { background: var(--gray-900); color: var(--white); }
+
+.period-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--gray-500); letter-spacing: .12em;
+  text-transform: uppercase; margin-left: auto;
+}
+
+/* LINE VIEW */
+.line-card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  border-left: 4px solid var(--line-color, var(--red));
+  transition: box-shadow .2s;
+}
+.line-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.06); }
+.line-info {
+  padding: 18px 22px;
+  display: flex; flex-direction: column; gap: 6px;
+  border-right: 1px solid var(--gray-100);
+  background: var(--gray-50);
+}
+.line-name {
+  font-size: 15px; font-weight: 700; letter-spacing: -.01em; color: var(--gray-900);
+  display: flex; align-items: center; gap: 8px;
+}
+.line-owner { font-size: 11px; color: var(--gray-500); font-weight: 500; }
+.line-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--line-color, var(--red)); text-decoration: none; font-weight: 700;
+  margin-top: 6px; align-self: flex-start;
+}
+.line-link:hover { text-decoration: underline; }
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.tile {
+  padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 3px;
+  border-right: 1px solid var(--gray-100);
+  min-width: 0;
+}
+.tile:last-child { border-right: none; }
+.tile-lbl {
+  font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gray-400);
+}
+.tile-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 19px; font-weight: 700; color: var(--gray-900);
+  letter-spacing: -.01em; line-height: 1.2; margin-top: 2px;
+}
+.tile-delta {
+  font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; gap: 4px; margin-top: 1px;
+}
+.tile-delta.up   { color: var(--green); }
+.tile-delta.down { color: var(--red-light); }
+.tile-delta.flat { color: var(--gray-400); }
+.tile-delta.na   { color: var(--gray-300); font-style: italic; }
+.tile-delta::before {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px; line-height: 1;
+}
+.tile-delta.up::before   { content: '▲'; }
+.tile-delta.down::before { content: '▼'; }
+.tile-delta.flat::before { content: '─'; }
+.tile-delta.na::before   { content: '?'; opacity: .5; }
+.tile-prev {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--gray-400); margin-top: 2px; letter-spacing: .04em;
+}
+
+/* PRODUCT VIEW */
+.products-toolbar {
+  display: flex; gap: 12px; padding: 14px 18px;
+  border: 1px solid var(--gray-200);
+  border-radius: 10px; background: var(--white);
+  margin-bottom: 16px; align-items: center; flex-wrap: wrap;
+  box-shadow: 0 1px 2px rgba(0,0,0,.03);
+}
+.products-toolbar select, .products-toolbar input {
+  font-family: inherit; font-size: 12px; padding: 7px 10px;
+  border: 1px solid var(--gray-200); border-radius: 6px;
+  background: var(--white); color: var(--gray-700); outline: none;
+}
+.products-toolbar input { min-width: 240px; }
+.products-toolbar input:focus, .products-toolbar select:focus {
+  border-color: var(--red); box-shadow: 0 0 0 3px rgba(176,30,30,.08);
+}
+.toolbar-stats {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--gray-500); letter-spacing: .1em; text-transform: uppercase;
+}
+
+.products-table-wrap {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  overflow: hidden;
+}
+table.products {
+  width: 100%; border-collapse: collapse;
+}
+table.products th, table.products td {
+  padding: 11px 14px; text-align: right; font-size: 12px;
+  border-bottom: 1px solid var(--gray-100);
+}
+table.products th {
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--gray-400); background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200); cursor: pointer; user-select: none;
+}
+table.products th:hover { color: var(--gray-700); background: var(--gray-100); }
+table.products th[data-sort=asc]::after { content: ' ▲'; color: var(--red); }
+table.products th[data-sort=desc]::after { content: ' ▼'; color: var(--red); }
+table.products th:nth-child(1), table.products td:nth-child(1),
+table.products th:nth-child(2), table.products td:nth-child(2),
+table.products th:nth-child(3), table.products td:nth-child(3) { text-align: left; }
+table.products td:nth-child(1) { font-weight: 700; color: var(--gray-900); }
+table.products tbody tr:hover { background: var(--gray-50); }
+.pill-line {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; font-weight: 700; padding: 3px 8px;
+  border-radius: 4px; letter-spacing: .08em; text-transform: uppercase;
+}
+.num {
+  font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: var(--gray-700);
+}
+.delta {
+  font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 11px;
+}
+.delta.up   { color: var(--green); }
+.delta.down { color: var(--red-light); }
+.delta.flat { color: var(--gray-400); }
+.delta.na   { color: var(--gray-300); }
+
+.empty-state {
+  text-align: center; padding: 48px 24px; color: var(--gray-400); font-size: 13px;
+}
+.error-state {
+  text-align: center; padding: 48px 24px;
+  color: var(--red); background: var(--red-pale);
+  border: 1px solid #FECACA; border-radius: 10px;
+}
+
+@media (max-width: 900px) {
+  .line-card { grid-template-columns: 1fr; border-left-width: 4px; }
+  .line-info { border-right: none; border-bottom: 1px solid var(--gray-100); }
+  .tile-grid { grid-template-columns: repeat(2, 1fr); }
+  .tile { border-bottom: 1px solid var(--gray-100); }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="./">
+    <span class="nav-logo-mark">S</span>
+  </a>
+  <div class="nav-divider"></div>
+  <div class="nav-info">
+    <span class="nav-title">Hub de Marketing</span>
+    <span class="nav-sub">Marcas · Argentina</span>
+  </div>
+  <div class="nav-actions">
+    <a class="nav-link" href="./">Tableros</a>
+    <a class="nav-link active" href="kpis.html">KPIs</a>
+    <div class="nav-date" id="nav-date">—</div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Indicadores Clave · SIEGFRIED</div>
+      <h1 class="hero-title">KPIs por <span>Línea</span> &amp; <span>Producto</span></h1>
+      <p class="hero-desc">
+        Performance Siegfried-only por período: YTD, último Trimestre, último Semestre y MAT 12 meses.
+        Recetas SIE y Units IQVIA SIE con su market share y delta vs período comparable.
+      </p>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-block">
+        <div class="hero-meta-val" id="kpi-asof">—</div>
+        <div class="hero-meta-lbl">Cierre</div>
+      </div>
+      <div class="hero-meta-block">
+        <div class="hero-meta-val" id="kpi-lines-count">—</div>
+        <div class="hero-meta-lbl">Líneas</div>
+      </div>
+      <div class="hero-meta-block">
+        <div class="hero-meta-val" id="kpi-prod-count">—</div>
+        <div class="hero-meta-lbl">Productos SIE</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="controls">
+    <div class="toggle" role="tablist" aria-label="Vista">
+      <button data-view="lines"    class="active">Por Línea</button>
+      <button data-view="products">Por Producto</button>
+    </div>
+    <div class="period-tabs" role="tablist" aria-label="Período">
+      <button data-period="ytd"        class="active">YTD</button>
+      <button data-period="trimestre">Trimestre</button>
+      <button data-period="semestre">Semestre</button>
+      <button data-period="mat">MAT</button>
+    </div>
+    <div class="period-label" id="period-label">—</div>
+  </div>
+
+  <div id="view-lines"></div>
+
+  <div id="view-products" style="display:none;">
+    <div class="products-toolbar">
+      <select id="prod-line">
+        <option value="">Todas las líneas</option>
+      </select>
+      <input id="prod-search" type="search" placeholder="Buscar producto o familia…" />
+      <div class="toolbar-stats" id="prod-count-label">—</div>
+    </div>
+    <div class="products-table-wrap">
+      <table class="products" id="prod-table">
+        <thead>
+          <tr>
+            <th data-key="name">Producto</th>
+            <th data-key="lineName">Línea</th>
+            <th data-key="family">Familia</th>
+            <th data-key="rec_curr" data-sort="desc">Recetas</th>
+            <th data-key="rec_var">Var Rec.</th>
+            <th data-key="units_curr">Units IQVIA</th>
+            <th data-key="units_var">Var U.</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const months = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+const n = new Date();
+document.getElementById('nav-date').textContent =
+  `${String(n.getDate()).padStart(2,'0')} ${months[n.getMonth()]} ${n.getFullYear()}`;
+
+const TILES = [
+  { id:'recetas_sie', label:'Recetas SIE',     fmt:'int', deltaMode:'pct' },
+  { id:'ms_recetas',  label:'MS Recetas',      fmt:'pct', deltaMode:'pp'  },
+  { id:'units_sie',   label:'Units IQVIA SIE', fmt:'int', deltaMode:'pct' },
+  { id:'ms_units',    label:'MS Units',        fmt:'pct', deltaMode:'pp'  },
+];
+
+const fmt = {
+  int: v => v == null ? '—' : v.toLocaleString('es-AR'),
+  pct: v => v == null ? '—' : v.toFixed(1) + '%',
+};
+
+let DATA = null;
+let state = { view:'lines', period:'ytd', prodLine:'', prodSearch:'', sortKey:'rec_curr', sortDir:'desc' };
+
+function deltaClass(curr, prev, mode) {
+  if (curr == null || prev == null) return 'na';
+  const d = (mode === 'pp') ? (curr - prev) : (prev === 0 ? null : (curr - prev) / prev * 100);
+  if (d == null) return 'na';
+  if (Math.abs(d) < 0.05) return 'flat';
+  return d > 0 ? 'up' : 'down';
+}
+function deltaText(curr, prev, mode) {
+  if (curr == null || prev == null) return 'sin comparable';
+  if (mode === 'pp') {
+    const d = curr - prev;
+    return (d >= 0 ? '+' : '') + d.toFixed(1) + ' pp';
+  }
+  if (prev === 0) return '—';
+  const d = (curr - prev) / prev * 100;
+  return (d >= 0 ? '+' : '') + d.toFixed(1) + '%';
+}
+
+function renderLines() {
+  const host = document.getElementById('view-lines');
+  if (!DATA || !DATA.lines.length) {
+    host.innerHTML = '<div class="empty-state">Sin datos disponibles.</div>';
+    return;
+  }
+  const period = state.period;
+  host.innerHTML = DATA.lines.map(line => {
+    const k = line.kpis[period] || {};
+    const tiles = TILES.map(t => {
+      const o = k[t.id] || { curr: null, prev: null };
+      const cls = deltaClass(o.curr, o.prev, t.deltaMode);
+      const dTxt = deltaText(o.curr, o.prev, t.deltaMode);
+      const valFmt = (t.id === 'ms_recetas' || t.id === 'ms_units') ? fmt.pct : fmt.int;
+      const prevTxt = (o.prev == null) ? '— sin data' : 'vs ' + valFmt(o.prev);
+      return `
+        <div class="tile">
+          <div class="tile-lbl">${t.label}</div>
+          <div class="tile-val">${valFmt(o.curr)}</div>
+          <div class="tile-delta ${cls}">${dTxt}</div>
+          <div class="tile-prev">${prevTxt}</div>
+        </div>`;
+    }).join('');
+    return `
+      <div class="line-card" style="--line-color:${line.color};">
+        <div class="line-info">
+          <div class="line-name">${line.icon} ${line.name}</div>
+          <div class="line-owner">${line.owner||''}</div>
+          <a class="line-link" href="${line.href}">Abrir tablero →</a>
+        </div>
+        <div class="tile-grid">${tiles}</div>
+      </div>`;
+  }).join('');
+}
+
+function pctVar(curr, prev) {
+  if (curr == null || prev == null || prev === 0) return null;
+  return (curr - prev) / prev * 100;
+}
+
+function renderProducts() {
+  if (!DATA) return;
+  let rows = DATA.products.slice();
+
+  if (state.prodLine) rows = rows.filter(r => r.line === state.prodLine);
+  if (state.prodSearch) {
+    const s = state.prodSearch.toLowerCase();
+    rows = rows.filter(r =>
+      (r.name||'').toLowerCase().includes(s) ||
+      (r.family||'').toLowerCase().includes(s)
+    );
+  }
+  // Compute var fields
+  rows.forEach(r => {
+    r.rec_var   = pctVar(r.rec_curr,   r.rec_prev);
+    r.units_var = pctVar(r.units_curr, r.units_prev);
+  });
+
+  // Sort
+  const k = state.sortKey, dir = state.sortDir === 'asc' ? 1 : -1;
+  rows.sort((a, b) => {
+    const va = a[k], vb = b[k];
+    if (va == null && vb == null) return 0;
+    if (va == null) return 1;
+    if (vb == null) return -1;
+    if (typeof va === 'string') return va.localeCompare(vb) * dir;
+    return (va - vb) * dir;
+  });
+
+  const lineMap = Object.fromEntries(DATA.lines.map(l => [l.key, l]));
+  const tbody = document.querySelector('#prod-table tbody');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Sin productos para los filtros</td></tr>';
+  } else {
+    tbody.innerHTML = rows.map(r => {
+      const ln = lineMap[r.line] || {};
+      const recVarCls = deltaClass(r.rec_curr, r.rec_prev, 'pct');
+      const uVarCls   = deltaClass(r.units_curr, r.units_prev, 'pct');
+      const recVarTxt = (r.rec_var == null) ? '—' : (r.rec_var >= 0 ? '+' : '') + r.rec_var.toFixed(1) + '%';
+      const uVarTxt   = (r.units_var == null) ? '—' : (r.units_var >= 0 ? '+' : '') + r.units_var.toFixed(1) + '%';
+      return `
+        <tr>
+          <td>${r.name}</td>
+          <td><span class="pill-line" style="background:${(ln.color||'#999')}22;color:${ln.color||'#666'};">${ln.name||r.line}</span></td>
+          <td style="color:var(--gray-500);">${r.family||''}</td>
+          <td class="num">${fmt.int(r.rec_curr)}</td>
+          <td class="delta ${recVarCls}">${recVarTxt}</td>
+          <td class="num">${fmt.int(r.units_curr)}</td>
+          <td class="delta ${uVarCls}">${uVarTxt}</td>
+        </tr>`;
+    }).join('');
+  }
+  document.getElementById('prod-count-label').textContent =
+    `${rows.length} de ${DATA.products.length} productos · ${DATA.period_labels[state.period]||''}`;
+
+  // Update sort markers
+  document.querySelectorAll('#prod-table th').forEach(th => {
+    th.removeAttribute('data-sort');
+    if (th.dataset.key === state.sortKey) th.dataset.sort = state.sortDir;
+  });
+}
+
+function render() {
+  document.getElementById('view-lines').style.display    = state.view==='lines'    ? '' : 'none';
+  document.getElementById('view-products').style.display = state.view==='products' ? '' : 'none';
+  document.getElementById('period-label').textContent = (DATA && DATA.period_labels) ? DATA.period_labels[state.period] : '';
+  if (state.view === 'lines') renderLines();
+  else                        renderProducts();
+}
+
+function init(d) {
+  DATA = d;
+  document.getElementById('kpi-asof').textContent = d.as_of_month || '—';
+  document.getElementById('kpi-lines-count').textContent = d.lines.length;
+  document.getElementById('kpi-prod-count').textContent  = d.products.length;
+
+  // Build line filter
+  const sel = document.getElementById('prod-line');
+  d.lines.forEach(l => {
+    const o = document.createElement('option');
+    o.value = l.key; o.textContent = l.name;
+    sel.appendChild(o);
+  });
+  sel.addEventListener('change', e => { state.prodLine = e.target.value; renderProducts(); });
+  document.getElementById('prod-search').addEventListener('input', e => { state.prodSearch = e.target.value; renderProducts(); });
+
+  // Toggle handlers
+  document.querySelectorAll('.toggle button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.toggle button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      state.view = b.dataset.view;
+      render();
+    });
+  });
+  document.querySelectorAll('.period-tabs button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.period-tabs button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      state.period = b.dataset.period;
+      render();
+    });
+  });
+
+  // Sort handlers
+  document.querySelectorAll('#prod-table th').forEach(th => {
+    th.addEventListener('click', () => {
+      const k = th.dataset.key;
+      if (state.sortKey === k) state.sortDir = (state.sortDir === 'asc' ? 'desc' : 'asc');
+      else { state.sortKey = k; state.sortDir = 'desc'; }
+      renderProducts();
+    });
+  });
+
+  render();
+}
+
+fetch('kpis.json?_=' + Date.now())
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(init)
+  .catch(err => {
+    document.querySelector('.main').innerHTML =
+      '<div class="error-state">No se pudo cargar <code>kpis.json</code>. Generalo con <code>py shared/build-kpis.py</code> y volvé a deployar. (' + err.message + ')</div>';
+  });
+</script>
+
+</body>
+</html>
