@@ -44,6 +44,9 @@ let sC = 'total';
 let sD = 'desc';
 let ddOpen = false;
 let ztSort = { col:'ms', dir:-1 };
+// Sort para la tabla de productos nacionales (rComp). 'default' = SIE primero
+// + units desc; otras opciones: 'ms' | 'units' | 'var' con dir asc/desc.
+let pSort = { col:'default', dir:'desc' };
 
 function fmt(n){ return Number(n || 0).toLocaleString('es-AR'); }
 function fms(n){ return Number(n || 0).toFixed(1) + '%'; }
@@ -66,6 +69,35 @@ function marketMonths(mk){ return MONTHS.filter(m => mk?.regionsByMonth?.[m]); }
 function latestMonth(mk){ return mk?.latestMonth || marketMonths(mk).slice(-1)[0] || MONTHS.slice(-1)[0] || ''; }
 function regionRows(mk, month){ return ((mk?.regionsByMonth || {})[month] || []).filter(r => validRegion(r.name)); }
 function productRows(mk, month){ return ((mk?.productsByMonth || {})[month] || []).filter(r => r && r.product); }
+// Devuelve los productos vistos en los ultimos N meses del market.
+// Util para que productos como TUKOL (que dejaron de reportar a IQVIA pero
+// son competidores historicos relevantes) aparezcan en la lista aunque
+// tengan 0 unidades en el mes actual.
+function recentProductRows(mk, monthsBack = 6){
+  const months = marketMonths(mk);
+  if (!months.length) return [];
+  const recent = months.slice(-monthsBack);
+  const latest = months[months.length - 1];
+  const latestRows = new Map(productRows(mk, latest).map(r => [r.product, r]));
+  // Empezamos desde el mes mas viejo y avanzamos: el dato mas reciente gana
+  const newest = new Map();
+  recent.forEach(m => {
+    productRows(mk, m).forEach(r => {
+      newest.set(r.product, { row:r, month:m });
+    });
+  });
+  const out = [];
+  newest.forEach((entry, prod) => {
+    if (latestRows.has(prod)) {
+      out.push(latestRows.get(prod));
+    } else {
+      // Producto sin datos en el mes actual; lo mostramos con 0/0 y la
+      // ultima fecha en que reporto, para no confundir.
+      out.push({ ...entry.row, units:0, share:0, _historic:true, _lastSeen:entry.month });
+    }
+  });
+  return out;
+}
 function regionRow(mk, reg, month){ return regionRows(mk, month).find(r => r.name === reg) || { name:reg, total:0, sie:0, share:0 }; }
 function natRow(mk, month){
   const rows = regionRows(mk, month);
@@ -115,7 +147,11 @@ function getQuarterlyProdMS(mk, product){
 function topRegionsByLatest(mk, count){
   return [...regionRows(mk, latestMonth(mk))].sort((a, b) => Number(b.total || 0) - Number(a.total || 0)).slice(0, count).map(row => row.name);
 }
-function competitorRows(mk){ return productRows(mk, latestMonth(mk)).filter(row => !row.isSie); }
+function competitorRows(mk){
+  // Antes: solo productos del ultimo mes. Ahora: ultimos 6 meses para que
+  // historicos como TUKOL (que dejaron de reportar) sigan apareciendo.
+  return recentProductRows(mk, 6).filter(row => !row.isSie);
+}
 function allProductRows(mk){ return productRows(mk, latestMonth(mk)); }
 function ensureSelection(){
   const mk = marketObj();
@@ -415,19 +451,49 @@ function rComp(mk){
       ms:Number(row.share || 0),
       units:Number(row.units || 0),
       var:+(Number(row.share || 0) - Number(prevRow?.share || 0)).toFixed(2),
-      sie:false
+      sie:false,
+      historic:!!row._historic,
+      lastSeen:row._lastSeen
     });
   });
-  rows.sort((a, b) => (b.sie - a.sie) || (Number(b.units || 0) - Number(a.units || 0)));
+  // Sort: por defecto SIE primero + units desc; si el user clickeo un header,
+  // ordenamos por esa columna (manteniendo SIE arriba para no perderlo).
+  if (pSort.col === 'default') {
+    rows.sort((a, b) => (b.sie - a.sie) || (Number(b.units || 0) - Number(a.units || 0)));
+  } else {
+    const dir = pSort.dir === 'asc' ? 1 : -1;
+    const key = pSort.col;
+    rows.sort((a, b) => {
+      if (a.sie !== b.sie) return b.sie - a.sie;
+      return (Number(a[key] || 0) - Number(b[key] || 0)) * dir;
+    });
+  }
+  // Indicadores ↑ ↓ ↕ en headers
+  ['ms','units','var'].forEach(col => {
+    const el = document.getElementById('ps-' + col);
+    if (!el) return;
+    if (pSort.col === col) {
+      el.textContent = pSort.dir === 'asc' ? '↑' : '↓';
+      el.style.color = '#b01e1e';
+    } else {
+      el.textContent = '↕';
+      el.style.color = '#a3a3a3';
+    }
+  });
   const maxMs = Math.max(...rows.map(row => row.ms), 1);
-  document.getElementById('cpe').textContent = `PRODUCTOS NACIONALES · ${monthLabel(latest).toUpperCase()}`;
+  const periodTxt = (prev && prev !== latest)
+    ? `PRODUCTOS NACIONALES · ${monthLabel(latest).toUpperCase()} vs ${monthLabel(prev).toUpperCase()}`
+    : `PRODUCTOS NACIONALES · ${monthLabel(latest).toUpperCase()}`;
+  document.getElementById('cpe').textContent = periodTxt;
   document.getElementById('cbo').innerHTML = rows.map((row, index) => {
     const hl = selB === row.name;
     const vc = row.var > 0 ? 'p' : row.var < 0 ? 'n' : 'z';
     const vs = row.var > 0 ? '+' : '';
     const bw = Math.max(row.ms / maxMs * 100, 1);
-    return `<tr style="${hl ? 'background:#EFF6FF;font-weight:600' : row.sie ? 'background:#FEF2F2' : ''}"><td class="rk">${index + 1}</td>
-      <td><div class="cbb"><div class="cl ${row.sie ? 's' : 'o'}"></div>${row.name}${row.sie ? ' <span class="st">SIE</span>' : ''}</div></td>
+    const histTag = row.historic ? ` <span style="font-size:9px;color:#94a3b8;font-weight:400;font-style:italic;" title="Sin datos IQVIA en el mes actual; ultima vez visto en ${row.lastSeen || 'mes previo'}">sin datos en periodo</span>` : '';
+    const opacity = row.historic ? 'opacity:0.55;' : '';
+    return `<tr style="${opacity}${hl ? 'background:#EFF6FF;font-weight:600' : row.sie ? 'background:#FEF2F2' : ''}"><td class="rk">${index + 1}</td>
+      <td><div class="cbb"><div class="cl ${row.sie ? 's' : 'o'}"></div>${row.name}${row.sie ? ' <span class="st">SIE</span>' : ''}${histTag}</div></td>
       <td class="r mn">${row.ms.toFixed(1)}%</td><td class="shs"><div class="sb"><div class="sf ${row.sie ? 's' : 'o'}" style="width:${bw}%"></div></div></td>
       <td class="r un">${fmt(row.units)}</td><td class="r"><span class="vb ${vc}">${vs}${row.var.toFixed(2)}pp</span></td></tr>`;
   }).join('');
@@ -454,6 +520,21 @@ function rTbl(mk){
 }
 function tglRegFromTbl(reg){ toggleReg(reg); }
 function doS(col){ if (sC === col) sD = sD === 'asc' ? 'desc' : 'asc'; else { sC = col; sD = col === 'region' ? 'asc' : 'desc'; } rTbl(marketObj()); }
+// Sort handler para la tabla de productos nacionales (rComp).
+// Click en el mismo header alterna asc/desc. Click en uno nuevo arranca desc
+// (asumimos que el user quiere ver el mas alto primero). Click en la
+// columna actual cuando ya esta desc -> asc; click otra vez -> default.
+function pSortBy(col){
+  if (pSort.col === col) {
+    if (pSort.dir === 'desc') { pSort.dir = 'asc'; }
+    else { pSort.col = 'default'; pSort.dir = 'desc'; }
+  } else {
+    pSort.col = col;
+    pSort.dir = 'desc';
+  }
+  const mk = marketObj();
+  if (mk) rComp(mk);
+}
 const PROVS = [
   {id:'jujuy', pts:'97,6 131,6 125,44 97,38', zones:['JUJUY']},
   {id:'salta', pts:'97,6 161,6 169,34 153,70 97,38', zones:['SALTA']},
@@ -761,11 +842,46 @@ function init(){
   render();
 }
 
+// Detecta si los segmentos etico/popular tienen data para el market actual.
+// Cuando el master IQVIA no trae Market Type, los buckets quedan vacios y
+// hay que deshabilitar el chip para no enganhar al usuario.
+function refreshSegChipsAvailability(){
+  const views = MKT_MAP[cur] || {};
+  const cmpView = views[cmp] || {};
+  ['all', 'etico', 'popular'].forEach(seg => {
+    const bucket = cmpView[seg];
+    let hasData = false;
+    if (bucket && bucket.productsByMonth) {
+      hasData = Object.values(bucket.productsByMonth).some(arr => Array.isArray(arr) && arr.length > 0);
+    }
+    const chip = document.querySelector(`#segBar .mc[data-s="${seg}"]`);
+    if (!chip) return;
+    if (hasData) {
+      chip.style.opacity = '';
+      chip.style.pointerEvents = '';
+      chip.style.cursor = '';
+      chip.title = '';
+    } else {
+      chip.style.opacity = '0.35';
+      chip.style.pointerEvents = 'none';
+      chip.style.cursor = 'not-allowed';
+      chip.title = 'Sin data de segmento (IQVIA Premium master no trae Market Type)';
+    }
+  });
+  // Si la seleccion actual quedo en un seg sin datos, caemos a 'all'
+  const curChip = document.querySelector(`#segBar .mc[data-s="${seg}"]`);
+  if (curChip && curChip.style.pointerEvents === 'none') {
+    seg = 'all';
+    document.querySelectorAll('#segBar .mc').forEach(n => n.classList.toggle('a', n.dataset.s === 'all'));
+  }
+}
+
 function render(){
   const mk = marketObj();
   if (!mk) return;
   ensureSelection();
   syncUrl();
+  refreshSegChipsAvailability();
   renderHero(mk);
   rKPI(mk);
   rBF(mk);

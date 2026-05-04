@@ -276,7 +276,7 @@ body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-ser
   <div class="chd"><div class="cn">04</div><div class="ctt" style="font-size:16px">Competidores en Provincia</div></div>
   <div class="ccd">
     <div class="cpe" id="cpe"></div>
-    <table class="ct2"><thead><tr><th style="width:3%"></th><th>Producto</th><th class="r">MS%</th><th class="shs">Share</th><th class="r">Unidades</th><th class="r">Var MoM</th></tr></thead>
+    <table class="ct2"><thead><tr><th style="width:3%"></th><th>Producto</th><th class="r" onclick="pSortBy('ms')" style="cursor:pointer;user-select:none;">MS% <span id="ps-ms" style="color:#a3a3a3;font-size:10px;">↕</span></th><th class="shs">Share</th><th class="r" onclick="pSortBy('units')" style="cursor:pointer;user-select:none;">Unidades <span id="ps-units" style="color:#a3a3a3;font-size:10px;">↕</span></th><th class="r" onclick="pSortBy('var')" style="cursor:pointer;user-select:none;">Var MoM <span id="ps-var" style="color:#a3a3a3;font-size:10px;">↕</span></th></tr></thead>
     <tbody id="cbo"></tbody></table>
   </div>
 
