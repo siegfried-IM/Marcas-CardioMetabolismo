@@ -200,7 +200,8 @@ def merge_line(data_js_path, family_data, months_in_pivot, dry_run=False):
         if skipped_partial:
             summary.setdefault('skipped_partial', {})[fam] = skipped_partial
 
-    if not dry_run:
+    # Solo escribir si hubo cambios reales
+    if not dry_run and summary['months_added_total'] > 0:
         new_text = serialize_data_js(text, d1, d2)
         data_js_path.write_text(new_text, encoding='utf-8', newline='')
 
