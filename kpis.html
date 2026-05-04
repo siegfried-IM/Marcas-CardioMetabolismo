@@ -177,6 +177,20 @@ body {
   display: flex; align-items: center; gap: 8px;
 }
 .line-owner { font-size: 11px; color: var(--gray-500); font-weight: 500; }
+.line-cuts {
+  display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap;
+}
+.cut-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; font-weight: 600;
+  padding: 2px 7px; border-radius: 4px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  color: var(--gray-500); letter-spacing: .04em;
+}
+.cut-pill.stale {
+  background: #FEF3C7; color: #92400E; border-color: #FDE68A;
+}
 .line-link {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
@@ -508,11 +522,20 @@ function renderLines() {
           <div class="tile-prev">${prevTxt}</div>
         </div>`;
     }).join('');
+    const globalCut = DATA.as_of_month;
+    const recCut = line.recetas_through;
+    const iqCut  = line.iqvia_through;
+    const recStale = recCut && recCut !== globalCut;
+    const iqStale  = iqCut  && iqCut  !== globalCut;
     return `
       <div class="line-card" style="--line-color:${line.color};">
         <div class="line-info">
           <div class="line-name">${line.icon} ${line.name}</div>
           <div class="line-owner">${line.owner||''}</div>
+          <div class="line-cuts">
+            <span class="cut-pill ${recStale?'stale':''}" title="Cierre datos de Recetas">Rx · ${recCut||'—'}</span>
+            <span class="cut-pill ${iqStale?'stale':''}"  title="Cierre datos de IQVIA">IQVIA · ${iqCut||'—'}</span>
+          </div>
           <a class="line-link" href="${line.href}">Abrir tablero →</a>
         </div>
         <div class="tile-grid">${tiles}</div>

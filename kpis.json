@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-04T19:47:49",
+  "generated_at": "2026-05-04T19:58:04",
   "as_of_month": "Mar 2026",
   "periods": [
     "ytd",
@@ -21,6 +21,8 @@
       "color": "#B01E1E",
       "href": "cardio/",
       "owner": "Diego Fernández",
+      "recetas_through": "Mar 2026",
+      "iqvia_through": "Mar 2026",
       "kpis": {
         "ytd": {
           "recetas_sie": {
@@ -151,6 +153,8 @@
       "color": "#16A34A",
       "href": "ATB/",
       "owner": "Antonella Mariani",
+      "recetas_through": "Mar 2026",
+      "iqvia_through": "Mar 2026",
       "kpis": {
         "ytd": {
           "recetas_sie": {
@@ -281,6 +285,8 @@
       "color": "#DB2777",
       "href": "mujer/",
       "owner": "María Hernández",
+      "recetas_through": "Mar 2026",
+      "iqvia_through": "Feb 2026",
       "kpis": {
         "ytd": {
           "recetas_sie": {
@@ -298,18 +304,18 @@
             "ie": 157.6
           },
           "units_sie": {
-            "curr": null,
-            "prev": 9021742,
-            "ie": null
+            "curr": 6194259,
+            "prev": 5986906,
+            "ie": 103.5
           },
           "ms_units": {
-            "curr": null,
-            "prev": 36.6
+            "curr": 37.46,
+            "prev": 36.7
           },
           "mercado_units": {
-            "curr": null,
-            "prev": 24650679,
-            "ie": null
+            "curr": 16535624,
+            "prev": 16311066,
+            "ie": 101.4
           }
         },
         "trimestre": {
@@ -328,18 +334,18 @@
             "ie": 170.1
           },
           "units_sie": {
-            "curr": null,
-            "prev": 9625233,
-            "ie": null
+            "curr": 9506947,
+            "prev": 9542382,
+            "ie": 99.6
           },
           "ms_units": {
-            "curr": null,
-            "prev": 36.63
+            "curr": 37.25,
+            "prev": 36.66
           },
           "mercado_units": {
-            "curr": null,
-            "prev": 26275895,
-            "ie": null
+            "curr": 25523554,
+            "prev": 26031097,
+            "ie": 98.1
           }
         },
         "semestre": {
@@ -358,18 +364,18 @@
             "ie": 133.1
           },
           "units_sie": {
-            "curr": 15819492,
-            "prev": 19096704,
-            "ie": 82.8
+            "curr": 19049329,
+            "prev": 18901703,
+            "ie": 100.8
           },
           "ms_units": {
             "curr": 36.95,
-            "prev": 37.01
+            "prev": 36.92
           },
           "mercado_units": {
-            "curr": 42811519,
-            "prev": 51597671,
-            "ie": 83.0
+            "curr": 51554651,
+            "prev": 51194152,
+            "ie": 100.7
           }
         },
         "mat": {
@@ -388,18 +394,18 @@
             "ie": 106.1
           },
           "units_sie": {
-            "curr": 34916196,
-            "prev": 37688565,
-            "ie": 92.6
+            "curr": 37951032,
+            "prev": 37770691,
+            "ie": 100.5
           },
           "ms_units": {
-            "curr": 36.98,
-            "prev": 36.82
+            "curr": 36.94,
+            "prev": 36.74
           },
           "mercado_units": {
-            "curr": 94409190,
-            "prev": 102366077,
-            "ie": 92.2
+            "curr": 102748803,
+            "prev": 102809806,
+            "ie": 99.9
           }
         }
       }
@@ -411,6 +417,8 @@
       "color": "#7C3AED",
       "href": "SNC/",
       "owner": "Juan Filidoro",
+      "recetas_through": "Mar 2026",
+      "iqvia_through": "Jan 2026",
       "kpis": {
         "ytd": {
           "recetas_sie": {
@@ -428,18 +436,18 @@
             "ie": 121.1
           },
           "units_sie": {
-            "curr": null,
-            "prev": 264566,
-            "ie": null
+            "curr": 101525,
+            "prev": 90869,
+            "ie": 111.7
           },
           "ms_units": {
-            "curr": null,
-            "prev": 7.79
+            "curr": 7.97,
+            "prev": 7.93
           },
           "mercado_units": {
-            "curr": null,
-            "prev": 3394735,
-            "ie": null
+            "curr": 1274533,
+            "prev": 1145529,
+            "ie": 111.3
           }
         },
         "trimestre": {
@@ -458,18 +466,18 @@
             "ie": 117.6
           },
           "units_sie": {
-            "curr": null,
-            "prev": 258394,
-            "ie": null
+            "curr": 266919,
+            "prev": 268355,
+            "ie": 99.5
           },
           "ms_units": {
-            "curr": null,
-            "prev": 6.91
+            "curr": 7.14,
+            "prev": 7.24
           },
           "mercado_units": {
-            "curr": null,
-            "prev": 3737266,
-            "ie": null
+            "curr": 3739612,
+            "prev": 3708236,
+            "ie": 100.8
           }
         },
         "semestre": {
@@ -488,18 +496,18 @@
             "ie": 111.3
           },
           "units_sie": {
-            "curr": null,
-            "prev": 558069,
-            "ie": null
+            "curr": 535274,
+            "prev": 556411,
+            "ie": 96.2
           },
           "ms_units": {
-            "curr": null,
-            "prev": 7.61
+            "curr": 7.19,
+            "prev": 7.78
           },
           "mercado_units": {
-            "curr": null,
-            "prev": 7335966,
-            "ie": null
+            "curr": 7447848,
+            "prev": 7149123,
+            "ie": 104.2
           }
         },
         "mat": {
@@ -518,18 +526,18 @@
             "ie": 108.1
           },
           "units_sie": {
-            "curr": 917988,
-            "prev": 1134371,
-            "ie": 80.9
+            "curr": 1091685,
+            "prev": 1142122,
+            "ie": 95.6
           },
           "ms_units": {
-            "curr": 7.43,
-            "prev": 7.84
+            "curr": 7.48,
+            "prev": 7.83
           },
           "mercado_units": {
-            "curr": 12347765,
-            "prev": 14460601,
-            "ie": 85.4
+            "curr": 14596971,
+            "prev": 14586727,
+            "ie": 100.1
           }
         }
       }
@@ -541,6 +549,8 @@
       "color": "#0D9488",
       "href": "respiratorio/",
       "owner": "Antonella Mariani",
+      "recetas_through": "Mar 2026",
+      "iqvia_through": "Mar 2026",
       "kpis": {
         "ytd": {
           "recetas_sie": {
@@ -671,6 +681,8 @@
       "color": "#0284C7",
       "href": "OTC/",
       "owner": "Tatiana Peker",
+      "recetas_through": "Mar 2026",
+      "iqvia_through": "Mar 2026",
       "kpis": {
         "ytd": {
           "recetas_sie": {
@@ -805,8 +817,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 2242830,
-      "units_prev": 3342270,
-      "units_ie": 67.1
+      "units_prev": 2241750,
+      "units_ie": 100.0
     },
     {
       "name": "SIDERBLUT COMPLEX (SIE)",
@@ -814,11 +826,11 @@
       "lineName": "Línea Mujer",
       "family": "COMPLEX",
       "rec_curr": 8477,
-      "rec_prev": 12450,
-      "rec_ie": 68.1,
+      "rec_prev": 8335,
+      "rec_ie": 101.7,
       "units_curr": 1795080,
-      "units_prev": 2597490,
-      "units_ie": 69.1
+      "units_prev": 1693980,
+      "units_ie": 106.0
     },
     {
       "name": "SIDERBLUT POLI (SIE)",
@@ -829,8 +841,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 747750,
-      "units_prev": 1063050,
-      "units_ie": 70.3
+      "units_prev": 710550,
+      "units_ie": 105.2
     },
     {
       "name": "FER-IN-SOL (SIE)",
@@ -841,8 +853,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 741600,
-      "units_prev": 1125840,
-      "units_ie": 65.9
+      "units_prev": 745360,
+      "units_ie": 99.5
     },
     {
       "name": "BACTRIM FORTE (SIE)",
@@ -922,11 +934,11 @@
       "lineName": "Línea Mujer",
       "family": "COMPLEX",
       "rec_curr": 344,
-      "rec_prev": 546,
-      "rec_ie": 63.0,
+      "rec_prev": 388,
+      "rec_ie": 88.7,
       "units_curr": 194970,
-      "units_prev": 240600,
-      "units_ie": 81.0
+      "units_prev": 156540,
+      "units_ie": 124.5
     },
     {
       "name": "SINTROM (SIE)",
@@ -958,11 +970,11 @@
       "lineName": "Línea Mujer",
       "family": "SIN ESTROGENO",
       "rec_curr": 11709,
-      "rec_prev": 16060,
-      "rec_ie": 72.9,
+      "rec_prev": 10904,
+      "rec_ie": 107.4,
       "units_curr": 119553,
-      "units_prev": 152509,
-      "units_ie": 78.4
+      "units_prev": 104513,
+      "units_ie": 114.4
     },
     {
       "name": "DIOVAN (SIE)",
@@ -1009,8 +1021,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 86740,
-      "units_prev": 119760,
-      "units_ie": 72.4
+      "units_prev": 80740,
+      "units_ie": 107.4
     },
     {
       "name": "METGLUCON AP (SIE)",
@@ -1102,11 +1114,11 @@
       "lineName": "Línea Mujer",
       "family": "BAJA DOSIS 21+7",
       "rec_curr": 5822,
-      "rec_prev": 10533,
-      "rec_ie": 55.3,
+      "rec_prev": 7332,
+      "rec_ie": 79.4,
       "units_curr": 59402,
-      "units_prev": 98891,
-      "units_ie": 60.1
+      "units_prev": 66956,
+      "units_ie": 88.7
     },
     {
       "name": "ACANTEX (SIE)",
@@ -1138,11 +1150,11 @@
       "lineName": "Línea Mujer",
       "family": "BASE",
       "rec_curr": 7263,
-      "rec_prev": 11879,
-      "rec_ie": 61.1,
+      "rec_prev": 7948,
+      "rec_ie": 91.4,
       "units_curr": 44933,
-      "units_prev": 65972,
-      "units_ie": 68.1
+      "units_prev": 44005,
+      "units_ie": 102.1
     },
     {
       "name": "VALIUM (SIE)",
@@ -1153,8 +1165,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 52033,
-      "units_prev": 129902,
-      "units_ie": 40.1
+      "units_prev": 44675,
+      "units_ie": 116.5
     },
     {
       "name": "ROXOLAN (SIE)",
@@ -1198,11 +1210,11 @@
       "lineName": "Línea Mujer",
       "family": "BAJA DOSIS 24",
       "rec_curr": 3981,
-      "rec_prev": 6670,
-      "rec_ie": 59.7,
+      "rec_prev": 4600,
+      "rec_ie": 86.5,
       "units_curr": 38909,
-      "units_prev": 59196,
-      "units_ie": 65.7
+      "units_prev": 40162,
+      "units_ie": 96.9
     },
     {
       "name": "TETRALGIN NOVO (SIE)",
@@ -1225,8 +1237,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 37073,
-      "units_prev": 46620,
-      "units_ie": 79.5
+      "units_prev": 29770,
+      "units_ie": 124.5
     },
     {
       "name": "FLEXINA 600 (SIE)",
@@ -1249,8 +1261,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 32123,
-      "units_prev": 43801,
-      "units_ie": 73.3
+      "units_prev": 29079,
+      "units_ie": 110.5
     },
     {
       "name": "MADOPAR (SIE)",
@@ -1261,8 +1273,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 26837,
-      "units_prev": 75653,
-      "units_ie": 35.5
+      "units_prev": 25478,
+      "units_ie": 105.3
     },
     {
       "name": "AIREAL PLUS (SIE)",
@@ -1285,8 +1297,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 24034,
-      "units_prev": 32171,
-      "units_ie": 74.7
+      "units_prev": 21484,
+      "units_ie": 111.9
     },
     {
       "name": "DECADRON. (SIE)",
@@ -1335,18 +1347,6 @@
       "units_curr": 19625,
       "units_prev": 15983,
       "units_ie": 122.8
-    },
-    {
-      "name": "TRIP D3 SIE",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "D3",
-      "rec_curr": 18829,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
     },
     {
       "name": "HEXALER (SIE)",
@@ -1421,6 +1421,18 @@
       "units_ie": 95.5
     },
     {
+      "name": "TRIP D3 SIE",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "D3",
+      "rec_curr": 12273,
+      "rec_prev": 0,
+      "rec_ie": null,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
       "name": "MAGNUS 36 (SIE)",
       "line": "otx",
       "lineName": "OTC",
@@ -1441,8 +1453,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 10965,
-      "units_prev": 16855,
-      "units_ie": 65.1
+      "units_prev": 11215,
+      "units_ie": 97.8
     },
     {
       "name": "TELPRES (SIE)",
@@ -1609,8 +1621,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 6552,
-      "units_prev": 16949,
-      "units_ie": 38.7
+      "units_prev": 6113,
+      "units_ie": 107.2
     },
     {
       "name": "HEXALER BRONQ. DUO (SIE)",
@@ -1633,8 +1645,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 4518,
-      "units_prev": 14050,
-      "units_ie": 32.2
+      "units_prev": 4813,
+      "units_ie": 93.9
     },
     {
       "name": "CALCIO BASE D (SIE)",
@@ -1642,11 +1654,11 @@
       "lineName": "Línea Mujer",
       "family": "BASE D",
       "rec_curr": 615,
-      "rec_prev": 1072,
-      "rec_ie": 57.4,
+      "rec_prev": 745,
+      "rec_ie": 82.6,
       "units_curr": 3862,
-      "units_prev": 5469,
-      "units_ie": 70.6
+      "units_prev": 3566,
+      "units_ie": 108.3
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 84 /.03",
@@ -1657,8 +1669,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 4446,
-      "units_prev": 6183,
-      "units_ie": 71.9
+      "units_prev": 4125,
+      "units_ie": 107.8
     },
     {
       "name": "ISIS (SIE)",
@@ -1666,8 +1678,8 @@
       "lineName": "Línea Mujer",
       "family": "ALTA DOSIS",
       "rec_curr": 4124,
-      "rec_prev": 6120,
-      "rec_ie": 67.4,
+      "rec_prev": 4220,
+      "rec_ie": 97.7,
       "units_curr": 0,
       "units_prev": 0,
       "units_ie": null
@@ -1753,8 +1765,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 2348,
-      "units_prev": 5451,
-      "units_ie": 43.1
+      "units_prev": 1967,
+      "units_ie": 119.4
     },
     {
       "name": "HEXALER BRONQUIAL (SIE)",
@@ -1777,8 +1789,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 2132,
-      "units_prev": 4933,
-      "units_ie": 43.2
+      "units_prev": 1796,
+      "units_ie": 118.7
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 56 /.03",
@@ -1789,8 +1801,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 2114,
-      "units_prev": 3636,
-      "units_ie": 58.1
+      "units_prev": 2238,
+      "units_ie": 94.5
     },
     {
       "name": "HEXALER PLUS (SIE)",
@@ -1825,8 +1837,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 1812,
-      "units_prev": 5583,
-      "units_ie": 32.5
+      "units_prev": 1992,
+      "units_ie": 91.0
     },
     {
       "name": "TRIP MAGNESIO (SIE)",
@@ -1849,8 +1861,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 1624,
-      "units_prev": 4739,
-      "units_ie": 34.3
+      "units_prev": 1551,
+      "units_ie": 104.7
     },
     {
       "name": "VALQUIR (SIE)",
@@ -1861,8 +1873,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 1375,
-      "units_prev": 1752,
-      "units_ie": 78.5
+      "units_prev": 557,
+      "units_ie": 246.9
     },
     {
       "name": "LEVITAL (SIE)",
@@ -1873,8 +1885,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 1236,
-      "units_prev": 3059,
-      "units_ie": 40.4
+      "units_prev": 1068,
+      "units_ie": 115.7
     },
     {
       "name": "EMPAX MET (SIE)",
@@ -1897,8 +1909,8 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 1058,
-      "units_prev": 2495,
-      "units_ie": 42.4
+      "units_prev": 859,
+      "units_ie": 123.2
     },
     {
       "name": "DELTROX NF (SIE)",
@@ -1906,11 +1918,11 @@
       "lineName": "Línea Mujer",
       "family": "DELTROX",
       "rec_curr": 250,
-      "rec_prev": 132,
-      "rec_ie": 189.4,
+      "rec_prev": 85,
+      "rec_ie": 294.1,
       "units_curr": 789,
-      "units_prev": 953,
-      "units_ie": 82.8
+      "units_prev": 551,
+      "units_ie": 143.2
     },
     {
       "name": "METGLUCON DUO (SIE)",
@@ -1953,7 +1965,7 @@
       "line": "mujer",
       "lineName": "Línea Mujer",
       "family": "D3",
-      "rec_curr": 19,
+      "rec_curr": 11,
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 0,

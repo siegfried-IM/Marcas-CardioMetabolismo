@@ -100,26 +100,11 @@ def month_range(end_year, end_month, n_months):
     return out
 
 
-def find_latest_month_in_data(D):
-    """Busca el ultimo month_key con data en rec_ms o mol_perf.
-    Devuelve (year, month_num) o None."""
-    candidates = set()
-    rec_ms = D.get('rec_ms', {})
-    for fam, obj in rec_ms.items():
-        if isinstance(obj, dict):
-            sie = obj.get('sie', {})
-            for mk in sie:
-                candidates.add(mk)
-    mol = D.get('mol_perf', {})
-    for m, obj in mol.items():
-        if not isinstance(obj, dict): continue
-        for prod in obj.get('products', []):
-            for mk in prod.get('monthly_vals', {}):
-                candidates.add(mk)
-    if not candidates: return None
+def find_latest_in_keys(month_keys):
+    """Devuelve (year, month_num) del month_key mas reciente, o None."""
     parsed = []
-    for mk in candidates:
-        parts = mk.split()
+    for mk in month_keys:
+        parts = str(mk).split()
         if len(parts) != 2: continue
         m = MES_INV.get(parts[0])
         if not m: continue
@@ -129,6 +114,37 @@ def find_latest_month_in_data(D):
     if not parsed: return None
     parsed.sort()
     return parsed[-1]
+
+
+def find_latest_recetas(D):
+    """Ultimo mes con data en rec_ms.sie."""
+    keys = set()
+    for fam, obj in D.get('rec_ms', {}).items():
+        if isinstance(obj, dict):
+            keys.update(obj.get('sie', {}).keys())
+    return find_latest_in_keys(keys)
+
+
+def find_latest_iqvia(D):
+    """Ultimo mes con data en mol_perf (cualquier producto)."""
+    keys = set()
+    for mol in D.get('mol_perf', {}).values():
+        if not isinstance(mol, dict): continue
+        for p in mol.get('products', []):
+            keys.update(p.get('monthly_vals', {}).keys())
+    return find_latest_in_keys(keys)
+
+
+def find_latest_month_in_data(D):
+    """Para reportar el cierre general de la linea (max entre recetas/iqvia)."""
+    cands = []
+    a = find_latest_recetas(D)
+    b = find_latest_iqvia(D)
+    if a: cands.append(a)
+    if b: cands.append(b)
+    if not cands: return None
+    cands.sort()
+    return cands[-1]
 
 
 def windows_for(end_y, end_m):
@@ -386,10 +402,22 @@ def main():
             print(f'  [{line["key"]}] sin data, skip en output')
             continue
 
+        # Per-line cutoffs por metrica (para que ninguna linea quede sin
+        # comparable solo porque mol_perf llega 1 mes mas tarde que recetas)
+        rec_latest = find_latest_recetas(D)
+        iq_latest  = find_latest_iqvia(D)
+        rec_windows = windows_for(*rec_latest) if rec_latest else None
+        iq_windows  = windows_for(*iq_latest)  if iq_latest  else None
+        rec_cut = month_key(*rec_latest) if rec_latest else None
+        iq_cut  = month_key(*iq_latest)  if iq_latest  else None
+        print(f'  [{line["key"]}] cutoffs: recetas={rec_cut or "—"}, iqvia={iq_cut or "—"}')
+
         kpis = {}
-        for period, (curr, prev) in windows.items():
-            rec = compute_recetas_kpi(D, curr, prev)
-            iqvia = compute_iqvia_kpi(D, curr, prev)
+        for period in ['ytd', 'trimestre', 'semestre', 'mat']:
+            r_curr, r_prev = rec_windows[period] if rec_windows else ([], [])
+            i_curr, i_prev = iq_windows[period]  if iq_windows  else ([], [])
+            rec = compute_recetas_kpi(D, r_curr, r_prev)
+            iqvia = compute_iqvia_kpi(D, i_curr, i_prev)
             def safe_ms(num, den):
                 if num is None or den is None or den == 0: return None
                 return round(num/den*100, 2)
@@ -418,11 +446,23 @@ def main():
             'color': line['color'],
             'href':  line['href'],
             'owner': line['owner'],
+            'recetas_through': rec_cut,
+            'iqvia_through':   iq_cut,
             'kpis':  kpis,
         })
 
-        # Productos: solo los que tienen units OR recetas en YTD curr
-        ytd_curr, ytd_prev = windows['ytd']
+        # Productos: union de cutoffs de la linea para YTD
+        # (units usa iq_cut, recetas usa rec_cut)
+        if iq_windows:
+            iq_ytd_curr, iq_ytd_prev = iq_windows['ytd']
+        else:
+            iq_ytd_curr = iq_ytd_prev = []
+        if rec_windows:
+            rec_ytd_curr, rec_ytd_prev = rec_windows['ytd']
+        else:
+            rec_ytd_curr = rec_ytd_prev = []
+        # Para collect_products usamos la mejor disponible: prefer iqvia_windows si existe
+        ytd_curr, ytd_prev = (iq_ytd_curr, iq_ytd_prev) if iq_ytd_curr else (rec_ytd_curr, rec_ytd_prev)
         prods = collect_products(D, ytd_curr, ytd_prev, line['key'], line['name'])
         prods = [p for p in prods if p['rec_curr'] > 0 or p['units_curr'] > 0]
         # Tambien metemos el resumen YTD para tabla por producto
