@@ -399,6 +399,7 @@ table.products tbody tr:hover { background: var(--gray-50); }
       <button data-view="products">Por Producto</button>
     </div>
     <div class="period-tabs" role="tablist" aria-label="Período">
+      <button data-period="mensual">Mensual</button>
       <button data-period="ytd"        class="active">YTD</button>
       <button data-period="trimestre">Trimestre</button>
       <button data-period="semestre">Semestre</button>
@@ -527,13 +528,16 @@ function renderLines() {
     const iqCut  = line.iqvia_through;
     const recStale = recCut && recCut !== globalCut;
     const iqStale  = iqCut  && iqCut  !== globalCut;
+    const recPill = (line.has_recetas === false)
+      ? `<span class="cut-pill" title="Esta linea no trackea recetas" style="opacity:.6;">Rx · sin tracking</span>`
+      : `<span class="cut-pill ${recStale?'stale':''}" title="Cierre datos de Recetas">Rx · ${recCut||'—'}</span>`;
     return `
       <div class="line-card" style="--line-color:${line.color};">
         <div class="line-info">
           <div class="line-name">${line.icon} ${line.name}</div>
           <div class="line-owner">${line.owner||''}</div>
           <div class="line-cuts">
-            <span class="cut-pill ${recStale?'stale':''}" title="Cierre datos de Recetas">Rx · ${recCut||'—'}</span>
+            ${recPill}
             <span class="cut-pill ${iqStale?'stale':''}"  title="Cierre datos de IQVIA">IQVIA · ${iqCut||'—'}</span>
           </div>
           <a class="line-link" href="${line.href}">Abrir tablero →</a>

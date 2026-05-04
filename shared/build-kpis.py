@@ -37,6 +37,10 @@ MES_EN = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',
           7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
 MES_INV = {v:k for k,v in MES_EN.items()}
 
+# Lineas que NO tienen recetas trackeadas (CloseUp). Para estas, las metricas
+# de recetas se setean a null en el output para no mostrar data engañosa.
+LINES_NO_RECETAS = {'resp'}
+
 # Definicion de lineas: como cargar la data
 LINES = [
     {'key':'cardio',  'name':'CardioMetabólica', 'icon':'❤️', 'color':'#B01E1E',
@@ -148,25 +152,40 @@ def find_latest_month_in_data(D):
 
 
 def windows_for(end_y, end_m):
-    """Define las ventanas current y previa para cada periodo."""
-    # Trimestre: ultimos 3 meses vs 3 anteriores
+    """Define las ventanas current y previa para cada periodo.
+
+    TODOS los periodos comparan vs el MISMO periodo del año anterior:
+      - mensual:   ultimo mes      vs mismo mes año -1
+      - trimestre: ultimos 3 meses vs mismos 3 meses año -1
+      - semestre:  ultimos 6 meses vs mismos 6 meses año -1
+      - ytd:       Ene..cierre     vs mismo rango año -1
+      - mat:       ultimos 12 mes  vs prev 12 (= same period año -1)
+    """
+    # Mensual: solo el ultimo mes
+    men_curr = [month_key(end_y, end_m)]
+    men_prev = [month_key(end_y - 1, end_m)]
+
+    # Trimestre: ultimos 3 meses (rolling) vs mismos 3 meses año anterior
     tri_curr = month_range(end_y, end_m, 3)
-    p_y, p_m = add_months(end_y, end_m, -3)
+    p_y, p_m = add_months(end_y, end_m, -12)
     tri_prev = month_range(p_y, p_m, 3)
 
+    # Semestre: ultimos 6 vs mismos 6 año anterior
     sem_curr = month_range(end_y, end_m, 6)
-    p_y, p_m = add_months(end_y, end_m, -6)
+    p_y, p_m = add_months(end_y, end_m, -12)
     sem_prev = month_range(p_y, p_m, 6)
 
+    # MAT: ultimos 12 vs prev 12 (= mismos meses año anterior por definicion)
     mat_curr = month_range(end_y, end_m, 12)
     p_y, p_m = add_months(end_y, end_m, -12)
     mat_prev = month_range(p_y, p_m, 12)
 
-    # YTD: enero del año del cierre hasta el mes del cierre
+    # YTD: Ene..cierre vs mismo rango año anterior
     ytd_curr = [month_key(end_y, m) for m in range(1, end_m + 1)]
     ytd_prev = [month_key(end_y - 1, m) for m in range(1, end_m + 1)]
 
     return {
+        'mensual':   (men_curr, men_prev),
         'ytd':       (ytd_curr, ytd_prev),
         'trimestre': (tri_curr, tri_prev),
         'semestre':  (sem_curr, sem_prev),
@@ -547,10 +566,11 @@ def main():
         'as_of_month': month_key(end_y, end_m),
         'periods': list(windows.keys()),
         'period_labels': {
-            'ytd': f'YTD {end_y} (Ene–{MES_EN[end_m]})',
-            'trimestre': f'Últ. 3 meses ({windows["trimestre"][0][0]} – {windows["trimestre"][0][-1]})',
-            'semestre':  f'Últ. 6 meses ({windows["semestre"][0][0]} – {windows["semestre"][0][-1]})',
-            'mat':       f'MAT 12 meses ({windows["mat"][0][0]} – {windows["mat"][0][-1]})',
+            'mensual':   f'{windows["mensual"][0][0]} vs {windows["mensual"][1][0]}',
+            'ytd':       f'YTD {end_y} (Ene–{MES_EN[end_m]}) vs {end_y-1}',
+            'trimestre': f'Últ. trimestre ({windows["trimestre"][0][0]} – {windows["trimestre"][0][-1]}) vs año -1',
+            'semestre':  f'Últ. semestre ({windows["semestre"][0][0]} – {windows["semestre"][0][-1]}) vs año -1',
+            'mat':       f'MAT 12 meses ({windows["mat"][0][0]} – {windows["mat"][0][-1]}) vs año -1',
         },
         'lines': [],
         'products': [],
@@ -572,11 +592,16 @@ def main():
         iq_cut  = month_key(*iq_latest)  if iq_latest  else None
         print(f'  [{line["key"]}] cutoffs: recetas={rec_cut or "—"}, iqvia={iq_cut or "—"}')
 
+        line_no_rec = line['key'] in LINES_NO_RECETAS
+
         kpis = {}
-        for period in ['ytd', 'trimestre', 'semestre', 'mat']:
+        for period in ['mensual', 'ytd', 'trimestre', 'semestre', 'mat']:
             r_curr, r_prev = rec_windows[period] if rec_windows else ([], [])
             i_curr, i_prev = iq_windows[period]  if iq_windows  else ([], [])
-            rec = compute_recetas_kpi(D, r_curr, r_prev)
+            if line_no_rec:
+                rec = {'sie_curr': None, 'sie_prev': None, 'mkt_curr': None, 'mkt_prev': None}
+            else:
+                rec = compute_recetas_kpi(D, r_curr, r_prev)
             iqvia = compute_iqvia_kpi(D, i_curr, i_prev)
             def safe_ms(num, den):
                 if num is None or den is None or den == 0: return None
@@ -606,8 +631,9 @@ def main():
             'color': line['color'],
             'href':  line['href'],
             'owner': line['owner'],
-            'recetas_through': rec_cut,
+            'recetas_through': None if line_no_rec else rec_cut,
             'iqvia_through':   iq_cut,
+            'has_recetas':     not line_no_rec,
             'kpis':  kpis,
         })
 
@@ -623,13 +649,38 @@ def main():
             rec_ytd_curr = rec_ytd_prev = []
         # Para units usamos iq_windows; para recetas, rec_windows (puede tener cutoff distinto)
         ytd_curr, ytd_prev = (iq_ytd_curr, iq_ytd_prev) if iq_ytd_curr else (rec_ytd_curr, rec_ytd_prev)
-        prods = collect_products(D, ytd_curr, ytd_prev, line['key'], line['name'],
-                                  rec_window_curr=rec_ytd_curr, rec_window_prev=rec_ytd_prev)
-        prods = [p for p in prods if p['rec_curr'] > 0 or p['units_curr'] > 0]
+        if line_no_rec:
+            # Linea sin tracking de recetas: incluir productos solo con units
+            prods = []
+            for m_key, fam_obj in D.get('mol_perf', {}).items():
+                if not isinstance(fam_obj, dict): continue
+                family = fam_obj.get('family', m_key)
+                for p in fam_obj.get('products', []):
+                    if not p.get('is_sie'): continue
+                    name = p.get('prod', '')
+                    if not name: continue
+                    mv = p.get('monthly_vals', {})
+                    u_curr = int(round(sum_window(mv, ytd_curr)))
+                    u_prev = int(round(sum_window(mv, ytd_prev)))
+                    if u_curr <= 0 and u_prev <= 0: continue
+                    prods.append({
+                        'name': name,
+                        'line': line['key'],
+                        'lineName': line['name'],
+                        'family': family,
+                        'rec_curr': None, 'rec_prev': None, 'rec_ie': None,
+                        'units_curr': u_curr,
+                        'units_prev': u_prev,
+                        'units_ie': (round(u_curr/u_prev*100,1) if u_prev>0 else None),
+                    })
+        else:
+            prods = collect_products(D, ytd_curr, ytd_prev, line['key'], line['name'],
+                                      rec_window_curr=rec_ytd_curr, rec_window_prev=rec_ytd_prev)
+            prods = [p for p in prods if (p['rec_curr'] or 0) > 0 or (p['units_curr'] or 0) > 0]
         # Tambien metemos el resumen YTD para tabla por producto
         out['products'].extend(prods)
 
-    out['products'].sort(key=lambda p: p['rec_curr'] + p['units_curr'], reverse=True)
+    out['products'].sort(key=lambda p: (p.get('rec_curr') or 0) + (p.get('units_curr') or 0), reverse=True)
 
     out_path = repo / args.out
     out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2),

@@ -1,17 +1,19 @@
 {
-  "generated_at": "2026-05-04T20:33:12",
+  "generated_at": "2026-05-04T20:40:05",
   "as_of_month": "Mar 2026",
   "periods": [
+    "mensual",
     "ytd",
     "trimestre",
     "semestre",
     "mat"
   ],
   "period_labels": {
-    "ytd": "YTD 2026 (Ene–Mar)",
-    "trimestre": "Últ. 3 meses (Jan 2026 – Mar 2026)",
-    "semestre": "Últ. 6 meses (Oct 2025 – Mar 2026)",
-    "mat": "MAT 12 meses (Apr 2025 – Mar 2026)"
+    "mensual": "Mar 2026 vs Mar 2025",
+    "ytd": "YTD 2026 (Ene–Mar) vs 2025",
+    "trimestre": "Últ. trimestre (Jan 2026 – Mar 2026) vs año -1",
+    "semestre": "Últ. semestre (Oct 2025 – Mar 2026) vs año -1",
+    "mat": "MAT 12 meses (Apr 2025 – Mar 2026) vs año -1"
   },
   "lines": [
     {
@@ -23,7 +25,38 @@
       "owner": "Diego Fernández",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "has_recetas": true,
       "kpis": {
+        "mensual": {
+          "recetas_sie": {
+            "curr": 35883,
+            "prev": 37089,
+            "ie": 96.7
+          },
+          "ms_recetas": {
+            "curr": 6.25,
+            "prev": 7.1
+          },
+          "mercado_recetas": {
+            "curr": 574197,
+            "prev": 522732,
+            "ie": 109.8
+          },
+          "units_sie": {
+            "curr": 396580,
+            "prev": 392802,
+            "ie": 101.0
+          },
+          "ms_units": {
+            "curr": 8.46,
+            "prev": 9.07
+          },
+          "mercado_units": {
+            "curr": 4688295,
+            "prev": 4328860,
+            "ie": 108.3
+          }
+        },
         "ytd": {
           "recetas_sie": {
             "curr": 104396,
@@ -57,61 +90,61 @@
         "trimestre": {
           "recetas_sie": {
             "curr": 104396,
-            "prev": 107730,
-            "ie": 96.9
+            "prev": 113608,
+            "ie": 91.9
           },
           "ms_recetas": {
             "curr": 6.24,
-            "prev": 6.58
+            "prev": 7.19
           },
           "mercado_recetas": {
             "curr": 1674054,
-            "prev": 1636628,
-            "ie": 102.3
+            "prev": 1580112,
+            "ie": 105.9
           },
           "units_sie": {
             "curr": 1126518,
-            "prev": 1191133,
-            "ie": 94.6
+            "prev": 1139005,
+            "ie": 98.9
           },
           "ms_units": {
             "curr": 8.46,
-            "prev": 8.7
+            "prev": 9.18
           },
           "mercado_units": {
             "curr": 13313242,
-            "prev": 13696870,
-            "ie": 97.2
+            "prev": 12401921,
+            "ie": 107.3
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 212126,
-            "prev": 220585,
-            "ie": 96.2
+            "prev": 237617,
+            "ie": 89.3
           },
           "ms_recetas": {
             "curr": 6.41,
-            "prev": 6.88
+            "prev": 7.36
           },
           "mercado_recetas": {
             "curr": 3310681,
-            "prev": 3206534,
-            "ie": 103.2
+            "prev": 3229586,
+            "ie": 102.5
           },
           "units_sie": {
             "curr": 2317651,
-            "prev": 2426322,
-            "ie": 95.5
+            "prev": 2374061,
+            "ie": 97.6
           },
           "ms_units": {
             "curr": 8.58,
-            "prev": 9.05
+            "prev": 9.21
           },
           "mercado_units": {
             "curr": 27010112,
-            "prev": 26797346,
-            "ie": 100.8
+            "prev": 25769511,
+            "ie": 104.8
           }
         },
         "mat": {
@@ -155,7 +188,38 @@
       "owner": "Antonella Mariani",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "has_recetas": true,
       "kpis": {
+        "mensual": {
+          "recetas_sie": {
+            "curr": 17368,
+            "prev": 17927,
+            "ie": 96.9
+          },
+          "ms_recetas": {
+            "curr": 66.92,
+            "prev": 49.9
+          },
+          "mercado_recetas": {
+            "curr": 25952,
+            "prev": 35924,
+            "ie": 72.2
+          },
+          "units_sie": {
+            "curr": 436928,
+            "prev": 411530,
+            "ie": 106.2
+          },
+          "ms_units": {
+            "curr": 57.88,
+            "prev": 56.49
+          },
+          "mercado_units": {
+            "curr": 754897,
+            "prev": 728494,
+            "ie": 103.6
+          }
+        },
         "ytd": {
           "recetas_sie": {
             "curr": 51827,
@@ -189,61 +253,61 @@
         "trimestre": {
           "recetas_sie": {
             "curr": 51827,
-            "prev": 49887,
-            "ie": 103.9
+            "prev": 54951,
+            "ie": 94.3
           },
           "ms_recetas": {
             "curr": 66.69,
-            "prev": 49.45
+            "prev": 49.59
           },
           "mercado_recetas": {
             "curr": 77712,
-            "prev": 100875,
-            "ie": 77.0
+            "prev": 110815,
+            "ie": 70.1
           },
           "units_sie": {
             "curr": 1272326,
-            "prev": 1258319,
-            "ie": 101.1
+            "prev": 1224082,
+            "ie": 103.9
           },
           "ms_units": {
             "curr": 60.69,
-            "prev": 60.53
+            "prev": 59.84
           },
           "mercado_units": {
             "curr": 2096434,
-            "prev": 2078736,
-            "ie": 100.9
+            "prev": 2045651,
+            "ie": 102.5
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 101714,
-            "prev": 102454,
-            "ie": 99.3
+            "prev": 112492,
+            "ie": 90.4
           },
           "ms_recetas": {
             "curr": 56.95,
-            "prev": 50.44
+            "prev": 49.6
           },
           "mercado_recetas": {
             "curr": 178587,
-            "prev": 203131,
-            "ie": 87.9
+            "prev": 226779,
+            "ie": 78.7
           },
           "units_sie": {
             "curr": 2530645,
-            "prev": 2550115,
-            "ie": 99.2
+            "prev": 2407293,
+            "ie": 105.1
           },
           "ms_units": {
             "curr": 60.61,
-            "prev": 56.38
+            "prev": 59.0
           },
           "mercado_units": {
             "curr": 4175170,
-            "prev": 4523022,
-            "ie": 92.3
+            "prev": 4079939,
+            "ie": 102.3
           }
         },
         "mat": {
@@ -287,7 +351,38 @@
       "owner": "María Hernández",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "has_recetas": true,
       "kpis": {
+        "mensual": {
+          "recetas_sie": {
+            "curr": 6564,
+            "prev": 26171,
+            "ie": 25.1
+          },
+          "ms_recetas": {
+            "curr": 5.59,
+            "prev": 23.93
+          },
+          "mercado_recetas": {
+            "curr": 117424,
+            "prev": 109348,
+            "ie": 107.4
+          },
+          "units_sie": {
+            "curr": 284261,
+            "prev": 242104,
+            "ie": 117.4
+          },
+          "ms_units": {
+            "curr": 13.26,
+            "prev": 12.37
+          },
+          "mercado_units": {
+            "curr": 2144067,
+            "prev": 1956465,
+            "ie": 109.6
+          }
+        },
         "ytd": {
           "recetas_sie": {
             "curr": 61379,
@@ -321,61 +416,61 @@
         "trimestre": {
           "recetas_sie": {
             "curr": 61379,
-            "prev": 82792,
-            "ie": 74.1
+            "prev": 81115,
+            "ie": 75.7
           },
           "ms_recetas": {
             "curr": 11.31,
-            "prev": 25.94
+            "prev": 23.56
           },
           "mercado_recetas": {
             "curr": 542800,
-            "prev": 319189,
-            "ie": 170.1
+            "prev": 344316,
+            "ie": 157.6
           },
           "units_sie": {
             "curr": 806414,
-            "prev": 812779,
-            "ie": 99.2
+            "prev": 731213,
+            "ie": 110.3
           },
           "ms_units": {
             "curr": 13.26,
-            "prev": 12.74
+            "prev": 12.67
           },
           "mercado_units": {
             "curr": 6083062,
-            "prev": 6378894,
-            "ie": 95.4
+            "prev": 5770664,
+            "ie": 105.4
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 144171,
-            "prev": 163093,
-            "ie": 88.4
+            "prev": 150086,
+            "ie": 96.1
           },
           "ms_recetas": {
             "curr": 16.73,
-            "prev": 25.19
+            "prev": 21.61
           },
           "mercado_recetas": {
             "curr": 861989,
-            "prev": 647419,
-            "ie": 133.1
+            "prev": 694535,
+            "ie": 124.1
           },
           "units_sie": {
             "curr": 1619193,
-            "prev": 1630113,
-            "ie": 99.3
+            "prev": 1479161,
+            "ie": 109.5
           },
           "ms_units": {
             "curr": 12.99,
-            "prev": 12.7
+            "prev": 12.33
           },
           "mercado_units": {
             "curr": 12461956,
-            "prev": 12838569,
-            "ie": 97.1
+            "prev": 11999425,
+            "ie": 103.9
           }
         },
         "mat": {
@@ -419,7 +514,38 @@
       "owner": "Juan Filidoro",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "has_recetas": true,
       "kpis": {
+        "mensual": {
+          "recetas_sie": {
+            "curr": 11976,
+            "prev": 12882,
+            "ie": 93.0
+          },
+          "ms_recetas": {
+            "curr": 10.89,
+            "prev": 14.61
+          },
+          "mercado_recetas": {
+            "curr": 109935,
+            "prev": 88161,
+            "ie": 124.7
+          },
+          "units_sie": {
+            "curr": 91883,
+            "prev": 88745,
+            "ie": 103.5
+          },
+          "ms_units": {
+            "curr": 7.36,
+            "prev": 7.62
+          },
+          "mercado_units": {
+            "curr": 1248888,
+            "prev": 1164275,
+            "ie": 107.3
+          }
+        },
         "ytd": {
           "recetas_sie": {
             "curr": 35122,
@@ -453,61 +579,61 @@
         "trimestre": {
           "recetas_sie": {
             "curr": 35122,
-            "prev": 35400,
-            "ie": 99.2
+            "prev": 39828,
+            "ie": 88.2
           },
           "ms_recetas": {
             "curr": 10.9,
-            "prev": 12.91
+            "prev": 14.96
           },
           "mercado_recetas": {
             "curr": 322365,
-            "prev": 274170,
-            "ie": 117.6
+            "prev": 266203,
+            "ie": 121.1
           },
           "units_sie": {
             "curr": 273703,
-            "prev": 258545,
-            "ie": 105.9
+            "prev": 264808,
+            "ie": 103.4
           },
           "ms_units": {
             "curr": 7.59,
-            "prev": 6.91
+            "prev": 7.79
           },
           "mercado_units": {
             "curr": 3607038,
-            "prev": 3740334,
-            "ie": 96.4
+            "prev": 3400410,
+            "ie": 106.1
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 70522,
-            "prev": 78011,
-            "ie": 90.4
+            "prev": 82561,
+            "ie": 85.4
           },
           "ms_recetas": {
             "curr": 11.82,
-            "prev": 14.56
+            "prev": 15.5
           },
           "mercado_recetas": {
             "curr": 596535,
-            "prev": 535951,
-            "ie": 111.3
+            "prev": 532771,
+            "ie": 112.0
           },
           "units_sie": {
             "curr": 532248,
-            "prev": 558420,
-            "ie": 95.3
+            "prev": 548209,
+            "ie": 97.1
           },
           "ms_units": {
             "curr": 7.24,
-            "prev": 7.6
+            "prev": 7.82
           },
           "mercado_units": {
             "curr": 7347372,
-            "prev": 7347507,
-            "ie": 100.0
+            "prev": 7008323,
+            "ie": 104.8
           }
         },
         "mat": {
@@ -549,23 +675,54 @@
       "color": "#0D9488",
       "href": "respiratorio/",
       "owner": "Antonella Mariani",
-      "recetas_through": "Mar 2026",
+      "recetas_through": null,
       "iqvia_through": "Mar 2026",
+      "has_recetas": false,
       "kpis": {
-        "ytd": {
+        "mensual": {
           "recetas_sie": {
-            "curr": 95843,
-            "prev": 101736,
-            "ie": 94.2
+            "curr": null,
+            "prev": null,
+            "ie": null
           },
           "ms_recetas": {
-            "curr": 18.96,
-            "prev": 18.76
+            "curr": null,
+            "prev": null
           },
           "mercado_recetas": {
-            "curr": 505589,
-            "prev": 542414,
-            "ie": 93.2
+            "curr": null,
+            "prev": null,
+            "ie": null
+          },
+          "units_sie": {
+            "curr": 489964,
+            "prev": 530596,
+            "ie": 92.3
+          },
+          "ms_units": {
+            "curr": 40.31,
+            "prev": 41.79
+          },
+          "mercado_units": {
+            "curr": 1215542,
+            "prev": 1269561,
+            "ie": 95.7
+          }
+        },
+        "ytd": {
+          "recetas_sie": {
+            "curr": null,
+            "prev": null,
+            "ie": null
+          },
+          "ms_recetas": {
+            "curr": null,
+            "prev": null
+          },
+          "mercado_recetas": {
+            "curr": null,
+            "prev": null,
+            "ie": null
           },
           "units_sie": {
             "curr": 1180415,
@@ -584,76 +741,76 @@
         },
         "trimestre": {
           "recetas_sie": {
-            "curr": 95843,
-            "prev": 130416,
-            "ie": 73.5
-          },
-          "ms_recetas": {
-            "curr": 18.96,
-            "prev": 21.14
-          },
-          "mercado_recetas": {
-            "curr": 505589,
-            "prev": 617021,
-            "ie": 81.9
-          },
-          "units_sie": {
-            "curr": 1180415,
-            "prev": 1616626,
-            "ie": 73.0
-          },
-          "ms_units": {
-            "curr": 40.96,
-            "prev": 43.44
-          },
-          "mercado_units": {
-            "curr": 2881902,
-            "prev": 3721659,
-            "ie": 77.4
-          }
-        },
-        "semestre": {
-          "recetas_sie": {
-            "curr": 226259,
-            "prev": 328121,
-            "ie": 69.0
-          },
-          "ms_recetas": {
-            "curr": 20.15,
-            "prev": 23.49
-          },
-          "mercado_recetas": {
-            "curr": 1122610,
-            "prev": 1396661,
-            "ie": 80.4
-          },
-          "units_sie": {
-            "curr": 2797041,
-            "prev": 4854626,
-            "ie": 57.6
-          },
-          "ms_units": {
-            "curr": 42.36,
-            "prev": 48.16
-          },
-          "mercado_units": {
-            "curr": 6603561,
-            "prev": 10080228,
-            "ie": 65.5
-          }
-        },
-        "mat": {
-          "recetas_sie": {
-            "curr": 554380,
+            "curr": null,
             "prev": null,
             "ie": null
           },
           "ms_recetas": {
-            "curr": 22.01,
+            "curr": null,
             "prev": null
           },
           "mercado_recetas": {
-            "curr": 2519271,
+            "curr": null,
+            "prev": null,
+            "ie": null
+          },
+          "units_sie": {
+            "curr": 1180415,
+            "prev": 1251218,
+            "ie": 94.3
+          },
+          "ms_units": {
+            "curr": 40.96,
+            "prev": 42.74
+          },
+          "mercado_units": {
+            "curr": 2881902,
+            "prev": 2927575,
+            "ie": 98.4
+          }
+        },
+        "semestre": {
+          "recetas_sie": {
+            "curr": null,
+            "prev": null,
+            "ie": null
+          },
+          "ms_recetas": {
+            "curr": null,
+            "prev": null
+          },
+          "mercado_recetas": {
+            "curr": null,
+            "prev": null,
+            "ie": null
+          },
+          "units_sie": {
+            "curr": 2797041,
+            "prev": 2762092,
+            "ie": 101.3
+          },
+          "ms_units": {
+            "curr": 42.36,
+            "prev": 43.32
+          },
+          "mercado_units": {
+            "curr": 6603561,
+            "prev": 6375516,
+            "ie": 103.6
+          }
+        },
+        "mat": {
+          "recetas_sie": {
+            "curr": null,
+            "prev": null,
+            "ie": null
+          },
+          "ms_recetas": {
+            "curr": null,
+            "prev": null
+          },
+          "mercado_recetas": {
+            "curr": null,
             "prev": null,
             "ie": null
           },
@@ -683,7 +840,38 @@
       "owner": "Tatiana Peker",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "has_recetas": true,
       "kpis": {
+        "mensual": {
+          "recetas_sie": {
+            "curr": 3102,
+            "prev": 3568,
+            "ie": 86.9
+          },
+          "ms_recetas": {
+            "curr": 8.03,
+            "prev": 9.44
+          },
+          "mercado_recetas": {
+            "curr": 38617,
+            "prev": 37782,
+            "ie": 102.2
+          },
+          "units_sie": {
+            "curr": 169982,
+            "prev": 168730,
+            "ie": 100.7
+          },
+          "ms_units": {
+            "curr": 7.18,
+            "prev": 8.92
+          },
+          "mercado_units": {
+            "curr": 2368207,
+            "prev": 1890651,
+            "ie": 125.3
+          }
+        },
         "ytd": {
           "recetas_sie": {
             "curr": 9344,
@@ -717,61 +905,61 @@
         "trimestre": {
           "recetas_sie": {
             "curr": 9344,
-            "prev": 10194,
-            "ie": 91.7
+            "prev": 10879,
+            "ie": 85.9
           },
           "ms_recetas": {
             "curr": 8.21,
-            "prev": 8.78
+            "prev": 9.5
           },
           "mercado_recetas": {
             "curr": 113852,
-            "prev": 116063,
-            "ie": 98.1
+            "prev": 114568,
+            "ie": 99.4
           },
           "units_sie": {
             "curr": 504866,
-            "prev": 501015,
-            "ie": 100.8
+            "prev": 497062,
+            "ie": 101.6
           },
           "ms_units": {
             "curr": 7.79,
-            "prev": 8.44
+            "prev": 9.47
           },
           "mercado_units": {
             "curr": 6482118,
-            "prev": 5938965,
-            "ie": 109.1
+            "prev": 5250003,
+            "ie": 123.5
           }
         },
         "semestre": {
           "recetas_sie": {
             "curr": 19538,
-            "prev": 21961,
-            "ie": 89.0
+            "prev": 22376,
+            "ie": 87.3
           },
           "ms_recetas": {
             "curr": 8.5,
-            "prev": 9.42
+            "prev": 9.51
           },
           "mercado_recetas": {
             "curr": 229914,
-            "prev": 233198,
-            "ie": 98.6
+            "prev": 235171,
+            "ie": 97.8
           },
           "units_sie": {
             "curr": 1005881,
-            "prev": 1006688,
-            "ie": 99.9
+            "prev": 1018028,
+            "ie": 98.8
           },
           "ms_units": {
             "curr": 8.1,
-            "prev": 8.64
+            "prev": 9.24
           },
           "mercado_units": {
             "curr": 12421083,
-            "prev": 11653173,
-            "ie": 106.6
+            "prev": 11013068,
+            "ie": 112.8
           }
         },
         "mat": {
@@ -825,9 +1013,9 @@
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "ACEMUK",
-      "rec_curr": 47336,
-      "rec_prev": 61136,
-      "rec_ie": 77.4,
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
       "units_curr": 405173,
       "units_prev": 511609,
       "units_ie": 79.2
@@ -843,18 +1031,6 @@
       "units_curr": 326784,
       "units_prev": 360440,
       "units_ie": 90.7
-    },
-    {
-      "name": "HEXALER NASAL (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER BRONQUIAL",
-      "rec_curr": 15356,
-      "rec_prev": 12790,
-      "rec_ie": 120.1,
-      "units_curr": 199240,
-      "units_prev": 170960,
-      "units_ie": 116.5
     },
     {
       "name": "MAGNUS (SIE)",
@@ -905,18 +1081,6 @@
       "units_ie": 103.4
     },
     {
-      "name": "HEXALER CORT (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER CORT",
-      "rec_curr": 21277,
-      "rec_prev": 17721,
-      "rec_ie": 120.1,
-      "units_curr": 109682,
-      "units_prev": 124299,
-      "units_ie": 88.2
-    },
-    {
       "name": "DIOVAN-D (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -929,16 +1093,40 @@
       "units_ie": 96.9
     },
     {
-      "name": "DECADRON (SIE)",
+      "name": "HEXALER CORT (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "DECADRON",
-      "rec_curr": 578,
-      "rec_prev": 577,
-      "rec_ie": 100.2,
-      "units_curr": 111754,
-      "units_prev": 108526,
-      "units_ie": 103.0
+      "family": "HEXALER CORT",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 109682,
+      "units_prev": 124299,
+      "units_ie": 88.2
+    },
+    {
+      "name": "HEXALER NASAL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER BRONQUIAL",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 99620,
+      "units_prev": 85480,
+      "units_ie": 116.5
+    },
+    {
+      "name": "HEXALER NASAL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER NASAL",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 99620,
+      "units_prev": 85480,
+      "units_ie": 116.5
     },
     {
       "name": "TERLOC (SIE)",
@@ -1001,18 +1189,6 @@
       "units_ie": 108.2
     },
     {
-      "name": "MOMETAX (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER BRONQUIAL",
-      "rec_curr": 5756,
-      "rec_prev": 4794,
-      "rec_ie": 120.1,
-      "units_curr": 74674,
-      "units_prev": 69880,
-      "units_ie": 106.9
-    },
-    {
       "name": "TRIP D3 (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -1023,18 +1199,6 @@
       "units_curr": 58991,
       "units_prev": 46621,
       "units_ie": 126.5
-    },
-    {
-      "name": "DUO-DECADRON (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DECADRON",
-      "rec_curr": 399,
-      "rec_prev": 398,
-      "rec_ie": 100.3,
-      "units_curr": 77152,
-      "units_prev": 71148,
-      "units_ie": 108.4
     },
     {
       "name": "CALCIO BASE (SIE)",
@@ -1073,18 +1237,6 @@
       "units_ie": 92.2
     },
     {
-      "name": "ACEMUK DIA Y NOCHE (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK DIA Y NOCHE",
-      "rec_curr": 49238,
-      "rec_prev": 63592,
-      "rec_ie": 77.4,
-      "units_curr": 17071,
-      "units_prev": 16366,
-      "units_ie": 104.3
-    },
-    {
       "name": "ACANTEX (SIE)",
       "line": "antibio",
       "lineName": "Antibióticos",
@@ -1095,18 +1247,6 @@
       "units_curr": 59584,
       "units_prev": 62257,
       "units_ie": 95.7
-    },
-    {
-      "name": "ACEMUK L (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK L",
-      "rec_curr": 49238,
-      "rec_prev": 63592,
-      "rec_ie": 77.4,
-      "units_curr": 12750,
-      "units_prev": 13352,
-      "units_ie": 95.5
     },
     {
       "name": "ROXOLAN (SIE)",
@@ -1133,18 +1273,6 @@
       "units_ie": 99.9
     },
     {
-      "name": "ACEMUK BIOTIC DUO (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK BIOTIC DUO",
-      "rec_curr": 49238,
-      "rec_prev": 63592,
-      "rec_ie": 77.4,
-      "units_curr": 9037,
-      "units_prev": 11826,
-      "units_ie": 76.4
-    },
-    {
       "name": "FER-IN-SOL (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -1169,28 +1297,28 @@
       "units_ie": 98.7
     },
     {
-      "name": "ALIDIAL (SIE)",
+      "name": "DECADRON (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "ALIDIAL",
-      "rec_curr": 11228,
-      "rec_prev": 9360,
-      "rec_ie": 120.0,
-      "units_curr": 43748,
-      "units_prev": 34686,
-      "units_ie": 126.1
+      "family": "DECADRON",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 55877,
+      "units_prev": 54263,
+      "units_ie": 103.0
     },
     {
-      "name": "ACEMUK GRIP (SIE)",
+      "name": "DECADRON (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "ACEMUK GRIP",
-      "rec_curr": 49238,
-      "rec_prev": 63592,
-      "rec_ie": 77.4,
-      "units_curr": 3719,
-      "units_prev": 5690,
-      "units_ie": 65.4
+      "family": "DUO-DECADRON",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 55877,
+      "units_prev": 54263,
+      "units_ie": 103.0
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 28 /.03",
@@ -1205,16 +1333,16 @@
       "units_ie": 111.2
     },
     {
-      "name": "HEXALER (SIE)",
+      "name": "ALIDIAL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "HEXALER",
-      "rec_curr": 21277,
-      "rec_prev": 17721,
-      "rec_ie": 120.1,
-      "units_curr": 17993,
-      "units_prev": 21240,
-      "units_ie": 84.7
+      "family": "ALIDIAL",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 43748,
+      "units_prev": 34686,
+      "units_ie": 126.1
     },
     {
       "name": "DILATREND AP (SIE)",
@@ -1229,6 +1357,54 @@
       "units_ie": 101.6
     },
     {
+      "name": "DUO-DECADRON (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 38576,
+      "units_prev": 35574,
+      "units_ie": 108.4
+    },
+    {
+      "name": "DUO-DECADRON (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DUO-DECADRON",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 38576,
+      "units_prev": 35574,
+      "units_ie": 108.4
+    },
+    {
+      "name": "MOMETAX (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER BRONQUIAL",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 37337,
+      "units_prev": 34940,
+      "units_ie": 106.9
+    },
+    {
+      "name": "MOMETAX (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER NASAL",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 37337,
+      "units_prev": 34940,
+      "units_ie": 106.9
+    },
+    {
       "name": "FLEXINA 600 (SIE)",
       "line": "otx",
       "lineName": "OTC",
@@ -1239,18 +1415,6 @@
       "units_curr": 32222,
       "units_prev": 27402,
       "units_ie": 117.6
-    },
-    {
-      "name": "AIREAL PLUS (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "AIREAL PLUS",
-      "rec_curr": 6458,
-      "rec_prev": 4035,
-      "rec_ie": 160.0,
-      "units_curr": 25558,
-      "units_prev": 15185,
-      "units_ie": 168.3
     },
     {
       "name": "DILATREND D (SIE)",
@@ -1265,18 +1429,6 @@
       "units_ie": 89.4
     },
     {
-      "name": "HEXALER BRONQ. DUO (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER BRONQUIAL DU",
-      "rec_curr": 21277,
-      "rec_prev": 17721,
-      "rec_ie": 120.1,
-      "units_curr": 5797,
-      "units_prev": 6495,
-      "units_ie": 89.3
-    },
-    {
       "name": "SIDERBLUT POLI (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -1289,40 +1441,16 @@
       "units_ie": 112.1
     },
     {
-      "name": "AIREAL (SIE)",
+      "name": "AIREAL PLUS (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "AIREAL",
-      "rec_curr": 5924,
-      "rec_prev": 5415,
-      "rec_ie": 109.4,
-      "units_curr": 21074,
-      "units_prev": 18176,
-      "units_ie": 115.9
-    },
-    {
-      "name": "HEXALER PLUS (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER PLUS",
-      "rec_curr": 21277,
-      "rec_prev": 17721,
-      "rec_ie": 120.1,
-      "units_curr": 1987,
-      "units_prev": 2305,
-      "units_ie": 86.2
-    },
-    {
-      "name": "DECADRON. (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DECADRON",
-      "rec_curr": 117,
-      "rec_prev": 117,
-      "rec_ie": 100.0,
-      "units_curr": 22594,
-      "units_prev": 23392,
-      "units_ie": 96.6
+      "family": "AIREAL PLUS",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 25558,
+      "units_prev": 15185,
+      "units_ie": 168.3
     },
     {
       "name": "PGB (SIE)",
@@ -1349,6 +1477,18 @@
       "units_ie": null
     },
     {
+      "name": "AIREAL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "AIREAL",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 21074,
+      "units_prev": 18176,
+      "units_ie": 115.9
+    },
+    {
       "name": "TRIP D3 SIE",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -1361,16 +1501,16 @@
       "units_ie": null
     },
     {
-      "name": "ACEMUK VL (SIE)",
+      "name": "HEXALER (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "ACEMUK",
-      "rec_curr": 1902,
-      "rec_prev": 2456,
-      "rec_ie": 77.4,
-      "units_curr": 16280,
-      "units_prev": 23160,
-      "units_ie": 70.3
+      "family": "HEXALER",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 17993,
+      "units_prev": 21240,
+      "units_ie": 84.7
     },
     {
       "name": "ACERPES 5% (SIE)",
@@ -1385,6 +1525,30 @@
       "units_ie": 107.7
     },
     {
+      "name": "ACEMUK DIA Y NOCHE (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK DIA Y NOCHE",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 17071,
+      "units_prev": 16366,
+      "units_ie": 104.3
+    },
+    {
+      "name": "ACEMUK VL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 16280,
+      "units_prev": 23160,
+      "units_ie": 70.3
+    },
+    {
       "name": "TELPRES (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -1395,6 +1559,18 @@
       "units_curr": 10695,
       "units_prev": 15474,
       "units_ie": 69.1
+    },
+    {
+      "name": "ACEMUK L (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK L",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 12750,
+      "units_prev": 13352,
+      "units_ie": 95.5
     },
     {
       "name": "ROXOLAN PLUS (SIE)",
@@ -1419,6 +1595,30 @@
       "units_curr": 11933,
       "units_prev": 12478,
       "units_ie": 95.6
+    },
+    {
+      "name": "DECADRON. (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 11297,
+      "units_prev": 11696,
+      "units_ie": 96.6
+    },
+    {
+      "name": "DECADRON. (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DUO-DECADRON",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 11297,
+      "units_prev": 11696,
+      "units_ie": 96.6
     },
     {
       "name": "ARTRO RED (SIE)",
@@ -1467,6 +1667,18 @@
       "units_curr": 8192,
       "units_prev": 4346,
       "units_ie": 188.5
+    },
+    {
+      "name": "ACEMUK BIOTIC DUO (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK BIOTIC DUO",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 9037,
+      "units_prev": 11826,
+      "units_ie": 76.4
     },
     {
       "name": "EMPAX (SIE)",
@@ -1553,6 +1765,18 @@
       "units_ie": 97.8
     },
     {
+      "name": "HEXALER BRONQ. DUO (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER BRONQUIAL DU",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 5797,
+      "units_prev": 6495,
+      "units_ie": 89.3
+    },
+    {
       "name": "DAURAN (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -1599,6 +1823,18 @@
       "units_curr": 3963,
       "units_prev": 1754,
       "units_ie": 225.9
+    },
+    {
+      "name": "ACEMUK GRIP (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK GRIP",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 3719,
+      "units_prev": 5690,
+      "units_ie": 65.4
     },
     {
       "name": "DIOVAN IC (SIE)",
@@ -1653,9 +1889,9 @@
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "ALIDIAL",
-      "rec_curr": 622,
-      "rec_prev": 519,
-      "rec_ie": 119.8,
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
       "units_curr": 2425,
       "units_prev": 0,
       "units_ie": null
@@ -1677,12 +1913,24 @@
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "HEXALER BRONQUIAL",
-      "rec_curr": 165,
-      "rec_prev": 137,
-      "rec_ie": 120.4,
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
       "units_curr": 2141,
       "units_prev": 2417,
       "units_ie": 88.6
+    },
+    {
+      "name": "HEXALER PLUS (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER PLUS",
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
+      "units_curr": 1987,
+      "units_prev": 2305,
+      "units_ie": 86.2
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 56 /.03",
@@ -1713,9 +1961,9 @@
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "DECADRON",
-      "rec_curr": 3,
-      "rec_prev": 3,
-      "rec_ie": 100.0,
+      "rec_curr": null,
+      "rec_prev": null,
+      "rec_ie": null,
       "units_curr": 566,
       "units_prev": 506,
       "units_ie": 111.9
