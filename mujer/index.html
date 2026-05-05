@@ -1219,7 +1219,7 @@ function renderRec(){
     const compData=D.rec_comp?.[rProd]||{};
     const topComps=Object.entries(compData)
       .filter(([p,v])=>!v.is_sie)
-      .sort((a,b)=>(b[1].total||0)-(a[1].total||0)).slice(0,4);
+      .sort((a,b)=>(b[1].total||0)-(a[1].total||0));
     topComps.forEach(([brand,cdata],i)=>{
       const clr=REC_COMP_COLORS[i%REC_COMP_COLORS.length];
       const compRec=msKeys.map(k=>{
@@ -1252,7 +1252,7 @@ function renderRec(){
     const compData=D.rec_comp?.[rProd]||{};
     const topComps=Object.entries(compData)
       .filter(([p,v])=>!v.is_sie)
-      .sort((a,b)=>(b[1].total||0)-(a[1].total||0)).slice(0,4);
+      .sort((a,b)=>(b[1].total||0)-(a[1].total||0));
     topComps.forEach(([brand,cdata],i)=>{
       const clr=REC_COMP_COLORS[i%REC_COMP_COLORS.length];
       const msObj2=D.rec_ms?.[rProd]||{};
@@ -1311,7 +1311,7 @@ function renderRec(){
           display:isMs||datasets.length>1,
           position:'bottom',
           labels:{color:'#374151',font:{size:9},boxWidth:12,padding:10,
-            filter:i=>i.datasetIndex<6}
+            filter:i=>i.datasetIndex<30}
         },
         tooltip:{backgroundColor:'#ffffff',borderColor:'rgba(0,0,0,.12)',borderWidth:1,
           titleColor:'#111827',bodyColor:'#111827',
