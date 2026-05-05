@@ -309,6 +309,9 @@ def main():
     meta['prev_ytd_key']    = pmk
     meta['current_mat_key'] = cmk
     meta['prev_mat_key']    = pmk
+    # ytd_keys / mat_keys: array de cierres anuales que el chart consume
+    meta['ytd_keys'] = [f'{MES_EN[cierre_month]} {y}' for y in (cierre_year-2, cierre_year-1, cierre_year)]
+    meta['mat_keys'] = [f'{MES_EN[cierre_month]} {y}' for y in (cierre_year-2, cierre_year-1, cierre_year)]
     meta['kpi_ytd_label']      = f"YTD {MES_EN[cierre_month]}'{str(cierre_year)[-2:]}"
     meta['kpi_ytd_prev_label'] = f"YTD {MES_EN[cierre_month]}'{str(cierre_year-1)[-2:]}"
     meta['kpi_mat_label']      = f"MAT {MES_EN[cierre_month]}'{str(cierre_year)[-2:]}"
