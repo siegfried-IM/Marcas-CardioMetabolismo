@@ -511,7 +511,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
     <div id="cov-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;"></div>
   </div>
 
-  <div class="footer">Siegfried S.A. · SNC · Datos al 19/02/2026 · PM IQVIA + Manual Farmacéutico + Datos Internos</div>
+  <div class="footer">Siegfried S.A. · SNC · Datos al 31/03/2026 · PM IQVIA + Manual Farmacéutico + Datos Internos</div>
 </div>
 
 <script>
@@ -680,10 +680,10 @@ function renderBrandKpis(){
   const color = COLORS[brand] || '#b01e1e';
   const pm    = PROD_MAP[brand] || {};
   const isYtd = kpiPeriod === 'ytd';
-  const budIndex = Number.isInteger(D.meta?.budget_index) ? D.meta.budget_index : 0;
-  const budLabel = D.meta?.budget_label || "Ene'26";
-  const period     = isYtd ? "YTD Ene'26" : "MAT Ene'26";
-  const periodPrev = isYtd ? "YTD Ene'25" : "MAT Ene'25";
+  const budIndex = Number.isInteger(D.meta?.budget_index) ? D.meta.budget_index : 2;
+  const budLabel = D.meta?.budget_label || "Mar'26";
+  const period     = isYtd ? "YTD Mar'26" : "MAT Mar'26";
+  const periodPrev = isYtd ? "YTD Mar'25" : "MAT Mar'25";
 
   // Label
   document.getElementById('brand-kpi-label').textContent = brand;
@@ -697,11 +697,11 @@ function renderBrandKpis(){
     const molData = D.mol_perf[pm.mol];
     const sieP = (molData.products||[]).find(p=>p.is_sie && p.prod===sieProdName);
     if(sieP){
-      units     = isYtd ? sieP.ytd?.['Jan 2026'] : sieP.mat?.['Jan 2026'];
-      unitsPrev = isYtd ? sieP.ytd?.['Jan 2025'] : sieP.mat?.['Jan 2025'];
-      ms        = isYtd ? sieP.ms_ytd?.['Jan 2026'] : sieP.ms_mat?.['Jan 2026'];
+      units     = isYtd ? sieP.ytd?.['Mar 2026'] : sieP.mat?.['Mar 2026'];
+      unitsPrev = isYtd ? sieP.ytd?.['Mar 2025'] : sieP.mat?.['Mar 2025'];
+      ms        = isYtd ? sieP.ms_ytd?.['Mar 2026'] : sieP.ms_mat?.['Mar 2026'];
       // Market total from mol level
-      const molMkt = isYtd ? molData.ytd?.['Jan 2026'] : molData.mat?.['Jan 2026'];
+      const molMkt = isYtd ? molData.ytd?.['Mar 2026'] : molData.mat?.['Mar 2026'];
       if(molMkt && units) mktTotal = molMkt;
     }
   }
@@ -830,9 +830,9 @@ function renderKpis(){
   const units = isYtd ? k.units_ytd : k.units_mat;
   const unitsPrev = isYtd ? (k.sie_ytd25||k.units_ytd25) : (k.sie_mat25||k.units_mat25);
   const mkt   = isYtd ? k.mkt_ytd26 : k.mkt_mat26;
-  const budLabel = D.meta?.budget_label || "Ene'26";
-  const period = (isYtd ? "YTD Ene'26" : "MAT Ene'26") + brandLabel;
-  const periodPrev = isYtd ? "YTD Ene'25" : "MAT Ene'25";
+  const budLabel = D.meta?.budget_label || "Mar'26";
+  const period = (isYtd ? "YTD Mar'26" : "MAT Mar'26") + brandLabel;
+  const periodPrev = isYtd ? "YTD Mar'25" : "MAT Mar'25";
 
   const ieColor = !ie ? 'b' : ie>=100 ? 'g' : ie>=90 ? 'y' : 'r';
   const ieAccent = !ie ? 'var(--blue)' : ie>=100 ? 'var(--green)' : ie>=90 ? 'var(--yellow)' : 'var(--red)';
@@ -1063,8 +1063,8 @@ function renderPerf(){
   const prods=molData.products;
 
   let periodKeys;
-  if(pPeriod==='ytd') periodKeys=['Jan 2022','Jan 2023','Jan 2024','Jan 2025','Jan 2026'];
-  else if(pPeriod==='mat') periodKeys=['Jan 2022','Jan 2023','Jan 2024','Jan 2025','Jan 2026'];
+  if(pPeriod==='ytd') periodKeys=['Mar 2022','Mar 2023','Mar 2024','Mar 2025','Mar 2026'];
+  else if(pPeriod==='mat') periodKeys=['Mar 2022','Mar 2023','Mar 2024','Mar 2025','Mar 2026'];
   else if(pPeriod==='quarterly'){
     // Build quarterly keys from product data
     const allQK=new Set();
