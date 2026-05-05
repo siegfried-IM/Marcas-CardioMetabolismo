@@ -54,7 +54,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
   white-space:nowrap;transition:all .2s;flex-shrink:0;}
 .nav-ext:hover{color:#b01e1e;border-color:rgba(176,30,30,.5);}
 
-.wrap{max-width:1200px;margin:0 auto;padding:32px 24px 80px;}
+.wrap{max-width:1200px;margin:0 auto;padding:32px 280px 80px 24px;}
 .pg-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;
   color:#8f1515;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;font-size:10px;}
 .pg-title{font-size:30px;font-weight:700;letter-spacing:-.025em;color:#ecf4ff;margin-bottom:4px;}
@@ -261,35 +261,54 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
   <p class="pg-eyebrow">Siegfried · Cardio Metabolismo · Inteligencia de Mercados</p>
   <h1 class="pg-title" style="color:#111827!important;font-size:36px;font-weight:900;">Gestión de Marcas · Línea Cardio Metabolismo</h1>
   <p class="pg-sub">IE · MS% · Unidades · Recetas · Presupuesto · Performance vs Mercado · Canales · Convenios · Precios</p>
-
-
-  <!-- GLOBAL BRAND FILTER -->
-  <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-    <span style="font-size:10px;color:#4b5563;">Ver período:</span>
-    <div class="kpi-toggle">
-      <button class="kt-btn on" id="kpi-ytd-label" onclick="setKpiPeriod('ytd')">YTD</button>
-      <button class="kt-btn" id="kpi-mat-label" onclick="setKpiPeriod('mat')">MAT</button>
+  <!-- ═══ LÍNEA + MARCA + FILTRO SIDEBAR ═══ -->
+  <!-- LÍNEA: bloque con border rojo, KPIs full-width -->
+  <div class="line-block" style="border:2px solid #b01e1e;border-radius:12px;padding:16px 18px 18px;background:#fff;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:#b01e1e;letter-spacing:.2em;text-transform:uppercase;">●</span>
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:800;color:#111827;letter-spacing:-.01em;">Línea · Cardio Metabolismo</span>
+        <span style="font-size:10px;color:#4b5563;">— performance global</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:10px;color:#4b5563;">Período:</span>
+        <div class="kpi-toggle">
+          <button class="kt-btn on" id="kpi-ytd-label" onclick="setKpiPeriod('ytd')">YTD</button>
+          <button class="kt-btn" id="kpi-mat-label" onclick="setKpiPeriod('mat')">MAT</button>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="kpi-row" id="s-kpi"></div>
-  <div id="global-filter-bar" style="background:#fff1f2;border:1px solid rgba(176,30,30,.2);border-radius:12px;padding:14px 18px;margin-bottom:24px;">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:#b01e1e;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;">Filtro global · Marca</span>
-      <span style="font-size:10px;color:#4b5563;">Seleccioná una marca para sincronizar todas las secciones</span>
-      <button onclick="clearGlobalFilter()" id="clear-filter-btn" style="display:none;margin-left:auto;padding:4px 10px;border-radius:5px;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.07);color:var(--red);font-size:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:all .2s;">✕ Limpiar filtro</button>
-    </div>
-    <div class="pill-group" id="global-pills"></div>
+    <div class="kpi-row" id="s-kpi"></div>
   </div>
 
-  <!-- BRAND KPI STRIP -->
-  <div id="brand-kpi-section" style="display:none;margin-bottom:24px;">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:#b01e1e;letter-spacing:.18em;text-transform:uppercase;">KPIs · Marca</span>
-      <span id="brand-kpi-label" style="font-size:13px;font-weight:700;color:#111827;"></span>
-      <span style="font-size:10px;color:#4b5563;" id="brand-kpi-period-label"></span>
+  <!-- MARCA: bloque con border violeta, aparece al filtrar marca -->
+  <div id="brand-kpi-section" style="display:none;margin-bottom:24px;border:2px solid #7c3aed;border-radius:12px;padding:16px 18px 18px;background:linear-gradient(180deg,#faf5ff,#fff);">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:#7c3aed;letter-spacing:.2em;text-transform:uppercase;">▼ Marca seleccionada</span>
+      <span id="brand-kpi-label" style="font-family:'IBM Plex Sans',sans-serif;font-size:18px;font-weight:800;color:#111827;letter-spacing:-.02em;"></span>
+      <span style="font-size:10px;color:#4b5563;margin-left:auto;" id="brand-kpi-period-label"></span>
     </div>
     <div class="kpi-row" id="s-brand-kpi"></div>
   </div>
+
+  <!-- FILTRO de Marca: SIDEBAR FIXED siempre visible al hacer scroll -->
+  <div id="global-filter-bar" style="position:fixed;right:16px;top:80px;width:240px;max-height:calc(100vh - 100px);overflow-y:auto;border:1px solid rgba(176,30,30,.25);border-radius:12px;padding:14px 16px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(0,0,0,.08);z-index:50;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:#b01e1e;letter-spacing:.2em;text-transform:uppercase;">Filtro · Marca</span>
+    </div>
+    <span style="font-size:10px;color:#4b5563;display:block;margin-bottom:12px;line-height:1.4;">Seleccioná una marca para sincronizar todas las secciones.</span>
+    <div class="pill-group" id="global-pills"></div>
+    <button onclick="clearGlobalFilter()" id="clear-filter-btn" style="display:none;margin-top:12px;padding:6px 10px;border-radius:6px;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.07);color:var(--red);font-size:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:all .2s;width:100%;">✕ Limpiar filtro</button>
+  </div>
+
+  <!-- Mobile: stack y filter inline cuando viewport pequenio -->
+  <style>
+    @media (max-width: 1100px) {
+      .wrap { padding-right: 24px !important; }
+      #global-filter-bar { position: relative !important; right: auto !important; top: auto !important; width: 100% !important; max-height: none !important; margin-bottom: 24px !important; }
+    }
+  </style>
+
 
   <!-- KPI TOGGLE + STRIP -->
 
