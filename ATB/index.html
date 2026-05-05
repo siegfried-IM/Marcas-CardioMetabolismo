@@ -790,10 +790,10 @@ function renderKpis(){
   const items=[
     {lbl:`IE Línea · ${period}`,num:ie||'—',cls:!ie?'b':ie>=100?'g':ie>=90?'y':'r',accent:!ie?'var(--blue)':ie>=100?'var(--green)':ie>=90?'var(--yellow)':'var(--red)',sub:`vs ${periodPrev}`,sub2:ie?(ie>=100?'▲ Por encima del año anterior':'▼ Por debajo del año anterior'):''},
     {lbl:`MS% Línea · ${period}`,num:ms!=null?ms.toFixed(1)+'%':'—',cls:'b',accent:'var(--blue)',sub:'del mercado OTC',sub2:mkt?`${fmt(mkt)} u. total mercado`:''},
-    {lbl:`Unidades · ${period}`,num:!units?'—':units>=1e6?(units/1e6).toFixed(2)+'M':units>=1e3?(units/1e3).toFixed(1)+'k':fmt(units),cls:'b',accent:'var(--cyan)',sub:'SIE OTC',sub2:unitsPrev?`${periodPrev}: ${fmt(unitsPrev)} u.`:''},
-    {lbl:`MS% Recetas · ${D.meta?.rec_label||'Recetas'}`,num:k.ms_rec?k.ms_rec.toFixed(1)+'%':'—',cls:'p',accent:'var(--purple)',sub:k.sie_rec_dic25?`${fmt(k.sie_rec_dic25)} de ${fmt(k.tot_rec_dic25)} rec.`:'',sub2:'CloseUp · mercado OTC'},
-    {lbl:`Crecimiento Línea · ${period}`,num:ie&&ie>0?(ie>=100?'+':'')+(ie-100).toFixed(1)+'%':'—',cls:ie>=100?'g':'r',accent:ie>=100?'var(--green)':'var(--red)',sub:ie?`iEvol ${ie}`:'',sub2:units&&unitsPrev?`${fmt(units)} vs ${fmt(unitsPrev)} u.`:''},
+    {lbl:`Unidades · ${period}`,num:!units?'—':units>=1e6?(units/1e6).toFixed(2)+'M':units>=1e3?(units/1e3).toFixed(1)+'k':fmt(units),cls:'b',accent:'var(--cyan)',sub:'SIE OTC',sub2:unitsPrev?`${periodPrev}: ${fmt(unitsPrev)} u.`:''},    {lbl:`Crecimiento Línea · ${period}`,num:ie&&ie>0?(ie>=100?'+':'')+(ie-100).toFixed(1)+'%':'—',cls:ie>=100?'g':'r',accent:ie>=100?'var(--green)':'var(--red)',sub:ie?`iEvol ${ie}`:'',sub2:units&&unitsPrev?`${fmt(units)} vs ${fmt(unitsPrev)} u.`:''},
     {lbl:`Presupuesto · ${D.meta?.budget_label||'2026'}`,num:bud?bud+'%':'—',cls:bud>=100?'g':bud>=85?'y':'r',accent:bud>=100?'var(--green)':bud>=85?'var(--yellow)':'var(--red)',sub:k.bud_total?`${fmt(k.real_total)} de ${fmt(k.bud_total)} u.`:'Sin datos budget',sub2:!k.bud_total?'':bud>=100?'✓ Objetivo alcanzado':`Δ ${fmt((k.real_total||0)-(k.bud_total||0))} u.`},
+
+    {lbl:`MS% Recetas · ${D.meta?.rec_label||'Recetas'}`,num:k.ms_rec?k.ms_rec.toFixed(1)+'%':'—',cls:'p',accent:'var(--purple)',sub:k.sie_rec_dic25?`${fmt(k.sie_rec_dic25)} de ${fmt(k.tot_rec_dic25)} rec.`:'',sub2:'CloseUp · mercado OTC'},
   ];
   document.getElementById('s-kpi').innerHTML=items.map(x=>`<div class="kpi"><div class="kpi-accent" style="background:${x.accent}"></div><p class="kpi-lbl">${x.lbl}</p><p class="kpi-num ${x.cls}">${x.num}</p><p class="kpi-sub">${x.sub}</p><p class="kpi-sub2">${x.sub2||''}</p></div>`).join('');
 }

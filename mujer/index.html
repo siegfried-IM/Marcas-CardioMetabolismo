@@ -818,12 +818,6 @@ function renderKpis(){
       sub2: unitsPrev ? `${periodPrev}: ${fmt(unitsPrev)} u.` : '',
     },
     {
-      lbl:'MS% Recetas · Dic\'25',
-      num: k.ms_rec ? k.ms_rec.toFixed(1)+'%' : '—', cls:'p', accent:'var(--purple)',
-      sub:k.sie_rec_dic25?`${fmt(k.sie_rec_dic25)} de ${fmt(k.tot_rec_dic25)} rec.`:'',
-      sub2:'CloseUp · mercado completo',
-    },
-    {
       lbl:`Crecimiento Línea · ${period}`,
       num: ie&&ie>0 ? (ie>=100?'+':'')+(ie-100).toFixed(1)+'%' : '—',
       cls: ie>=100?'g':'r', accent: ie>=100?'var(--green)':'var(--red)',
@@ -835,6 +829,12 @@ function renderKpis(){
       num: bud ? bud+'%' : '—', cls:budColor, accent:budAccent,
       sub:k.bud_total?`${fmt(k.real_total)} de ${fmt(k.bud_total)} u.`:'Sin datos budget',
       sub2: !k.bud_total?'':bud>=100 ? '✓ Objetivo alcanzado' : `Δ ${fmt((k.real_total||0) - (k.bud_total||0))} u.`,
+    },
+    {
+      lbl:'MS% Recetas · Dic\'25',
+      num: k.ms_rec ? k.ms_rec.toFixed(1)+'%' : '—', cls:'p', accent:'var(--purple)',
+      sub:k.sie_rec_dic25?`${fmt(k.sie_rec_dic25)} de ${fmt(k.tot_rec_dic25)} rec.`:'',
+      sub2:'CloseUp · mercado completo',
     },
   ];
 
