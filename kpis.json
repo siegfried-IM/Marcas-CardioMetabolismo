@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-05T08:35:21",
+  "generated_at": "2026-05-05T08:48:14",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -410,13 +410,13 @@
             "ie": 25.1
           },
           "ms_recetas": {
-            "curr": 5.59,
-            "prev": 23.93
+            "curr": 4.62,
+            "prev": 11.1
           },
           "mercado_recetas": {
-            "curr": 117424,
-            "prev": 109348,
-            "ie": 107.4
+            "curr": 142078,
+            "prev": 235684,
+            "ie": 60.3
           },
           "units_sie": {
             "curr": 284261,
@@ -445,13 +445,13 @@
             "ie": 75.7
           },
           "ms_recetas": {
-            "curr": 11.31,
-            "prev": 23.56
+            "curr": 9.99,
+            "prev": 11.23
           },
           "mercado_recetas": {
-            "curr": 542800,
-            "prev": 344316,
-            "ie": 157.6
+            "curr": 614193,
+            "prev": 722406,
+            "ie": 85.0
           },
           "units_sie": {
             "curr": 806414,
@@ -480,13 +480,13 @@
             "ie": 75.7
           },
           "ms_recetas": {
-            "curr": 11.31,
-            "prev": 23.56
+            "curr": 9.99,
+            "prev": 11.23
           },
           "mercado_recetas": {
-            "curr": 542800,
-            "prev": 344316,
-            "ie": 157.6
+            "curr": 614193,
+            "prev": 722406,
+            "ie": 85.0
           },
           "units_sie": {
             "curr": 806414,
@@ -515,13 +515,13 @@
             "ie": 96.1
           },
           "ms_recetas": {
-            "curr": 16.73,
-            "prev": 21.61
+            "curr": 10.67,
+            "prev": 13.99
           },
           "mercado_recetas": {
-            "curr": 861989,
-            "prev": 694535,
-            "ie": 124.1
+            "curr": 1351628,
+            "prev": 1072625,
+            "ie": 126.0
           },
           "units_sie": {
             "curr": 1619193,
@@ -550,13 +550,13 @@
             "ie": 104.9
           },
           "ms_recetas": {
-            "curr": 20.36,
-            "prev": 20.6
+            "curr": 10.83,
+            "prev": 16.27
           },
           "mercado_recetas": {
-            "curr": 1509408,
-            "prev": 1422351,
-            "ie": 106.1
+            "curr": 2836250,
+            "prev": 1800440,
+            "ie": 157.5
           },
           "units_sie": {
             "curr": 3249306,
@@ -2098,9 +2098,9 @@
       "family": "D3",
       "periods": {
         "mensual": {
-          "rec_curr": 6556,
-          "rec_prev": 0,
-          "rec_ie": null,
+          "rec_curr": 7152,
+          "rec_prev": 5938,
+          "rec_ie": 120.4,
           "units_curr": 21916,
           "units_prev": 16851,
           "units_ie": 130.1,
@@ -2109,9 +2109,9 @@
           "int_ie": 147.5
         },
         "ytd": {
-          "rec_curr": 18829,
-          "rec_prev": 0,
-          "rec_ie": null,
+          "rec_curr": 20784,
+          "rec_prev": 17740,
+          "rec_ie": 117.2,
           "units_curr": 58991,
           "units_prev": 46621,
           "units_ie": 126.5,
@@ -2120,9 +2120,9 @@
           "int_ie": 110.8
         },
         "trimestre": {
-          "rec_curr": 18829,
-          "rec_prev": 0,
-          "rec_ie": null,
+          "rec_curr": 20784,
+          "rec_prev": 17740,
+          "rec_ie": 117.2,
           "units_curr": 58991,
           "units_prev": 46621,
           "units_ie": 126.5,
@@ -2131,9 +2131,9 @@
           "int_ie": 110.8
         },
         "semestre": {
-          "rec_curr": 18829,
-          "rec_prev": 0,
-          "rec_ie": null,
+          "rec_curr": 44387,
+          "rec_prev": 17740,
+          "rec_ie": 250.2,
           "units_curr": 132074,
           "units_prev": 104302,
           "units_ie": 126.6,
@@ -2142,9 +2142,9 @@
           "int_ie": 120.4
         },
         "mat": {
-          "rec_curr": 18829,
-          "rec_prev": 0,
-          "rec_ie": null,
+          "rec_curr": 89440,
+          "rec_prev": 17740,
+          "rec_ie": 504.2,
           "units_curr": 276665,
           "units_prev": 217854,
           "units_ie": 127.0,
@@ -4933,9 +4933,9 @@
       "family": "D3",
       "periods": {
         "mensual": {
-          "rec_curr": 8,
-          "rec_prev": 0,
-          "rec_ie": null,
+          "rec_curr": 9,
+          "rec_prev": 42,
+          "rec_ie": 21.4,
           "units_curr": 0,
           "units_prev": 154,
           "units_ie": 0.0,
@@ -4944,9 +4944,9 @@
           "int_ie": 147.5
         },
         "ytd": {
-          "rec_curr": 19,
-          "rec_prev": 0,
-          "rec_ie": null,
+          "rec_curr": 21,
+          "rec_prev": 135,
+          "rec_ie": 15.6,
           "units_curr": 0,
           "units_prev": 476,
           "units_ie": 0.0,
@@ -4955,9 +4955,9 @@
           "int_ie": 110.8
         },
         "trimestre": {
-          "rec_curr": 19,
-          "rec_prev": 0,
-          "rec_ie": null,
+          "rec_curr": 21,
+          "rec_prev": 135,
+          "rec_ie": 15.6,
           "units_curr": 0,
           "units_prev": 476,
           "units_ie": 0.0,
@@ -4966,9 +4966,9 @@
           "int_ie": 110.8
         },
         "semestre": {
-          "rec_curr": 19,
-          "rec_prev": 0,
-          "rec_ie": null,
+          "rec_curr": 53,
+          "rec_prev": 135,
+          "rec_ie": 39.3,
           "units_curr": 1,
           "units_prev": 1093,
           "units_ie": 0.1,
@@ -4977,9 +4977,9 @@
           "int_ie": 120.4
         },
         "mat": {
-          "rec_curr": 19,
-          "rec_prev": 0,
-          "rec_ie": null,
+          "rec_curr": 229,
+          "rec_prev": 135,
+          "rec_ie": 169.6,
           "units_curr": 267,
           "units_prev": 2862,
           "units_ie": 9.3,
