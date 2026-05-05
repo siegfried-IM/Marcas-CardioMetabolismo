@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-04T22:35:51",
+  "generated_at": "2026-05-05T08:35:21",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -1840,69 +1840,6 @@
       }
     },
     {
-      "name": "SIDERBLUT (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "SOLO",
-      "periods": {
-        "mensual": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 32016,
-          "units_prev": 28524,
-          "units_ie": 112.2,
-          "int_curr": 69317,
-          "int_prev": 56361,
-          "int_ie": 123.0
-        },
-        "ytd": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 90522,
-          "units_prev": 86170,
-          "units_ie": 105.1,
-          "int_curr": 195638,
-          "int_prev": 175035,
-          "int_ie": 111.8
-        },
-        "trimestre": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 90522,
-          "units_prev": 86170,
-          "units_ie": 105.1,
-          "int_curr": 195638,
-          "int_prev": 175035,
-          "int_ie": 111.8
-        },
-        "semestre": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 181600,
-          "units_prev": 182976,
-          "units_ie": 99.2,
-          "int_curr": 365361,
-          "int_prev": 366060,
-          "int_ie": 99.8
-        },
-        "mat": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 358708,
-          "units_prev": 363018,
-          "units_ie": 98.8,
-          "int_curr": 735491,
-          "int_prev": 734068,
-          "int_ie": 100.2
-        }
-      }
-    },
-    {
       "name": "ISIS MINI (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -2596,69 +2533,6 @@
       }
     },
     {
-      "name": "FER-IN-SOL (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "SOLO",
-      "periods": {
-        "mensual": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 20536,
-          "units_prev": 19024,
-          "units_ie": 107.9,
-          "int_curr": 69317,
-          "int_prev": 56361,
-          "int_ie": 123.0
-        },
-        "ytd": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 57619,
-          "units_prev": 56292,
-          "units_ie": 102.4,
-          "int_curr": 195638,
-          "int_prev": 175035,
-          "int_ie": 111.8
-        },
-        "trimestre": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 57619,
-          "units_prev": 56292,
-          "units_ie": 102.4,
-          "int_curr": 195638,
-          "int_prev": 175035,
-          "int_ie": 111.8
-        },
-        "semestre": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 115973,
-          "units_prev": 116476,
-          "units_ie": 99.6,
-          "int_curr": 365361,
-          "int_prev": 366060,
-          "int_ie": 99.8
-        },
-        "mat": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 235904,
-          "units_prev": 237446,
-          "units_ie": 99.4,
-          "int_curr": 735491,
-          "int_prev": 734068,
-          "int_ie": 100.2
-        }
-      }
-    },
-    {
       "name": "ISIS MINI 24 (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -2970,69 +2844,6 @@
           "int_curr": 112742,
           "int_prev": 74147,
           "int_ie": 152.1
-        }
-      }
-    },
-    {
-      "name": "SIDERBLUT POLI (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "SOLO",
-      "periods": {
-        "mensual": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 9793,
-          "units_prev": 7946,
-          "units_ie": 123.2,
-          "int_curr": 69317,
-          "int_prev": 56361,
-          "int_ie": 123.0
-        },
-        "ytd": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 27012,
-          "units_prev": 24107,
-          "units_ie": 112.1,
-          "int_curr": 195638,
-          "int_prev": 175035,
-          "int_ie": 111.8
-        },
-        "trimestre": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 27012,
-          "units_prev": 24107,
-          "units_ie": 112.1,
-          "int_curr": 195638,
-          "int_prev": 175035,
-          "int_ie": 111.8
-        },
-        "semestre": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 54364,
-          "units_prev": 48893,
-          "units_ie": 111.2,
-          "int_curr": 365361,
-          "int_prev": 366060,
-          "int_ie": 99.8
-        },
-        "mat": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 106544,
-          "units_prev": 104828,
-          "units_ie": 101.6,
-          "int_curr": 735491,
-          "int_prev": 734068,
-          "int_ie": 100.2
         }
       }
     },
@@ -4108,69 +3919,6 @@
       }
     },
     {
-      "name": "SIDERBLUT GOTAS (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "SOLO",
-      "periods": {
-        "mensual": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 2606,
-          "units_prev": 1951,
-          "units_ie": 133.6,
-          "int_curr": 69317,
-          "int_prev": 56361,
-          "int_ie": 123.0
-        },
-        "ytd": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 6943,
-          "units_prev": 5988,
-          "units_ie": 115.9,
-          "int_curr": 195638,
-          "int_prev": 175035,
-          "int_ie": 111.8
-        },
-        "trimestre": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 6943,
-          "units_prev": 5988,
-          "units_ie": 115.9,
-          "int_curr": 195638,
-          "int_prev": 175035,
-          "int_ie": 111.8
-        },
-        "semestre": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 13185,
-          "units_prev": 12339,
-          "units_ie": 106.9,
-          "int_curr": 365361,
-          "int_prev": 366060,
-          "int_ie": 99.8
-        },
-        "mat": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 26054,
-          "units_prev": 24915,
-          "units_ie": 104.6,
-          "int_curr": 735491,
-          "int_prev": 734068,
-          "int_ie": 100.2
-        }
-      }
-    },
-    {
       "name": "CALCIO BASE D (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -4734,69 +4482,6 @@
           "int_curr": 10941,
           "int_prev": 11795,
           "int_ie": 92.8
-        }
-      }
-    },
-    {
-      "name": "SIDERBLUT IM (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "SOLO",
-      "periods": {
-        "mensual": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 1083,
-          "units_prev": 1128,
-          "units_ie": 96.0,
-          "int_curr": 69317,
-          "int_prev": 56361,
-          "int_ie": 123.0
-        },
-        "ytd": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 3276,
-          "units_prev": 3371,
-          "units_ie": 97.2,
-          "int_curr": 195638,
-          "int_prev": 175035,
-          "int_ie": 111.8
-        },
-        "trimestre": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 3276,
-          "units_prev": 3371,
-          "units_ie": 97.2,
-          "int_curr": 195638,
-          "int_prev": 175035,
-          "int_ie": 111.8
-        },
-        "semestre": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 6694,
-          "units_prev": 6836,
-          "units_ie": 97.9,
-          "int_curr": 365361,
-          "int_prev": 366060,
-          "int_ie": 99.8
-        },
-        "mat": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 13301,
-          "units_prev": 13115,
-          "units_ie": 101.4,
-          "int_curr": 735491,
-          "int_prev": 734068,
-          "int_ie": 100.2
         }
       }
     },
