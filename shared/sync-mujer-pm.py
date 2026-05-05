@@ -169,26 +169,55 @@ def aggregate_quarterly(monthly):
     return dict(out)
 
 
-def aggregate_ytd_per_year(monthly):
-    """Para cada año del data, suma todos los meses de Ene..Dic."""
+def aggregate_ytd_per_year(monthly, cierre_month=None):
+    """Para cada año del data, suma Jan..<cierre_month>.
+    Si cierre_month es None, usa Dic (12). Devuelve dict keyed por
+    '<mes_cierre> <YYYY>' (formato consistente con dashboards)."""
+    if not monthly: return {}
+    if cierre_month is None: cierre_month = 12
+    inv = {v: k for k, v in MES_INV.items()}  # 1->'Jan', etc.
+    mes_label = MES_INV.get(cierre_month) if cierre_month in MES_INV.values() else None
+    # cierre_month puede ser num int. Mapear a label:
+    if isinstance(cierre_month, int):
+        # MES_INV: {'Jan':1,...} so reverse
+        num_to_label = {v: k for k, v in MES_INV.items()}
+        mes_label = num_to_label.get(cierre_month, 'Dec')
     by_year = defaultdict(int)
     for mk, v in monthly.items():
         parts = mk.split()
-        if len(parts) == 2:
+        if len(parts) != 2: continue
+        m_num = MES_INV.get(parts[0])
+        if not m_num: continue
+        if m_num <= cierre_month:
             by_year[parts[1]] += v
-    return {f'Dec {y}': v for y, v in by_year.items()}
+    return {f'{mes_label} {y}': v for y, v in by_year.items()}
 
 
-def aggregate_mat(monthly, all_months):
-    """MAT = suma rolling 12 meses. Devuelve {mk: mat_value} por cada mes."""
-    sorted_mks = sorted(monthly.keys(), key=msort)
+def aggregate_mat(monthly, cierre_month=None):
+    """MAT por año = rolling 12 meses terminando en <cierre_month> de YYYY.
+    Devuelve dict keyed por '<mes_cierre> <YYYY>'."""
+    if not monthly: return {}
+    if cierre_month is None: cierre_month = 12
+    num_to_label = {v: k for k, v in MES_INV.items()}
+    mes_label = num_to_label.get(cierre_month, 'Dec')
+
+    # Identificar años con data
+    years_with = set()
+    for mk in monthly:
+        parts = mk.split()
+        if len(parts) == 2 and parts[0] in MES_INV:
+            years_with.add(int(parts[1]))
+
     out = {}
-    months_idx = {mk: i for i, mk in enumerate(sorted_mks)}
-    for mk in sorted_mks:
-        i = months_idx[mk]
-        if i < 11: continue  # No hay 12 meses previos
-        window = sorted_mks[i-11:i+1]
-        out[mk] = sum(monthly[m] for m in window)
+    for y in sorted(years_with):
+        # MAT termina en <cierre_month> y, empieza 11 meses antes
+        total = 0
+        for back in range(11, -1, -1):
+            total_idx = (y * 12 + (cierre_month - 1)) - back
+            yy, mm = divmod(total_idx, 12)
+            mk = f'{num_to_label[mm + 1]} {yy}'
+            total += int(monthly.get(mk, 0) or 0)
+        out[f'{mes_label} {y}'] = total
     return out
 
 
@@ -208,6 +237,8 @@ def main():
     print(f'  {len(all_months)} meses ({all_months[0]} .. {all_months[-1]})')
     print(f'  {len(by_product)} productos unicos en AR_PM')
     last_mk = all_months[-1]
+    # Cierre month como int (1-12) para aggregates ytd/mat
+    cierre_m = MES_INV.get(last_mk.split()[0], 12)
 
     # Read inline D
     html_path = Path(args.html)
@@ -242,8 +273,8 @@ def main():
             if not new_monthly: continue
             p['monthly_vals'] = new_monthly
             p['quarterly_vals'] = aggregate_quarterly(new_monthly)
-            p['ytd'] = aggregate_ytd_per_year(new_monthly)
-            p['mat'] = aggregate_mat(new_monthly, all_months)
+            p['ytd'] = aggregate_ytd_per_year(new_monthly, cierre_month=cierre_m)
+            p['mat'] = aggregate_mat(new_monthly, cierre_month=cierre_m)
             n_products_updated += 1
 
     # Step 2: Recompute family-level aggregates (sum of all products' monthly_vals)
@@ -258,8 +289,8 @@ def main():
         fam_monthly = dict(fam_monthly)
         fam_obj['monthly'] = fam_monthly
         fam_obj['quarterly'] = aggregate_quarterly(fam_monthly)
-        fam_obj['ytd'] = aggregate_ytd_per_year(fam_monthly)
-        fam_obj['mat'] = aggregate_mat(fam_monthly, all_months)
+        fam_obj['ytd'] = aggregate_ytd_per_year(fam_monthly, cierre_month=cierre_m)
+        fam_obj['mat'] = aggregate_mat(fam_monthly, cierre_month=cierre_m)
 
         # Step 3: Recompute MS for each product (vs family total)
         for p in prods:

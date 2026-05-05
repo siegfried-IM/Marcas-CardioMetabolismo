@@ -135,24 +135,42 @@ def aggregate_quarterly(monthly):
     return dict(out)
 
 
-def aggregate_ytd_per_year(monthly):
+def aggregate_ytd_per_year(monthly, cierre_month=12):
+    """YTD por año = sum Jan..<cierre_month>. Key = '<mes_cierre> <YYYY>'."""
+    if not monthly: return {}
+    num_to_label = {v: k for k, v in MES_INV.items()}
+    mes_label = num_to_label.get(cierre_month, 'Dec')
     by_year = defaultdict(int)
     for mk, v in monthly.items():
         parts = mk.split()
-        if len(parts) == 2:
+        if len(parts) != 2: continue
+        m_num = MES_INV.get(parts[0])
+        if not m_num: continue
+        if m_num <= cierre_month:
             by_year[parts[1]] += v
-    return {f'Dec {y}': v for y, v in by_year.items()}
+    return {f'{mes_label} {y}': v for y, v in by_year.items()}
 
 
-def aggregate_mat(monthly):
-    sorted_mks = sorted(monthly.keys(), key=msort)
+def aggregate_mat(monthly, cierre_month=12):
+    """MAT por año = rolling 12 meses terminando en <cierre_month>.
+    Key = '<mes_cierre> <YYYY>'."""
+    if not monthly: return {}
+    num_to_label = {v: k for k, v in MES_INV.items()}
+    mes_label = num_to_label.get(cierre_month, 'Dec')
+    years_with = set()
+    for mk in monthly:
+        parts = mk.split()
+        if len(parts) == 2 and parts[0] in MES_INV:
+            years_with.add(int(parts[1]))
     out = {}
-    months_idx = {mk: i for i, mk in enumerate(sorted_mks)}
-    for mk in sorted_mks:
-        i = months_idx[mk]
-        if i < 11: continue
-        window = sorted_mks[i-11:i+1]
-        out[mk] = sum(monthly[m] for m in window)
+    for y in sorted(years_with):
+        total = 0
+        for back in range(11, -1, -1):
+            total_idx = (y * 12 + (cierre_month - 1)) - back
+            yy, mm = divmod(total_idx, 12)
+            mk = f'{num_to_label[mm + 1]} {yy}'
+            total += int(monthly.get(mk, 0) or 0)
+        out[f'{mes_label} {y}'] = total
     return out
 
 
@@ -171,6 +189,8 @@ def main():
     print(f'Filtrando moleculas: {SNC_MOLECULES}')
     all_months, by_mol = load_pm(pm_path, SNC_MOLECULES)
     print(f'  {len(all_months)} meses ({all_months[0]} .. {all_months[-1]})')
+    # Cierre month como int (1-12) para aggregates ytd/mat
+    cierre_m = MES_INV.get(all_months[-1].split()[0], 12) if all_months else 12
     for mol, prods in by_mol.items():
         print(f'  [{mol}]: {len(prods)} productos')
 
@@ -209,8 +229,8 @@ def main():
                 fam_monthly[mk] += v
             is_sie = (prod_name in sie_set) or (str(info.get('manuf') or '').strip().upper() == 'SIEGFRIED')
             quarterly = aggregate_quarterly(monthly)
-            ytd = aggregate_ytd_per_year(monthly)
-            mat = aggregate_mat(monthly)
+            ytd = aggregate_ytd_per_year(monthly, cierre_month=cierre_m)
+            mat = aggregate_mat(monthly, cierre_month=cierre_m)
             product_list.append({
                 'prod': prod_name,
                 'manuf': info.get('manuf') or '',
@@ -227,8 +247,8 @@ def main():
 
         fam_monthly = dict(fam_monthly)
         fam_quarterly = aggregate_quarterly(fam_monthly)
-        fam_ytd = aggregate_ytd_per_year(fam_monthly)
-        fam_mat = aggregate_mat(fam_monthly)
+        fam_ytd = aggregate_ytd_per_year(fam_monthly, cierre_month=cierre_m)
+        fam_mat = aggregate_mat(fam_monthly, cierre_month=cierre_m)
 
         # Compute MS por producto vs total molecula
         for p in product_list:
