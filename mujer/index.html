@@ -1255,18 +1255,6 @@ function renderRec(){
         fill:false,tension:.3,pointRadius:2,borderWidth:1.5,borderDash:[4,3],order:i+2
       });
     });
-    if(Object.keys(compData).length){
-      const mktSeries=keys.map(k=>{
-        let s=0;Object.values(compData).forEach(p=>{s+=(p[metricField]?.[k]||0);});
-        return s||null;
-      });
-      datasets.push({
-        label:rView==='rec'?'Recetas Mercado':'Médicos Mercado',data:mktSeries,
-        borderColor:'#111827',backgroundColor:'transparent',
-        fill:false,tension:.3,pointRadius:2,pointBackgroundColor:'#111827',
-        borderWidth:2,borderDash:[6,3],order:999
-      });
-    }
     document.getElementById('rec-comp-panel').style.display='block';
     renderRecComp(rProd,keys,rView);
   }
