@@ -554,100 +554,6 @@ body {
   letter-spacing: .1em;
 }
 
-/* ─── EDIT BTN ───────────────────────────────────────────────────── */
-.edit-btn {
-  position: fixed;
-  bottom: 24px; right: 24px; z-index: 200;
-  background: var(--red);
-  color: #fff; border: none; cursor: pointer;
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: .1em; text-transform: uppercase;
-  display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 4px 20px rgba(139,21,21,.4);
-  transition: background .15s, transform .15s, box-shadow .15s;
-}
-.edit-btn:hover {
-  background: var(--red-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 28px rgba(139,21,21,.5);
-}
-
-/* ─── MODAL ──────────────────────────────────────────────────────── */
-.overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 300;
-  background: rgba(17,24,39,.5);
-  backdrop-filter: blur(4px);
-  align-items: center; justify-content: center;
-  padding: 20px;
-}
-.overlay.open { display: flex; }
-.modal {
-  background: var(--white);
-  border-radius: 12px;
-  border-top: 4px solid var(--red);
-  padding: 32px;
-  width: 540px; max-width: 100%;
-  max-height: 85vh; overflow-y: auto;
-  box-shadow: 0 24px 64px rgba(0,0,0,.2);
-}
-.modal-header { margin-bottom: 20px; }
-.modal-header h3 {
-  font-size: 18px; font-weight: 700;
-  letter-spacing: -.02em; color: var(--gray-900);
-  margin-bottom: 4px;
-}
-.modal-header p {
-  font-size: 12px; color: var(--gray-500); line-height: 1.6;
-}
-.url-row {
-  display: flex; flex-direction: column; gap: 5px;
-  margin-bottom: 14px;
-}
-.url-row label {
-  font-size: 10px; font-weight: 700;
-  letter-spacing: .1em; text-transform: uppercase;
-  color: var(--gray-500);
-  display: flex; align-items: center; gap: 8px;
-}
-.url-row input {
-  background: var(--gray-50);
-  border: 1px solid var(--gray-200);
-  border-radius: 6px;
-  padding: 9px 12px;
-  color: var(--gray-900);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px; width: 100%;
-  transition: border-color .15s, background .15s;
-}
-.url-row input:focus {
-  outline: none;
-  border-color: var(--red);
-  background: var(--white);
-  box-shadow: 0 0 0 3px rgba(176,30,30,.08);
-}
-.url-row input::placeholder { color: var(--gray-300); }
-.modal-btns {
-  display: flex; gap: 8px; justify-content: flex-end;
-  margin-top: 24px; padding-top: 20px;
-  border-top: 1px solid var(--gray-200);
-}
-.btn { 
-  padding: 9px 20px; border-radius: 6px; cursor: pointer;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 12px; font-weight: 600;
-  letter-spacing: .06em; border: none;
-  transition: background .15s;
-}
-.btn-primary { background: var(--red); color: #fff; }
-.btn-primary:hover { background: var(--red-dark); }
-.btn-ghost {
-  background: transparent; color: var(--gray-500);
-  border: 1px solid var(--gray-200);
-}
 .card-owner {
   display: flex;
   align-items: center;
@@ -910,34 +816,9 @@ body {
 </div>
 
 
-<!-- ═══ MODAL ══════════════════════════════════════════════════════════ -->
-<div class="overlay" id="overlay">
-  <div class="modal">
-    <div class="modal-header">
-      <h3>Configurar URLs de tableros</h3>
-      <p>Pegá la URL de cada tablero (GitHub Pages u otro hosting). Cuando se agrega una URL válida, la tarjeta pasa a estado <strong>Live</strong> y el botón queda activo.</p>
-    </div>
-    <div id="url-fields"></div>
-    <div class="modal-btns">
-      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveUrls()">Guardar cambios</button>
-    </div>
-  </div>
-</div>
-
 <script>
-const LINES = [
-  { key:'cardio', label:'❤️  CardioMetabólica',      color:'#B01E1E' },
-  { key:'antibio',label:'🦠  Antibióticos',           color:'#16A34A' },
-  { key:'resp',   label:'🫁  Respiratoria',            color:'#0D9488' },
-  { key:'mujer',  label:'🌸  Línea Mujer',             color:'#DB2777' },
-  { key:'snc',    label:'🧠  SNC',                     color:'#7C3AED' },
-  { key:'derma',  label:'🩹  Dermatología',            color:'#D97706' },
-  { key:'otx',    label:'💊  OTC',                     color:'#0284C7' },
-];
-
 function loadUrls() {
-  const DEFAULTS = {
+  return {
     cardio: 'cardio/',
     snc: 'SNC/',
     antibio: 'ATB/',
@@ -946,13 +827,6 @@ function loadUrls() {
     otx: 'OTC/',
     resp: 'respiratorio/'
   };
-
-  try {
-    const saved = JSON.parse(localStorage.getItem('sie_hub_urls') || '{}');
-    return Object.assign({}, DEFAULTS, saved);
-  } catch (e) {
-    return DEFAULTS;
-  }
 }
 
 function applyUrls() {
@@ -1011,37 +885,6 @@ function applyUrls() {
   });
   document.getElementById('live-count').textContent = live || 1;
 }
-
-function openModal() {
-  const urls = loadUrls();
-  document.getElementById('url-fields').innerHTML = LINES.map(l => `
-    <div class="url-row">
-      <label>
-        <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:3px;background:${l.color};font-size:9px;">
-        </span>
-        ${l.label}
-      </label>
-      <input type="url" data-key="${l.key}" value="${urls[l.key]||''}"
-        placeholder="https://usuario.github.io/tablero-${l.key}.html">
-    </div>
-  `).join('');
-  document.getElementById('overlay').classList.add('open');
-}
-function closeModal() {
-  document.getElementById('overlay').classList.remove('open');
-}
-function saveUrls() {
-  const urls = {};
-  document.querySelectorAll('#url-fields input').forEach(i => {
-    const v = i.value.trim();
-    if (v) urls[i.dataset.key] = v;
-  });
-  localStorage.setItem('sie_hub_urls', JSON.stringify(urls));
-  applyUrls();
-  closeModal();
-}
-document.getElementById('overlay').addEventListener('click', e => { if (e.target===e.currentTarget) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
 
 // Date
 const months = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];

@@ -3,9 +3,12 @@
 shared/merge-ventas-internas.py
 
 Actualiza budget[fam].YYYY.real (venta interna) en todas las lineas
-desde 'Planilla de Ventas - <fecha>.xlsx' que tiene formato:
+desde un xlsx de Planilla de Ventas con formato:
 
-  Familia | Abr-2025 | May-2025 | ... | Mar-2026 | Abr-2026
+  Familia | Ene-YYYY | Feb-YYYY | ... | Dic-YYYY+1
+
+Acepta tanto el formato corto (1 fila de header con meses) como
+el largo (2 filas de header). Detecta automaticamente.
 
 Solo actualiza venta interna (real). NO toca presupuesto (budget).
 NO toca rec_ms, rec_comp, recetas, mol_perf, stock, etc.
@@ -15,7 +18,10 @@ linea. Para mujer (que usa segmentos como 'SIN ESTROGENO' en el
 inline D), aplica el mapeo brand->segment definido abajo.
 
 Uso:
-    py shared/merge-ventas-internas.py [--file <path>] [--dry-run]
+    py shared/merge-ventas-internas.py [--file <path>] [--cutoff YYYY-MM] [--dry-run]
+
+  --cutoff: ultimo mes cerrado a incluir. Meses posteriores se
+            ignoran (data parcial). Ej: --cutoff 2026-04 ignora May+.
 """
 
 from __future__ import annotations
@@ -62,14 +68,30 @@ MUJER_SEGMENT_TO_FAMS = {
 }
 
 
-def parse_xlsx(path):
-    """Devuelve dict[familia] = {(year, month_idx): value} para todos los meses."""
+def parse_xlsx(path, cutoff=None):
+    """Devuelve dict[familia] = {(year, month_idx): value}.
+    cutoff = (year, month_idx) o None. Meses posteriores se ignoran."""
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
     ws = wb.active
-    row1 = list(next(ws.iter_rows(min_row=1, max_row=1, values_only=True)))
+
+    # Detectar fila con headers de meses (a veces hay 2 filas, queremos
+    # la que tenga "Ene-YYYY", "Feb-YYYY", etc.)
+    header_row = None
+    data_start = 2
+    for ri in (1, 2):
+        row = list(next(ws.iter_rows(min_row=ri, max_row=ri, values_only=True)))
+        if not row: continue
+        # ¿Tiene al menos un header tipo Mes-YYYY?
+        if any(re.match(r'\w+[\s\-/]\d{4}', str(h).strip()) for h in row if h):
+            header_row = row
+            data_start = ri + 1
+            break
+    if header_row is None:
+        header_row = list(next(ws.iter_rows(min_row=1, max_row=1, values_only=True)))
+        data_start = 2
 
     col_to_ym = {}  # col_idx -> (year, month_idx 0..11)
-    for i, h in enumerate(row1):
+    for i, h in enumerate(header_row):
         if not h or i == 0: continue
         s = str(h).strip()
         m = re.match(r'(\w+)[\s\-/](\d{4})', s)
@@ -78,13 +100,20 @@ def parse_xlsx(path):
         year = int(m.group(2))
         midx = MES_ES.get(mes)
         if midx is None: continue
+        # Aplicar cutoff
+        if cutoff is not None:
+            cy, cm = cutoff
+            if (year, midx) > (cy, cm):
+                continue
         col_to_ym[i] = (year, midx)
 
     out = {}
-    for row in ws.iter_rows(min_row=2, values_only=True):
+    for row in ws.iter_rows(min_row=data_start, values_only=True):
         if not row or len(row) < 1 or not row[0]: continue
         fam = str(row[0]).strip()
         if not fam: continue
+        # Skip header-like rows (e.g., 'Familia' as data row in 2-header layout)
+        if fam.lower() in ('familia', 'familias', 'family'): continue
         out[fam] = {}
         for ci, ym in col_to_ym.items():
             if ci >= len(row): continue
@@ -186,6 +215,7 @@ def update_budget(budget, fam_to_excel, years_seen, line_key):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--file', default=str(DEFAULT_FILE))
+    ap.add_argument('--cutoff', help="Ultimo mes cerrado, formato 'YYYY-MM'. Meses posteriores se ignoran.")
     ap.add_argument('--dry-run', action='store_true')
     args = ap.parse_args()
 
@@ -193,8 +223,16 @@ def main():
     if not fp.is_file():
         print(f'ERROR: archivo no existe: {fp}', file=sys.stderr); return 2
 
+    cutoff = None
+    if args.cutoff:
+        m = re.match(r'(\d{4})-(\d{2})', args.cutoff)
+        if not m:
+            print(f'ERROR: --cutoff debe ser YYYY-MM, recibido: {args.cutoff}', file=sys.stderr); return 2
+        cutoff = (int(m.group(1)), int(m.group(2)) - 1)
+        print(f'Cutoff: incluir hasta {args.cutoff} (mes idx {cutoff[1]})')
+
     print(f'Leyendo: {fp}')
-    fam_data, years_seen = parse_xlsx(fp)
+    fam_data, years_seen = parse_xlsx(fp, cutoff=cutoff)
     print(f'  {len(fam_data)} familias en xlsx, años: {years_seen}')
 
     for line in LINES:
