@@ -270,22 +270,42 @@ def compute_iqvia_kpi(D, window_curr, window_prev):
                     all_dicts.append(p.get('monthly_vals', {}))
     cov_curr = coverage(all_dicts, window_curr)
     cov_prev = coverage(all_dicts, window_prev)
+
+    # Primer pase: identificar la family "primary" de cada SIE product.
+    # Primary = la family cuyo m_key = base_name del producto. Si no hay,
+    # se usa la primera ocurrencia.
+    sie_primary_fam = {}  # name -> m_key primary
+    for m_key, obj in mol.items():
+        if not isinstance(obj, dict): continue
+        for p in obj.get('products', []):
+            if not p.get('is_sie'): continue
+            name = p.get('prod', '')
+            if not name: continue
+            base_name = re.sub(r'\s*\(.*?\)\s*$', '', name).strip().upper()
+            is_primary = (base_name == m_key.upper())
+            if name not in sie_primary_fam or is_primary:
+                sie_primary_fam[name] = m_key
+
+    # Segundo pase: agregar mkt (todos los products incl competidores) y
+    # SIE solo en la primary family.
     sie_curr = sie_prev = 0.0
     mkt_curr = mkt_prev = 0.0
     for m_key, obj in mol.items():
         if not isinstance(obj, dict): continue
-        prods = obj.get('products', [])
-        for p in prods:
+        for p in obj.get('products', []):
             mv = p.get('monthly_vals', {})
             is_sie = bool(p.get('is_sie'))
+            name = p.get('prod', '')
             for mk in window_curr:
                 v = float(mv.get(mk, 0) or 0)
                 mkt_curr += v
-                if is_sie: sie_curr += v
+                if is_sie and sie_primary_fam.get(name) == m_key:
+                    sie_curr += v
             for mk in window_prev:
                 v = float(mv.get(mk, 0) or 0)
                 mkt_prev += v
-                if is_sie: sie_prev += v
+                if is_sie and sie_primary_fam.get(name) == m_key:
+                    sie_prev += v
     incomplete_prev = cov_prev < len(window_prev) * 0.8
     incomplete_curr = cov_curr < len(window_curr) * 0.8
     return {
@@ -296,24 +316,50 @@ def compute_iqvia_kpi(D, window_curr, window_prev):
     }
 
 
-def get_internal_sales(D, prod_name, fam_key, window_curr, window_prev):
+def _sum_budget_real(target, window_curr, window_prev):
+    """Helper: dado un budget[KEY] dict ({YYYY: {real:[m1..m12]}}),
+    devuelve (suma_curr, suma_prev) sumando los meses de window_curr/prev."""
+    monthly_real = {}
+    for year_str, year_data in target.items():
+        if not isinstance(year_data, dict): continue
+        real_arr = year_data.get('real', [])
+        if not isinstance(real_arr, list): continue
+        try: year = int(year_str)
+        except ValueError: continue
+        for i, v in enumerate(real_arr):
+            if v is None or v == 0 or i >= 12: continue
+            mk = f'{MES_EN[i+1]} {year}'
+            monthly_real[mk] = float(v)
+    curr = sum(monthly_real.get(mk, 0) for mk in window_curr)
+    prev = sum(monthly_real.get(mk, 0) for mk in window_prev)
+    return (curr, prev)
+
+
+def get_internal_sales(D, prod_name, fam_key, window_curr, window_prev,
+                       is_primary=True):
     """Devuelve (curr, prev) de venta interna del SIE product.
 
     Busca budget[KEY].YYYY.real con KEY en este orden:
       1) prod_name exacto
       2) prod_name sin '(SIE)' o ' SIE'
-      3) fam_key del mol_perf
+      3) fam_key del mol_perf — pero solo si is_primary=True (sino
+         seria double-count para variantes que comparten budget de
+         familia)
     Si encuentra, suma los meses del window."""
     budget = D.get('budget', {})
     if not budget: return (None, None)
 
     base = re.sub(r'\s*\(.*?\)\s*$', '', str(prod_name)).strip()
     base = re.sub(r'\s+SIE\s*$', '', base, flags=re.I).strip()
-    candidates = [prod_name, base, fam_key]
+    # Probar match directo primero
     target = None
-    for c in candidates:
+    for c in [prod_name, base]:
         if c and c in budget and isinstance(budget[c], dict):
             target = budget[c]; break
+    # Fallback al fam_key SOLO si este es el primary del family
+    if target is None and is_primary and fam_key and fam_key in budget:
+        if isinstance(budget[fam_key], dict):
+            target = budget[fam_key]
     if target is None: return (None, None)
 
     monthly_real = {}
@@ -358,9 +404,13 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
     rec_comp = D.get('rec_comp', {})
     rec_ms = D.get('rec_ms', {})
 
-    # 1) Recoger SIE products de mol_perf con units
+    # 1) Recoger SIE products de mol_perf con units.
+    # Algunas familias de mol_perf incluyen el producto padre (ej. mol_perf
+    # [DILATREND AP].products contiene DILATREND (SIE) ademas de DILATREND
+    # AP (SIE)). Para evitar double-count, usamos la PRIMERA ocurrencia del
+    # producto en su family "primary" (la que mas matchea el nombre).
     sie_units_by_prod = {}    # prod_name -> {curr, prev, family, fam_key}
-    sie_per_fam = defaultdict(list)  # fam_key -> [prod_name, ...] de productos SIE
+    sie_per_fam = defaultdict(list)  # fam_key -> [prod_name, ...] de productos SIE primary
     for m_key, obj in mol.items():
         if not isinstance(obj, dict): continue
         family = obj.get('family', m_key)
@@ -368,16 +418,32 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
             if not p.get('is_sie'): continue
             name = p.get('prod', '')
             if not name: continue
+            # Determinar si esta es la "primary" family de este producto.
+            # Heuristica: la family donde el nombre del producto sin (SIE)
+            # matchea el m_key (e.g. DILATREND (SIE) -> DILATREND).
+            base_name = re.sub(r'\s*\(.*?\)\s*$', '', name).strip().upper()
+            is_primary = (base_name == m_key.upper())
             mv = p.get('monthly_vals', {})
             curr = sum_window(mv, window_curr)
             prev = sum_window(mv, window_prev)
-            if name in sie_units_by_prod:
-                sie_units_by_prod[name]['curr'] += curr
-                sie_units_by_prod[name]['prev'] += prev
+            existing = sie_units_by_prod.get(name)
+            if existing:
+                # Si el existente NO era primary y este SI lo es, reemplazar.
+                # Sino, ignorar duplicado (no sumar).
+                if is_primary and not existing.get('is_primary'):
+                    sie_per_fam[existing['fam_key']].remove(name)
+                    sie_units_by_prod[name] = {
+                        'curr': curr, 'prev': prev,
+                        'family': family, 'fam_key': m_key,
+                        'is_primary': True,
+                    }
+                    sie_per_fam[m_key].append(name)
+                # else: skip (duplicado)
             else:
                 sie_units_by_prod[name] = {
                     'curr': curr, 'prev': prev,
-                    'family': family, 'fam_key': m_key
+                    'family': family, 'fam_key': m_key,
+                    'is_primary': is_primary,
                 }
                 sie_per_fam[m_key].append(name)
 
@@ -540,11 +606,44 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
         u_curr = int(round(u_info['curr']))
         u_prev = int(round(u_info['prev']))
 
-        # Venta interna (budget.real) por SIE product
-        int_curr, int_prev = get_internal_sales(D, prod_name, u_info['fam_key'],
-                                                  rec_window_curr, rec_window_prev)
-        int_curr_int = int(round(int_curr)) if int_curr is not None else None
-        int_prev_int = int(round(int_prev)) if int_prev is not None else None
+        # Venta interna (budget.real) por SIE product.
+        # Estrategia: budget[FAM_KEY] cubre TODOS los SIE products del
+        # family. Lo repartimos proporcionalmente por units share IQVIA
+        # (igual que ya hacemos con recetas). Si un producto tiene su
+        # propio budget exacto (ej. BACTRIM FORTE -> budget[BACTRIM FORTE]),
+        # se usa directamente y no se reparte.
+        int_curr_v = int_prev_v = None
+        budget = D.get('budget', {})
+        base = re.sub(r'\s*\(.*?\)\s*$', '', str(prod_name)).strip()
+        base = re.sub(r'\s+SIE\s*$', '', base, flags=re.I).strip()
+        # Si el producto tiene fam_key DIFERENTE del fam parent (ej.
+        # BACTRIM FORTE -> fam_key='BACTRIM FORTE'), match exacto.
+        # Si fam_key matchea base_name (es primary), tambien match.
+        own_budget_key = None
+        for c in [prod_name, base]:
+            if c and c in budget and isinstance(budget[c], dict):
+                own_budget_key = c; break
+        # Si own_budget_key != fam_key, hay match propio especifico:
+        # usar tal cual sin reparto (porque budget no cubre siblings).
+        if own_budget_key and own_budget_key != u_info['fam_key']:
+            int_curr_v, int_prev_v = _sum_budget_real(
+                budget[own_budget_key], rec_window_curr, rec_window_prev)
+        elif u_info['fam_key'] and u_info['fam_key'] in budget:
+            # Family budget — repartir entre TODOS los SIE products de
+            # esta family por units share. (Si solo hay 1 SIE en family,
+            # share=1.0 y se atribuye total.)
+            fam_budget = budget[u_info['fam_key']]
+            siblings = sie_per_fam.get(u_info['fam_key'], [])
+            total_u = sum(sie_units_by_prod[n].get('curr', 0) for n in siblings)
+            if total_u > 0:
+                share = u_info['curr'] / total_u
+            else:
+                share = 1.0 / max(len(siblings), 1)
+            fam_c, fam_p = _sum_budget_real(fam_budget, rec_window_curr, rec_window_prev)
+            int_curr_v = (fam_c * share) if fam_c is not None else None
+            int_prev_v = (fam_p * share) if fam_p is not None else None
+        int_curr_int = int(round(int_curr_v)) if int_curr_v is not None else None
+        int_prev_int = int(round(int_prev_v)) if int_prev_v is not None else None
 
         out.append({
             'name': prod_name,
