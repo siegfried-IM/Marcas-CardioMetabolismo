@@ -224,20 +224,29 @@ def compute_recetas_kpi(D, window_curr, window_prev):
     cov_prev = coverage(sie_dicts, window_prev)
     sie_curr = sie_prev = 0.0
     mkt_curr = mkt_prev = 0.0
+    # Sumar PER-FAMILY con inclusion simetrica: si el month_key falta en
+    # curr para una familia, tambien se excluye del prev (y viceversa).
+    # Esto evita falsos drops cuando una familia tiene Mar 2025 pero no
+    # Mar 2026 (data parcial / no actualizada).
     for fam, obj in rec_ms.items():
         if not isinstance(obj, dict): continue
         sie_m = obj.get('sie', {})
         ms_m  = obj.get('ms', {})
-        for mk in window_curr:
-            v = float(sie_m.get(mk, 0) or 0)
-            sie_curr += v
-            ms_pct = float(ms_m.get(mk, 0) or 0)
-            mkt_curr += (v / (ms_pct/100.0)) if ms_pct > 0 else v
-        for mk in window_prev:
-            v = float(sie_m.get(mk, 0) or 0)
-            sie_prev += v
-            ms_pct = float(ms_m.get(mk, 0) or 0)
-            mkt_prev += (v / (ms_pct/100.0)) if ms_pct > 0 else v
+        # Por posicion: window_curr y window_prev deben tener mismo length
+        # y representar mismos meses-de-año (Ene curr <-> Ene prev, etc).
+        for i, (mk_c, mk_p) in enumerate(zip(window_curr, window_prev)):
+            has_c = mk_c in sie_m
+            has_p = mk_p in sie_m
+            if not (has_c and has_p):
+                continue   # skip ambos si falta uno
+            v_c = float(sie_m.get(mk_c, 0) or 0)
+            v_p = float(sie_m.get(mk_p, 0) or 0)
+            sie_curr += v_c
+            sie_prev += v_p
+            ms_c = float(ms_m.get(mk_c, 0) or 0)
+            ms_p = float(ms_m.get(mk_p, 0) or 0)
+            mkt_curr += (v_c / (ms_c/100.0)) if ms_c > 0 else v_c
+            mkt_prev += (v_p / (ms_p/100.0)) if ms_p > 0 else v_p
     incomplete_prev = cov_prev < len(window_prev) * 0.8
     incomplete_curr = cov_curr < len(window_curr) * 0.8
     return {

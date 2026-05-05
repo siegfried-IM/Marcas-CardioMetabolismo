@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-05T08:48:14",
+  "generated_at": "2026-05-05T09:05:07",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -406,17 +406,17 @@
         "mensual": {
           "recetas_sie": {
             "curr": 6564,
-            "prev": 26171,
-            "ie": 25.1
+            "prev": 5264,
+            "ie": 124.7
           },
           "ms_recetas": {
             "curr": 4.62,
-            "prev": 11.1
+            "prev": 4.0
           },
           "mercado_recetas": {
             "curr": 142078,
-            "prev": 235684,
-            "ie": 60.3
+            "prev": 131600,
+            "ie": 108.0
           },
           "units_sie": {
             "curr": 284261,
@@ -441,17 +441,17 @@
         "ytd": {
           "recetas_sie": {
             "curr": 61379,
-            "prev": 81115,
-            "ie": 75.7
+            "prev": 60208,
+            "ie": 101.9
           },
           "ms_recetas": {
             "curr": 9.99,
-            "prev": 11.23
+            "prev": 9.74
           },
           "mercado_recetas": {
             "curr": 614193,
-            "prev": 722406,
-            "ie": 85.0
+            "prev": 618322,
+            "ie": 99.3
           },
           "units_sie": {
             "curr": 806414,
@@ -476,17 +476,17 @@
         "trimestre": {
           "recetas_sie": {
             "curr": 61379,
-            "prev": 81115,
-            "ie": 75.7
+            "prev": 60208,
+            "ie": 101.9
           },
           "ms_recetas": {
             "curr": 9.99,
-            "prev": 11.23
+            "prev": 9.74
           },
           "mercado_recetas": {
             "curr": 614193,
-            "prev": 722406,
-            "ie": 85.0
+            "prev": 618322,
+            "ie": 99.3
           },
           "units_sie": {
             "curr": 806414,
@@ -510,18 +510,18 @@
         },
         "semestre": {
           "recetas_sie": {
-            "curr": 144171,
-            "prev": 150086,
-            "ie": 96.1
+            "curr": 122794,
+            "prev": 129179,
+            "ie": 95.1
           },
           "ms_recetas": {
-            "curr": 10.67,
-            "prev": 13.99
+            "curr": 13.46,
+            "prev": 13.34
           },
           "mercado_recetas": {
-            "curr": 1351628,
-            "prev": 1072625,
-            "ie": 126.0
+            "curr": 912005,
+            "prev": 968541,
+            "ie": 94.2
           },
           "units_sie": {
             "curr": 1619193,
@@ -545,18 +545,18 @@
         },
         "mat": {
           "recetas_sie": {
-            "curr": 307264,
-            "prev": 292961,
-            "ie": 104.9
+            "curr": 245530,
+            "prev": 272054,
+            "ie": 90.3
           },
           "ms_recetas": {
-            "curr": 10.83,
-            "prev": 16.27
+            "curr": 16.16,
+            "prev": 16.04
           },
           "mercado_recetas": {
-            "curr": 2836250,
-            "prev": 1800440,
-            "ie": 157.5
+            "curr": 1519067,
+            "prev": 1696357,
+            "ie": 89.5
           },
           "units_sie": {
             "curr": 3249306,
@@ -594,17 +594,17 @@
         "mensual": {
           "recetas_sie": {
             "curr": 11976,
-            "prev": 12882,
-            "ie": 93.0
+            "prev": 12742,
+            "ie": 94.0
           },
           "ms_recetas": {
             "curr": 10.89,
-            "prev": 14.61
+            "prev": 15.13
           },
           "mercado_recetas": {
             "curr": 109935,
-            "prev": 88161,
-            "ie": 124.7
+            "prev": 84239,
+            "ie": 130.5
           },
           "units_sie": {
             "curr": 91883,
@@ -629,17 +629,17 @@
         "ytd": {
           "recetas_sie": {
             "curr": 35122,
-            "prev": 39828,
-            "ie": 88.2
+            "prev": 39432,
+            "ie": 89.1
           },
           "ms_recetas": {
             "curr": 10.9,
-            "prev": 14.96
+            "prev": 15.47
           },
           "mercado_recetas": {
             "curr": 322365,
-            "prev": 266203,
-            "ie": 121.1
+            "prev": 254843,
+            "ie": 126.5
           },
           "units_sie": {
             "curr": 273703,
@@ -664,17 +664,17 @@
         "trimestre": {
           "recetas_sie": {
             "curr": 35122,
-            "prev": 39828,
-            "ie": 88.2
+            "prev": 39432,
+            "ie": 89.1
           },
           "ms_recetas": {
             "curr": 10.9,
-            "prev": 14.96
+            "prev": 15.47
           },
           "mercado_recetas": {
             "curr": 322365,
-            "prev": 266203,
-            "ie": 121.1
+            "prev": 254843,
+            "ie": 126.5
           },
           "units_sie": {
             "curr": 273703,
@@ -699,17 +699,17 @@
         "semestre": {
           "recetas_sie": {
             "curr": 70522,
-            "prev": 82561,
-            "ie": 85.4
+            "prev": 82165,
+            "ie": 85.8
           },
           "ms_recetas": {
             "curr": 11.82,
-            "prev": 15.5
+            "prev": 15.76
           },
           "mercado_recetas": {
             "curr": 596535,
-            "prev": 532771,
-            "ie": 112.0
+            "prev": 521411,
+            "ie": 114.4
           },
           "units_sie": {
             "curr": 532248,
@@ -733,18 +733,18 @@
         },
         "mat": {
           "recetas_sie": {
-            "curr": 148533,
-            "prev": 167351,
-            "ie": 88.8
+            "curr": 148365,
+            "prev": 166955,
+            "ie": 88.9
           },
           "ms_recetas": {
-            "curr": 13.12,
-            "prev": 15.98
+            "curr": 13.15,
+            "prev": 16.12
           },
           "mercado_recetas": {
-            "curr": 1132487,
-            "prev": 1047226,
-            "ie": 108.1
+            "curr": 1128607,
+            "prev": 1035867,
+            "ie": 109.0
           },
           "units_sie": {
             "curr": 1090668,
@@ -886,16 +886,16 @@
         },
         "semestre": {
           "recetas_sie": {
-            "curr": 409431,
+            "curr": 174984,
             "prev": null,
             "ie": null
           },
           "ms_recetas": {
-            "curr": 20.04,
+            "curr": 19.18,
             "prev": null
           },
           "mercado_recetas": {
-            "curr": 2043520,
+            "curr": 912349,
             "prev": null,
             "ie": null
           },
@@ -921,16 +921,16 @@
         },
         "mat": {
           "recetas_sie": {
-            "curr": 968485,
+            "curr": 174984,
             "prev": null,
             "ie": null
           },
           "ms_recetas": {
-            "curr": 20.95,
+            "curr": 19.18,
             "prev": null
           },
           "mercado_recetas": {
-            "curr": 4622383,
+            "curr": 912349,
             "prev": null,
             "ie": null
           },
