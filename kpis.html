@@ -446,11 +446,11 @@ table.products tbody tr:hover td:nth-child(3) { background: var(--gray-50); }
             <th data-key="lineName">Línea</th>
             <th data-key="family">Familia</th>
             <th data-key="rec_curr">Recetas</th>
-            <th data-key="rec_ie">Crec. Rec.</th>
+            <th data-key="rec_ie">IE Rec.</th>
             <th data-key="units_curr" data-sort="desc">Units IQVIA</th>
-            <th data-key="units_ie">Crec. U.</th>
+            <th data-key="units_ie">IE U.</th>
             <th data-key="int_curr">Venta Interna</th>
-            <th data-key="int_ie">Crec. V.I.</th>
+            <th data-key="int_ie">IE V.I.</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -469,12 +469,12 @@ document.getElementById('nav-date').textContent =
 const TILES = [
   { id:'recetas_sie',   label:'Recetas SIE',    fmt:'int', deltaMode:'pct' },
   { id:'ms_recetas',    label:'MS Recetas',     fmt:'pct', deltaMode:'pp'  },
-  { id:'g_recetas',     label:'Crec. Recetas',  fmt:'pct', pulledFrom:'recetas_sie', isGrowth:true },
+  { id:'g_recetas',     label:'IE Recetas',     fmt:'pct', pulledFrom:'recetas_sie', isGrowth:true },
   { id:'units_sie',     label:'Units IQVIA',    fmt:'int', deltaMode:'pct' },
   { id:'ms_units',      label:'MS Units',       fmt:'pct', deltaMode:'pp'  },
-  { id:'g_units',       label:'Crec. Units',    fmt:'pct', pulledFrom:'units_sie',   isGrowth:true },
+  { id:'g_units',       label:'IE Units',       fmt:'pct', pulledFrom:'units_sie',   isGrowth:true },
   { id:'venta_interna', label:'Venta Interna',  fmt:'int', deltaMode:'pct' },
-  { id:'g_interna',     label:'Crec. Vta. Int.',fmt:'pct', pulledFrom:'venta_interna', isGrowth:true },
+  { id:'g_interna',     label:'IE Vta. Int.',   fmt:'pct', pulledFrom:'venta_interna', isGrowth:true },
 ];
 
 const fmt = {
@@ -520,7 +520,7 @@ function renderLines() {
   host.innerHTML = DATA.lines.map(line => {
     const k = line.kpis[period] || {};
     const tiles = TILES.map(t => {
-      // Growth tile: pull curr/prev from another KPI block, compute % YoY
+      // Growth tile: IE en grande, % crecimiento en chico abajo
       if (t.isGrowth) {
         const src = k[t.pulledFrom] || {};
         const c = src.curr, p = src.prev;
@@ -528,22 +528,25 @@ function renderLines() {
         let growth = null;
         if (c != null && p != null && p > 0) growth = (c - p) / p * 100;
         const cls = ieClass(ie);
-        const valTxt = (growth == null) ? '—' : (growth >= 0 ? '+' : '') + growth.toFixed(1) + '%';
-        const ieTxt  = (ie == null) ? 'sin data año -1' : 'IE ' + ie.toFixed(0);
+        const ieTxt    = (ie == null) ? '—' : ie.toFixed(0);
+        const growthTx = (growth == null) ? 'sin data año -1'
+                       : (growth >= 0 ? '+' : '') + growth.toFixed(1) + '% YoY';
         return `
           <div class="tile ie">
             <div class="tile-lbl">${t.label}</div>
-            <div class="tile-val">${valTxt}</div>
-            <div class="tile-delta ${cls}">${ieTxt}</div>
+            <div class="tile-val">${ieTxt}</div>
+            <div class="tile-delta ${cls}">${growthTx}</div>
           </div>`;
       }
-      // Normal tile (sin "vs prev" — solo valor actual)
-      const o = k[t.id] || { curr: null };
+      // Normal tile: valor en grande, prev (año -1) en chico abajo
+      const o = k[t.id] || { curr: null, prev: null };
       const valFmt = (t.id === 'ms_recetas' || t.id === 'ms_units') ? fmt.pct : fmt.int;
+      const prevTxt = (o.prev == null) ? 'sin comparable' : 'vs ' + valFmt(o.prev) + ' año -1';
       return `
         <div class="tile">
           <div class="tile-lbl">${t.label}</div>
           <div class="tile-val">${valFmt(o.curr)}</div>
+          <div class="tile-prev">${prevTxt}</div>
         </div>`;
     }).join('');
     const globalCut = DATA.as_of_month;
@@ -613,30 +616,25 @@ function renderProducts() {
   if (!rows.length) {
     tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Sin productos para los filtros</td></tr>';
   } else {
-    function growthTxt(curr, prev) {
-      if (curr == null || prev == null || prev <= 0) return '—';
-      const d = (curr - prev) / prev * 100;
-      return (d >= 0 ? '+' : '') + d.toFixed(1) + '%';
-    }
     tbody.innerHTML = rows.map(r => {
       const ln = lineMap[r.line] || {};
       const recIeCls = ieClass(r.rec_ie);
       const uIeCls   = ieClass(r.units_ie);
       const intIeCls = ieClass(r.int_ie);
-      const recGTxt = growthTxt(r.rec_curr, r.rec_prev);
-      const uGTxt   = growthTxt(r.units_curr, r.units_prev);
-      const intGTxt = growthTxt(r.int_curr, r.int_prev);
+      const recIeTxt = (r.rec_ie == null) ? '—' : r.rec_ie.toFixed(0);
+      const uIeTxt   = (r.units_ie == null) ? '—' : r.units_ie.toFixed(0);
+      const intIeTxt = (r.int_ie == null) ? '—' : r.int_ie.toFixed(0);
       return `
         <tr>
           <td>${r.name}</td>
           <td><span class="pill-line" style="background:${(ln.color||'#999')}22;color:${ln.color||'#666'};">${ln.name||r.line}</span></td>
           <td style="color:var(--gray-500);">${r.family||''}</td>
           <td class="num">${r.rec_curr ? fmt.int(r.rec_curr) : '—'}</td>
-          <td class="delta ${recIeCls}">${recGTxt}</td>
+          <td class="delta ${recIeCls}">${recIeTxt}</td>
           <td class="num">${r.units_curr ? fmt.int(r.units_curr) : '—'}</td>
-          <td class="delta ${uIeCls}">${uGTxt}</td>
+          <td class="delta ${uIeCls}">${uIeTxt}</td>
           <td class="num">${r.int_curr ? fmt.int(r.int_curr) : '—'}</td>
-          <td class="delta ${intIeCls}">${intGTxt}</td>
+          <td class="delta ${intIeCls}">${intIeTxt}</td>
         </tr>`;
     }).join('');
   }
