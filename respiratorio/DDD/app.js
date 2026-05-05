@@ -818,9 +818,7 @@ function init(){
   });
 
   [
-    { key:'all', label:'Todos' },
-    { key:'etico', label:'Ético' },
-    { key:'popular', label:'Popular' }
+    { key:'all', label:'Todos' }
   ].forEach(item => {
     const chip = document.createElement('div');
     chip.className = 'mc' + (item.key === seg ? ' a' : '');
