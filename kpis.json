@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-05T09:14:00",
+  "generated_at": "2026-05-05T09:21:17",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -25,6 +25,7 @@
       "owner": "Diego Fernández",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "venta_through": "Apr 2026",
       "has_recetas": true,
       "kpis": {
         "mensual": {
@@ -213,6 +214,7 @@
       "owner": "Antonella Mariani",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "venta_through": "Apr 2026",
       "has_recetas": true,
       "kpis": {
         "mensual": {
@@ -401,6 +403,7 @@
       "owner": "María Hernández",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "venta_through": "Apr 2026",
       "has_recetas": true,
       "kpis": {
         "mensual": {
@@ -589,6 +592,7 @@
       "owner": "Juan Filidoro",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "venta_through": "Apr 2026",
       "has_recetas": true,
       "kpis": {
         "mensual": {
@@ -777,6 +781,7 @@
       "owner": "Antonella Mariani",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "venta_through": "Apr 2026",
       "has_recetas": true,
       "kpis": {
         "mensual": {
@@ -965,6 +970,7 @@
       "owner": "Tatiana Peker",
       "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
+      "venta_through": "Apr 2026",
       "has_recetas": true,
       "kpis": {
         "mensual": {

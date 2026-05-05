@@ -139,6 +139,25 @@ def find_latest_iqvia(D):
     return find_latest_in_keys(keys)
 
 
+def find_latest_venta(D):
+    """Ultimo mes con data en budget[fam].YYYY.real (cualquier familia)."""
+    candidates = []
+    for fam, fd in D.get('budget', {}).items():
+        if not isinstance(fd, dict): continue
+        for y_str, yd in fd.items():
+            if not isinstance(yd, dict): continue
+            arr = yd.get('real', [])
+            if not isinstance(arr, list): continue
+            try: y = int(y_str)
+            except: continue
+            for i, v in enumerate(arr):
+                if v in (None, 0): continue
+                if i >= 12: continue
+                candidates.append((y, i + 1))
+    if not candidates: return None
+    return max(candidates)
+
+
 def find_latest_month_in_data(D):
     """Para reportar el cierre general de la linea (max entre recetas/iqvia)."""
     cands = []
@@ -751,11 +770,13 @@ def main():
         # comparable solo porque mol_perf llega 1 mes mas tarde que recetas)
         rec_latest = find_latest_recetas(D)
         iq_latest  = find_latest_iqvia(D)
+        venta_latest = find_latest_venta(D)
         rec_windows = windows_for(*rec_latest) if rec_latest else None
         iq_windows  = windows_for(*iq_latest)  if iq_latest  else None
         rec_cut = month_key(*rec_latest) if rec_latest else None
         iq_cut  = month_key(*iq_latest)  if iq_latest  else None
-        print(f'  [{line["key"]}] cutoffs: recetas={rec_cut or "—"}, iqvia={iq_cut or "—"}')
+        venta_cut = month_key(*venta_latest) if venta_latest else None
+        print(f'  [{line["key"]}] cutoffs: recetas={rec_cut or "—"}, iqvia={iq_cut or "—"}, venta={venta_cut or "—"}')
 
         line_no_rec = line['key'] in LINES_NO_RECETAS
 
@@ -824,6 +845,7 @@ def main():
             'owner': line['owner'],
             'recetas_through': None if line_no_rec else rec_cut,
             'iqvia_through':   iq_cut,
+            'venta_through':   venta_cut,
             'has_recetas':     not line_no_rec,
             'kpis':  kpis,
         })

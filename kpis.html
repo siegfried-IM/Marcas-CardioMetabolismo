@@ -191,6 +191,9 @@ body {
 .cut-pill.stale {
   background: #FEF3C7; color: #92400E; border-color: #FDE68A;
 }
+.cut-pill.ahead {
+  background: #DBEAFE; color: #1E40AF; border-color: #BFDBFE;
+}
 .line-link {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
@@ -391,7 +394,8 @@ table.products tbody tr:hover td:nth-child(3) { background: var(--gray-50); }
       <h1 class="hero-title">KPIs por <span>Línea</span> &amp; <span>Producto</span></h1>
       <p class="hero-desc">
         Performance Siegfried-only por período: YTD, último Trimestre, último Semestre y MAT 12 meses.
-        Recetas SIE y Units IQVIA SIE con su market share y delta vs período comparable.
+        Recetas SIE, Units IQVIA SIE y Venta Interna con su market share, IE y crecimiento vs mismo período del año anterior.
+        <br><strong style="color:var(--gray-700);">Cierre alineado:</strong> Todos los KPIs usan el mes de cierre más restrictivo entre Recetas, IQVIA y Venta Interna para que los comparables YoY queden alineados. Si la Vta. Interna tiene data más fresca, el pill aparece en azul con asterisco (*).
       </p>
     </div>
     <div class="hero-meta">
@@ -488,6 +492,13 @@ function ieClass(ie) {
   if (ie < 100) return 'down';
   return 'flat';
 }
+const _MES_SORT = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
+function monthSortKey(mk) {
+  if (!mk) return 0;
+  const parts = mk.split(' ');
+  if (parts.length !== 2) return 0;
+  return parseInt(parts[1])*100 + (_MES_SORT[parts[0]]||0);
+}
 
 let DATA = null;
 let state = { view:'lines', period:'ytd', prodLine:'', prodSearch:'', sortKey:'units_curr', sortDir:'desc' };
@@ -552,11 +563,19 @@ function renderLines() {
     const globalCut = DATA.as_of_month;
     const recCut = line.recetas_through;
     const iqCut  = line.iqvia_through;
+    const vCut   = line.venta_through;
     const recStale = recCut && recCut !== globalCut;
     const iqStale  = iqCut  && iqCut  !== globalCut;
+    // VI puede ser MAS reciente que el cierre global (data fresca de
+    // Planilla de Ventas pero aun no incluida en comparativos). Se
+    // marca con clase "ahead" en azul.
+    const vAhead   = vCut && globalCut && monthSortKey(vCut) > monthSortKey(globalCut);
     const recPill = (line.has_recetas === false)
       ? `<span class="cut-pill" title="Esta linea no trackea recetas" style="opacity:.6;">Rx · sin tracking</span>`
       : `<span class="cut-pill ${recStale?'stale':''}" title="Cierre datos de Recetas">Rx · ${recCut||'—'}</span>`;
+    const vPill = vAhead
+      ? `<span class="cut-pill ahead" title="Vta. Interna disponible hasta ${vCut}, pero los KPIs usan ${globalCut} (cierre IQVIA) para alinear comparables.">Vta · ${vCut} *</span>`
+      : `<span class="cut-pill" title="Cierre datos de Venta Interna">Vta · ${vCut||'—'}</span>`;
     return `
       <div class="line-card" style="--line-color:${line.color};">
         <div class="line-info">
@@ -565,6 +584,7 @@ function renderLines() {
           <div class="line-cuts">
             ${recPill}
             <span class="cut-pill ${iqStale?'stale':''}"  title="Cierre datos de IQVIA">IQVIA · ${iqCut||'—'}</span>
+            ${vPill}
           </div>
           <a class="line-link" href="${line.href}">Abrir tablero →</a>
         </div>
