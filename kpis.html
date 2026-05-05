@@ -201,7 +201,7 @@ body {
 
 .tile-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(8, 1fr);
 }
 .tile {
   padding: 14px 14px;
@@ -289,16 +289,18 @@ body {
   overflow: hidden;
 }
 table.products {
-  width: 100%; border-collapse: collapse;
+  width: 100%; border-collapse: separate; border-spacing: 0;
 }
 table.products th, table.products td {
   padding: 11px 14px; text-align: right; font-size: 12px;
   border-bottom: 1px solid var(--gray-100);
+  white-space: nowrap;
 }
 table.products th {
   font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
   color: var(--gray-400); background: var(--gray-50);
   border-bottom: 1px solid var(--gray-200); cursor: pointer; user-select: none;
+  position: sticky; top: 0; z-index: 3;
 }
 table.products th:hover { color: var(--gray-700); background: var(--gray-100); }
 table.products th[data-sort=asc]::after { content: ' ▲'; color: var(--red); }
@@ -308,6 +310,24 @@ table.products th:nth-child(2), table.products td:nth-child(2),
 table.products th:nth-child(3), table.products td:nth-child(3) { text-align: left; }
 table.products td:nth-child(1) { font-weight: 700; color: var(--gray-900); }
 table.products tbody tr:hover { background: var(--gray-50); }
+/* Sticky columnas: Producto (1), Linea (2), Familia (3) */
+table.products th:nth-child(1), table.products td:nth-child(1) {
+  position: sticky; left: 0; background: var(--white); z-index: 2;
+  border-right: 1px solid var(--gray-100);
+}
+table.products th:nth-child(1) { background: var(--gray-50); z-index: 4; }
+table.products tbody tr:hover td:nth-child(1) { background: var(--gray-50); }
+table.products th:nth-child(2), table.products td:nth-child(2) {
+  position: sticky; left: 220px; background: var(--white); z-index: 2;
+}
+table.products th:nth-child(2) { background: var(--gray-50); z-index: 4; }
+table.products tbody tr:hover td:nth-child(2) { background: var(--gray-50); }
+table.products th:nth-child(3), table.products td:nth-child(3) {
+  position: sticky; left: 360px; background: var(--white); z-index: 2;
+  border-right: 1px solid var(--gray-200);
+}
+table.products th:nth-child(3) { background: var(--gray-50); z-index: 4; }
+table.products tbody tr:hover td:nth-child(3) { background: var(--gray-50); }
 .pill-line {
   display: inline-block;
   font-family: 'IBM Plex Mono', monospace;
@@ -334,8 +354,8 @@ table.products tbody tr:hover { background: var(--gray-50); }
   border: 1px solid #FECACA; border-radius: 10px;
 }
 
-@media (max-width: 1200px) {
-  .tile-grid { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 1400px) {
+  .tile-grid { grid-template-columns: repeat(4, 1fr); }
   .tile { border-bottom: 1px solid var(--gray-100); }
 }
 @media (max-width: 900px) {
@@ -428,7 +448,9 @@ table.products tbody tr:hover { background: var(--gray-50); }
             <th data-key="rec_curr">Recetas</th>
             <th data-key="rec_ie">IE Rec.</th>
             <th data-key="units_curr" data-sort="desc">Units IQVIA</th>
-            <th data-key="units_ie">IE Units</th>
+            <th data-key="units_ie">IE U.</th>
+            <th data-key="int_curr">Venta Interna</th>
+            <th data-key="int_ie">IE V.I.</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -445,12 +467,14 @@ document.getElementById('nav-date').textContent =
   `${String(n.getDate()).padStart(2,'0')} ${months[n.getMonth()]} ${n.getFullYear()}`;
 
 const TILES = [
-  { id:'recetas_sie', label:'Recetas SIE',  fmt:'int', deltaMode:'pct', showIE:true  },
-  { id:'ms_recetas',  label:'MS Recetas',   fmt:'pct', deltaMode:'pp',  showIE:false },
-  { id:'ie_recetas',  label:'IE Recetas',   fmt:'ie',  deltaMode:null,  pulledFrom:'recetas_sie', isIE:true },
-  { id:'units_sie',   label:'Units IQVIA',  fmt:'int', deltaMode:'pct', showIE:true  },
-  { id:'ms_units',    label:'MS Units',     fmt:'pct', deltaMode:'pp',  showIE:false },
-  { id:'ie_units',    label:'IE Units',     fmt:'ie',  deltaMode:null,  pulledFrom:'units_sie', isIE:true },
+  { id:'recetas_sie',   label:'Recetas SIE',    fmt:'int', deltaMode:'pct' },
+  { id:'ms_recetas',    label:'MS Recetas',     fmt:'pct', deltaMode:'pp'  },
+  { id:'ie_recetas',    label:'IE Recetas',     fmt:'ie',  pulledFrom:'recetas_sie', isIE:true },
+  { id:'units_sie',     label:'Units IQVIA',    fmt:'int', deltaMode:'pct' },
+  { id:'ms_units',      label:'MS Units',       fmt:'pct', deltaMode:'pp'  },
+  { id:'ie_units',      label:'IE Units',       fmt:'ie',  pulledFrom:'units_sie',   isIE:true },
+  { id:'venta_interna', label:'Venta Interna',  fmt:'int', deltaMode:'pct' },
+  { id:'ie_interna',    label:'IE Vta. Int.',   fmt:'ie',  pulledFrom:'venta_interna', isIE:true },
 ];
 
 const fmt = {
@@ -564,6 +588,7 @@ function renderProducts() {
   rows.forEach(r => {
     r.rec_var   = pctVar(r.rec_curr,   r.rec_prev);
     r.units_var = pctVar(r.units_curr, r.units_prev);
+    r.int_var   = pctVar(r.int_curr,   r.int_prev);
   });
 
   // Sort
@@ -580,14 +605,16 @@ function renderProducts() {
   const lineMap = Object.fromEntries(DATA.lines.map(l => [l.key, l]));
   const tbody = document.querySelector('#prod-table tbody');
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Sin productos para los filtros</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Sin productos para los filtros</td></tr>';
   } else {
     tbody.innerHTML = rows.map(r => {
       const ln = lineMap[r.line] || {};
       const recIeCls = ieClass(r.rec_ie);
       const uIeCls   = ieClass(r.units_ie);
+      const intIeCls = ieClass(r.int_ie);
       const recIeTxt = (r.rec_ie == null) ? '—' : r.rec_ie.toFixed(0);
       const uIeTxt   = (r.units_ie == null) ? '—' : r.units_ie.toFixed(0);
+      const intIeTxt = (r.int_ie == null) ? '—' : r.int_ie.toFixed(0);
       return `
         <tr>
           <td>${r.name}</td>
@@ -597,6 +624,8 @@ function renderProducts() {
           <td class="delta ${recIeCls}">${recIeTxt}</td>
           <td class="num">${r.units_curr ? fmt.int(r.units_curr) : '—'}</td>
           <td class="delta ${uIeCls}">${uIeTxt}</td>
+          <td class="num">${r.int_curr ? fmt.int(r.int_curr) : '—'}</td>
+          <td class="delta ${intIeCls}">${intIeTxt}</td>
         </tr>`;
     }).join('');
   }

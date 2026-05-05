@@ -287,6 +287,46 @@ def compute_iqvia_kpi(D, window_curr, window_prev):
     }
 
 
+def get_internal_sales(D, prod_name, fam_key, window_curr, window_prev):
+    """Devuelve (curr, prev) de venta interna del SIE product.
+
+    Busca budget[KEY].YYYY.real con KEY en este orden:
+      1) prod_name exacto
+      2) prod_name sin '(SIE)' o ' SIE'
+      3) fam_key del mol_perf
+    Si encuentra, suma los meses del window."""
+    budget = D.get('budget', {})
+    if not budget: return (None, None)
+
+    base = re.sub(r'\s*\(.*?\)\s*$', '', str(prod_name)).strip()
+    base = re.sub(r'\s+SIE\s*$', '', base, flags=re.I).strip()
+    candidates = [prod_name, base, fam_key]
+    target = None
+    for c in candidates:
+        if c and c in budget and isinstance(budget[c], dict):
+            target = budget[c]; break
+    if target is None: return (None, None)
+
+    monthly_real = {}
+    for year_str, year_data in target.items():
+        if not isinstance(year_data, dict): continue
+        real_arr = year_data.get('real', [])
+        if not isinstance(real_arr, list): continue
+        try:
+            year = int(year_str)
+        except ValueError:
+            continue
+        for i, v in enumerate(real_arr):
+            if v is None or v == 0: continue
+            if i >= 12: continue
+            mk = f'{MES_EN[i+1]} {year}'
+            monthly_real[mk] = float(v)
+
+    curr = sum(monthly_real.get(mk, 0) for mk in window_curr)
+    prev = sum(monthly_real.get(mk, 0) for mk in window_prev)
+    return (curr, prev)
+
+
 def collect_products(D, window_curr, window_prev, line_key, line_name,
                      rec_window_curr=None, rec_window_prev=None):
     """Devuelve lista de productos SIE con metricas por la ventana actual.
@@ -347,8 +387,16 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
             }
 
     # Helper: normalizar nombre para matching mol_perf <-> rec_comp
+    # 'HEXALER NASAL (SIE)'         -> 'HEXALERNASAL'
+    # 'HEXALER NASAL SIE'           -> 'HEXALERNASAL'
+    # 'ACEMUK DIAYNOCHE SIE'        -> 'ACEMUKDIAYNOCHE'
+    # 'ACEMUK DIA Y NOCHE (SIE)'    -> 'ACEMUKDIAYNOCHE' (whitespace colapsado)
     def norm(s):
-        return re.sub(r'\s*\(.*?\)\s*', ' ', str(s)).strip().upper()
+        s = str(s).strip().upper()
+        s = re.sub(r'\s*\([^)]*\)\s*$', '', s)        # quitar (SIE) final
+        s = re.sub(r'\s+SIE\s*$', '', s)               # quitar ' SIE' final
+        s = re.sub(r'[^A-Z0-9]+', '', s)               # eliminar puntuación + espacios
+        return s.strip()
 
     sie_rec_by_norm = {norm(k): (k, v) for k, v in sie_rec_explicit.items()}
 
@@ -367,25 +415,17 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
         return re.sub(r'\s*\(.*?\)\s*$', '', str(name)).strip()
 
     def find_recms_match(key):
-        """Devuelve rec_ms[k] tras probar:
-            - exact match
-            - progressively strip last word ('DILATREND AP' -> 'DILATREND')
-            - case-insensitive
-        """
+        """Devuelve rec_ms[k] tras probar exact match o case-insensitive.
+        NO hace prefix-strip (causaba mal-atribucion: ACEMUK L SIE no
+        deberia heredar rec de ACEMUK)."""
         if not key: return None
-        candidates = [key]
-        words = key.split()
-        for i in range(len(words) - 1, 0, -1):
-            candidates.append(' '.join(words[:i]))
-        # case-insensitive map
+        if key in rec_ms and isinstance(rec_ms[key], dict):
+            return rec_ms[key]
         rms_lower = {k.upper(): k for k in rec_ms}
-        for c in candidates:
-            if c in rec_ms and isinstance(rec_ms[c], dict):
-                return rec_ms[c]
-            cu = c.upper()
-            if cu in rms_lower:
-                k = rms_lower[cu]
-                if isinstance(rec_ms[k], dict): return rec_ms[k]
+        cu = key.upper()
+        if cu in rms_lower:
+            k = rms_lower[cu]
+            if isinstance(rec_ms[k], dict): return rec_ms[k]
         return None
 
     fam_sie_recetas = {}  # fam_key -> {curr, prev}
@@ -490,6 +530,13 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
         rec_prev = int(round(r_prev))
         u_curr = int(round(u_info['curr']))
         u_prev = int(round(u_info['prev']))
+
+        # Venta interna (budget.real) por SIE product
+        int_curr, int_prev = get_internal_sales(D, prod_name, u_info['fam_key'],
+                                                  rec_window_curr, rec_window_prev)
+        int_curr_int = int(round(int_curr)) if int_curr is not None else None
+        int_prev_int = int(round(int_prev)) if int_prev is not None else None
+
         out.append({
             'name': prod_name,
             'line': line_key,
@@ -501,6 +548,9 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
             'units_curr': u_curr,
             'units_prev': u_prev,
             'units_ie':   safe_ie(u_curr, u_prev),
+            'int_curr':  int_curr_int,
+            'int_prev':  int_prev_int,
+            'int_ie':    safe_ie(int_curr_int, int_prev_int),
         })
 
     # Tambien incluir SIE products que tienen explicit rec_comp pero no estan
@@ -594,6 +644,24 @@ def main():
 
         line_no_rec = line['key'] in LINES_NO_RECETAS
 
+        # Compute per-line internal sales (suma de budget[fam].YYYY.real)
+        def line_internal_sales(window_keys):
+            total = 0.0
+            for fam_key, fam_b in D.get('budget', {}).items():
+                if not isinstance(fam_b, dict): continue
+                for year_str, year_data in fam_b.items():
+                    if not isinstance(year_data, dict): continue
+                    real_arr = year_data.get('real', [])
+                    if not isinstance(real_arr, list): continue
+                    try: year = int(year_str)
+                    except ValueError: continue
+                    for i, v in enumerate(real_arr):
+                        if v is None or i >= 12: continue
+                        mk = f'{MES_EN[i+1]} {year}'
+                        if mk in window_keys:
+                            total += float(v)
+            return int(round(total))
+
         kpis = {}
         for period in ['mensual', 'ytd', 'trimestre', 'semestre', 'mat']:
             r_curr, r_prev = rec_windows[period] if rec_windows else ([], [])
@@ -603,6 +671,12 @@ def main():
             else:
                 rec = compute_recetas_kpi(D, r_curr, r_prev)
             iqvia = compute_iqvia_kpi(D, i_curr, i_prev)
+            # Internal sales (sum of all family budget.real). Periodos compartidos
+            # con iqvia (mismo cierre por linea).
+            int_curr = line_internal_sales(set(i_curr)) if i_curr else None
+            int_prev = line_internal_sales(set(i_prev)) if i_prev else None
+            if int_curr == 0 and int_prev == 0:
+                int_curr = int_prev = None
             def safe_ms(num, den):
                 if num is None or den is None or den == 0: return None
                 return round(num/den*100, 2)
@@ -623,6 +697,8 @@ def main():
                                   'prev': safe_ms(iqvia['sie_prev'], iqvia['mkt_prev'])},
                 'mercado_units': {'curr': iqvia['mkt_curr'], 'prev': iqvia['mkt_prev'],
                                   'ie': safe_ie(iqvia['mkt_curr'], iqvia['mkt_prev'])},
+                'venta_interna': {'curr': int_curr, 'prev': int_prev,
+                                  'ie': safe_ie(int_curr, int_prev)},
             }
         out['lines'].append({
             'key':   line['key'],
@@ -663,6 +739,9 @@ def main():
                     u_curr = int(round(sum_window(mv, ytd_curr)))
                     u_prev = int(round(sum_window(mv, ytd_prev)))
                     if u_curr <= 0 and u_prev <= 0: continue
+                    int_c, int_p = get_internal_sales(D, name, m_key, ytd_curr, ytd_prev)
+                    int_c = int(round(int_c)) if int_c is not None else None
+                    int_p = int(round(int_p)) if int_p is not None else None
                     prods.append({
                         'name': name,
                         'line': line['key'],
@@ -672,6 +751,8 @@ def main():
                         'units_curr': u_curr,
                         'units_prev': u_prev,
                         'units_ie': (round(u_curr/u_prev*100,1) if u_prev>0 else None),
+                        'int_curr': int_c, 'int_prev': int_p,
+                        'int_ie': (round(int_c/int_p*100,1) if int_p and int_p>0 else None),
                     })
         else:
             prods = collect_products(D, ytd_curr, ytd_prev, line['key'], line['name'],

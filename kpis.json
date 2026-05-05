@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-04T21:40:33",
+  "generated_at": "2026-05-04T21:56:30",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -55,6 +55,11 @@
             "curr": 4688295,
             "prev": 4328860,
             "ie": 108.3
+          },
+          "venta_interna": {
+            "curr": 354130,
+            "prev": 316666,
+            "ie": 111.8
           }
         },
         "ytd": {
@@ -85,6 +90,11 @@
             "curr": 13313242,
             "prev": 12401921,
             "ie": 107.3
+          },
+          "venta_interna": {
+            "curr": 1019473,
+            "prev": 961573,
+            "ie": 106.0
           }
         },
         "trimestre": {
@@ -115,6 +125,11 @@
             "curr": 13313242,
             "prev": 12401921,
             "ie": 107.3
+          },
+          "venta_interna": {
+            "curr": 1019473,
+            "prev": 961573,
+            "ie": 106.0
           }
         },
         "semestre": {
@@ -145,6 +160,11 @@
             "curr": 27010112,
             "prev": 25769511,
             "ie": 104.8
+          },
+          "venta_interna": {
+            "curr": 1901150,
+            "prev": 961573,
+            "ie": 197.7
           }
         },
         "mat": {
@@ -175,6 +195,11 @@
             "curr": 53807458,
             "prev": 52579819,
             "ie": 102.3
+          },
+          "venta_interna": {
+            "curr": 3887240,
+            "prev": 961573,
+            "ie": 404.3
           }
         }
       }
@@ -218,6 +243,11 @@
             "curr": 754897,
             "prev": 728494,
             "ie": 103.6
+          },
+          "venta_interna": {
+            "curr": 487957,
+            "prev": 355543,
+            "ie": 137.2
           }
         },
         "ytd": {
@@ -248,6 +278,11 @@
             "curr": 2096434,
             "prev": 2045651,
             "ie": 102.5
+          },
+          "venta_interna": {
+            "curr": 1180467,
+            "prev": 1191252,
+            "ie": 99.1
           }
         },
         "trimestre": {
@@ -278,6 +313,11 @@
             "curr": 2096434,
             "prev": 2045651,
             "ie": 102.5
+          },
+          "venta_interna": {
+            "curr": 1180467,
+            "prev": 1191252,
+            "ie": 99.1
           }
         },
         "semestre": {
@@ -308,6 +348,11 @@
             "curr": 4175170,
             "prev": 4079939,
             "ie": 102.3
+          },
+          "venta_interna": {
+            "curr": 2699598,
+            "prev": 1191252,
+            "ie": 226.6
           }
         },
         "mat": {
@@ -338,6 +383,11 @@
             "curr": 8698192,
             "prev": 8649566,
             "ie": 100.6
+          },
+          "venta_interna": {
+            "curr": 5382059,
+            "prev": 1191252,
+            "ie": 451.8
           }
         }
       }
@@ -381,6 +431,11 @@
             "curr": 2144067,
             "prev": 1956465,
             "ie": 109.6
+          },
+          "venta_interna": {
+            "curr": 266336,
+            "prev": 211009,
+            "ie": 126.2
           }
         },
         "ytd": {
@@ -411,6 +466,11 @@
             "curr": 6083062,
             "prev": 5770664,
             "ie": 105.4
+          },
+          "venta_interna": {
+            "curr": 764001,
+            "prev": 699759,
+            "ie": 109.2
           }
         },
         "trimestre": {
@@ -441,6 +501,11 @@
             "curr": 6083062,
             "prev": 5770664,
             "ie": 105.4
+          },
+          "venta_interna": {
+            "curr": 764001,
+            "prev": 699759,
+            "ie": 109.2
           }
         },
         "semestre": {
@@ -471,6 +536,11 @@
             "curr": 12461956,
             "prev": 11999425,
             "ie": 103.9
+          },
+          "venta_interna": {
+            "curr": 1477995,
+            "prev": 699759,
+            "ie": 211.2
           }
         },
         "mat": {
@@ -501,6 +571,11 @@
             "curr": 25300525,
             "prev": 23719348,
             "ie": 106.7
+          },
+          "venta_interna": {
+            "curr": 2980368,
+            "prev": 699759,
+            "ie": 425.9
           }
         }
       }
@@ -544,6 +619,11 @@
             "curr": 1248888,
             "prev": 1164275,
             "ie": 107.3
+          },
+          "venta_interna": {
+            "curr": 0,
+            "prev": 93585,
+            "ie": 0.0
           }
         },
         "ytd": {
@@ -574,6 +654,11 @@
             "curr": 3607038,
             "prev": 3400410,
             "ie": 106.1
+          },
+          "venta_interna": {
+            "curr": 235944,
+            "prev": 303550,
+            "ie": 77.7
           }
         },
         "trimestre": {
@@ -604,6 +689,11 @@
             "curr": 3607038,
             "prev": 3400410,
             "ie": 106.1
+          },
+          "venta_interna": {
+            "curr": 235944,
+            "prev": 303550,
+            "ie": 77.7
           }
         },
         "semestre": {
@@ -634,6 +724,11 @@
             "curr": 7347372,
             "prev": 7008323,
             "ie": 104.8
+          },
+          "venta_interna": {
+            "curr": 502559,
+            "prev": 303550,
+            "ie": 165.6
           }
         },
         "mat": {
@@ -664,6 +759,11 @@
             "curr": 14694879,
             "prev": 14480036,
             "ie": 101.5
+          },
+          "venta_interna": {
+            "curr": 1101901,
+            "prev": 303550,
+            "ie": 363.0
           }
         }
       }
@@ -707,6 +807,11 @@
             "curr": 1215542,
             "prev": 1269561,
             "ie": 95.7
+          },
+          "venta_interna": {
+            "curr": 372911,
+            "prev": 397695,
+            "ie": 93.8
           }
         },
         "ytd": {
@@ -737,6 +842,11 @@
             "curr": 2881902,
             "prev": 2927575,
             "ie": 98.4
+          },
+          "venta_interna": {
+            "curr": 869755,
+            "prev": 852366,
+            "ie": 102.0
           }
         },
         "trimestre": {
@@ -767,6 +877,11 @@
             "curr": 2881902,
             "prev": 2927575,
             "ie": 98.4
+          },
+          "venta_interna": {
+            "curr": 869755,
+            "prev": 852366,
+            "ie": 102.0
           }
         },
         "semestre": {
@@ -797,6 +912,11 @@
             "curr": 6603561,
             "prev": 6375516,
             "ie": 103.6
+          },
+          "venta_interna": {
+            "curr": 2095895,
+            "prev": 852366,
+            "ie": 245.9
           }
         },
         "mat": {
@@ -827,6 +947,11 @@
             "curr": 16683789,
             "prev": 16275279,
             "ie": 102.5
+          },
+          "venta_interna": {
+            "curr": 5844497,
+            "prev": 852366,
+            "ie": 685.7
           }
         }
       }
@@ -870,6 +995,11 @@
             "curr": 2368207,
             "prev": 1890651,
             "ie": 125.3
+          },
+          "venta_interna": {
+            "curr": 117709,
+            "prev": 43568,
+            "ie": 270.2
           }
         },
         "ytd": {
@@ -900,6 +1030,11 @@
             "curr": 6482118,
             "prev": 5250003,
             "ie": 123.5
+          },
+          "venta_interna": {
+            "curr": 425450,
+            "prev": 150452,
+            "ie": 282.8
           }
         },
         "trimestre": {
@@ -930,6 +1065,11 @@
             "curr": 6482118,
             "prev": 5250003,
             "ie": 123.5
+          },
+          "venta_interna": {
+            "curr": 425450,
+            "prev": 150452,
+            "ie": 282.8
           }
         },
         "semestre": {
@@ -960,6 +1100,11 @@
             "curr": 12421083,
             "prev": 11013068,
             "ie": 112.8
+          },
+          "venta_interna": {
+            "curr": 692976,
+            "prev": 150452,
+            "ie": 460.6
           }
         },
         "mat": {
@@ -990,6 +1135,11 @@
             "curr": 24074256,
             "prev": 20419455,
             "ie": 117.9
+          },
+          "venta_interna": {
+            "curr": 982790,
+            "prev": 150452,
+            "ie": 653.2
           }
         }
       }
@@ -1006,19 +1156,25 @@
       "rec_ie": 84.7,
       "units_curr": 555758,
       "units_prev": 509838,
-      "units_ie": 109.0
+      "units_ie": 109.0,
+      "int_curr": 509540,
+      "int_prev": 462028,
+      "int_ie": 110.3
     },
     {
       "name": "ACEMUK (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "ACEMUK",
-      "rec_curr": 47336,
-      "rec_prev": 61396,
+      "rec_curr": 49238,
+      "rec_prev": 63863,
       "rec_ie": 77.1,
       "units_curr": 405173,
       "units_prev": 511609,
-      "units_ie": 79.2
+      "units_ie": 79.2,
+      "int_curr": 392029,
+      "int_prev": 529927,
+      "int_ie": 74.0
     },
     {
       "name": "DILATREND (SIE)",
@@ -1030,19 +1186,25 @@
       "rec_ie": 81.6,
       "units_curr": 326784,
       "units_prev": 360440,
-      "units_ie": 90.7
+      "units_ie": 90.7,
+      "int_curr": 166567,
+      "int_prev": 183440,
+      "int_ie": 90.8
     },
     {
       "name": "HEXALER NASAL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "HEXALER BRONQUIAL",
-      "rec_curr": 15356,
-      "rec_prev": 12790,
-      "rec_ie": 120.1,
+      "family": "HEXALER NASAL",
+      "rec_curr": 25850,
+      "rec_prev": 25635,
+      "rec_ie": 100.8,
       "units_curr": 199240,
       "units_prev": 170960,
-      "units_ie": 116.5
+      "units_ie": 116.5,
+      "int_curr": 117512,
+      "int_prev": 109133,
+      "int_ie": 107.7
     },
     {
       "name": "MAGNUS (SIE)",
@@ -1054,7 +1216,10 @@
       "rec_ie": 82.3,
       "units_curr": 202202,
       "units_prev": 202409,
-      "units_ie": 99.9
+      "units_ie": 99.9,
+      "int_curr": 217339,
+      "int_prev": 0,
+      "int_ie": null
     },
     {
       "name": "ISIS FREE S/ESTROG (SIE)",
@@ -1066,7 +1231,10 @@
       "rec_ie": 72.9,
       "units_curr": 167046,
       "units_prev": 137940,
-      "units_ie": 121.1
+      "units_ie": 121.1,
+      "int_curr": 165536,
+      "int_prev": 146378,
+      "int_ie": 113.1
     },
     {
       "name": "DIOVAN (SIE)",
@@ -1078,7 +1246,10 @@
       "rec_ie": 87.8,
       "units_curr": 123387,
       "units_prev": 126883,
-      "units_ie": 97.2
+      "units_ie": 97.2,
+      "int_curr": 128209,
+      "int_prev": 130264,
+      "int_ie": 98.4
     },
     {
       "name": "VALIUM (SIE)",
@@ -1090,43 +1261,40 @@
       "rec_ie": 83.4,
       "units_curr": 134500,
       "units_prev": 130042,
-      "units_ie": 103.4
+      "units_ie": 103.4,
+      "int_curr": 119449,
+      "int_prev": 138336,
+      "int_ie": 86.3
     },
     {
       "name": "HEXALER CORT (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "HEXALER CORT",
-      "rec_curr": 22589,
-      "rec_prev": 25584,
-      "rec_ie": 88.3,
+      "rec_curr": 22556,
+      "rec_prev": 25529,
+      "rec_ie": 88.4,
       "units_curr": 109682,
       "units_prev": 124299,
-      "units_ie": 88.2
-    },
-    {
-      "name": "DIOVAN-D (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "DIOVAN D",
-      "rec_curr": 35447,
-      "rec_prev": 40392,
-      "rec_ie": 87.8,
-      "units_curr": 79295,
-      "units_prev": 81844,
-      "units_ie": 96.9
+      "units_ie": 88.2,
+      "int_curr": 104345,
+      "int_prev": 122598,
+      "int_ie": 85.1
     },
     {
       "name": "DECADRON (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "DECADRON",
-      "rec_curr": 578,
-      "rec_prev": 578,
-      "rec_ie": 100.0,
+      "family": "DECADRON INY",
+      "rec_curr": 2619,
+      "rec_prev": 3109,
+      "rec_ie": 84.2,
       "units_curr": 111754,
       "units_prev": 108526,
-      "units_ie": 103.0
+      "units_ie": 103.0,
+      "int_curr": 68601,
+      "int_prev": 0,
+      "int_ie": null
     },
     {
       "name": "TERLOC (SIE)",
@@ -1138,7 +1306,10 @@
       "rec_ie": 80.4,
       "units_curr": 82749,
       "units_prev": 82030,
-      "units_ie": 100.9
+      "units_ie": 100.9,
+      "int_curr": 99923,
+      "int_prev": 86934,
+      "int_ie": 114.9
     },
     {
       "name": "SIDERBLUT (SIE)",
@@ -1150,7 +1321,10 @@
       "rec_ie": null,
       "units_curr": 90522,
       "units_prev": 86170,
-      "units_ie": 105.1
+      "units_ie": 105.1,
+      "int_curr": 134764,
+      "int_prev": 122773,
+      "int_ie": 109.8
     },
     {
       "name": "ISIS MINI (SIE)",
@@ -1162,7 +1336,10 @@
       "rec_ie": 55.3,
       "units_curr": 82062,
       "units_prev": 89492,
-      "units_ie": 91.7
+      "units_ie": 91.7,
+      "int_curr": 80616,
+      "int_prev": 87239,
+      "int_ie": 92.4
     },
     {
       "name": "MADOPAR (SIE)",
@@ -1174,7 +1351,10 @@
       "rec_ie": 89.5,
       "units_curr": 74983,
       "units_prev": 75716,
-      "units_ie": 99.0
+      "units_ie": 99.0,
+      "int_curr": 53527,
+      "int_prev": 76321,
+      "int_ie": 70.1
     },
     {
       "name": "SIDERBLUT COMPLEX (SIE)",
@@ -1186,43 +1366,40 @@
       "rec_ie": 68.1,
       "units_curr": 72571,
       "units_prev": 67065,
-      "units_ie": 108.2
+      "units_ie": 108.2,
+      "int_curr": 84682,
+      "int_prev": 77301,
+      "int_ie": 109.5
     },
     {
-      "name": "MOMETAX (SIE)",
+      "name": "DUO-DECADRON (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "HEXALER BRONQUIAL",
-      "rec_curr": 5756,
-      "rec_prev": 4794,
-      "rec_ie": 120.1,
-      "units_curr": 74674,
-      "units_prev": 69880,
-      "units_ie": 106.9
+      "family": "DECADRON INY",
+      "rec_curr": 2674,
+      "rec_prev": 3360,
+      "rec_ie": 79.6,
+      "units_curr": 77152,
+      "units_prev": 71148,
+      "units_ie": 108.4,
+      "int_curr": 38145,
+      "int_prev": 0,
+      "int_ie": null
     },
     {
       "name": "TRIP D3 (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
       "family": "D3",
-      "rec_curr": 18794,
-      "rec_prev": 15649,
-      "rec_ie": 120.1,
+      "rec_curr": 18829,
+      "rec_prev": 0,
+      "rec_ie": null,
       "units_curr": 58991,
       "units_prev": 46621,
-      "units_ie": 126.5
-    },
-    {
-      "name": "DUO-DECADRON (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DECADRON",
-      "rec_curr": 399,
-      "rec_prev": 399,
-      "rec_ie": 100.0,
-      "units_curr": 77152,
-      "units_prev": 71148,
-      "units_ie": 108.4
+      "units_ie": 126.5,
+      "int_curr": 52950,
+      "int_prev": 46793,
+      "int_ie": 113.2
     },
     {
       "name": "CALCIO BASE (SIE)",
@@ -1234,7 +1411,10 @@
       "rec_ie": 61.1,
       "units_curr": 69036,
       "units_prev": 65973,
-      "units_ie": 104.6
+      "units_ie": 104.6,
+      "int_curr": 70954,
+      "int_prev": 69138,
+      "int_ie": 102.6
     },
     {
       "name": "BACTRIM (SIE)",
@@ -1246,7 +1426,10 @@
       "rec_ie": 84.7,
       "units_curr": 69542,
       "units_prev": 71960,
-      "units_ie": 96.6
+      "units_ie": 96.6,
+      "int_curr": 129046,
+      "int_prev": 144730,
+      "int_ie": 89.2
     },
     {
       "name": "BACTRIM JARABE (SIE)",
@@ -1258,7 +1441,10 @@
       "rec_ie": 84.7,
       "units_curr": 68806,
       "units_prev": 74656,
-      "units_ie": 92.2
+      "units_ie": 92.2,
+      "int_curr": 129046,
+      "int_prev": 144730,
+      "int_ie": 89.2
     },
     {
       "name": "ACANTEX (SIE)",
@@ -1270,19 +1456,10 @@
       "rec_ie": 95.7,
       "units_curr": 59584,
       "units_prev": 62257,
-      "units_ie": 95.7
-    },
-    {
-      "name": "ACEMUK L (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK L",
-      "rec_curr": 49238,
-      "rec_prev": 63863,
-      "rec_ie": 77.1,
-      "units_curr": 12750,
-      "units_prev": 13352,
-      "units_ie": 95.5
+      "units_ie": 95.7,
+      "int_curr": 127642,
+      "int_prev": 153620,
+      "int_ie": 83.1
     },
     {
       "name": "ROXOLAN (SIE)",
@@ -1294,7 +1471,10 @@
       "rec_ie": 117.6,
       "units_curr": 50593,
       "units_prev": 45021,
-      "units_ie": 112.4
+      "units_ie": 112.4,
+      "int_curr": 60623,
+      "int_prev": 46683,
+      "int_ie": 129.9
     },
     {
       "name": "ENTRESTO (SIE)",
@@ -1306,19 +1486,10 @@
       "rec_ie": 95.9,
       "units_curr": 52426,
       "units_prev": 52504,
-      "units_ie": 99.9
-    },
-    {
-      "name": "ACEMUK BIOTIC DUO (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK BIOTIC DUO",
-      "rec_curr": 49238,
-      "rec_prev": 63863,
-      "rec_ie": 77.1,
-      "units_curr": 9037,
-      "units_prev": 11826,
-      "units_ie": 76.4
+      "units_ie": 99.9,
+      "int_curr": 57476,
+      "int_prev": 53396,
+      "int_ie": 107.6
     },
     {
       "name": "FER-IN-SOL (SIE)",
@@ -1330,7 +1501,10 @@
       "rec_ie": null,
       "units_curr": 57619,
       "units_prev": 56292,
-      "units_ie": 102.4
+      "units_ie": 102.4,
+      "int_curr": 134764,
+      "int_prev": 122773,
+      "int_ie": 109.8
     },
     {
       "name": "ISIS MINI 24 (SIE)",
@@ -1342,31 +1516,25 @@
       "rec_ie": 59.7,
       "units_curr": 52698,
       "units_prev": 53380,
-      "units_ie": 98.7
+      "units_ie": 98.7,
+      "int_curr": 48613,
+      "int_prev": 49061,
+      "int_ie": 99.1
     },
     {
       "name": "ALIDIAL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "ALIDIAL",
-      "rec_curr": 11228,
-      "rec_prev": 9388,
-      "rec_ie": 119.6,
+      "family": "ANTIHISTA SIST",
+      "rec_curr": 11499,
+      "rec_prev": 9632,
+      "rec_ie": 119.4,
       "units_curr": 43748,
       "units_prev": 34686,
-      "units_ie": 126.1
-    },
-    {
-      "name": "ACEMUK GRIP (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK GRIP",
-      "rec_curr": 49238,
-      "rec_prev": 63863,
-      "rec_ie": 77.1,
-      "units_curr": 3719,
-      "units_prev": 5690,
-      "units_ie": 65.4
+      "units_ie": 126.1,
+      "int_curr": 44955,
+      "int_prev": 26332,
+      "int_ie": 170.7
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 28 /.03",
@@ -1378,43 +1546,10 @@
       "rec_ie": 67.4,
       "units_curr": 48723,
       "units_prev": 43830,
-      "units_ie": 111.2
-    },
-    {
-      "name": "ACEMUK SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK",
-      "rec_curr": 49238,
-      "rec_prev": 63863,
-      "rec_ie": 77.1,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
-    },
-    {
-      "name": "HEXALER (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER",
-      "rec_curr": 21277,
-      "rec_prev": 17721,
-      "rec_ie": 120.1,
-      "units_curr": 17993,
-      "units_prev": 21240,
-      "units_ie": 84.7
-    },
-    {
-      "name": "DILATREND AP (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "DILATREND AP",
-      "rec_curr": 25913,
-      "rec_prev": 31772,
-      "rec_ie": 81.6,
-      "units_curr": 13092,
-      "units_prev": 12886,
-      "units_ie": 101.6
+      "units_ie": 111.2,
+      "int_curr": 49390,
+      "int_prev": 45472,
+      "int_ie": 108.6
     },
     {
       "name": "FLEXINA 600 (SIE)",
@@ -1426,43 +1561,25 @@
       "rec_ie": 94.4,
       "units_curr": 32222,
       "units_prev": 27402,
-      "units_ie": 117.6
+      "units_ie": 117.6,
+      "int_curr": 32811,
+      "int_prev": 0,
+      "int_ie": null
     },
     {
       "name": "AIREAL PLUS (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "AIREAL PLUS",
+      "family": "ANTIHISTA SIST",
       "rec_curr": 6458,
       "rec_prev": 4045,
       "rec_ie": 159.7,
       "units_curr": 25558,
       "units_prev": 15185,
-      "units_ie": 168.3
-    },
-    {
-      "name": "DILATREND D (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "DILATREND D",
-      "rec_curr": 25913,
-      "rec_prev": 31772,
-      "rec_ie": 81.6,
-      "units_curr": 3394,
-      "units_prev": 3798,
-      "units_ie": 89.4
-    },
-    {
-      "name": "HEXALER BRONQ. DUO (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER BRONQUIAL DU",
-      "rec_curr": 21277,
-      "rec_prev": 17721,
-      "rec_ie": 120.1,
-      "units_curr": 5797,
-      "units_prev": 6495,
-      "units_ie": 89.3
+      "units_ie": 168.3,
+      "int_curr": 20030,
+      "int_prev": 4704,
+      "int_ie": 425.8
     },
     {
       "name": "SIDERBLUT POLI (SIE)",
@@ -1474,7 +1591,10 @@
       "rec_ie": null,
       "units_curr": 27012,
       "units_prev": 24107,
-      "units_ie": 112.1
+      "units_ie": 112.1,
+      "int_curr": 134764,
+      "int_prev": 122773,
+      "int_ie": 109.8
     },
     {
       "name": "AIREAL (SIE)",
@@ -1486,55 +1606,25 @@
       "rec_ie": 109.6,
       "units_curr": 21074,
       "units_prev": 18176,
-      "units_ie": 115.9
-    },
-    {
-      "name": "HEXALER NASAL SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER NASAL",
-      "rec_curr": 25850,
-      "rec_prev": 25635,
-      "rec_ie": 100.8,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
-    },
-    {
-      "name": "HEXALER PLUS (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER PLUS",
-      "rec_curr": 21277,
-      "rec_prev": 17721,
-      "rec_ie": 120.1,
-      "units_curr": 1987,
-      "units_prev": 2305,
-      "units_ie": 86.2
+      "units_ie": 115.9,
+      "int_curr": 19224,
+      "int_prev": 15360,
+      "int_ie": 125.2
     },
     {
       "name": "DECADRON. (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "DECADRON",
-      "rec_curr": 117,
-      "rec_prev": 117,
-      "rec_ie": 100.0,
+      "family": "DECADRON INY",
+      "rec_curr": 2619,
+      "rec_prev": 3109,
+      "rec_ie": 84.2,
       "units_curr": 22594,
       "units_prev": 23392,
-      "units_ie": 96.6
-    },
-    {
-      "name": "HEXALER CORT SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER CORT",
-      "rec_curr": 22556,
-      "rec_prev": 25529,
-      "rec_ie": 88.4,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
+      "units_ie": 96.6,
+      "int_curr": 68601,
+      "int_prev": 0,
+      "int_ie": null
     },
     {
       "name": "PGB (SIE)",
@@ -1546,43 +1636,40 @@
       "rec_ie": 96.8,
       "units_curr": 18259,
       "units_prev": 16968,
-      "units_ie": 107.6
+      "units_ie": 107.6,
+      "int_curr": 11669,
+      "int_prev": 18918,
+      "int_ie": 61.7
     },
     {
-      "name": "TRIP D3 PLUS (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "D3 PLUS",
-      "rec_curr": 18794,
-      "rec_prev": 15649,
-      "rec_ie": 120.1,
-      "units_curr": 2962,
-      "units_prev": 0,
-      "units_ie": null
+      "name": "HEXALER (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ANTIHISTA SIST",
+      "rec_curr": 2969,
+      "rec_prev": 3804,
+      "rec_ie": 78.0,
+      "units_curr": 17993,
+      "units_prev": 21240,
+      "units_ie": 84.7,
+      "int_curr": 14038,
+      "int_prev": 10727,
+      "int_ie": 130.9
     },
     {
       "name": "ACEMUK DIA Y NOCHE (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "ACEMUK DIA Y NOCHE",
-      "rec_curr": 3574,
-      "rec_prev": 3464,
-      "rec_ie": 103.2,
+      "rec_curr": 2986,
+      "rec_prev": 2903,
+      "rec_ie": 102.9,
       "units_curr": 17071,
       "units_prev": 16366,
-      "units_ie": 104.3
-    },
-    {
-      "name": "TRIP D3 SIE",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "D3",
-      "rec_curr": 18829,
-      "rec_prev": 0,
-      "rec_ie": null,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
+      "units_ie": 104.3,
+      "int_curr": 17217,
+      "int_prev": 6674,
+      "int_ie": 258.0
     },
     {
       "name": "ACEMUK VL (SIE)",
@@ -1594,7 +1681,10 @@
       "rec_ie": 77.1,
       "units_curr": 16280,
       "units_prev": 23160,
-      "units_ie": 70.3
+      "units_ie": 70.3,
+      "int_curr": 392029,
+      "int_prev": 529927,
+      "int_ie": 74.0
     },
     {
       "name": "ACERPES 5% (SIE)",
@@ -1606,7 +1696,10 @@
       "rec_ie": 112.9,
       "units_curr": 16490,
       "units_prev": 15316,
-      "units_ie": 107.7
+      "units_ie": 107.7,
+      "int_curr": 25523,
+      "int_prev": 21487,
+      "int_ie": 118.8
     },
     {
       "name": "TELPRES (SIE)",
@@ -1618,7 +1711,10 @@
       "rec_ie": 83.2,
       "units_curr": 10695,
       "units_prev": 15474,
-      "units_ie": 69.1
+      "units_ie": 69.1,
+      "int_curr": 12156,
+      "int_prev": 0,
+      "int_ie": null
     },
     {
       "name": "ROXOLAN PLUS (SIE)",
@@ -1630,7 +1726,10 @@
       "rec_ie": 117.6,
       "units_curr": 10137,
       "units_prev": 5080,
-      "units_ie": 199.5
+      "units_ie": 199.5,
+      "int_curr": 60623,
+      "int_prev": 46683,
+      "int_ie": 129.9
     },
     {
       "name": "MAGNUS 36 (SIE)",
@@ -1642,19 +1741,10 @@
       "rec_ie": 82.3,
       "units_curr": 11933,
       "units_prev": 12478,
-      "units_ie": 95.6
-    },
-    {
-      "name": "ALIDIAL SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ANTIHISTA SIST",
-      "rec_curr": 11499,
-      "rec_prev": 9632,
-      "rec_ie": 119.4,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
+      "units_ie": 95.6,
+      "int_curr": 217339,
+      "int_prev": 0,
+      "int_ie": null
     },
     {
       "name": "ARTRO RED (SIE)",
@@ -1666,19 +1756,10 @@
       "rec_ie": 60.8,
       "units_curr": 9577,
       "units_prev": 13660,
-      "units_ie": 70.1
-    },
-    {
-      "name": "SILTRAN MET (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "SILTRAN MET",
-      "rec_curr": 1735,
-      "rec_prev": 901,
-      "rec_ie": 192.6,
-      "units_curr": 9042,
-      "units_prev": 4843,
-      "units_ie": 186.7
+      "units_ie": 70.1,
+      "int_curr": 8262,
+      "int_prev": 0,
+      "int_ie": null
     },
     {
       "name": "SIDERBLUT FOLICO (SIE)",
@@ -1690,7 +1771,10 @@
       "rec_ie": 63.0,
       "units_curr": 10359,
       "units_prev": 8027,
-      "units_ie": 129.1
+      "units_ie": 129.1,
+      "int_curr": 84682,
+      "int_prev": 77301,
+      "int_ie": 109.5
     },
     {
       "name": "SILTRAN (SIE)",
@@ -1702,7 +1786,10 @@
       "rec_ie": 192.6,
       "units_curr": 8192,
       "units_prev": 4346,
-      "units_ie": 188.5
+      "units_ie": 188.5,
+      "int_curr": 8160,
+      "int_prev": 4454,
+      "int_ie": 183.2
     },
     {
       "name": "EMPAX (SIE)",
@@ -1714,7 +1801,10 @@
       "rec_ie": 37666.7,
       "units_curr": 6617,
       "units_prev": 513,
-      "units_ie": 1289.9
+      "units_ie": 1289.9,
+      "int_curr": 6472,
+      "int_prev": 2016,
+      "int_ie": 321.0
     },
     {
       "name": "ACERPES (SIE)",
@@ -1726,7 +1816,10 @@
       "rec_ie": 113.0,
       "units_curr": 8348,
       "units_prev": 8312,
-      "units_ie": 100.4
+      "units_ie": 100.4,
+      "int_curr": 25523,
+      "int_prev": 21487,
+      "int_ie": 118.8
     },
     {
       "name": "QTP (SIE)",
@@ -1738,7 +1831,10 @@
       "rec_ie": 105.1,
       "units_curr": 5824,
       "units_prev": 4937,
-      "units_ie": 118.0
+      "units_ie": 118.0,
+      "int_curr": 3598,
+      "int_prev": 4871,
+      "int_ie": 73.9
     },
     {
       "name": "MADOPAR HBS (SIE)",
@@ -1750,7 +1846,10 @@
       "rec_ie": 111.3,
       "units_curr": 6751,
       "units_prev": 5452,
-      "units_ie": 123.8
+      "units_ie": 123.8,
+      "int_curr": 4552,
+      "int_prev": 5788,
+      "int_ie": 78.6
     },
     {
       "name": "SIDERBLUT GOTAS (SIE)",
@@ -1762,19 +1861,10 @@
       "rec_ie": null,
       "units_curr": 6943,
       "units_prev": 5988,
-      "units_ie": 115.9
-    },
-    {
-      "name": "AIREAL PLUS SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ANTIHISTA SIST",
-      "rec_curr": 6458,
-      "rec_prev": 4045,
-      "rec_ie": 159.7,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
+      "units_ie": 115.9,
+      "int_curr": 134764,
+      "int_prev": 122773,
+      "int_ie": 109.8
     },
     {
       "name": "CALCIO BASE D (SIE)",
@@ -1786,7 +1876,10 @@
       "rec_ie": 57.4,
       "units_curr": 5735,
       "units_prev": 5469,
-      "units_ie": 104.9
+      "units_ie": 104.9,
+      "int_curr": 27066,
+      "int_prev": 21555,
+      "int_ie": 125.6
     },
     {
       "name": "VISDON (SIE)",
@@ -1798,19 +1891,10 @@
       "rec_ie": 99.3,
       "units_curr": 4636,
       "units_prev": 4742,
-      "units_ie": 97.8
-    },
-    {
-      "name": "AIREAL SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "AIREAL",
-      "rec_curr": 5924,
-      "rec_prev": 5403,
-      "rec_ie": 109.6,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
+      "units_ie": 97.8,
+      "int_curr": 3324,
+      "int_prev": 5042,
+      "int_ie": 65.9
     },
     {
       "name": "DAURAN (SIE)",
@@ -1822,7 +1906,25 @@
       "rec_ie": 362.0,
       "units_curr": 3705,
       "units_prev": 1305,
-      "units_ie": 283.9
+      "units_ie": 283.9,
+      "int_curr": 5446,
+      "int_prev": 1319,
+      "int_ie": 412.9
+    },
+    {
+      "name": "ACEMUK GRIP (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK DIA Y NOCHE",
+      "rec_curr": 588,
+      "rec_prev": 561,
+      "rec_ie": 104.8,
+      "units_curr": 3719,
+      "units_prev": 5690,
+      "units_ie": 65.4,
+      "int_curr": 2902,
+      "int_prev": 4411,
+      "int_ie": 65.8
     },
     {
       "name": "ISIS (SIE)",
@@ -1846,7 +1948,10 @@
       "rec_ie": 148.6,
       "units_curr": 3486,
       "units_prev": 3059,
-      "units_ie": 114.0
+      "units_ie": 114.0,
+      "int_curr": 2531,
+      "int_prev": 4061,
+      "int_ie": 62.3
     },
     {
       "name": "VALQUIR (SIE)",
@@ -1858,7 +1963,10 @@
       "rec_ie": 0.0,
       "units_curr": 3963,
       "units_prev": 1754,
-      "units_ie": 225.9
+      "units_ie": 225.9,
+      "int_curr": 3114,
+      "int_prev": 1905,
+      "int_ie": 163.5
     },
     {
       "name": "DIOVAN IC (SIE)",
@@ -1870,7 +1978,10 @@
       "rec_ie": 87.8,
       "units_curr": 2902,
       "units_prev": 2553,
-      "units_ie": 113.7
+      "units_ie": 113.7,
+      "int_curr": 128209,
+      "int_prev": 130264,
+      "int_ie": 98.4
     },
     {
       "name": "LURAP (SIE)",
@@ -1882,19 +1993,10 @@
       "rec_ie": 116.2,
       "units_curr": 2806,
       "units_prev": 2495,
-      "units_ie": 112.5
-    },
-    {
-      "name": "EMPAX MET (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "EMPAX MET",
-      "rec_curr": 2260,
-      "rec_prev": 6,
-      "rec_ie": 37666.7,
-      "units_curr": 1139,
-      "units_prev": 46,
-      "units_ie": 2476.1
+      "units_ie": 112.5,
+      "int_curr": 2137,
+      "int_prev": 2552,
+      "int_ie": 83.7
     },
     {
       "name": "SIDERBLUT IM (SIE)",
@@ -1906,67 +2008,25 @@
       "rec_ie": null,
       "units_curr": 3276,
       "units_prev": 3371,
-      "units_ie": 97.2
+      "units_ie": 97.2,
+      "int_curr": 134764,
+      "int_prev": 122773,
+      "int_ie": 109.8
     },
     {
       "name": "ALIDIAL L (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "ALIDIAL",
-      "rec_curr": 622,
-      "rec_prev": 520,
-      "rec_ie": 119.6,
+      "family": "ANTIHISTA SIST",
+      "rec_curr": 351,
+      "rec_prev": 276,
+      "rec_ie": 127.2,
       "units_curr": 2425,
       "units_prev": 0,
-      "units_ie": null
-    },
-    {
-      "name": "ACEMUK DIAYNOCHE SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK DIA Y NOCHE",
-      "rec_curr": 2986,
-      "rec_prev": 2903,
-      "rec_ie": 102.9,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
-    },
-    {
-      "name": "HEXALER SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ANTIHISTA SIST",
-      "rec_curr": 2969,
-      "rec_prev": 3804,
-      "rec_ie": 78.0,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
-    },
-    {
-      "name": "DUO DECADRON SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DECADRON INY",
-      "rec_curr": 2674,
-      "rec_prev": 3360,
-      "rec_ie": 79.6,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
-    },
-    {
-      "name": "DECADRON SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DECADRON INY",
-      "rec_curr": 2619,
-      "rec_prev": 3109,
-      "rec_ie": 84.2,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
+      "units_ie": null,
+      "int_curr": 44955,
+      "int_prev": 26332,
+      "int_ie": 170.7
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 84 /.03",
@@ -1978,19 +2038,10 @@
       "rec_ie": 67.4,
       "units_curr": 2238,
       "units_prev": 2061,
-      "units_ie": 108.6
-    },
-    {
-      "name": "HEXALER BRONQUIAL (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER BRONQUIAL",
-      "rec_curr": 165,
-      "rec_prev": 137,
-      "rec_ie": 120.4,
-      "units_curr": 2141,
-      "units_prev": 2417,
-      "units_ie": 88.6
+      "units_ie": 108.6,
+      "int_curr": 49390,
+      "int_prev": 45472,
+      "int_ie": 108.6
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 56 /.03",
@@ -2002,7 +2053,10 @@
       "rec_ie": 67.4,
       "units_curr": 1524,
       "units_prev": 1820,
-      "units_ie": 83.7
+      "units_ie": 83.7,
+      "int_curr": 49390,
+      "int_prev": 45472,
+      "int_ie": 108.6
     },
     {
       "name": "DELTROX NF (SIE)",
@@ -2014,31 +2068,25 @@
       "rec_ie": 189.4,
       "units_curr": 1257,
       "units_prev": 953,
-      "units_ie": 131.9
-    },
-    {
-      "name": "ACEMUK GRIP SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK DIA Y NOCHE",
-      "rec_curr": 588,
-      "rec_prev": 561,
-      "rec_ie": 104.8,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
+      "units_ie": 131.9,
+      "int_curr": 663,
+      "int_prev": 949,
+      "int_ie": 69.9
     },
     {
       "name": "DECADRON SHOCK (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "DECADRON",
-      "rec_curr": 3,
-      "rec_prev": 3,
-      "rec_ie": 100.0,
+      "family": "DECADRON INY",
+      "rec_curr": 87,
+      "rec_prev": 69,
+      "rec_ie": 126.1,
       "units_curr": 566,
       "units_prev": 506,
-      "units_ie": 111.9
+      "units_ie": 111.9,
+      "int_curr": 68601,
+      "int_prev": 0,
+      "int_ie": null
     },
     {
       "name": "DECADRON AL SIE",
@@ -2048,30 +2096,6 @@
       "rec_curr": 471,
       "rec_prev": 525,
       "rec_ie": 89.7,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
-    },
-    {
-      "name": "ALIDIAL L SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ANTIHISTA SIST",
-      "rec_curr": 351,
-      "rec_prev": 276,
-      "rec_ie": 127.2,
-      "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
-    },
-    {
-      "name": "DECADRON SHOCK SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DECADRON INY",
-      "rec_curr": 87,
-      "rec_prev": 69,
-      "rec_ie": 126.1,
       "units_curr": 0,
       "units_prev": 0,
       "units_ie": null
@@ -2089,7 +2113,7 @@
       "units_ie": null
     },
     {
-      "name": "CALCITOL D3 SIE",
+      "name": "CALCITOL D3 (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
       "family": "D3",
@@ -2097,8 +2121,11 @@
       "rec_prev": 0,
       "rec_ie": null,
       "units_curr": 0,
-      "units_prev": 0,
-      "units_ie": null
+      "units_prev": 476,
+      "units_ie": 0.0,
+      "int_curr": 52950,
+      "int_prev": 46793,
+      "int_ie": 113.2
     }
   ]
 }
