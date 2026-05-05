@@ -40,6 +40,19 @@
   Default: 'AR_PM*' (matchea 'AR_PM_FV_Standard_<fecha>.xlsx', el formato
   estandar de IQVIA). Solo se usa si la carpeta IqviaSubfolder existe.
 
+.PARAMETER VentasFile
+  Path al xlsx de Planilla de Ventas (venta interna mensual por familia).
+  Si se omite, busca en <BaseDir>/<VentasSubfolder>/<Month>/Planilla*.xlsx.
+  Si no encuentra, skip silently la actualizacion de venta interna.
+
+.PARAMETER VentasSubfolder
+  Subcarpeta dentro de BaseDir donde esta la Planilla de Ventas.
+  Default: '_ventas'.
+
+.PARAMETER SkipKpis
+  Si esta presente, NO regenera kpis.json al final. Por default
+  build-all corre shared/build-kpis.py y trackea kpis.json en el commit.
+
 .EXAMPLE
   .\shared\build-all.ps1 -Month '2026-04'
   Regenera data.js de las 5 lineas para el corte 2026-04. No hace commit.
@@ -78,7 +91,13 @@ param(
 
     [string]$IqviaSubfolder = '_iqvia-master',
 
-    [string]$IqviaPattern = 'AR_PM*'
+    [string]$IqviaPattern = 'AR_PM*',
+
+    [string]$VentasFile,
+
+    [string]$VentasSubfolder = '_ventas',
+
+    [switch]$SkipKpis
 )
 
 $ErrorActionPreference = 'Stop'
@@ -287,6 +306,56 @@ if (-not $DryRun) {
     }
 }
 
+# ─── Venta interna: actualizar budget.real desde Planilla de Ventas ───
+# Resuelve VentasFile en este orden:
+#   1) Param explicito -VentasFile
+#   2) <BaseDir>/<VentasSubfolder>/<Month>/Planilla*.xlsx (mas reciente)
+$pyExe = if (Get-Command 'py' -ErrorAction SilentlyContinue) { 'py' } else { 'python' }
+if (-not $DryRun) {
+    $resolvedVentas = $null
+    if ($VentasFile) {
+        if (Test-Path -LiteralPath $VentasFile) {
+            $resolvedVentas = $VentasFile
+        } else {
+            Write-Warning "VentasFile especificado no existe: $VentasFile"
+        }
+    } else {
+        $ventasDir = Join-Path $BaseDir (Join-Path $VentasSubfolder $Month)
+        if (Test-Path -LiteralPath $ventasDir) {
+            $candidates = Get-ChildItem -LiteralPath $ventasDir -Filter 'Planilla*.xlsx' -File -ErrorAction SilentlyContinue |
+                Sort-Object -Property LastWriteTime -Descending
+            if ($candidates) { $resolvedVentas = $candidates[0].FullName }
+        }
+    }
+    if ($resolvedVentas) {
+        $ventasScript = Join-Path $PSScriptRoot 'merge-ventas-internas.py'
+        if (Test-Path -LiteralPath $ventasScript) {
+            Write-Host ""
+            Write-Host "Actualizando venta interna desde: $resolvedVentas" -ForegroundColor Cyan
+            & $pyExe $ventasScript --file $resolvedVentas
+            if ($LASTEXITCODE -ne 0) {
+                Write-Warning "merge-ventas-internas.py fallo (exit $LASTEXITCODE)."
+            }
+        }
+    } else {
+        Write-Host ""
+        Write-Host "Venta interna: no hay Planilla de Ventas (skip)." -ForegroundColor DarkGray
+    }
+}
+
+# ─── KPIs: regenerar kpis.json (consume rec_ms / mol_perf / budget) ───
+if (-not $DryRun -and -not $SkipKpis) {
+    $kpisScript = Join-Path $PSScriptRoot 'build-kpis.py'
+    if (Test-Path -LiteralPath $kpisScript) {
+        Write-Host ""
+        Write-Host "Regenerando kpis.json..." -ForegroundColor Cyan
+        & $pyExe $kpisScript --repo $repoRoot
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "build-kpis.py fallo (exit $LASTEXITCODE)."
+        }
+    }
+}
+
 # Commit & push
 if ($CommitPush -and -not $DryRun) {
     $hadFailure = $results.Values | Where-Object { $_ -like 'FAILED*' }
@@ -301,7 +370,10 @@ if ($CommitPush -and -not $DryRun) {
     Write-Host "================================================================"
     Push-Location $repoRoot
     try {
-        git add '*/data.js' 'shared/cross-line-summary.json' 2>&1 | Out-Null
+        # data.js de las lineas + shared/cross-line-summary.json + kpis.json
+        # + inline D de mujer/SNC (si merge-ventas o sync los toco)
+        git add '*/data.js' 'shared/cross-line-summary.json' 'kpis.json' `
+                'mujer/index.html' 'SNC/index.html' 2>&1 | Out-Null
         $staged = git diff --cached --name-only
         if (-not $staged) {
             Write-Host "  Sin cambios para commitear." -ForegroundColor Yellow
