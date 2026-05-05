@@ -235,6 +235,21 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
 .cov-badge.bajo{background:#fefce8;color:#a16207;}
 .cov-badge.alerta{background:#eff6ff;color:#1d4ed8;}
 .cov-badge.ok{background:#f0fdf4;color:#16a34a;}
+
+/* KPI source badge (IQVIA / Recetas / Vta Int) */
+.kpi { position: relative; }
+.kpi-source {
+  position: absolute; top: 8px; right: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 2px 6px; border-radius: 3px;
+  background: rgba(0,0,0,.06); color: #4b5563;
+  white-space: nowrap;
+}
+.kpi-source.iq  { background: rgba(8,145,178,.12);  color: #0891b2; }
+.kpi-source.rec { background: rgba(124,58,237,.12); color: #7c3aed; }
+.kpi-source.vi  { background: rgba(22,163,74,.14);  color: #16a34a; }
 </style>
 </head>
 <body>
@@ -743,6 +758,14 @@ function setKpiPeriod(p){
   renderBrandKpis();
 }
 
+
+function _kpiSrc(lbl){
+  if(!lbl) return '';
+  if(lbl.indexOf('Recetas')!==-1) return '<span class="kpi-source rec">Recetas</span>';
+  if(lbl.indexOf('Presupuesto')!==-1) return '<span class="kpi-source vi">Vta Int</span>';
+  return '<span class="kpi-source iq">IQVIA</span>';
+}
+
 function renderBrandKpis(){
   const section=document.getElementById('brand-kpi-section');
   if(!activeBrand){section.style.display='none';return;}
@@ -777,7 +800,7 @@ function renderBrandKpis(){
     document.getElementById('s-brand-kpi').innerHTML=`<div style="color:#4b5563;font-size:12px;grid-column:1/-1;">Sin datos disponibles para ${activeBrand}</div>`;
     return;
   }
-  document.getElementById('s-brand-kpi').innerHTML=items.map(x=>`<div class="kpi"><div class="kpi-accent" style="background:${x.accent}"></div><p class="kpi-lbl">${x.lbl}</p><p class="kpi-num ${x.cls}">${x.num}</p><p class="kpi-sub">${x.sub||''}</p><p class="kpi-sub2">${x.sub2||''}</p></div>`).join('');
+  document.getElementById('s-brand-kpi').innerHTML=items.map(x=>`<div class="kpi">${_kpiSrc(x.lbl)}<div class="kpi-accent" style="background:${x.accent}"></div><p class="kpi-lbl">${x.lbl}</p><p class="kpi-num ${x.cls}">${x.num}</p><p class="kpi-sub">${x.sub||''}</p><p class="kpi-sub2">${x.sub2||''}</p></div>`).join('');
 }
 
 
@@ -801,7 +824,7 @@ function renderKpis(){
 
     {lbl:`MS% Recetas · ${D.meta?.rec_label||'Recetas'}`,num:k.ms_rec?k.ms_rec.toFixed(1)+'%':'—',cls:'p',accent:'var(--purple)',sub:k.sie_rec_dic25?`${fmt(k.sie_rec_dic25)} de ${fmt(k.tot_rec_dic25)} rec.`:'',sub2:'CloseUp · mercado'},
   ];
-  document.getElementById('s-kpi').innerHTML=items.map(x=>`<div class="kpi"><div class="kpi-accent" style="background:${x.accent}"></div><p class="kpi-lbl">${x.lbl}</p><p class="kpi-num ${x.cls}">${x.num}</p><p class="kpi-sub">${x.sub}</p><p class="kpi-sub2">${x.sub2||''}</p></div>`).join('');
+  document.getElementById('s-kpi').innerHTML=items.map(x=>`<div class="kpi">${_kpiSrc(x.lbl)}<div class="kpi-accent" style="background:${x.accent}"></div><p class="kpi-lbl">${x.lbl}</p><p class="kpi-num ${x.cls}">${x.num}</p><p class="kpi-sub">${x.sub}</p><p class="kpi-sub2">${x.sub2||''}</p></div>`).join('');
 }
 
 
