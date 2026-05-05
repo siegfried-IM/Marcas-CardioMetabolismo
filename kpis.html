@@ -574,7 +574,16 @@ function pctVar(curr, prev) {
 
 function renderProducts() {
   if (!DATA) return;
-  let rows = DATA.products.slice();
+  // Build flattened rows for current period
+  let rows = DATA.products.map(p => {
+    const k = (p.periods || {})[state.period] || {};
+    return {
+      name: p.name, line: p.line, lineName: p.lineName, family: p.family,
+      rec_curr: k.rec_curr, rec_prev: k.rec_prev, rec_ie: k.rec_ie,
+      units_curr: k.units_curr, units_prev: k.units_prev, units_ie: k.units_ie,
+      int_curr: k.int_curr, int_prev: k.int_prev, int_ie: k.int_ie,
+    };
+  });
 
   if (state.prodLine) rows = rows.filter(r => r.line === state.prodLine);
   if (state.prodSearch) {
@@ -584,12 +593,6 @@ function renderProducts() {
       (r.family||'').toLowerCase().includes(s)
     );
   }
-  // Compute var fields
-  rows.forEach(r => {
-    r.rec_var   = pctVar(r.rec_curr,   r.rec_prev);
-    r.units_var = pctVar(r.units_curr, r.units_prev);
-    r.int_var   = pctVar(r.int_curr,   r.int_prev);
-  });
 
   // Sort
   const k = state.sortKey, dir = state.sortDir === 'asc' ? 1 : -1;

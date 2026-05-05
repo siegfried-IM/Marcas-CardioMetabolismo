@@ -559,6 +559,10 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
         if n in seen: continue
         rec_curr = int(round(info['curr']))
         rec_prev = int(round(info['prev']))
+        int_curr, int_prev = get_internal_sales(D, orig_name, info['family'],
+                                                  rec_window_curr, rec_window_prev)
+        int_curr_int = int(round(int_curr)) if int_curr is not None else None
+        int_prev_int = int(round(int_prev)) if int_prev is not None else None
         out.append({
             'name': orig_name,
             'line': line_key,
@@ -570,6 +574,9 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
             'units_curr': 0,
             'units_prev': 0,
             'units_ie':   None,
+            'int_curr':  int_curr_int,
+            'int_prev':  int_prev_int,
+            'int_ie':    safe_ie(int_curr_int, int_prev_int),
         })
     return out
 
@@ -723,45 +730,80 @@ def main():
             rec_ytd_curr, rec_ytd_prev = rec_windows['ytd']
         else:
             rec_ytd_curr = rec_ytd_prev = []
-        # Para units usamos iq_windows; para recetas, rec_windows (puede tener cutoff distinto)
-        ytd_curr, ytd_prev = (iq_ytd_curr, iq_ytd_prev) if iq_ytd_curr else (rec_ytd_curr, rec_ytd_prev)
-        if line_no_rec:
-            # Linea sin tracking de recetas: incluir productos solo con units
-            prods = []
-            for m_key, fam_obj in D.get('mol_perf', {}).items():
-                if not isinstance(fam_obj, dict): continue
-                family = fam_obj.get('family', m_key)
-                for p in fam_obj.get('products', []):
-                    if not p.get('is_sie'): continue
-                    name = p.get('prod', '')
-                    if not name: continue
-                    mv = p.get('monthly_vals', {})
-                    u_curr = int(round(sum_window(mv, ytd_curr)))
-                    u_prev = int(round(sum_window(mv, ytd_prev)))
-                    if u_curr <= 0 and u_prev <= 0: continue
-                    int_c, int_p = get_internal_sales(D, name, m_key, ytd_curr, ytd_prev)
-                    int_c = int(round(int_c)) if int_c is not None else None
-                    int_p = int(round(int_p)) if int_p is not None else None
-                    prods.append({
-                        'name': name,
-                        'line': line['key'],
-                        'lineName': line['name'],
-                        'family': family,
-                        'rec_curr': None, 'rec_prev': None, 'rec_ie': None,
-                        'units_curr': u_curr,
-                        'units_prev': u_prev,
-                        'units_ie': (round(u_curr/u_prev*100,1) if u_prev>0 else None),
-                        'int_curr': int_c, 'int_prev': int_p,
-                        'int_ie': (round(int_c/int_p*100,1) if int_p and int_p>0 else None),
-                    })
-        else:
-            prods = collect_products(D, ytd_curr, ytd_prev, line['key'], line['name'],
-                                      rec_window_curr=rec_ytd_curr, rec_window_prev=rec_ytd_prev)
-            prods = [p for p in prods if (p['rec_curr'] or 0) > 0 or (p['units_curr'] or 0) > 0]
+        # Por producto: computar TODOS los periodos para que la UI pueda
+        # cambiar el filtro y ver los numeros correctos sin re-fetch.
+        period_kpis_per_prod = {}  # prod_name -> {period: kpi_dict}
+        prods_seen = []  # ordered list of products (key=name)
+        prod_meta = {}   # prod_name -> {family, fam_key}
+
+        for period in ['mensual', 'ytd', 'trimestre', 'semestre', 'mat']:
+            r_curr, r_prev = rec_windows[period] if rec_windows else ([], [])
+            i_curr, i_prev = iq_windows[period]  if iq_windows  else ([], [])
+
+            if line_no_rec:
+                # Linea sin recetas: solo units + venta interna
+                for m_key, fam_obj in D.get('mol_perf', {}).items():
+                    if not isinstance(fam_obj, dict): continue
+                    family = fam_obj.get('family', m_key)
+                    for p in fam_obj.get('products', []):
+                        if not p.get('is_sie'): continue
+                        name = p.get('prod', '')
+                        if not name: continue
+                        mv = p.get('monthly_vals', {})
+                        u_curr = int(round(sum_window(mv, i_curr)))
+                        u_prev = int(round(sum_window(mv, i_prev)))
+                        int_c, int_p = get_internal_sales(D, name, m_key, i_curr, i_prev)
+                        int_c = int(round(int_c)) if int_c is not None else None
+                        int_p = int(round(int_p)) if int_p is not None else None
+                        if name not in period_kpis_per_prod:
+                            period_kpis_per_prod[name] = {}
+                            prods_seen.append(name)
+                            prod_meta[name] = {'family': family, 'fam_key': m_key}
+                        period_kpis_per_prod[name][period] = {
+                            'rec_curr': None, 'rec_prev': None, 'rec_ie': None,
+                            'units_curr': u_curr, 'units_prev': u_prev,
+                            'units_ie': (round(u_curr/u_prev*100,1) if u_prev>0 else None),
+                            'int_curr': int_c, 'int_prev': int_p,
+                            'int_ie': (round(int_c/int_p*100,1) if int_p and int_p>0 else None),
+                        }
+            else:
+                period_prods = collect_products(D, i_curr, i_prev, line['key'], line['name'],
+                                                  rec_window_curr=r_curr, rec_window_prev=r_prev)
+                for p in period_prods:
+                    name = p['name']
+                    if name not in period_kpis_per_prod:
+                        period_kpis_per_prod[name] = {}
+                        prods_seen.append(name)
+                        prod_meta[name] = {'family': p['family'], 'fam_key': None}
+                    period_kpis_per_prod[name][period] = {
+                        'rec_curr': p['rec_curr'], 'rec_prev': p['rec_prev'], 'rec_ie': p['rec_ie'],
+                        'units_curr': p['units_curr'], 'units_prev': p['units_prev'], 'units_ie': p['units_ie'],
+                        'int_curr': p['int_curr'], 'int_prev': p['int_prev'], 'int_ie': p['int_ie'],
+                    }
+
+        # Filtrar productos: deben tener al menos algun dato en YTD
+        prods = []
+        for name in prods_seen:
+            ytd = period_kpis_per_prod[name].get('ytd', {})
+            has_data = ((ytd.get('rec_curr') or 0) > 0
+                        or (ytd.get('units_curr') or 0) > 0
+                        or (ytd.get('int_curr') or 0) > 0)
+            if not has_data: continue
+            meta = prod_meta[name]
+            prods.append({
+                'name': name,
+                'line': line['key'],
+                'lineName': line['name'],
+                'family': meta['family'],
+                'periods': period_kpis_per_prod[name],
+            })
         # Tambien metemos el resumen YTD para tabla por producto
         out['products'].extend(prods)
 
-    out['products'].sort(key=lambda p: (p.get('rec_curr') or 0) + (p.get('units_curr') or 0), reverse=True)
+    def prod_sort_key(p):
+        ytd = p.get('periods', {}).get('ytd', {})
+        return (ytd.get('rec_curr') or 0) + (ytd.get('units_curr') or 0)
+    out['products'].sort(key=prod_sort_key, reverse=True)
 
     out_path = repo / args.out
     out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2),
