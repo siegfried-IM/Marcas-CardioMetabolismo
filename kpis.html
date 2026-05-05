@@ -501,26 +501,22 @@ function renderLines() {
         const src = k[t.pulledFrom] || {};
         const ie = src.ie;
         const cls = ieClass(ie);
+        const lbl = (ie == null) ? 'sin data año -1'
+                  : (ie >= 100) ? 'crece' : 'cae';
         return `
           <div class="tile ie">
             <div class="tile-lbl">${t.label}</div>
             <div class="tile-val">${fmt.ie(ie)}</div>
-            <div class="tile-delta ${cls}">${ie==null ? 'sin comparable' : (ie >= 100 ? 'crece' : 'cae') + ' vs prev'}</div>
-            <div class="tile-prev">base 100 = sin cambio</div>
+            <div class="tile-delta ${cls}">${lbl}</div>
           </div>`;
       }
-      // Normal tile
-      const o = k[t.id] || { curr: null, prev: null };
-      const cls = deltaClass(o.curr, o.prev, t.deltaMode);
-      const dTxt = deltaText(o.curr, o.prev, t.deltaMode);
+      // Normal tile (sin "vs prev" — solo valor actual)
+      const o = k[t.id] || { curr: null };
       const valFmt = (t.id === 'ms_recetas' || t.id === 'ms_units') ? fmt.pct : fmt.int;
-      const prevTxt = (o.prev == null) ? '— sin data' : 'vs ' + valFmt(o.prev);
       return `
         <div class="tile">
           <div class="tile-lbl">${t.label}</div>
           <div class="tile-val">${valFmt(o.curr)}</div>
-          <div class="tile-delta ${cls}">${dTxt}</div>
-          <div class="tile-prev">${prevTxt}</div>
         </div>`;
     }).join('');
     const globalCut = DATA.as_of_month;
