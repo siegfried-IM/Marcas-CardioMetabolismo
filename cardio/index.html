@@ -34,7 +34,15 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
   background:#ffffff;border-bottom:2px solid #b01e1e;box-shadow:0 1px 8px rgba(0,0,0,.08);
   border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;}
 .nav-logo{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;
-  color:#b01e1e;letter-spacing:.18em;margin-right:24px;white-space:nowrap;font-weight:700;}
+  color:#b01e1e;letter-spacing:.18em;margin-right:18px;white-space:nowrap;font-weight:700;
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+  padding:6px 10px;border-radius:6px;transition:background .15s;}
+.nav-logo:hover{background:rgba(176,30,30,.08);}
+.nav-back{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;
+  color:#b01e1e;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
+  border:1px solid rgba(176,30,30,.3);border-radius:6px;padding:6px 12px;
+  margin-right:14px;white-space:nowrap;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
+.nav-back:hover{background:#b01e1e;color:#fff;border-color:#b01e1e;}
 .nav-items{display:flex;overflow-x:auto;flex:1;}
 .nav-item{height:50px;padding:0 14px;display:flex;align-items:center;
   font-size:11px;font-weight:500;color:#4b5563;cursor:pointer;
@@ -232,7 +240,8 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
 <body>
 
 <nav class="nav">
-  <span class="nav-logo">⬡ SIEGFRIED</span>
+  <a class="nav-back" href="../" title="Volver al hub">← Hub</a>
+  <a class="nav-logo" href="../">⬡ SIEGFRIED</a>
   <div class="nav-items">
     <a class="nav-item on" href="#s-kpi">Resumen</a>
     <a class="nav-item" href="#s-bud">Venta Interna</a>
