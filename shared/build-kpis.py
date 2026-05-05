@@ -39,7 +39,7 @@ MES_INV = {v:k for k,v in MES_EN.items()}
 
 # Lineas que NO tienen recetas trackeadas (CloseUp). Para estas, las metricas
 # de recetas se setean a null en el output para no mostrar data engañosa.
-LINES_NO_RECETAS = {'resp'}
+LINES_NO_RECETAS = set()
 
 # Definicion de lineas: como cargar la data
 LINES = [

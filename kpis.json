@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-04T20:40:05",
+  "generated_at": "2026-05-04T21:40:33",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -675,24 +675,24 @@
       "color": "#0D9488",
       "href": "respiratorio/",
       "owner": "Antonella Mariani",
-      "recetas_through": null,
+      "recetas_through": "Mar 2026",
       "iqvia_through": "Mar 2026",
-      "has_recetas": false,
+      "has_recetas": true,
       "kpis": {
         "mensual": {
           "recetas_sie": {
-            "curr": null,
-            "prev": null,
-            "ie": null
+            "curr": 64725,
+            "prev": 69313,
+            "ie": 93.4
           },
           "ms_recetas": {
-            "curr": null,
-            "prev": null
+            "curr": 19.62,
+            "prev": 19.49
           },
           "mercado_recetas": {
-            "curr": null,
-            "prev": null,
-            "ie": null
+            "curr": 329903,
+            "prev": 355647,
+            "ie": 92.8
           },
           "units_sie": {
             "curr": 489964,
@@ -711,18 +711,18 @@
         },
         "ytd": {
           "recetas_sie": {
-            "curr": null,
-            "prev": null,
-            "ie": null
+            "curr": 174984,
+            "prev": 181540,
+            "ie": 96.4
           },
           "ms_recetas": {
-            "curr": null,
-            "prev": null
+            "curr": 19.18,
+            "prev": 18.31
           },
           "mercado_recetas": {
-            "curr": null,
-            "prev": null,
-            "ie": null
+            "curr": 912349,
+            "prev": 991646,
+            "ie": 92.0
           },
           "units_sie": {
             "curr": 1180415,
@@ -741,18 +741,18 @@
         },
         "trimestre": {
           "recetas_sie": {
-            "curr": null,
-            "prev": null,
-            "ie": null
+            "curr": 174984,
+            "prev": 181540,
+            "ie": 96.4
           },
           "ms_recetas": {
-            "curr": null,
-            "prev": null
+            "curr": 19.18,
+            "prev": 18.31
           },
           "mercado_recetas": {
-            "curr": null,
-            "prev": null,
-            "ie": null
+            "curr": 912349,
+            "prev": 991646,
+            "ie": 92.0
           },
           "units_sie": {
             "curr": 1180415,
@@ -771,16 +771,16 @@
         },
         "semestre": {
           "recetas_sie": {
-            "curr": null,
+            "curr": 409431,
             "prev": null,
             "ie": null
           },
           "ms_recetas": {
-            "curr": null,
+            "curr": 20.04,
             "prev": null
           },
           "mercado_recetas": {
-            "curr": null,
+            "curr": 2043520,
             "prev": null,
             "ie": null
           },
@@ -801,16 +801,16 @@
         },
         "mat": {
           "recetas_sie": {
-            "curr": null,
+            "curr": 968485,
             "prev": null,
             "ie": null
           },
           "ms_recetas": {
-            "curr": null,
+            "curr": 20.95,
             "prev": null
           },
           "mercado_recetas": {
-            "curr": null,
+            "curr": 4622383,
             "prev": null,
             "ie": null
           },
@@ -1013,9 +1013,9 @@
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "ACEMUK",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
+      "rec_curr": 47336,
+      "rec_prev": 61396,
+      "rec_ie": 77.1,
       "units_curr": 405173,
       "units_prev": 511609,
       "units_ie": 79.2
@@ -1031,6 +1031,18 @@
       "units_curr": 326784,
       "units_prev": 360440,
       "units_ie": 90.7
+    },
+    {
+      "name": "HEXALER NASAL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER BRONQUIAL",
+      "rec_curr": 15356,
+      "rec_prev": 12790,
+      "rec_ie": 120.1,
+      "units_curr": 199240,
+      "units_prev": 170960,
+      "units_ie": 116.5
     },
     {
       "name": "MAGNUS (SIE)",
@@ -1081,6 +1093,18 @@
       "units_ie": 103.4
     },
     {
+      "name": "HEXALER CORT (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER CORT",
+      "rec_curr": 22589,
+      "rec_prev": 25584,
+      "rec_ie": 88.3,
+      "units_curr": 109682,
+      "units_prev": 124299,
+      "units_ie": 88.2
+    },
+    {
       "name": "DIOVAN-D (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -1093,40 +1117,16 @@
       "units_ie": 96.9
     },
     {
-      "name": "HEXALER CORT (SIE)",
+      "name": "DECADRON (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "HEXALER CORT",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 109682,
-      "units_prev": 124299,
-      "units_ie": 88.2
-    },
-    {
-      "name": "HEXALER NASAL (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER BRONQUIAL",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 99620,
-      "units_prev": 85480,
-      "units_ie": 116.5
-    },
-    {
-      "name": "HEXALER NASAL (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER NASAL",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 99620,
-      "units_prev": 85480,
-      "units_ie": 116.5
+      "family": "DECADRON",
+      "rec_curr": 578,
+      "rec_prev": 578,
+      "rec_ie": 100.0,
+      "units_curr": 111754,
+      "units_prev": 108526,
+      "units_ie": 103.0
     },
     {
       "name": "TERLOC (SIE)",
@@ -1189,6 +1189,18 @@
       "units_ie": 108.2
     },
     {
+      "name": "MOMETAX (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER BRONQUIAL",
+      "rec_curr": 5756,
+      "rec_prev": 4794,
+      "rec_ie": 120.1,
+      "units_curr": 74674,
+      "units_prev": 69880,
+      "units_ie": 106.9
+    },
+    {
       "name": "TRIP D3 (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -1199,6 +1211,18 @@
       "units_curr": 58991,
       "units_prev": 46621,
       "units_ie": 126.5
+    },
+    {
+      "name": "DUO-DECADRON (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON",
+      "rec_curr": 399,
+      "rec_prev": 399,
+      "rec_ie": 100.0,
+      "units_curr": 77152,
+      "units_prev": 71148,
+      "units_ie": 108.4
     },
     {
       "name": "CALCIO BASE (SIE)",
@@ -1249,6 +1273,18 @@
       "units_ie": 95.7
     },
     {
+      "name": "ACEMUK L (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK L",
+      "rec_curr": 49238,
+      "rec_prev": 63863,
+      "rec_ie": 77.1,
+      "units_curr": 12750,
+      "units_prev": 13352,
+      "units_ie": 95.5
+    },
+    {
       "name": "ROXOLAN (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -1271,6 +1307,18 @@
       "units_curr": 52426,
       "units_prev": 52504,
       "units_ie": 99.9
+    },
+    {
+      "name": "ACEMUK BIOTIC DUO (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK BIOTIC DUO",
+      "rec_curr": 49238,
+      "rec_prev": 63863,
+      "rec_ie": 77.1,
+      "units_curr": 9037,
+      "units_prev": 11826,
+      "units_ie": 76.4
     },
     {
       "name": "FER-IN-SOL (SIE)",
@@ -1297,28 +1345,28 @@
       "units_ie": 98.7
     },
     {
-      "name": "DECADRON (SIE)",
+      "name": "ALIDIAL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "DECADRON",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 55877,
-      "units_prev": 54263,
-      "units_ie": 103.0
+      "family": "ALIDIAL",
+      "rec_curr": 11228,
+      "rec_prev": 9388,
+      "rec_ie": 119.6,
+      "units_curr": 43748,
+      "units_prev": 34686,
+      "units_ie": 126.1
     },
     {
-      "name": "DECADRON (SIE)",
+      "name": "ACEMUK GRIP (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "DUO-DECADRON",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 55877,
-      "units_prev": 54263,
-      "units_ie": 103.0
+      "family": "ACEMUK GRIP",
+      "rec_curr": 49238,
+      "rec_prev": 63863,
+      "rec_ie": 77.1,
+      "units_curr": 3719,
+      "units_prev": 5690,
+      "units_ie": 65.4
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 28 /.03",
@@ -1333,16 +1381,28 @@
       "units_ie": 111.2
     },
     {
-      "name": "ALIDIAL (SIE)",
+      "name": "ACEMUK SIE",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "ALIDIAL",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 43748,
-      "units_prev": 34686,
-      "units_ie": 126.1
+      "family": "ACEMUK",
+      "rec_curr": 49238,
+      "rec_prev": 63863,
+      "rec_ie": 77.1,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
+      "name": "HEXALER (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER",
+      "rec_curr": 21277,
+      "rec_prev": 17721,
+      "rec_ie": 120.1,
+      "units_curr": 17993,
+      "units_prev": 21240,
+      "units_ie": 84.7
     },
     {
       "name": "DILATREND AP (SIE)",
@@ -1357,54 +1417,6 @@
       "units_ie": 101.6
     },
     {
-      "name": "DUO-DECADRON (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DECADRON",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 38576,
-      "units_prev": 35574,
-      "units_ie": 108.4
-    },
-    {
-      "name": "DUO-DECADRON (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DUO-DECADRON",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 38576,
-      "units_prev": 35574,
-      "units_ie": 108.4
-    },
-    {
-      "name": "MOMETAX (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER BRONQUIAL",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 37337,
-      "units_prev": 34940,
-      "units_ie": 106.9
-    },
-    {
-      "name": "MOMETAX (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER NASAL",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 37337,
-      "units_prev": 34940,
-      "units_ie": 106.9
-    },
-    {
       "name": "FLEXINA 600 (SIE)",
       "line": "otx",
       "lineName": "OTC",
@@ -1415,6 +1427,18 @@
       "units_curr": 32222,
       "units_prev": 27402,
       "units_ie": 117.6
+    },
+    {
+      "name": "AIREAL PLUS (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "AIREAL PLUS",
+      "rec_curr": 6458,
+      "rec_prev": 4045,
+      "rec_ie": 159.7,
+      "units_curr": 25558,
+      "units_prev": 15185,
+      "units_ie": 168.3
     },
     {
       "name": "DILATREND D (SIE)",
@@ -1429,6 +1453,18 @@
       "units_ie": 89.4
     },
     {
+      "name": "HEXALER BRONQ. DUO (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER BRONQUIAL DU",
+      "rec_curr": 21277,
+      "rec_prev": 17721,
+      "rec_ie": 120.1,
+      "units_curr": 5797,
+      "units_prev": 6495,
+      "units_ie": 89.3
+    },
+    {
       "name": "SIDERBLUT POLI (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -1441,16 +1477,64 @@
       "units_ie": 112.1
     },
     {
-      "name": "AIREAL PLUS (SIE)",
+      "name": "AIREAL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "AIREAL PLUS",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 25558,
-      "units_prev": 15185,
-      "units_ie": 168.3
+      "family": "AIREAL",
+      "rec_curr": 5924,
+      "rec_prev": 5403,
+      "rec_ie": 109.6,
+      "units_curr": 21074,
+      "units_prev": 18176,
+      "units_ie": 115.9
+    },
+    {
+      "name": "HEXALER NASAL SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER NASAL",
+      "rec_curr": 25850,
+      "rec_prev": 25635,
+      "rec_ie": 100.8,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
+      "name": "HEXALER PLUS (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER PLUS",
+      "rec_curr": 21277,
+      "rec_prev": 17721,
+      "rec_ie": 120.1,
+      "units_curr": 1987,
+      "units_prev": 2305,
+      "units_ie": 86.2
+    },
+    {
+      "name": "DECADRON. (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON",
+      "rec_curr": 117,
+      "rec_prev": 117,
+      "rec_ie": 100.0,
+      "units_curr": 22594,
+      "units_prev": 23392,
+      "units_ie": 96.6
+    },
+    {
+      "name": "HEXALER CORT SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER CORT",
+      "rec_curr": 22556,
+      "rec_prev": 25529,
+      "rec_ie": 88.4,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
     },
     {
       "name": "PGB (SIE)",
@@ -1477,16 +1561,16 @@
       "units_ie": null
     },
     {
-      "name": "AIREAL (SIE)",
+      "name": "ACEMUK DIA Y NOCHE (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "AIREAL",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 21074,
-      "units_prev": 18176,
-      "units_ie": 115.9
+      "family": "ACEMUK DIA Y NOCHE",
+      "rec_curr": 3574,
+      "rec_prev": 3464,
+      "rec_ie": 103.2,
+      "units_curr": 17071,
+      "units_prev": 16366,
+      "units_ie": 104.3
     },
     {
       "name": "TRIP D3 SIE",
@@ -1501,16 +1585,16 @@
       "units_ie": null
     },
     {
-      "name": "HEXALER (SIE)",
+      "name": "ACEMUK VL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "HEXALER",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 17993,
-      "units_prev": 21240,
-      "units_ie": 84.7
+      "family": "ACEMUK",
+      "rec_curr": 1902,
+      "rec_prev": 2467,
+      "rec_ie": 77.1,
+      "units_curr": 16280,
+      "units_prev": 23160,
+      "units_ie": 70.3
     },
     {
       "name": "ACERPES 5% (SIE)",
@@ -1525,30 +1609,6 @@
       "units_ie": 107.7
     },
     {
-      "name": "ACEMUK DIA Y NOCHE (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK DIA Y NOCHE",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 17071,
-      "units_prev": 16366,
-      "units_ie": 104.3
-    },
-    {
-      "name": "ACEMUK VL (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 16280,
-      "units_prev": 23160,
-      "units_ie": 70.3
-    },
-    {
       "name": "TELPRES (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -1559,18 +1619,6 @@
       "units_curr": 10695,
       "units_prev": 15474,
       "units_ie": 69.1
-    },
-    {
-      "name": "ACEMUK L (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK L",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 12750,
-      "units_prev": 13352,
-      "units_ie": 95.5
     },
     {
       "name": "ROXOLAN PLUS (SIE)",
@@ -1597,28 +1645,16 @@
       "units_ie": 95.6
     },
     {
-      "name": "DECADRON. (SIE)",
+      "name": "ALIDIAL SIE",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "DECADRON",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 11297,
-      "units_prev": 11696,
-      "units_ie": 96.6
-    },
-    {
-      "name": "DECADRON. (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DUO-DECADRON",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 11297,
-      "units_prev": 11696,
-      "units_ie": 96.6
+      "family": "ANTIHISTA SIST",
+      "rec_curr": 11499,
+      "rec_prev": 9632,
+      "rec_ie": 119.4,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
     },
     {
       "name": "ARTRO RED (SIE)",
@@ -1667,18 +1703,6 @@
       "units_curr": 8192,
       "units_prev": 4346,
       "units_ie": 188.5
-    },
-    {
-      "name": "ACEMUK BIOTIC DUO (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK BIOTIC DUO",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 9037,
-      "units_prev": 11826,
-      "units_ie": 76.4
     },
     {
       "name": "EMPAX (SIE)",
@@ -1741,6 +1765,18 @@
       "units_ie": 115.9
     },
     {
+      "name": "AIREAL PLUS SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ANTIHISTA SIST",
+      "rec_curr": 6458,
+      "rec_prev": 4045,
+      "rec_ie": 159.7,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
       "name": "CALCIO BASE D (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -1765,16 +1801,16 @@
       "units_ie": 97.8
     },
     {
-      "name": "HEXALER BRONQ. DUO (SIE)",
+      "name": "AIREAL SIE",
       "line": "resp",
       "lineName": "Respiratoria",
-      "family": "HEXALER BRONQUIAL DU",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 5797,
-      "units_prev": 6495,
-      "units_ie": 89.3
+      "family": "AIREAL",
+      "rec_curr": 5924,
+      "rec_prev": 5403,
+      "rec_ie": 109.6,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
     },
     {
       "name": "DAURAN (SIE)",
@@ -1823,18 +1859,6 @@
       "units_curr": 3963,
       "units_prev": 1754,
       "units_ie": 225.9
-    },
-    {
-      "name": "ACEMUK GRIP (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ACEMUK GRIP",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 3719,
-      "units_prev": 5690,
-      "units_ie": 65.4
     },
     {
       "name": "DIOVAN IC (SIE)",
@@ -1889,10 +1913,58 @@
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "ALIDIAL",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
+      "rec_curr": 622,
+      "rec_prev": 520,
+      "rec_ie": 119.6,
       "units_curr": 2425,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
+      "name": "ACEMUK DIAYNOCHE SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK DIA Y NOCHE",
+      "rec_curr": 2986,
+      "rec_prev": 2903,
+      "rec_ie": 102.9,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
+      "name": "HEXALER SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ANTIHISTA SIST",
+      "rec_curr": 2969,
+      "rec_prev": 3804,
+      "rec_ie": 78.0,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
+      "name": "DUO DECADRON SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON INY",
+      "rec_curr": 2674,
+      "rec_prev": 3360,
+      "rec_ie": 79.6,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
+      "name": "DECADRON SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON INY",
+      "rec_curr": 2619,
+      "rec_prev": 3109,
+      "rec_ie": 84.2,
+      "units_curr": 0,
       "units_prev": 0,
       "units_ie": null
     },
@@ -1913,24 +1985,12 @@
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "HEXALER BRONQUIAL",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
+      "rec_curr": 165,
+      "rec_prev": 137,
+      "rec_ie": 120.4,
       "units_curr": 2141,
       "units_prev": 2417,
       "units_ie": 88.6
-    },
-    {
-      "name": "HEXALER PLUS (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER PLUS",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
-      "units_curr": 1987,
-      "units_prev": 2305,
-      "units_ie": 86.2
     },
     {
       "name": "ISIS TABL RECUBIE 3.00MG x 56 /.03",
@@ -1957,16 +2017,76 @@
       "units_ie": 131.9
     },
     {
+      "name": "ACEMUK GRIP SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ACEMUK DIA Y NOCHE",
+      "rec_curr": 588,
+      "rec_prev": 561,
+      "rec_ie": 104.8,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
       "name": "DECADRON SHOCK (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "DECADRON",
-      "rec_curr": null,
-      "rec_prev": null,
-      "rec_ie": null,
+      "rec_curr": 3,
+      "rec_prev": 3,
+      "rec_ie": 100.0,
       "units_curr": 566,
       "units_prev": 506,
       "units_ie": 111.9
+    },
+    {
+      "name": "DECADRON AL SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON INY",
+      "rec_curr": 471,
+      "rec_prev": 525,
+      "rec_ie": 89.7,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
+      "name": "ALIDIAL L SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ANTIHISTA SIST",
+      "rec_curr": 351,
+      "rec_prev": 276,
+      "rec_ie": 127.2,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
+      "name": "DECADRON SHOCK SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON INY",
+      "rec_curr": 87,
+      "rec_prev": 69,
+      "rec_ie": 126.1,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
+    },
+    {
+      "name": "VIXIDONE SIE",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER CORT",
+      "rec_curr": 33,
+      "rec_prev": 54,
+      "rec_ie": 61.1,
+      "units_curr": 0,
+      "units_prev": 0,
+      "units_ie": null
     },
     {
       "name": "CALCITOL D3 SIE",
