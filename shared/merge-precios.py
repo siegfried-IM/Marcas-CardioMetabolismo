@@ -32,7 +32,12 @@ from pathlib import Path
 import openpyxl
 
 LINES_DEFAULT = ['cardio', 'ATB', 'OTC', 'respiratorio']
-INLINE_LINES = {'mujer', 'SNC'}  # tienen `const D = {...};` en lugar de window.OTC_*
+INLINE_LINES = {'mujer', 'SNC', 'dermatologia'}  # tienen `const D = {...};` en lugar de window.OTC_*
+
+# Path al inline HTML por linea (default: <line>/index.html)
+INLINE_PATH_OVERRIDES = {
+    'dermatologia': 'dermatologia/dermato_dashboard.html',
+}
 
 # Para mujer, los productos en data.js tienen sufijos como "(SIE)", "(ELE)",
 # "(GAD)" que no estan en el archivo de precios. Los stripeamos al matchear.
@@ -350,7 +355,8 @@ def main():
     print(f'\nMergeando precios en {len(args.lines)} lineas...')
     for line in args.lines:
         if line in INLINE_LINES:
-            html_path = repo / line / 'index.html'
+            override = INLINE_PATH_OVERRIDES.get(line)
+            html_path = repo / override if override else (repo / line / 'index.html')
             extras = []
             # SNC tiene tambien psq_dashboard.html como copia legacy
             if line == 'SNC':
