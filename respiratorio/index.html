@@ -1198,6 +1198,8 @@ function setRY(y){
   renderRecYr();renderRec();
 }
 
+const REC_COMP_COLORS = ['#2563eb','#16a34a','#d97706','#7c3aed','#0891b2','#dc2626'];  // distintos para chart de recetas
+
 function renderRec(){
   if(activeBrand && !REC_PRODS.includes(activeBrand)){
     if(rChart){rChart.destroy();rChart=null;}
@@ -1248,7 +1250,7 @@ function renderRec(){
       .filter(([p])=>!p.includes(rProd))
       .sort((a,b)=>(b[1].total||0)-(a[1].total||0)).slice(0,4);
     topComps.forEach(([brand,cdata],i)=>{
-      const clr=COMP_COLORS[i%COMP_COLORS.length];
+      const clr=REC_COMP_COLORS[i%REC_COMP_COLORS.length];
       const compRec=msKeys.map(k=>{
         // Convert competitor monthly recetas to MS% using SIE MS% denominator (proportional)
         // Use raw recetas and normalize by same market denominator
@@ -1281,7 +1283,7 @@ function renderRec(){
       .filter(([p])=>!p.includes(rProd))
       .sort((a,b)=>(b[1].total||0)-(a[1].total||0)).slice(0,4);
     topComps.forEach(([brand,cdata],i)=>{
-      const clr=COMP_COLORS[i%COMP_COLORS.length];
+      const clr=REC_COMP_COLORS[i%REC_COMP_COLORS.length];
       const msObj2=D.rec_ms?.[rProd]||{};
       const compQ=qKeys.map(k=>{
         const sieMs=msObj2.ms_quarterly?.[k];
