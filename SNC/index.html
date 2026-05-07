@@ -1556,6 +1556,7 @@ function buildPrecRows(entries, iqviaMap, dose){
 }
 
 function renderPrecPills(){
+  if(!document.getElementById('prec-pills'))return;
   document.getElementById('prec-pills').innerHTML=PREC_PRODS.map(p=>`
     <button class="pill ${p===prProd?'on':''}" onclick="setPrP('${p}')"
       style="${p===prProd?`color:${COLORS[p]||'#38bdf8'};border-color:${COLORS[p]||'#38bdf8'}`:''}">
@@ -1566,6 +1567,7 @@ function renderPrecPills(){
 function setPrP(p){prProd=p;prDose=null;renderPrecPills();renderPrecDoses();renderPrec();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
 
 function renderPrecDoses(){
+  if(!document.getElementById('prec-pills'))return;
   const groups=D.precios[prProd]||{};
   const doses=Object.keys(groups);
   if(!prDose||!groups[prDose]) prDose=doses[0]||null;
@@ -1584,6 +1586,7 @@ function renderPrecDoses(){
 function setPrD(d){prDose=d;renderPrecDoses();renderPrec();}
 
 function renderPrec(){
+  if(!document.getElementById('prec-pills'))return;
   const groups=D.precios[prProd]||{};
   if(!prDose||!groups[prDose]){document.getElementById('prec-content').innerHTML='';return;}
   const entries=groups[prDose];

@@ -1596,6 +1596,7 @@ function getPriceIqvia(prod=prProd, compare=prCompare){
 }
 
 function renderPrecCompareCtrl(){
+  if(!document.getElementById('prec-pills'))return;
   const host = document.getElementById('prec-compare-ctrl');
   if(!host) return;
   host.querySelectorAll('.seg').forEach(b=>{
@@ -1605,6 +1606,7 @@ function renderPrecCompareCtrl(){
 }
 
 function renderPrecPills(){
+  if(!document.getElementById('prec-pills'))return;
   document.getElementById('prec-pills').innerHTML=PREC_PRODS.map(p=>`
     <button class="pill ${p===prProd?'on':''}" onclick="setPrP('${p}')"
       style="${p===prProd?`color:${COLORS[p]||'#38bdf8'};border-color:${COLORS[p]||'#38bdf8'}`:''}">
@@ -1616,6 +1618,7 @@ function setPrP(p){prProd=p;prDose=null;renderPrecPills();renderPrecCompareCtrl(
 function setPrCompare(mode){prCompare=mode;prDose=null;renderPrecCompareCtrl();renderPrecDoses();renderPrec();}
 
 function renderPrecDoses(){
+  if(!document.getElementById('prec-pills'))return;
   const groups=getPriceGroups();
   const doses=Object.keys(groups);
   if(!doses.length){
@@ -1639,6 +1642,7 @@ function renderPrecDoses(){
 function setPrD(d){prDose=d;renderPrecDoses();renderPrec();}
 
 function renderPrec(){
+  if(!document.getElementById('prec-pills'))return;
   const groups=getPriceGroups();
   const iqviaMap = getPriceIqvia();
   const compareLabel = prCompare==='atc' ? 'mismo ATC y presentación' : 'misma molécula y presentación';

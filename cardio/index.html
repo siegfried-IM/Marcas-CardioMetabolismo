@@ -1494,6 +1494,7 @@ function getActivePriceGroups(prod){
 }
 
 function renderPrecPills(){
+  if(!document.getElementById('prec-pills'))return;
   document.getElementById('prec-pills').innerHTML=PREC_PRODS.map(p=>`
     <button class="pill ${p===prProd?'on':''}" onclick="setPrP('${p}')"
       style="${p===prProd?`color:${COLORS[p]||'#38bdf8'};border-color:${COLORS[p]||'#38bdf8'}`:''}">
@@ -1502,6 +1503,7 @@ function renderPrecPills(){
 }
 
 function renderPrecModes(){
+  if(!document.getElementById('prec-pills'))return;
   const labels={molecule:'vs Molécula',atc:'vs ATC'};
   const modes=getPriceModes(prProd);
   document.getElementById('prec-mode-pills').innerHTML=modes.map(mode=>`
@@ -1513,6 +1515,7 @@ function setPrP(p){prProd=p;prMode='molecule';prDose=null;renderPrecPills();rend
 function setPrM(mode){prMode=mode;prDose=null;renderPrecModes();renderPrecDoses();renderPrec();}
 
 function renderPrecDoses(){
+  if(!document.getElementById('prec-pills'))return;
   const groups=getActivePriceGroups(prProd);
   const doses=Object.keys(groups);
   if(!prDose||!groups[prDose]) prDose=doses[0]||null;
@@ -1531,6 +1534,7 @@ function renderPrecDoses(){
 function setPrD(d){prDose=d;renderPrecDoses();renderPrec();}
 
 function renderPrec(){
+  if(!document.getElementById('prec-pills'))return;
   const groups=getActivePriceGroups(prProd);
   if(!prDose||!groups[prDose]){document.getElementById('prec-content').innerHTML='';return;}
   const entries=groups[prDose];
