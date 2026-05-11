@@ -79,17 +79,13 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
   <div class="tabs">
     <a class="tab" href="../">Resumen</a>
     <a class="tab" href="./index.html">DDD</a>
-    <a class="tab on" href="./competidores.html">Competidores</a><a class="nav-tab" href="https://bonos-pap.pages.dev/" target="_blank" rel="noopener" style="background:#86EFAC;color:#166534;border-radius:5px;padding:4px 12px;margin-left:6px;">Bonos PAP ↗</a>
+    <a class="tab on" href="./competidores.html">Competidores</a><a class="tab" href="https://bonos-pap.pages.dev/" target="_blank" rel="noopener" style="background:#86EFAC;color:#166534;border-radius:5px;padding:4px 12px;margin-left:6px;">Bonos PAP ↗</a>
     <a class="tab" href="../../">Hub</a>
   </div>
   <span class="right" id="cutoff"></span>
 </nav>
 
 <div class="wrap">
-  <p class="eyebrow">DDD · COMPETIDORES · CARDIO-METABOLISMO</p>
-  <h1>Competidores · Heatmap geográfico</h1>
-  <p class="subtitle">Cómo crece o cae cada competidor por provincia y región CUP. Períodos: Mensual · Trimestral · Semestral · YTD · MAT.</p>
-
   <div class="card">
     <h2>Mercado / Molécula</h2>
     <div class="mkt-grid" id="mkt-grid"></div>
@@ -425,7 +421,7 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
     return {txt:'—', bg:'#fff', fg:'#9ca3af'};
   }
 
-  // === Render Shape A table ===
+  // === Render Shape A table (TRANSPOSED: regions=rows, competitors=cols) ===
   function renderTableA(tableId, regions, market, period, visibleSet){
     const tbl = document.getElementById(tableId);
     const thead = tbl.querySelector('thead'); const tbody = tbl.querySelector('tbody');
@@ -434,14 +430,18 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
     if (!grid || !grid.rows.length){ thead.innerHTML=''; tbody.innerHTML='<tr><td class="empty">Sin datos visibles. Activá competidores en el filtro.</td></tr>'; return; }
     const max = {ms: Math.max(grid.max_ms,1), dms: Math.max(grid.max_abs_dms, 0.1), du: Math.max(grid.max_abs_du, 1)};
     const cleanReg = r => r.startsWith('_') ? r.slice(1) : r;
-    let h = '<tr><th>Competidor</th>';
-    for (const r of grid.cols){ h += `<th title="${r}">${cleanReg(r)}</th>`; }
+    // Header: Región | competidor1 | competidor2 | ...
+    let h = '<tr><th>Región / Provincia</th>';
+    for (const row of grid.rows){
+      h += `<th class="${row.isSie?'sie':''}" title="${row.brand}">${row.isSie?'★ ':''}${row.brand}</th>`;
+    }
     h += '</tr>';
     thead.innerHTML = h;
+    // Body: una fila por región, columnas = competidores
     let b = '';
-    for (const row of grid.rows){
-      b += `<tr><th class="${row.isSie?'sie':''}" title="${row.brand}">${row.brand}</th>`;
-      for (const r of grid.cols){
+    for (const r of grid.cols){
+      b += `<tr><th title="${r}">${cleanReg(r)}</th>`;
+      for (const row of grid.rows){
         const cell = grid.cells[row.brand][r];
         const f = fmtCellMetric(cell, max);
         const tt = [`${row.brand} · ${r}`];
@@ -456,7 +456,7 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
     tbody.innerHTML = b;
   }
 
-  // === Render Shape B table (SIE vs Mercado) ===
+  // === Render Shape B table (TRANSPOSED: regiones=filas, series=cols) ===
   function renderTableB(tableId, regionFilter, market, period){
     const tbl = document.getElementById(tableId);
     const thead = tbl.querySelector('thead'); const tbody = tbl.querySelector('tbody');
@@ -478,10 +478,6 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
     }
     const max = {ms: Math.max(max_ms,1), dms: Math.max(max_abs_dms, 0.1), du: Math.max(max_abs_du, 1)};
     const cleanReg = r => r.startsWith('_') ? r.slice(1) : r;
-    let h = '<tr><th>Serie</th>';
-    for (const r of regs){ h += `<th title="${r}">${cleanReg(r)}</th>`; }
-    h += '</tr>';
-    thead.innerHTML = h;
     function cell(serie, region){
       const a = aggC[region]; const p = aggP ? aggP[region] : null;
       const v_a = serie==='SIE' ? a.sie : a.total;
@@ -510,12 +506,18 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
       }
       return {txt:'—', bg:'#fff', fg:'#9ca3af'};
     }
+    // Header: Región | SIE | Mercado total
+    const series = ['SIE','Mercado total'];
+    let h = '<tr><th>Región / Provincia</th>';
+    for (const s of series){ h += `<th class="${s==='SIE'?'sie':''}">${s==='SIE'?'★ ':''}${s}</th>`; }
+    h += '</tr>';
+    thead.innerHTML = h;
     let b = '';
-    for (const serie of ['SIE','Mercado total']){
-      b += `<tr><th class="${serie==='SIE'?'sie':''}">${serie}</th>`;
-      for (const r of regs){
-        const f = cell(serie, r);
-        b += `<td style="background:${f.bg};color:${f.fg}" title="${serie} · ${r}">${f.txt}</td>`;
+    for (const r of regs){
+      b += `<tr><th title="${r}">${cleanReg(r)}</th>`;
+      for (const s of series){
+        const f = cell(s, r);
+        b += `<td style="background:${f.bg};color:${f.fg}" title="${s} · ${r}">${f.txt}</td>`;
       }
       b += '</tr>';
     }
@@ -558,10 +560,6 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
       }
     }
     const max = {ms: Math.max(max_ms,1), dms: Math.max(max_abs_dms, 0.1), du: Math.max(max_abs_du, 1)};
-    let h = '<tr><th>Serie</th>';
-    for (const p of provs){ h += `<th title="${p}">${p}</th>`; }
-    h += '</tr>';
-    thead.innerHTML = h;
     function cell(serie, prov){
       const a = aggC[prov]; const p = aggP ? aggP[prov] : null;
       const v_a = serie==='SIE' ? a.sie : a.total;
@@ -590,12 +588,18 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
       }
       return {txt:'—', bg:'#fff', fg:'#9ca3af'};
     }
+    // TRANSPOSED: Header: Provincia | SIE | Mercado total
+    const series = ['SIE','Mercado total'];
+    let h = '<tr><th>Provincia</th>';
+    for (const s of series){ h += `<th class="${s==='SIE'?'sie':''}">${s==='SIE'?'★ ':''}${s}</th>`; }
+    h += '</tr>';
+    thead.innerHTML = h;
     let b = '';
-    for (const serie of ['SIE','Mercado total']){
-      b += `<tr><th class="${serie==='SIE'?'sie':''}">${serie}</th>`;
-      for (const p of provs){
-        const f = cell(serie, p);
-        b += `<td style="background:${f.bg};color:${f.fg}" title="${serie} · ${p}">${f.txt}</td>`;
+    for (const p of provs){
+      b += `<tr><th title="${p}">${p}</th>`;
+      for (const s of series){
+        const f = cell(s, p);
+        b += `<td style="background:${f.bg};color:${f.fg}" title="${s} · ${p}">${f.txt}</td>`;
       }
       b += '</tr>';
     }
