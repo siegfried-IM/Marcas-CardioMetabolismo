@@ -127,10 +127,10 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
       <span class="meta" id="comp-meta"></span>
     </div>
 
-    <div class="tbl-title"><span>Por Provincia</span><span class="meta" id="prov-meta"></span></div>
+    <div class="tbl-title"><span>Por Provincia (agregado)</span><span class="meta" id="prov-meta"></span></div>
     <div class="hm-wrap"><table class="hm" id="hm-prov"><thead></thead><tbody></tbody></table></div>
 
-    <div class="tbl-title" style="margin-top:18px;"><span>Por Región CUP (BAIRES)</span><span class="meta" id="cup-meta"></span></div>
+    <div class="tbl-title" style="margin-top:18px;"><span>Por Región CUP (zonas IQVIA detalladas)</span><span class="meta" id="cup-meta"></span></div>
     <div class="hm-wrap"><table class="hm" id="hm-cup"><thead></thead><tbody></tbody></table></div>
 
     <p class="note" id="note"></p>
@@ -185,6 +185,59 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
   let HEAT_SEARCH = '';
   let HEAT_MARKET = null;
   const VIS_BY_MKT = {};  // market -> Set<brand> when in custom mode
+
+  // === CUP zone → Provincia mapping ===================================
+  // IQVIA RegionCUP field mixes provincias y zonas CUP (subdivisiones).
+  // Esta tabla mapea cada zona CUP a su provincia real. Las que NO estan
+  // listadas se asumen como nombre de provincia directo.
+  const CUP_TO_PROV = {
+    '_CAPITAL FEDERAL': 'CABA',
+    '_SUBURBANO NORTE': 'Buenos Aires',
+    '_SUBURBANO OESTE': 'Buenos Aires',
+    '_SUBURBANO SUR':   'Buenos Aires',
+    'AZUL-OLAVARRIA-TANDIL':                  'Buenos Aires',
+    'BAHIA BLANCA':                           'Buenos Aires',
+    'BARADERO-SAN PEDRO-RAMALLO-SAN NICOLAS': 'Buenos Aires',
+    'JUNIN-CHIVILCOY-PERGAMINO':              'Buenos Aires',
+    'LA PLATA':                               'Buenos Aires',
+    'LUJAN Y ALREDEDORES':                    'Buenos Aires',
+    'M.DEL PLATA':                            'Buenos Aires',
+    'PILAR - ESCOBAR':                        'Buenos Aires',
+    'ZARATE - CAMPANA':                       'Buenos Aires',
+    'CATAMARCA':                              'Catamarca',
+    'COMODORO RIVADAVIA':                     'Chubut',
+    'TRELEW':                                 'Chubut',
+    'RESISTENCIA':                            'Chaco',
+    'CORDOBA':                                'Córdoba',
+    'RIO IV Y ALREDEDORES':                   'Córdoba',
+    'SAN FCO-ESTE Y NORTE':                   'Córdoba',
+    'CORRIENTES':                             'Corrientes',
+    'CONCORDIA':                              'Entre Ríos',
+    'PARANA':                                 'Entre Ríos',
+    'FORMOSA':                                'Formosa',
+    'JUJUY':                                  'Jujuy',
+    'SANTA ROSA':                             'La Pampa',
+    'LA RIOJA':                               'La Rioja',
+    'MENDOZA':                                'Mendoza',
+    'SAN RAFAEL':                             'Mendoza',
+    'POSADAS':                                'Misiones',
+    'NEUQUEN':                                'Neuquén',
+    'RIO NEGRO':                              'Río Negro',
+    'SALTA':                                  'Salta',
+    'SAN JUAN':                               'San Juan',
+    'SAN LUIS':                               'San Luis',
+    'SANTA CRUZ':                             'Santa Cruz',
+    'RAFAELA-NTE SANTA FE':                   'Santa Fe',
+    'ROSARIO':                                'Santa Fe',
+    'SANTA FE':                               'Santa Fe',
+    'SANTIAGO DEL ESTERO':                    'Santiago del Estero',
+    'TIERRA DEL FUEGO':                       'Tierra del Fuego',
+    'TUCUMAN':                                'Tucumán',
+  };
+  function regionToProvince(r){
+    if (!r) return null;
+    return CUP_TO_PROV[r] || r;
+  }
 
   // === Period helpers ===
   function periodIdxs(){
@@ -469,6 +522,86 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
     tbody.innerHTML = b;
   }
 
+  // === Shape B: aggregate regions by province ===
+  function aggregateBByProvince(market, idxs){
+    const raw = aggregateB(market, idxs);
+    const out = {};
+    for (const region of Object.keys(raw)){
+      const prov = regionToProvince(region);
+      if (!prov) continue;
+      if (!out[prov]) out[prov] = {sie:0,total:0};
+      out[prov].sie   += raw[region].sie;
+      out[prov].total += raw[region].total;
+    }
+    for (const k of Object.keys(out)){
+      const a = out[k]; a.ms = a.total>0 ? a.sie/a.total*100 : null;
+    }
+    return out;
+  }
+
+  function renderTableBProv(tableId, market, period){
+    const tbl = document.getElementById(tableId);
+    const thead = tbl.querySelector('thead'); const tbody = tbl.querySelector('tbody');
+    const aggC = aggregateBByProvince(market, period.curr);
+    const aggP = period.prev ? aggregateBByProvince(market, period.prev) : null;
+    const provs = Object.keys(aggC).filter(p=>aggC[p].total>0).sort((a,b)=>aggC[b].total-aggC[a].total);
+    if (!provs.length){ thead.innerHTML=''; tbody.innerHTML='<tr><td class="empty">Sin datos para esta vista.</td></tr>'; return; }
+    let max_ms=0, max_abs_dms=0, max_abs_du=0;
+    for (const p of provs){
+      const a = aggC[p];
+      if (a.ms!=null && a.ms>max_ms) max_ms = a.ms;
+      if (aggP && aggP[p]){
+        const pp = aggP[p];
+        if (pp.ms!=null && a.ms!=null) max_abs_dms = Math.max(max_abs_dms, Math.abs(a.ms-pp.ms));
+        if (pp.sie>0) max_abs_du = Math.max(max_abs_du, Math.abs((a.sie-pp.sie)/pp.sie*100));
+        if (pp.total>0) max_abs_du = Math.max(max_abs_du, Math.abs((a.total-pp.total)/pp.total*100));
+      }
+    }
+    const max = {ms: Math.max(max_ms,1), dms: Math.max(max_abs_dms, 0.1), du: Math.max(max_abs_du, 1)};
+    let h = '<tr><th>Serie</th>';
+    for (const p of provs){ h += `<th title="${p}">${p}</th>`; }
+    h += '</tr>';
+    thead.innerHTML = h;
+    function cell(serie, prov){
+      const a = aggC[prov]; const p = aggP ? aggP[prov] : null;
+      const v_a = serie==='SIE' ? a.sie : a.total;
+      const v_p = p ? (serie==='SIE' ? p.sie : p.total) : null;
+      const ms_a = serie==='SIE' ? a.ms : 100;
+      const ms_p = (p && serie==='SIE') ? p.ms : null;
+      let dms=null, du=null;
+      if (ms_a!=null && ms_p!=null) dms = ms_a-ms_p;
+      if (v_p && v_p>0) du = (v_a-v_p)/v_p*100;
+      if (HEAT_METRIC==='ms'){
+        if (serie==='Mercado total') return {txt: v_a.toLocaleString('es-AR'), bg:'#fafafa', fg:'#525252'};
+        if (ms_a==null) return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+        const c = colorMS(ms_a, max.ms);
+        return {txt: ms_a.toFixed(1)+'%', bg:c.bg, fg:c.fg};
+      }
+      if (HEAT_METRIC==='dms'){
+        if (serie==='Mercado total') return {txt:'—', bg:'#fafafa', fg:'#9ca3af'};
+        if (dms==null) return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+        const c = colorDiv(dms, max.dms);
+        return {txt:(dms>=0?'+':'')+dms.toFixed(1), bg:c.bg, fg:c.fg};
+      }
+      if (HEAT_METRIC==='du'){
+        if (du==null) return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+        const c = colorDiv(du, max.du);
+        return {txt:(du>=0?'+':'')+du.toFixed(0)+'%', bg:c.bg, fg:c.fg};
+      }
+      return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+    }
+    let b = '';
+    for (const serie of ['SIE','Mercado total']){
+      b += `<tr><th class="${serie==='SIE'?'sie':''}">${serie}</th>`;
+      for (const p of provs){
+        const f = cell(serie, p);
+        b += `<td style="background:${f.bg};color:${f.fg}" title="${serie} · ${p}">${f.txt}</td>`;
+      }
+      b += '</tr>';
+    }
+    tbody.innerHTML = b;
+  }
+
   // === Comp pills (Shape A only) ===
   function renderPills(market, allRanked, visibleSet){
     const el = document.getElementById('comp-pills');
@@ -482,12 +615,61 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
     document.getElementById('comp-meta').textContent = `${visibleSet.size}/${allRanked.length} visibles` + (search?` · "${HEAT_SEARCH}"`:'');
   }
 
+  // === Aggregate brand_monthly per province (Shape A) ===
+  // Returns a "virtual" market view where regions are provinces (aggregated
+  // sum of constituent CUP zones).
+  function buildProvinceView(market){
+    if (SHAPE !== 'A') return null;
+    const mk = MKTS[market]; if (!mk) return null;
+    const bm = mk.brand_monthly || {};
+    const tm = mk.total_monthly || {};
+    const NMonths = MONTHS.length;
+    const provBM = {}; // brand → province → [N months]
+    const provTM = {}; // province → [N months]
+    const addToArr = (target, src) => {
+      if (!src) return target;
+      for (let i = 0; i < NMonths; i++){
+        target[i] = (target[i]||0) + (Number(src[i])||0);
+      }
+      return target;
+    };
+    for (const brand of Object.keys(bm)){
+      provBM[brand] = {};
+      for (const region of Object.keys(bm[brand])){
+        const prov = regionToProvince(region);
+        if (!prov) continue;
+        if (!provBM[brand][prov]) provBM[brand][prov] = new Array(NMonths).fill(0);
+        addToArr(provBM[brand][prov], bm[brand][region]);
+      }
+    }
+    for (const region of Object.keys(tm)){
+      const prov = regionToProvince(region);
+      if (!prov) continue;
+      if (!provTM[prov]) provTM[prov] = new Array(NMonths).fill(0);
+      addToArr(provTM[prov], tm[region]);
+    }
+    return { brands: mk.brands || [], brand_monthly: provBM, total_monthly: provTM };
+  }
+
+  // For Shape A province table we need a way to feed `computeGridA` with the
+  // province-aggregated view. We achieve this by temporarily injecting a
+  // synthetic market into MKTS and pointing computeGridA at it.
+  const PROV_MKT_KEY = '__PROV_AGG__';
+  function withProvinceView(market, fn){
+    const view = buildProvinceView(market);
+    if (!view) return fn();
+    const savedOrig = MKTS[PROV_MKT_KEY];
+    MKTS[PROV_MKT_KEY] = view;
+    try { return fn(); } finally {
+      if (savedOrig === undefined) delete MKTS[PROV_MKT_KEY]; else MKTS[PROV_MKT_KEY] = savedOrig;
+    }
+  }
+
   // === Render entry point ===
-  function getRegions(){
+  function getRawRegions(){
     if (SHAPE==='A'){
       return (D.regions||[]).filter(r=>r && r!=='-');
     }
-    // Shape B: derive from regionsByMonth of current market
     const mk = MKTS[HEAT_MARKET]; if (!mk) return [];
     const rbm = mk.regionsByMonth || (mk.molecule && mk.molecule.all && mk.molecule.all.regionsByMonth) || {};
     const set = new Set();
@@ -499,21 +681,32 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
     if (!HEAT_MARKET) HEAT_MARKET = Object.keys(MKTS)[0];
     if (!HEAT_MARKET){ document.getElementById('mkt-grid').innerHTML='<span class="empty">Sin mercados.</span>'; return; }
     const period = periodIdxs(); if (!period) return;
-    const allRegs = getRegions();
-    const provRegs = allRegs.filter(r=>!r.startsWith('_'));
-    const cupRegs  = allRegs.filter(r=>r.startsWith('_'));
+    const allRegs = getRawRegions();
+    const cupRegs = allRegs;  // CUP table shows ALL raw zones (provinces + BAIRES + sub-zones)
 
     if (SHAPE==='A'){
+      // Pills + ranking use the raw (full) data for accuracy
       const allRanked = rankedBrandsA(HEAT_MARKET, allRegs, period);
       const visibleSet = getVisibleSet(HEAT_MARKET, allRanked);
       renderPills(HEAT_MARKET, allRanked, visibleSet);
-      renderTableA('hm-prov', provRegs, HEAT_MARKET, period, visibleSet);
-      renderTableA('hm-cup',  cupRegs,  HEAT_MARKET, period, visibleSet);
+      // Province table: aggregated view
+      withProvinceView(HEAT_MARKET, () => {
+        const provView = MKTS[PROV_MKT_KEY];
+        const provNames = Object.keys(provView.total_monthly);
+        renderTableA('hm-prov', provNames, PROV_MKT_KEY, period, visibleSet);
+      });
+      // CUP/Region table: raw zones
+      renderTableA('hm-cup', cupRegs, HEAT_MARKET, period, visibleSet);
     } else {
       document.getElementById('comp-pills').innerHTML = '<span class="empty">Data DDD de esta línea no expone competidores individuales — mostrando SIE vs Mercado Total.</span>';
       document.getElementById('comp-meta').textContent = '';
-      renderTableB('hm-prov', r=>r&&r!=='-'&&!r.startsWith('_'), HEAT_MARKET, period);
-      renderTableB('hm-cup',  r=>r&&r.startsWith('_'),            HEAT_MARKET, period);
+      // For Shape B we still aggregate to province via the regionsByMonth filter.
+      const provFilter = r => {
+        const p = regionToProvince(r);
+        return p && p !== '-';
+      };
+      renderTableBProv('hm-prov', HEAT_MARKET, period);
+      renderTableB('hm-cup',  r=>r,                  HEAT_MARKET, period);
     }
 
     document.getElementById('period-label').textContent =
@@ -527,8 +720,14 @@ table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
     } else {
       noteEl.textContent = 'La data DDD de esta línea agrega SIE vs Mercado Total por región/mes. No expone competidores individuales — el granular requiere rebuild de data.js desde el xlsx fuente.';
     }
-    document.getElementById('prov-meta').textContent = `${provRegs.length} regiones`;
-    document.getElementById('cup-meta').textContent  = `${cupRegs.length} regiones`;
+    if (SHAPE==='A'){
+      const provCount = (function(){ const view = buildProvinceView(HEAT_MARKET); return view ? Object.keys(view.total_monthly).length : 0; })();
+      document.getElementById('prov-meta').textContent = `${provCount} provincias`;
+    } else {
+      const aggC = aggregateBByProvince(HEAT_MARKET, period.curr);
+      document.getElementById('prov-meta').textContent = `${Object.keys(aggC).filter(p=>aggC[p].total>0).length} provincias`;
+    }
+    document.getElementById('cup-meta').textContent = `${cupRegs.length} zonas CUP`;
   }
 
   function renderMktGrid(){
