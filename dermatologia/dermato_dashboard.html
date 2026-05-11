@@ -1332,8 +1332,8 @@ function renderCanQuartTable(){
   // Sub-header row: Conv | Most repeated
   html += '<tr style="background:#1f2937;color:#9ca3af;">';
   for(let i=0;i<4;i++){
-    html += '<th style="text-align:center;padding:6px 8px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:#60a5fa;border-right:1px solid rgba(255,255,255,.05);">Conv</th>';
-    html += '<th style="text-align:center;padding:6px 8px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:#fbbf24;border-right:1px solid rgba(255,255,255,.08);">Most</th>';
+    html += '<th style="text-align:center;padding:6px 8px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:#60a5fa;border-right:1px solid rgba(255,255,255,.05);">Convenio</th>';
+    html += '<th style="text-align:center;padding:6px 8px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:#fbbf24;border-right:1px solid rgba(255,255,255,.08);">Mostrador</th>';
   }
   html += '</tr></thead>';
   html += '<tbody>';
@@ -1350,7 +1350,7 @@ function renderCanQuartTable(){
     html += '</tr>';
   }
   html += '</tbody></table></div>';
-  html += '<p style="margin-top:12px;font-size:10px;color:#6b7280;letter-spacing:.04em;"><span style="color:#2563eb;font-weight:700">■</span> Conv = Convenio OS &nbsp;·&nbsp; <span style="color:#d97706;font-weight:700">■</span> Most = Mostrador</p>';
+  html += '<p style="margin-top:12px;font-size:10px;color:#6b7280;letter-spacing:.04em;"><span style="color:#2563eb;font-weight:700">■</span> Convenio OS &nbsp;·&nbsp; <span style="color:#d97706;font-weight:700">■</span> Mostrador</p>';
   el.innerHTML = html;
 }
 renderCanQuartPills(); renderCanQuartTable();
