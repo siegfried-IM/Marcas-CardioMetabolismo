@@ -698,9 +698,14 @@ def build_page(line: str, shape: str, main_path: str) -> str:
         data_loader = '<script src="./competidores-data.js"></script>'
         loader_note = f'extracted to {data_file.name}'
     else:
-        # Load shared data.js from parent
-        data_loader = '<script src="../data.js"></script>'
-        loader_note = 'reuses ../data.js'
+        # Load shared data.js. Mujer keeps its DDD data sibling (./data.js)
+        # while the others use the line-level ../data.js.
+        if line == 'mujer':
+            data_loader = '<script src="./data.js"></script>'
+            loader_note = 'reuses ./data.js (DDD-local)'
+        else:
+            data_loader = '<script src="../data.js"></script>'
+            loader_note = 'reuses ../data.js'
 
     html = (PAGE_HTML
             .replace('__TITLE__', LINE_TITLES.get(line, line))
