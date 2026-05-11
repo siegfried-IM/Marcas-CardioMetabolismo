@@ -1830,7 +1830,7 @@ function setCovBrand(b){
 
 function renderCovBrandPills(){
   const SA = D.stock_pres||{};
-  const familias = PROD_ORDER.filter(f=>Object.values(SA).some(v=>v.familia===f));
+  const familias = [...new Set(Object.values(SA).map(v=>v.familia).filter(Boolean))].sort();
   const el = document.getElementById('cov-brand-pills');
   if(!el) return;
   el.innerHTML = familias.map(f=>{
