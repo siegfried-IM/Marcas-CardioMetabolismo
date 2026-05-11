@@ -697,15 +697,20 @@ def build_page(line: str, shape: str, main_path: str) -> str:
         data_file.write_text(f'window.SFG_COMP_DATA = {d_json};\n', encoding='utf-8', newline='')
         data_loader = '<script src="./competidores-data.js"></script>'
         loader_note = f'extracted to {data_file.name}'
-    else:
-        # Load shared data.js. Mujer keeps its DDD data sibling (./data.js)
-        # while the others use the line-level ../data.js.
-        if line == 'mujer':
-            data_loader = '<script src="./data.js"></script>'
-            loader_note = 'reuses ./data.js (DDD-local)'
+    elif line == 'mujer':
+        # Mujer tiene una build dedicada: shared/build-mujer-competidores-data.py
+        # Si existe, usar ese (Shape A full granularity); si no, fallback al
+        # ./data.js (Shape B).
+        comp_data = base_dir / 'competidores-data.js'
+        if comp_data.is_file():
+            data_loader = '<script src="./competidores-data.js"></script>'
+            loader_note = f'reuses {comp_data.name} (Shape A pre-built)'
         else:
-            data_loader = '<script src="../data.js"></script>'
-            loader_note = 'reuses ../data.js'
+            data_loader = '<script src="./data.js"></script>'
+            loader_note = 'reuses ./data.js (Shape B fallback)'
+    else:
+        data_loader = '<script src="../data.js"></script>'
+        loader_note = 'reuses ../data.js'
 
     html = (PAGE_HTML
             .replace('__TITLE__', LINE_TITLES.get(line, line))
