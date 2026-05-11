@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siegfried · Competidores DDD · Respiratorio</title>
+<style>
+:root{--sie:#7A1518;--ink:#1a1a1a;--mut:#737373;--bg:#fafafa;--card:#fff;--bord:#e5e5e5;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Inter','IBM Plex Sans',-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink);font-size:13px;}
+.nav{display:flex;align-items:center;padding:10px 20px;background:#fff;border-bottom:1px solid var(--bord);}
+.nav .brand{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--sie);letter-spacing:.1em;}
+.nav .brand .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--sie);margin-right:6px;}
+.nav .tabs{display:flex;margin-left:24px;gap:4px;flex:1;}
+.nav .tab{color:var(--mut);text-decoration:none;padding:6px 12px;font-size:12px;font-weight:500;border-radius:4px;}
+.nav .tab.on{color:var(--sie);background:#fef2f2;font-weight:700;}
+.nav .tab:hover{color:var(--ink);}
+.nav .right{font-size:11px;color:var(--mut);font-family:'IBM Plex Mono',monospace;}
+
+.wrap{padding:20px;max-width:1800px;margin:0 auto;}
+h1{margin:0 0 6px;font-size:22px;font-weight:700;}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mut);letter-spacing:.15em;text-transform:uppercase;font-weight:700;}
+.subtitle{color:var(--mut);font-size:12px;margin-bottom:18px;}
+
+.card{background:var(--card);border:1px solid var(--bord);border-radius:8px;padding:16px 18px;margin-bottom:16px;}
+.card h2{margin:0 0 10px;font-size:13px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.1em;}
+
+/* Market selector */
+.mkt-grid{display:flex;flex-wrap:wrap;gap:6px;}
+.mkt-pill{padding:6px 12px;border:1px solid var(--bord);border-radius:14px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:var(--mut);}
+.mkt-pill:hover{border-color:var(--mut);color:var(--ink);}
+.mkt-pill.on{background:var(--sie);color:#fff;border-color:var(--sie);}
+
+/* Controls */
+.ctrl{display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:12px 14px;background:#fafafa;border-radius:6px;margin-bottom:12px;}
+.ctrl .lbl{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
+.ctrl .seg{display:inline-flex;border:1px solid #d4d4d4;border-radius:5px;overflow:hidden;background:#fff;}
+.ctrl .seg button{padding:6px 12px;border:0;background:transparent;cursor:pointer;font-size:11px;font-weight:600;color:#525252;border-right:1px solid #e5e5e5;}
+.ctrl .seg button:last-child{border-right:0;}
+.ctrl .seg button.on{background:var(--sie);color:#fff;}
+.ctrl .seg button:hover:not(.on){background:#f5f5f5;}
+.ctrl .meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mut);margin-left:auto;}
+
+/* Competitor filter */
+.flt-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;padding:12px 14px;background:#fafafa;border-radius:6px;margin-bottom:14px;}
+.flt-bar .preset{display:inline-flex;border:1px solid #d4d4d4;border-radius:5px;overflow:hidden;background:#fff;}
+.flt-bar .preset button{padding:5px 11px;border:0;background:transparent;cursor:pointer;font-size:11px;font-weight:600;color:#525252;border-right:1px solid #e5e5e5;}
+.flt-bar .preset button:last-child{border-right:0;}
+.flt-bar .preset button.on{background:#1f2937;color:#fff;}
+.flt-bar .search{padding:5px 11px;border:1px solid #d4d4d4;border-radius:4px;font-size:11px;width:200px;}
+.flt-bar .search:focus{outline:none;border-color:var(--sie);}
+.flt-bar .meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mut);margin-left:auto;align-self:center;}
+.pills{display:flex;flex-wrap:wrap;gap:5px;flex:1;min-width:300px;max-height:140px;overflow-y:auto;padding:4px;border:1px solid #e5e5e5;border-radius:5px;background:#fff;}
+.pill-c{padding:3px 10px;border:1px solid #d4d4d4;border-radius:12px;font-size:10px;font-weight:600;cursor:pointer;background:#fff;color:#525252;white-space:nowrap;transition:all .15s;user-select:none;}
+.pill-c.on{background:#1f2937;color:#fff;border-color:#1f2937;}
+.pill-c.on.sie{background:var(--sie);border-color:var(--sie);}
+.pill-c:not(.on){opacity:.5;}
+.pill-c:not(.on):hover{opacity:1;border-color:var(--mut);}
+
+/* Heatmap tables */
+.tbl-title{font-size:11px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px;display:flex;align-items:center;justify-content:space-between;}
+.tbl-title .meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mut);font-weight:500;letter-spacing:.02em;text-transform:none;}
+.hm-wrap{overflow:auto;border:1px solid var(--bord);border-radius:6px;max-height:560px;background:#fff;}
+table.hm{border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:10px;width:max-content;}
+table.hm th,table.hm td{border:1px solid #f0f0f0;padding:4px 6px;text-align:center;min-width:42px;}
+table.hm thead th{position:sticky;top:0;background:#1f2937;color:#fff;font-weight:700;font-size:9px;letter-spacing:.04em;z-index:2;white-space:nowrap;padding:6px 8px;}
+table.hm thead th:first-child{position:sticky;left:0;z-index:3;}
+table.hm tbody th{position:sticky;left:0;background:#fafafa;color:var(--ink);font-weight:600;text-align:left;font-size:10px;white-space:nowrap;z-index:1;border-right:1px solid #d4d4d4;max-width:200px;overflow:hidden;text-overflow:ellipsis;padding:5px 10px;}
+table.hm tbody th.sie{color:var(--sie);font-weight:700;}
+table.hm tbody th.sie::before{content:'★ ';}
+table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
+.empty{padding:20px;text-align:center;color:var(--mut);font-size:12px;}
+.note{font-size:10px;color:var(--mut);margin-top:8px;font-style:italic;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="brand"><span class="dot"></span>SIEGFRIED</span>
+  <div class="tabs">
+    <a class="tab" href="../">Resumen</a>
+    <a class="tab" href="./index.html">DDD</a>
+    <a class="tab on" href="./competidores.html">Competidores</a>
+    <a class="tab" href="../../">Hub</a>
+  </div>
+  <span class="right" id="cutoff"></span>
+</nav>
+
+<div class="wrap">
+  <p class="eyebrow">DDD · COMPETIDORES · RESPIRATORIO</p>
+  <h1>Competidores · Heatmap geográfico</h1>
+  <p class="subtitle">Cómo crece o cae cada competidor por provincia y región CUP. Períodos: Mensual · Trimestral · Semestral · YTD · MAT.</p>
+
+  <div class="card">
+    <h2>Mercado / Molécula</h2>
+    <div class="mkt-grid" id="mkt-grid"></div>
+  </div>
+
+  <div class="card">
+    <div class="ctrl">
+      <span class="lbl">Período</span>
+      <div class="seg" id="ctl-period">
+        <button data-p="m">Mensual</button>
+        <button data-p="q" class="on">Trimestral</button>
+        <button data-p="s">Semestral</button>
+        <button data-p="ytd">YTD</button>
+        <button data-p="mat">MAT</button>
+      </div>
+      <span class="lbl">Métrica</span>
+      <div class="seg" id="ctl-metric">
+        <button data-m="ms" class="on">MS%</button>
+        <button data-m="dms">Δ MS% (pp)</button>
+        <button data-m="du">Δ Unidades %</button>
+      </div>
+      <span class="meta" id="period-label"></span>
+    </div>
+
+    <div class="flt-bar">
+      <span class="lbl">Competidores</span>
+      <div class="preset" id="ctl-preset">
+        <button data-preset="all">Todos</button>
+        <button data-preset="sie">Solo SIE</button>
+        <button data-preset="top5">Top 5</button>
+        <button data-preset="top10" class="on">Top 10</button>
+      </div>
+      <input type="text" class="search" id="ctl-search" placeholder="Buscar competidor..." />
+      <div class="pills" id="comp-pills"></div>
+      <span class="meta" id="comp-meta"></span>
+    </div>
+
+    <div class="tbl-title"><span>Por Provincia</span><span class="meta" id="prov-meta"></span></div>
+    <div class="hm-wrap"><table class="hm" id="hm-prov"><thead></thead><tbody></tbody></table></div>
+
+    <div class="tbl-title" style="margin-top:18px;"><span>Por Región CUP (BAIRES)</span><span class="meta" id="cup-meta"></span></div>
+    <div class="hm-wrap"><table class="hm" id="hm-cup"><thead></thead><tbody></tbody></table></div>
+
+    <p class="note" id="note"></p>
+  </div>
+</div>
+
+<script src="../data.js"></script>
+
+<script>
+/* === Competidores DDD — heatmap por provincia + region CUP ========= */
+(function(){
+  // Resolve data based on shape detected at runtime.
+  // Shape A (cardio/SNC/dermato): window.SFG_COMP_DATA = D (markets/brand_monthly/regions/months)
+  // Shape B (ATB/OTC/respi):     window.OTC_DATA.ddd  (markets/regionsByMonth/months)
+  // Shape B mujer:               window.OTC_DATA.dddGineco (families/molecule.all.regionsByMonth)
+  function detectShape(){
+    if (window.SFG_COMP_DATA && window.SFG_COMP_DATA.markets && window.SFG_COMP_DATA.brand_monthly !== undefined) {
+      // older shape: brand_monthly is on each market
+      return {shape:'A', D: window.SFG_COMP_DATA};
+    }
+    if (window.SFG_COMP_DATA && window.SFG_COMP_DATA.markets) {
+      // Check if markets have brand_monthly
+      const m0 = Object.values(window.SFG_COMP_DATA.markets)[0] || {};
+      if (m0.brand_monthly) return {shape:'A', D: window.SFG_COMP_DATA};
+    }
+    if (window.OTC_DATA && window.OTC_DATA.ddd && Object.keys(window.OTC_DATA.ddd.markets||{}).length){
+      return {shape:'B', D: window.OTC_DATA.ddd, kind:'ddd'};
+    }
+    if (window.OTC_DATA && window.OTC_DATA.dddGineco){
+      return {shape:'B', D: window.OTC_DATA.dddGineco, kind:'gineco'};
+    }
+    if (window.OTC_DATA && window.OTC_DATA.respDdd){
+      return {shape:'B', D: window.OTC_DATA.respDdd, kind:'resp'};
+    }
+    return null;
+  }
+
+  const ctx = detectShape();
+  if (!ctx){
+    document.getElementById('mkt-grid').innerHTML = '<span class="empty">No se encontró data DDD para esta línea.</span>';
+    return;
+  }
+  const SHAPE = ctx.shape;
+  const D = ctx.D;
+  const KIND = ctx.kind || '';
+  const MONTHS = (D.months && Array.isArray(D.months)) ? D.months : (Array.isArray(D.months) ? D.months : []);
+  const MKTS = D.markets || D.families || {};
+
+  let HEAT_PERIOD = 'q';
+  let HEAT_METRIC = 'ms';
+  let HEAT_PRESET = 'top10';
+  let HEAT_SEARCH = '';
+  let HEAT_MARKET = null;
+  const VIS_BY_MKT = {};  // market -> Set<brand> when in custom mode
+
+  // === Period helpers ===
+  function periodIdxs(){
+    const N = MONTHS.length; if (!N) return null;
+    const last = N - 1;
+    const lastM = MONTHS[last];
+    const mkLabel = (a,b) => MONTHS[a] + (b>a ? '..'+MONTHS[b] : '');
+    if (HEAT_PERIOD==='m'){
+      const prev = last>=1 ? [last-1] : null;
+      return {curr:[last], prev, label: lastM, prevLabel: prev ? MONTHS[prev[0]] : null};
+    }
+    if (HEAT_PERIOD==='q'){
+      const curr = [last-2, last-1, last].filter(i=>i>=0);
+      const prev = last-5>=0 ? [last-5, last-4, last-3] : null;
+      return {curr, prev, label: mkLabel(curr[0], curr[curr.length-1]), prevLabel: prev ? mkLabel(prev[0], prev[2]) : null};
+    }
+    if (HEAT_PERIOD==='s'){
+      const curr = Array.from({length:6}, (_,k)=>last-5+k).filter(i=>i>=0);
+      const prev = last-11>=0 ? Array.from({length:6}, (_,k)=>last-11+k) : null;
+      return {curr, prev, label: mkLabel(curr[0], curr[curr.length-1]), prevLabel: prev ? mkLabel(prev[0], prev[5]) : null};
+    }
+    if (HEAT_PERIOD==='ytd'){
+      const yr = lastM.split('-').pop();
+      const curr = MONTHS.map((m,i)=>m.endsWith('-'+yr) ? i : -1).filter(i=>i>=0 && i<=last);
+      const prevYr = String(parseInt(yr,10)-1);
+      const prevAll = MONTHS.map((m,i)=>m.endsWith('-'+prevYr) ? i : -1).filter(i=>i>=0);
+      const prev = prevAll.length >= curr.length ? prevAll.slice(0, curr.length) : null;
+      return {curr, prev, label:'YTD '+yr, prevLabel: prev ? 'YTD '+prevYr : null};
+    }
+    if (HEAT_PERIOD==='mat'){
+      const curr = Array.from({length:12}, (_,k)=>last-11+k).filter(i=>i>=0);
+      const prev = last-23>=0 ? Array.from({length:12}, (_,k)=>last-23+k) : null;
+      return {curr, prev, label: 'MAT '+lastM, prevLabel: prev ? 'MAT '+MONTHS[last-12] : null};
+    }
+    return null;
+  }
+  function sumMonths(arr, idxs){
+    if (!arr || !idxs) return 0;
+    let s=0; for (const i of idxs){ if (i>=0 && i<arr.length){ const v=arr[i]; if (typeof v==='number') s+=v; } } return s;
+  }
+
+  // === Shape-A helpers: rank competitors + grid ===
+  function rankedBrandsA(market, regions, period){
+    const mk = MKTS[market]; if (!mk) return [];
+    const bm = mk.brand_monthly || {};
+    const brands = Object.keys(bm);
+    const sieList = (mk.brands || []).map(s=>String(s).toUpperCase());
+    const bt = {};
+    for (const b of brands){
+      let t=0;
+      for (const r of regions){ const arr=(bm[b]||{})[r]; if (arr) t += sumMonths(arr, period.curr); }
+      bt[b] = t;
+    }
+    return brands.filter(b=>bt[b]>0).sort((a,b)=>bt[b]-bt[a])
+                 .map(b=>({brand:b, units:bt[b], isSie: sieList.includes(String(b).toUpperCase())}));
+  }
+  function computeGridA(market, regions, period, visibleSet){
+    const mk = MKTS[market]; if (!mk) return null;
+    const bm = mk.brand_monthly || {};
+    const tm = mk.total_monthly || {};
+    const sieList = (mk.brands || []).map(s=>String(s).toUpperCase());
+    const allBrands = Object.keys(bm);
+    // Per-brand total in period (national across regions)
+    const bt = {};
+    for (const b of allBrands){
+      let t=0;
+      for (const r of regions){ const arr=(bm[b]||{})[r]; if (arr) t += sumMonths(arr, period.curr); }
+      bt[b]=t;
+    }
+    const rows = allBrands.filter(b=>bt[b]>0 && (!visibleSet || visibleSet.has(b)))
+                          .sort((a,b)=>bt[b]-bt[a])
+                          .map(b=>({brand:b, isSie: sieList.includes(String(b).toUpperCase())}));
+    // Total market per region in period
+    const regTotal = {};
+    for (const r of regions){
+      let t = sumMonths(tm[r], period.curr);
+      if (!t){ for (const b of allBrands) t += sumMonths((bm[b]||{})[r], period.curr); }
+      regTotal[r] = t;
+    }
+    const cols = regions.filter(r=>regTotal[r]>0).sort((a,b)=>regTotal[b]-regTotal[a]);
+    const cells = {};
+    let max_ms=0, max_abs_dms=0, max_abs_du=0;
+    for (const row of rows){
+      const b = row.brand;
+      cells[b] = {};
+      for (const r of cols){
+        const arr = (bm[b]||{})[r] || null;
+        const tot = tm[r] || null;
+        const u_a = sumMonths(arr, period.curr);
+        let mkt_a = sumMonths(tot, period.curr);
+        if (!mkt_a){ for (const bb of allBrands) mkt_a += sumMonths((bm[bb]||{})[r], period.curr); }
+        const ms_a = mkt_a>0 ? u_a/mkt_a*100 : null;
+        let u_p=null, mkt_p=null, ms_p=null, dms=null, du=null;
+        if (period.prev){
+          u_p = sumMonths(arr, period.prev);
+          mkt_p = sumMonths(tot, period.prev);
+          if (!mkt_p){ for (const bb of allBrands) mkt_p += sumMonths((bm[bb]||{})[r], period.prev); }
+          ms_p = mkt_p>0 ? u_p/mkt_p*100 : null;
+          if (ms_a!==null && ms_p!==null) dms = ms_a-ms_p;
+          if (u_p>0) du = (u_a-u_p)/u_p*100;
+        }
+        cells[b][r] = {u_act:u_a, u_prev:u_p, ms_act:ms_a, ms_prev:ms_p, dms, du};
+        if (ms_a!==null && ms_a>max_ms) max_ms = ms_a;
+        if (dms!==null && Math.abs(dms)>max_abs_dms) max_abs_dms = Math.abs(dms);
+        if (du!==null && Math.abs(du)>max_abs_du) max_abs_du = Math.abs(du);
+      }
+    }
+    return {rows, cols, cells, max_ms, max_abs_dms, max_abs_du};
+  }
+
+  // === Shape-B helpers ===
+  function aggregateB(market, idxs){
+    const mk = MKTS[market]; if (!mk) return {};
+    const rbm = mk.regionsByMonth || (mk.molecule && mk.molecule.all && mk.molecule.all.regionsByMonth) || {};
+    const agg = {};
+    for (const i of idxs){
+      const mn = MONTHS[i]; if (!mn) continue;
+      const list = rbm[mn] || [];
+      for (const r of list){
+        if (!agg[r.name]) agg[r.name] = {sie:0,total:0};
+        agg[r.name].sie += Number(r.sie||0);
+        agg[r.name].total += Number(r.total||0);
+      }
+    }
+    for (const k of Object.keys(agg)){
+      const a = agg[k]; a.ms = a.total>0 ? a.sie/a.total*100 : null;
+    }
+    return agg;
+  }
+
+  // === Visible set logic (shared) ===
+  function getVisibleSet(market, allRanked){
+    if (!VIS_BY_MKT[market]) VIS_BY_MKT[market] = new Set();
+    const cache = VIS_BY_MKT[market];
+    if (HEAT_PRESET==='all') return new Set(allRanked.map(r=>r.brand));
+    if (HEAT_PRESET==='sie') return new Set(allRanked.filter(r=>r.isSie).map(r=>r.brand));
+    if (HEAT_PRESET==='top5') return new Set(allRanked.slice(0,5).map(r=>r.brand));
+    if (HEAT_PRESET==='top10') return new Set(allRanked.slice(0,10).map(r=>r.brand));
+    // custom
+    if (cache.size===0) allRanked.slice(0,10).forEach(r=>cache.add(r.brand));
+    return cache;
+  }
+
+  // === Color helpers ===
+  function colorMS(v, max){
+    if (v==null || max<=0) return {bg:'#fff', fg:'#9ca3af'};
+    const t = Math.min(v/max, 1);
+    const r = Math.round(243+(30-243)*t);
+    const g = Math.round(244+(64-244)*t);
+    const b = Math.round(246+(175-246)*t);
+    return {bg:`rgb(${r},${g},${b})`, fg: t>0.55?'#fff':'#1f2937'};
+  }
+  function colorDiv(v, max){
+    if (v==null || max<=0) return {bg:'#fff', fg:'#9ca3af'};
+    const t = Math.max(-1, Math.min(1, v/max));
+    if (t>=0){
+      const r = Math.round(255+(22-255)*t);
+      const g = Math.round(255+(163-255)*t);
+      const b = Math.round(255+(74-255)*t);
+      return {bg:`rgb(${r},${g},${b})`, fg: t>0.55?'#fff':'#0f5132'};
+    } else {
+      const tt = -t;
+      const r = Math.round(255+(220-255)*tt);
+      const g = Math.round(255+(38-255)*tt);
+      const b = Math.round(255+(38-255)*tt);
+      return {bg:`rgb(${r},${g},${b})`, fg: tt>0.55?'#fff':'#7f1d1d'};
+    }
+  }
+  function fmtCellMetric(cell, max){
+    if (HEAT_METRIC==='ms'){
+      if (cell.ms_act==null) return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+      const c = colorMS(cell.ms_act, max.ms);
+      return {txt: cell.ms_act.toFixed(1)+'%', bg:c.bg, fg:c.fg};
+    }
+    if (HEAT_METRIC==='dms'){
+      if (cell.dms==null) return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+      const c = colorDiv(cell.dms, max.dms);
+      return {txt:(cell.dms>=0?'+':'')+cell.dms.toFixed(1), bg:c.bg, fg:c.fg};
+    }
+    if (HEAT_METRIC==='du'){
+      if (cell.du==null) return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+      const c = colorDiv(cell.du, max.du);
+      return {txt:(cell.du>=0?'+':'')+cell.du.toFixed(0)+'%', bg:c.bg, fg:c.fg};
+    }
+    return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+  }
+
+  // === Render Shape A table ===
+  function renderTableA(tableId, regions, market, period, visibleSet){
+    const tbl = document.getElementById(tableId);
+    const thead = tbl.querySelector('thead'); const tbody = tbl.querySelector('tbody');
+    if (!regions.length){ thead.innerHTML=''; tbody.innerHTML='<tr><td class="empty">Sin regiones.</td></tr>'; return; }
+    const grid = computeGridA(market, regions, period, visibleSet);
+    if (!grid || !grid.rows.length){ thead.innerHTML=''; tbody.innerHTML='<tr><td class="empty">Sin datos visibles. Activá competidores en el filtro.</td></tr>'; return; }
+    const max = {ms: Math.max(grid.max_ms,1), dms: Math.max(grid.max_abs_dms, 0.1), du: Math.max(grid.max_abs_du, 1)};
+    const cleanReg = r => r.startsWith('_') ? r.slice(1) : r;
+    let h = '<tr><th>Competidor</th>';
+    for (const r of grid.cols){ h += `<th title="${r}">${cleanReg(r)}</th>`; }
+    h += '</tr>';
+    thead.innerHTML = h;
+    let b = '';
+    for (const row of grid.rows){
+      b += `<tr><th class="${row.isSie?'sie':''}" title="${row.brand}">${row.brand}</th>`;
+      for (const r of grid.cols){
+        const cell = grid.cells[row.brand][r];
+        const f = fmtCellMetric(cell, max);
+        const tt = [`${row.brand} · ${r}`];
+        if (cell.ms_act!=null) tt.push(`MS%: ${cell.ms_act.toFixed(2)}%`);
+        if (cell.dms!=null) tt.push(`Δ MS%: ${(cell.dms>=0?'+':'')+cell.dms.toFixed(2)} pp`);
+        if (cell.du!=null) tt.push(`Δ U: ${(cell.du>=0?'+':'')+cell.du.toFixed(1)}%`);
+        tt.push(`Units: ${cell.u_act.toLocaleString('es-AR')}`);
+        b += `<td style="background:${f.bg};color:${f.fg}" title="${tt.join(' · ')}">${f.txt}</td>`;
+      }
+      b += '</tr>';
+    }
+    tbody.innerHTML = b;
+  }
+
+  // === Render Shape B table (SIE vs Mercado) ===
+  function renderTableB(tableId, regionFilter, market, period){
+    const tbl = document.getElementById(tableId);
+    const thead = tbl.querySelector('thead'); const tbody = tbl.querySelector('tbody');
+    const aggC = aggregateB(market, period.curr);
+    const aggP = period.prev ? aggregateB(market, period.prev) : null;
+    const regs = Object.keys(aggC).filter(regionFilter).filter(r=>aggC[r].total>0)
+                       .sort((a,b)=>aggC[b].total-aggC[a].total);
+    if (!regs.length){ thead.innerHTML=''; tbody.innerHTML='<tr><td class="empty">Sin datos para esta vista.</td></tr>'; return; }
+    let max_ms=0, max_abs_dms=0, max_abs_du=0;
+    for (const r of regs){
+      const a = aggC[r];
+      if (a.ms!=null && a.ms>max_ms) max_ms = a.ms;
+      if (aggP && aggP[r]){
+        const p = aggP[r];
+        if (p.ms!=null && a.ms!=null) max_abs_dms = Math.max(max_abs_dms, Math.abs(a.ms-p.ms));
+        if (p.sie>0) max_abs_du = Math.max(max_abs_du, Math.abs((a.sie-p.sie)/p.sie*100));
+        if (p.total>0) max_abs_du = Math.max(max_abs_du, Math.abs((a.total-p.total)/p.total*100));
+      }
+    }
+    const max = {ms: Math.max(max_ms,1), dms: Math.max(max_abs_dms, 0.1), du: Math.max(max_abs_du, 1)};
+    const cleanReg = r => r.startsWith('_') ? r.slice(1) : r;
+    let h = '<tr><th>Serie</th>';
+    for (const r of regs){ h += `<th title="${r}">${cleanReg(r)}</th>`; }
+    h += '</tr>';
+    thead.innerHTML = h;
+    function cell(serie, region){
+      const a = aggC[region]; const p = aggP ? aggP[region] : null;
+      const v_a = serie==='SIE' ? a.sie : a.total;
+      const v_p = p ? (serie==='SIE' ? p.sie : p.total) : null;
+      const ms_a = serie==='SIE' ? a.ms : 100;
+      const ms_p = (p && serie==='SIE') ? p.ms : null;
+      let dms=null, du=null;
+      if (ms_a!=null && ms_p!=null) dms = ms_a-ms_p;
+      if (v_p && v_p>0) du = (v_a-v_p)/v_p*100;
+      if (HEAT_METRIC==='ms'){
+        if (serie==='Mercado total') return {txt: v_a.toLocaleString('es-AR'), bg:'#fafafa', fg:'#525252'};
+        if (ms_a==null) return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+        const c = colorMS(ms_a, max.ms);
+        return {txt: ms_a.toFixed(1)+'%', bg:c.bg, fg:c.fg};
+      }
+      if (HEAT_METRIC==='dms'){
+        if (serie==='Mercado total') return {txt:'—', bg:'#fafafa', fg:'#9ca3af'};
+        if (dms==null) return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+        const c = colorDiv(dms, max.dms);
+        return {txt:(dms>=0?'+':'')+dms.toFixed(1), bg:c.bg, fg:c.fg};
+      }
+      if (HEAT_METRIC==='du'){
+        if (du==null) return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+        const c = colorDiv(du, max.du);
+        return {txt:(du>=0?'+':'')+du.toFixed(0)+'%', bg:c.bg, fg:c.fg};
+      }
+      return {txt:'—', bg:'#fff', fg:'#9ca3af'};
+    }
+    let b = '';
+    for (const serie of ['SIE','Mercado total']){
+      b += `<tr><th class="${serie==='SIE'?'sie':''}">${serie}</th>`;
+      for (const r of regs){
+        const f = cell(serie, r);
+        b += `<td style="background:${f.bg};color:${f.fg}" title="${serie} · ${r}">${f.txt}</td>`;
+      }
+      b += '</tr>';
+    }
+    tbody.innerHTML = b;
+  }
+
+  // === Comp pills (Shape A only) ===
+  function renderPills(market, allRanked, visibleSet){
+    const el = document.getElementById('comp-pills');
+    const search = (HEAT_SEARCH||'').toUpperCase();
+    const filtered = search ? allRanked.filter(r=>r.brand.toUpperCase().includes(search)) : allRanked;
+    el.innerHTML = filtered.map(r=>{
+      const on = visibleSet.has(r.brand);
+      const cls = 'pill-c' + (on?' on':'') + (r.isSie?' sie':'');
+      return `<button class="${cls}" data-b="${r.brand.replace(/"/g,'&quot;')}" title="${r.brand} · ${r.units.toLocaleString('es-AR')} u.">${r.isSie?'★ ':''}${r.brand}</button>`;
+    }).join('');
+    document.getElementById('comp-meta').textContent = `${visibleSet.size}/${allRanked.length} visibles` + (search?` · "${HEAT_SEARCH}"`:'');
+  }
+
+  // === Render entry point ===
+  function getRegions(){
+    if (SHAPE==='A'){
+      return (D.regions||[]).filter(r=>r && r!=='-');
+    }
+    // Shape B: derive from regionsByMonth of current market
+    const mk = MKTS[HEAT_MARKET]; if (!mk) return [];
+    const rbm = mk.regionsByMonth || (mk.molecule && mk.molecule.all && mk.molecule.all.regionsByMonth) || {};
+    const set = new Set();
+    for (const list of Object.values(rbm)){ for (const r of (list||[])){ set.add(r.name); } }
+    return Array.from(set);
+  }
+
+  function render(){
+    if (!HEAT_MARKET) HEAT_MARKET = Object.keys(MKTS)[0];
+    if (!HEAT_MARKET){ document.getElementById('mkt-grid').innerHTML='<span class="empty">Sin mercados.</span>'; return; }
+    const period = periodIdxs(); if (!period) return;
+    const allRegs = getRegions();
+    const provRegs = allRegs.filter(r=>!r.startsWith('_'));
+    const cupRegs  = allRegs.filter(r=>r.startsWith('_'));
+
+    if (SHAPE==='A'){
+      const allRanked = rankedBrandsA(HEAT_MARKET, allRegs, period);
+      const visibleSet = getVisibleSet(HEAT_MARKET, allRanked);
+      renderPills(HEAT_MARKET, allRanked, visibleSet);
+      renderTableA('hm-prov', provRegs, HEAT_MARKET, period, visibleSet);
+      renderTableA('hm-cup',  cupRegs,  HEAT_MARKET, period, visibleSet);
+    } else {
+      document.getElementById('comp-pills').innerHTML = '<span class="empty">Data DDD de esta línea no expone competidores individuales — mostrando SIE vs Mercado Total.</span>';
+      document.getElementById('comp-meta').textContent = '';
+      renderTableB('hm-prov', r=>r&&r!=='-'&&!r.startsWith('_'), HEAT_MARKET, period);
+      renderTableB('hm-cup',  r=>r&&r.startsWith('_'),            HEAT_MARKET, period);
+    }
+
+    document.getElementById('period-label').textContent =
+      `${HEAT_MARKET} · ${period.label}` + (HEAT_METRIC==='ms' ? '' : (period.prevLabel ? ` (vs ${period.prevLabel})` : ' · sin comparador'));
+
+    const noteEl = document.getElementById('note');
+    if (SHAPE==='A'){
+      noteEl.textContent = (HEAT_METRIC!=='ms' && !period.prev)
+        ? 'Sin período comparador disponible: la serie no es lo suficientemente larga para esta agregación.'
+        : 'Filas = competidores ordenados por unidades; columnas = regiones ordenadas por volumen del mercado. Hover para detalle.';
+    } else {
+      noteEl.textContent = 'La data DDD de esta línea agrega SIE vs Mercado Total por región/mes. No expone competidores individuales — el granular requiere rebuild de data.js desde el xlsx fuente.';
+    }
+    document.getElementById('prov-meta').textContent = `${provRegs.length} regiones`;
+    document.getElementById('cup-meta').textContent  = `${cupRegs.length} regiones`;
+  }
+
+  function renderMktGrid(){
+    const el = document.getElementById('mkt-grid');
+    const keys = Object.keys(MKTS);
+    if (!HEAT_MARKET && keys.length) HEAT_MARKET = keys[0];
+    el.innerHTML = keys.map(k=>`<button class="mkt-pill ${k===HEAT_MARKET?'on':''}" data-mkt="${k.replace(/"/g,'&quot;')}">${k}</button>`).join('');
+  }
+
+  // === Wire up controls (event delegation for pills) ===
+  document.addEventListener('click', (e)=>{
+    const t = e.target;
+    if (t.matches && t.matches('.mkt-pill')){
+      HEAT_MARKET = t.dataset.mkt;
+      document.querySelectorAll('.mkt-pill').forEach(b=>b.classList.toggle('on', b===t));
+      render();
+    } else if (t.closest && t.closest('#ctl-period')){
+      const btn = t.closest('button'); if (!btn || !btn.dataset.p) return;
+      HEAT_PERIOD = btn.dataset.p;
+      document.querySelectorAll('#ctl-period button').forEach(b=>b.classList.toggle('on', b===btn));
+      render();
+    } else if (t.closest && t.closest('#ctl-metric')){
+      const btn = t.closest('button'); if (!btn || !btn.dataset.m) return;
+      HEAT_METRIC = btn.dataset.m;
+      document.querySelectorAll('#ctl-metric button').forEach(b=>b.classList.toggle('on', b===btn));
+      render();
+    } else if (t.closest && t.closest('#ctl-preset')){
+      const btn = t.closest('button'); if (!btn || !btn.dataset.preset) return;
+      HEAT_PRESET = btn.dataset.preset;
+      document.querySelectorAll('#ctl-preset button').forEach(b=>b.classList.toggle('on', b===btn));
+      if (HEAT_MARKET) VIS_BY_MKT[HEAT_MARKET] = new Set();
+      render();
+    } else if (t.matches && t.matches('.pill-c')){
+      const b = t.dataset.b;
+      // Switch to custom
+      if (HEAT_PRESET !== 'custom'){
+        HEAT_PRESET = 'custom';
+        document.querySelectorAll('#ctl-preset button').forEach(x=>x.classList.remove('on'));
+        // seed VIS_BY_MKT from current visibility (parse from DOM state)
+        const visible = new Set();
+        document.querySelectorAll('.pill-c.on').forEach(p => visible.add(p.dataset.b));
+        VIS_BY_MKT[HEAT_MARKET] = visible;
+      }
+      const set = VIS_BY_MKT[HEAT_MARKET];
+      if (set.has(b)) set.delete(b); else set.add(b);
+      render();
+    }
+  });
+
+  document.getElementById('ctl-search').addEventListener('input', (e)=>{
+    HEAT_SEARCH = e.target.value || '';
+    if (!HEAT_MARKET) return;
+    const period = periodIdxs();
+    if (SHAPE==='A' && period){
+      const allRegs = getRegions();
+      const allRanked = rankedBrandsA(HEAT_MARKET, allRegs, period);
+      const visibleSet = getVisibleSet(HEAT_MARKET, allRanked);
+      renderPills(HEAT_MARKET, allRanked, visibleSet);
+    }
+  });
+
+  // Init
+  renderMktGrid();
+  render();
+  document.getElementById('cutoff').textContent = MONTHS.length ? `Hasta ${MONTHS[MONTHS.length-1]}` : '';
+})();
+</script>
+</body>
+</html>
