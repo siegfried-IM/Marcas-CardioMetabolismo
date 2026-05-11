@@ -1869,7 +1869,7 @@ function renderCobertura(){
         </div>
         ${isPresView&&SA[prod]?.familia ? `<span style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:.08em;">${SA[prod].familia}</span>` : ''}
       </div>
-      <div style="position:relative;height:80px;margin-bottom:8px;"><canvas id="cov-c-${prod.replace(/[^a-zA-Z0-9]/g,'_')}"></canvas></div>
+      <div style="position:relative;height:110px;margin-bottom:8px;"><canvas id="cov-c-${prod.replace(/[^a-zA-Z0-9]/g,'_')}"></canvas></div>
       <div style="height:3px;background:#f3f4f6;border-radius:2px;margin-bottom:6px;overflow:hidden;">
         <div style="height:100%;width:${diasPct}%;background:${diasColor};border-radius:2px;transition:width .4s;"></div>
       </div>
@@ -1940,7 +1940,7 @@ function renderCobertura(){
           }
         },
         scales:{
-          x:{display:false},
+          x:{display:true,ticks:{color:'#9ca3af',font:{size:8,family:'IBM Plex Mono'},maxRotation:45,minRotation:45,autoSkip:true,autoSkipPadding:6},grid:{display:false},border:{display:false}},
           y:{display:false,beginAtZero:false}
         }
       }
