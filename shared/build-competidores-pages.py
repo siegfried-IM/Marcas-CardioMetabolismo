@@ -152,6 +152,15 @@ table.hm tbody th{position:sticky;left:0;background:#fafafa;color:var(--ink);fon
 table.hm tbody th.sie{color:var(--sie);font-weight:700;}
 table.hm tbody th.sie::before{content:'★ ';}
 table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
+/* SIE column highlight (column == competitor de Siegfried) */
+table.hm thead th.sie-col{background:#7A1518 !important;color:#fff !important;border-left:2px solid #7A1518;border-right:2px solid #7A1518;font-weight:800;letter-spacing:.04em;}
+table.hm td.sie-col{box-shadow:inset 2px 0 0 #7A1518, inset -2px 0 0 #7A1518;font-weight:700;}
+/* Zebra rows */
+table.hm tbody tr:nth-child(even) th{background:#f3f4f6;}
+table.hm tbody tr:nth-child(even) td:not(.sie-col){opacity:.96;}
+table.hm tbody th{padding-right:14px;font-size:11px;}
+/* Sticky SIE column shadow on horizontal scroll */
+table.hm thead th.sie-col,table.hm td.sie-col{position:relative;}
 .empty{padding:20px;text-align:center;color:var(--mut);font-size:12px;}
 .note{font-size:10px;color:var(--mut);margin-top:8px;font-style:italic;}
 </style>
@@ -516,7 +525,8 @@ __DATA_LOADER__
     // Header: Región | competidor1 | competidor2 | ...
     let h = '<tr><th>Región / Provincia</th>';
     for (const row of grid.rows){
-      h += `<th class="${row.isSie?'sie':''}" title="${row.brand}">${row.isSie?'★ ':''}${row.brand}</th>`;
+      const cls = row.isSie ? 'sie sie-col' : '';
+      h += `<th class="${cls}" title="${row.brand}">${row.isSie?'★ ':''}${row.brand}</th>`;
     }
     h += '</tr>';
     thead.innerHTML = h;
@@ -532,7 +542,8 @@ __DATA_LOADER__
         if (cell.dms!=null) tt.push(`Δ MS%: ${(cell.dms>=0?'+':'')+cell.dms.toFixed(2)} pp`);
         if (cell.du!=null) tt.push(`Δ U: ${(cell.du>=0?'+':'')+cell.du.toFixed(1)}%`);
         tt.push(`Units: ${cell.u_act.toLocaleString('es-AR')}`);
-        b += `<td style="background:${f.bg};color:${f.fg}" title="${tt.join(' · ')}">${f.txt}</td>`;
+        const tdCls = row.isSie ? 'sie-col' : '';
+        b += `<td class="${tdCls}" style="background:${f.bg};color:${f.fg}" title="${tt.join(' · ')}">${f.txt}</td>`;
       }
       b += '</tr>';
     }
@@ -592,7 +603,10 @@ __DATA_LOADER__
     // Header: Región | SIE | Mercado total
     const series = ['SIE','Mercado total'];
     let h = '<tr><th>Región / Provincia</th>';
-    for (const s of series){ h += `<th class="${s==='SIE'?'sie':''}">${s==='SIE'?'★ ':''}${s}</th>`; }
+    for (const s of series){
+      const cls = s==='SIE' ? 'sie sie-col' : '';
+      h += `<th class="${cls}">${s==='SIE'?'★ ':''}${s}</th>`;
+    }
     h += '</tr>';
     thead.innerHTML = h;
     let b = '';
@@ -600,7 +614,8 @@ __DATA_LOADER__
       b += `<tr><th title="${r}">${cleanReg(r)}</th>`;
       for (const s of series){
         const f = cell(s, r);
-        b += `<td style="background:${f.bg};color:${f.fg}" title="${s} · ${r}">${f.txt}</td>`;
+        const tdCls = s==='SIE' ? 'sie-col' : '';
+        b += `<td class="${tdCls}" style="background:${f.bg};color:${f.fg}" title="${s} · ${r}">${f.txt}</td>`;
       }
       b += '</tr>';
     }
@@ -674,7 +689,10 @@ __DATA_LOADER__
     // TRANSPOSED: Header: Provincia | SIE | Mercado total
     const series = ['SIE','Mercado total'];
     let h = '<tr><th>Provincia</th>';
-    for (const s of series){ h += `<th class="${s==='SIE'?'sie':''}">${s==='SIE'?'★ ':''}${s}</th>`; }
+    for (const s of series){
+      const cls = s==='SIE' ? 'sie sie-col' : '';
+      h += `<th class="${cls}">${s==='SIE'?'★ ':''}${s}</th>`;
+    }
     h += '</tr>';
     thead.innerHTML = h;
     let b = '';
@@ -682,7 +700,8 @@ __DATA_LOADER__
       b += `<tr><th title="${p}">${p}</th>`;
       for (const s of series){
         const f = cell(s, p);
-        b += `<td style="background:${f.bg};color:${f.fg}" title="${s} · ${p}">${f.txt}</td>`;
+        const tdCls = s==='SIE' ? 'sie-col' : '';
+        b += `<td class="${tdCls}" style="background:${f.bg};color:${f.fg}" title="${s} · ${p}">${f.txt}</td>`;
       }
       b += '</tr>';
     }
