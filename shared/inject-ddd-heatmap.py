@@ -50,6 +50,22 @@ CSS = """
 .heat-ctrl .seg button:hover:not(.on){background:#f5f5f5;}
 .heat-ctrl .lbl{font-size:10px;color:#737373;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-right:-6px;}
 .heat-ctrl .meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#737373;margin-left:auto;}
+.heat-filter{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:14px;padding:10px 12px;background:#fafafa;border-radius:6px;}
+.heat-filter .lbl{font-size:10px;color:#737373;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-right:6px;}
+.heat-filter .seg{display:inline-flex;border:1px solid #d4d4d4;border-radius:4px;overflow:hidden;background:#fff;margin-right:8px;}
+.heat-filter .seg button{padding:4px 10px;border:0;background:transparent;cursor:pointer;font-size:10px;font-weight:600;color:#525252;border-right:1px solid #e5e5e5;}
+.heat-filter .seg button:last-child{border-right:0;}
+.heat-filter .seg button:hover{background:#f5f5f5;}
+.heat-comp-pills{display:flex;flex-wrap:wrap;gap:4px;flex:1;min-width:300px;}
+.heat-comp-pill{padding:3px 9px;border:1px solid #d4d4d4;border-radius:11px;font-size:10px;font-weight:600;cursor:pointer;background:#fff;color:#525252;white-space:nowrap;transition:all .15s;}
+.heat-comp-pill.on{background:#1f2937;color:#fff;border-color:#1f2937;}
+.heat-comp-pill.on.sie{background:#7A1518;border-color:#7A1518;}
+.heat-comp-pill:not(.on){opacity:.55;}
+.heat-comp-pill:not(.on):hover{opacity:1;border-color:#737373;}
+.heat-comp-pill .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:5px;vertical-align:middle;}
+.heat-search{padding:4px 10px;border:1px solid #d4d4d4;border-radius:4px;font-size:11px;background:#fff;color:#1a1a1a;width:160px;}
+.heat-search:focus{outline:none;border-color:#7A1518;}
+.heat-comp-meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#737373;margin-left:auto;}
 .heat-table-title{font-size:12px;font-weight:700;color:#1a1a1a;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px;}
 .heat-wrap{overflow-x:auto;border:1px solid #e5e5e5;border-radius:6px;max-height:560px;overflow-y:auto;}
 table.heat{border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:10px;width:max-content;}
@@ -92,6 +108,19 @@ HTML = """
     <span class="meta" id="heat-period-label"></span>
   </div>
 
+  <div class="heat-filter" id="heat-filter">
+    <span class="lbl">Competidores</span>
+    <div class="seg" id="heat-preset">
+      <button data-preset="all">Todos</button>
+      <button data-preset="sie">Solo SIE</button>
+      <button data-preset="top5">Top 5</button>
+      <button data-preset="top10" class="on">Top 10</button>
+    </div>
+    <input type="text" class="heat-search" id="heat-search" placeholder="Buscar competidor..." />
+    <div class="heat-comp-pills" id="heat-comp-pills"></div>
+    <span class="heat-comp-meta" id="heat-comp-meta"></span>
+  </div>
+
   <div class="heat-table-title">Por Provincia</div>
   <div class="heat-wrap"><table class="heat" id="heat-prov"><thead></thead><tbody></tbody></table></div>
 
@@ -109,6 +138,10 @@ JS_SHAPE_A = r"""
   if (typeof D === 'undefined' || !D || !D.markets) return;
   let HEAT_PERIOD = 'q';   // m | q | s | ytd | mat
   let HEAT_METRIC = 'ms';  // ms | dms | du
+  let HEAT_PRESET = 'top10';  // all | sie | top5 | top10 | custom
+  let HEAT_SEARCH = '';
+  // visibleBrands keyed by market: market -> Set<brand>
+  const VIS_BY_MKT = {};
 
   // Determine periods (current + comparator) returning {curr:[idx], prev:[idx]|null, label, prevLabel}
   function periodIdxs(){
@@ -156,8 +189,50 @@ JS_SHAPE_A = r"""
     return s;
   }
 
+  // Compute the full ranked list of brands for a market & period (used for preset filters + pills)
+  function rankedBrands(market, regions, period){
+    const mk = D.markets[market]; if (!mk) return [];
+    const bm = mk.brand_monthly || {};
+    const brands = Object.keys(bm);
+    const sieList = (mk.brands || []).map(s=>String(s).toUpperCase());
+    const brandTotal = {};
+    for (const b of brands){
+      let t = 0;
+      for (const r of regions){
+        const arr = (bm[b]||{})[r]; if (!arr) continue;
+        t += sumMonths(arr, period.curr);
+      }
+      brandTotal[b] = t;
+    }
+    return brands.filter(b=>brandTotal[b]>0)
+                 .sort((a,b)=>brandTotal[b]-brandTotal[a])
+                 .map(b=>({brand:b, units:brandTotal[b], isSie: sieList.includes(String(b).toUpperCase())}));
+  }
+
+  function getVisibleSet(market, allRanked){
+    if (!VIS_BY_MKT[market]) VIS_BY_MKT[market] = new Set();
+    const cache = VIS_BY_MKT[market];
+    if (HEAT_PRESET === 'all'){
+      return new Set(allRanked.map(r=>r.brand));
+    }
+    if (HEAT_PRESET === 'sie'){
+      return new Set(allRanked.filter(r=>r.isSie).map(r=>r.brand));
+    }
+    if (HEAT_PRESET === 'top5'){
+      return new Set(allRanked.slice(0,5).map(r=>r.brand));
+    }
+    if (HEAT_PRESET === 'top10'){
+      return new Set(allRanked.slice(0,10).map(r=>r.brand));
+    }
+    // custom: use cached set (or initialize to top10 first time)
+    if (cache.size === 0){
+      allRanked.slice(0,10).forEach(r=>cache.add(r.brand));
+    }
+    return cache;
+  }
+
   // Returns: { rows:[{brand, isSie}], cols:[region], cells:{brand:{region:{ms,dms,du,units,units_prev}}}, max:{ms,abs_dms,abs_du} }
-  function computeGrid(market, regions, period){
+  function computeGrid(market, regions, period, visibleSet){
     const mk = D.markets[market]; if (!mk) return null;
     const bm = mk.brand_monthly || {};
     const tm = mk.total_monthly || {};
@@ -175,12 +250,14 @@ JS_SHAPE_A = r"""
       brandTotal[b] = t;
     }
 
-    // Sort brands by total units desc; mark SIE
+    // Sort brands by total units desc; mark SIE; filter by visibleSet
     const sieList = (mk.brands || []).map(s=>String(s).toUpperCase());
-    const rows = brands.filter(b=>brandTotal[b]>0).sort((a,b)=>brandTotal[b]-brandTotal[a]).map(b=>({
-      brand: b,
-      isSie: sieList.includes(String(b).toUpperCase())
-    }));
+    const rows = brands.filter(b=>brandTotal[b]>0 && (!visibleSet || visibleSet.has(b)))
+                       .sort((a,b)=>brandTotal[b]-brandTotal[a])
+                       .map(b=>({
+                         brand: b,
+                         isSie: sieList.includes(String(b).toUpperCase())
+                       }));
 
     // Sort regions by total market units in period desc
     const regTotal = {};
@@ -272,7 +349,7 @@ JS_SHAPE_A = r"""
     return {txt:'—', bg:'#fff', fg:'#9ca3af'};
   }
 
-  function renderTable(tableId, regions, market, period){
+  function renderTable(tableId, regions, market, period, visibleSet){
     const tbl = document.getElementById(tableId); if (!tbl) return;
     const thead = tbl.querySelector('thead');
     const tbody = tbl.querySelector('tbody');
@@ -281,7 +358,7 @@ JS_SHAPE_A = r"""
       tbody.innerHTML = `<tr><td class="heat-empty">Sin regiones disponibles para esta vista.</td></tr>`;
       return;
     }
-    const grid = computeGrid(market, regions, period);
+    const grid = computeGrid(market, regions, period, visibleSet);
     if (!grid || !grid.rows.length){
       thead.innerHTML = '';
       tbody.innerHTML = `<tr><td class="heat-empty">Sin datos para este mercado.</td></tr>`;
@@ -313,6 +390,36 @@ JS_SHAPE_A = r"""
     tbody.innerHTML = b;
   }
 
+  function renderCompPills(market, allRanked, visibleSet){
+    const el = document.getElementById('heat-comp-pills'); if (!el) return;
+    const search = (HEAT_SEARCH||'').toUpperCase();
+    const filtered = search ? allRanked.filter(r => r.brand.toUpperCase().includes(search)) : allRanked;
+    el.innerHTML = filtered.map(r => {
+      const on = visibleSet.has(r.brand);
+      const cls = 'heat-comp-pill' + (on?' on':'') + (r.isSie?' sie':'');
+      const safe = r.brand.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      return `<button class="${cls}" data-brand="${safe}" title="${safe} · ${r.units.toLocaleString('es-AR')} u.">${r.isSie?'★ ':''}${r.brand}</button>`;
+    }).join('');
+    document.getElementById('heat-comp-meta').textContent =
+      `${visibleSet.size}/${allRanked.length} visibles` + (search?` · filtro: "${HEAT_SEARCH}"`:'');
+    // Re-bind clicks (delegation would be cleaner but this is short list)
+    el.querySelectorAll('.heat-comp-pill').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const b = btn.dataset.brand;
+        // Switch to custom preset
+        if (HEAT_PRESET !== 'custom'){
+          HEAT_PRESET = 'custom';
+          document.querySelectorAll('#heat-preset button').forEach(x=>x.classList.remove('on'));
+          // seed VIS_BY_MKT from current visibleSet
+          VIS_BY_MKT[market] = new Set(visibleSet);
+        }
+        const cache = VIS_BY_MKT[market];
+        if (cache.has(b)) cache.delete(b); else cache.add(b);
+        window.renderHeat();
+      });
+    });
+  }
+
   window.renderHeat = function renderHeat(){
     const market = (typeof cur !== 'undefined' && cur) ? cur : Object.keys(D.markets)[0];
     if (!market || !D.markets[market]){
@@ -324,8 +431,12 @@ JS_SHAPE_A = r"""
     const allRegs = (D.regions || []).filter(r => r && r !== '-');
     const provRegs = allRegs.filter(r => !r.startsWith('_'));
     const cupRegs = allRegs.filter(r => r.startsWith('_'));
-    renderTable('heat-prov', provRegs, market, period);
-    renderTable('heat-cup', cupRegs, market, period);
+    // Rank brands using ALL regions (combined provinces + CUP)
+    const allRanked = rankedBrands(market, allRegs, period);
+    const visibleSet = getVisibleSet(market, allRanked);
+    renderCompPills(market, allRanked, visibleSet);
+    renderTable('heat-prov', provRegs, market, period, visibleSet);
+    renderTable('heat-cup', cupRegs, market, period, visibleSet);
     // Period label
     const labelEl = document.getElementById('heat-period-label');
     if (labelEl){
@@ -357,6 +468,23 @@ JS_SHAPE_A = r"""
         window.renderHeat();
       });
     });
+    document.querySelectorAll('#heat-preset button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        HEAT_PRESET = btn.dataset.preset;
+        document.querySelectorAll('#heat-preset button').forEach(b=>b.classList.toggle('on', b===btn));
+        // Clear cached custom selection so preset takes effect cleanly
+        const market = (typeof cur !== 'undefined' && cur) ? cur : Object.keys(D.markets)[0];
+        if (market) VIS_BY_MKT[market] = new Set();
+        window.renderHeat();
+      });
+    });
+    const searchInput = document.getElementById('heat-search');
+    if (searchInput){
+      searchInput.addEventListener('input', ()=>{
+        HEAT_SEARCH = searchInput.value || '';
+        window.renderHeat();
+      });
+    }
   }
 
   // Wait for DOM + main app to set up `cur` variable
@@ -616,10 +744,28 @@ JS_SHAPE_B = r"""
 """
 
 
+HEAT_VERSION = 'v2-with-pills'
+
+
+def strip_old(text: str) -> str:
+    """Remove previously-injected heatmap CSS + section + script blocks."""
+    # Strip CSS block (between '/* Heatmap section */' and the comment terminator we don't have — use sentinel)
+    # Easier: remove the whole CSS region from '/* Heatmap section */' through '.heat-note{...}'
+    text = re.sub(r'\n/\* Heatmap section \*/.*?\.heat-note\{[^}]*\}', '', text, count=1, flags=re.DOTALL)
+    # Strip section (between '<section class="heat-section" id="s5-heat">' and '</section>')
+    text = re.sub(r'<section class="heat-section" id="s5-heat">.*?</section>\n?', '', text, count=1, flags=re.DOTALL)
+    # Strip the IIFE script: it's a <script> that contains 'DDD Heatmap (Shape A' or 'DDD Heatmap (Shape B'
+    text = re.sub(r'<script>\s*\n?/\* === DDD Heatmap \(Shape [AB]\).*?</script>\n?', '', text, count=1, flags=re.DOTALL)
+    return text
+
+
 def inject(path: Path, shape: str) -> str:
     text = path.read_text(encoding='utf-8', errors='replace')
+    if f'HEAT_VERSION="{HEAT_VERSION}"' in text:
+        return f'  [{path.relative_to(REPO)}] SKIP (ya en {HEAT_VERSION})'
+    # Strip old injection if present
     if 'id="s5-heat"' in text:
-        return f'  [{path.relative_to(REPO)}] SKIP (ya inyectado)'
+        text = strip_old(text)
 
     # 1) Inject CSS before first </style>
     m_style = re.search(r'</style>', text)
@@ -641,7 +787,8 @@ def inject(path: Path, shape: str) -> str:
         text = text + HTML
 
     # 3) Inject JS before </body> (after HTML). Use shape-specific bundle wrapped in <script>
-    js_bundle = '<script>\n' + (JS_SHAPE_A if shape == 'A' else JS_SHAPE_B) + '\n</script>\n'
+    version_marker = f'\n/* HEAT_VERSION="{HEAT_VERSION}" */\n'
+    js_bundle = '<script>' + version_marker + (JS_SHAPE_A if shape == 'A' else JS_SHAPE_B) + '\n</script>\n'
     m_body2 = re.search(r'</body>', text)
     if m_body2:
         text = text[:m_body2.start()] + js_bundle + text[m_body2.start():]
