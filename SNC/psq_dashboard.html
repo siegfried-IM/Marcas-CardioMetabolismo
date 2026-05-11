@@ -1109,18 +1109,24 @@ function renderPerf(){
 
   let cIdx2=0;
   document.getElementById('perf-table').innerHTML=`<table class="pt">
-    <thead><tr><th>Producto</th><th>${pMetric==='ms'?'MS% actual':'Unidades'}</th><th>Δ vs prev</th></tr></thead>
+    <thead><tr><th>Producto</th><th>${pMetric==='ms'?'MS% actual':'Unidades'}</th><th>${pMetric==='ms'?'MS% anterior':'Unidades ant.'}</th><th>IE 100</th><th>Δ vs prev</th></tr></thead>
     <tbody>${sorted.map(p=>{
       const vNow=getVal(p,lastPK); const vPrev=getVal(p,prevPK);
       const color2=p.is_sie?'#ef4444':COMP_COLORS[cIdx2++%COMP_COLORS.length];
       const delta=(vNow!=null&&vPrev!=null&&vPrev>0)?((vNow/vPrev-1)*100):null;
       const barW=pMetric==='ms'&&vNow?Math.min(Math.round(vNow*2),80):0;
       const valStr=pMetric==='ms'?(vNow!=null?vNow.toFixed(1)+'%':'—'):(vNow!=null?fmt(vNow)+'u':'—');
+      const valPrevStr=pMetric==='ms'?(vPrev!=null?vPrev.toFixed(1)+'%':'—'):(vPrev!=null?fmt(vPrev)+'u':'—');
+      const ie=(vNow!=null&&vPrev!=null&&vPrev>0)?(vNow/vPrev*100):null;
+      const ieStr=ie!=null?ie.toFixed(0):'—';
+      const ieColor=ie==null?'var(--dim)':ie>=100?'var(--green)':'var(--red)';
       const deltaStr=delta!=null?(delta>=0?'+':'')+delta.toFixed(1)+'%':'—';
       const deltaColor=delta==null?'var(--dim)':delta>=0?'var(--green)':'var(--red)';
       return`<tr class="${p.is_sie?'sie-row':''}">
         <td><span style="color:${color2};font-size:9px;margin-right:4px;">●</span><span style="font-weight:${p.is_sie?700:400}">${p.prod}${p.is_sie?' ★':''}</span></td>
         <td style="max-width:90px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;">${valStr}</span></td>
+        <td style="max-width:90px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);">${valPrevStr}</span></td>
+        <td><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:${ieColor};">${ieStr}</span></td>
         <td><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:${deltaColor};">${deltaStr}</span></td>
       </tr>`;
     }).join('')}</tbody></table>`;
