@@ -1521,7 +1521,7 @@ function renderCanQuartTable(){
   const quarters = ['Q1','Q2','Q3','Q4'];
   const cellFmt = (v) => {
     if(!v || v.c==null || v.m==null) return '<span style="color:#9ca3af">—</span>';
-    return `<span style="color:#2563eb;font-weight:600">${v.c.toFixed(0)}%</span> <span style="color:#9ca3af">/</span> <span style="color:#d97706;font-weight:600">${v.m.toFixed(0)}%</span>`;
+    return `<span style="display:inline-flex;align-items:center;gap:6px;"><span style="background:rgba(37,99,235,.10);color:#1e40af;font-weight:700;padding:3px 8px;border-radius:4px;min-width:38px;display:inline-block;text-align:center;">${v.c.toFixed(0)}%</span><span style="color:#d1d5db;font-weight:300;">│</span><span style="background:rgba(217,119,6,.10);color:#9a3412;font-weight:700;padding:3px 8px;border-radius:4px;min-width:38px;display:inline-block;text-align:center;">${v.m.toFixed(0)}%</span></span>`;
   };
   let html = '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-family:\'IBM Plex Mono\',monospace;font-size:12px;">';
   html += '<thead><tr><th style="text-align:left;padding:8px 12px;color:#4b5563;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid rgba(0,0,0,.08);">Año</th>';
