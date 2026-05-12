@@ -581,7 +581,7 @@ __DATA_LOADER__
           tt.push(`1% MS% = ${Math.round(perPct).toLocaleString('es-AR')} u. (mercado total: ${cell.mkt_act.toLocaleString('es-AR')})`);
         }
         const tdCls = row.isSie ? 'sie-col' : '';
-        const ttStr = tt.join('\n');
+        const ttStr = tt.join('\\n');
         // Sub-col 1: metric (con heat color)
         b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${ttStr}">${f.txt}</td>`;
         // Sub-col 2: unidades (neutro)
@@ -685,7 +685,7 @@ __DATA_LOADER__
           const perPct = a.total / 100;
           tt.push(`1% MS% = ${Math.round(perPct).toLocaleString('es-AR')} u. (mercado total: ${a.total.toLocaleString('es-AR')})`);
         }
-        const ttStr = tt.join('\n');
+        const ttStr = tt.join('\\n');
         b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${ttStr}">${f.txt}</td>`;
         b += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${ttStr}">${fmtUnits(units)}</td>`;
       }
@@ -800,7 +800,7 @@ __DATA_LOADER__
           const perPct = a.total / 100;
           tt.push(`1% MS% = ${Math.round(perPct).toLocaleString('es-AR')} u. (mercado total: ${a.total.toLocaleString('es-AR')})`);
         }
-        const ttStr = tt.join('\n');
+        const ttStr = tt.join('\\n');
         b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${ttStr}">${f.txt}</td>`;
         b += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${ttStr}">${fmtUnits(units)}</td>`;
       }
