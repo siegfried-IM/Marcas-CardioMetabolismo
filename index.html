@@ -1132,20 +1132,24 @@ function populateCardKpis(){
     const ie = k.units_sie && k.units_sie.ie;
     const varPP = (ms!=null && msPrev!=null) ? (ms - msPrev) : null;
     const color = card.style.getPropertyValue('--bar-color').trim() || '#b01e1e';
+    const tipMS  = `MS% MAT (Market Share últimos 12 meses)\nUnidades SIE / Unidades totales del mercado de la línea\n→ qué % del mercado representan los productos Siegfried.\nFuente: IQVIA Premium (mol_perf).`;
+    const tipIE  = `IE (Índice de Evolución vs Mercado, base 100)\n(Crec. SIE) / (Crec. Mercado) × 100, MAT vs MAT año anterior.\n  100 = SIE crece igual que el mercado\n  >100 = SIE le gana al mercado\n  <100 = SIE pierde share`;
+    const tipVAR = `VAR PP (Variación en puntos porcentuales)\nMS% MAT actual − MS% MAT año anterior.\n  + verde = ganamos share\n  − rojo  = perdimos share`;
+    const tipSpark = `Evolución unidades SIE últimos 12 meses (IQVIA)`;
     strip.innerHTML = `
-      <div class="kpi-mini">
+      <div class="kpi-mini" title="${tipMS}">
         <span class="kpi-mini-lbl">MS% MAT</span>
         <span class="kpi-mini-val">${fmtPct(ms)}</span>
       </div>
-      <div class="kpi-mini">
-        <span class="kpi-mini-lbl">IE</span>
+      <div class="kpi-mini" title="${tipIE}">
+        <span class="kpi-mini-lbl">IE vs mercado</span>
         <span class="kpi-mini-val ${ieClass(ie)}">${fmtIE(ie)}</span>
       </div>
-      <div class="kpi-mini">
-        <span class="kpi-mini-lbl">VAR PP</span>
+      <div class="kpi-mini" title="${tipVAR}">
+        <span class="kpi-mini-lbl">Δ MS% (pp)</span>
         <span class="kpi-mini-val ${varClass(varPP)}">${varPP==null?'—':(varPP>=0?'+':'')+varPP.toFixed(2)}</span>
       </div>
-      ${renderSparkline(line.sparkline_units_sie, color)}
+      <span title="${tipSpark}">${renderSparkline(line.sparkline_units_sie, color)}</span>
     `;
   });
 }
@@ -1230,32 +1234,42 @@ function showToast(msg){
   clearTimeout(window.__toastTO); window.__toastTO = setTimeout(()=>t.classList.remove('show'), 2200);
 }
 
-document.getElementById('ht-search')?.addEventListener('click', openSearch);
-document.getElementById('ht-pdf')?.addEventListener('click', ()=>window.print());
-document.getElementById('ht-share')?.addEventListener('click', async ()=>{
-  try { await navigator.clipboard.writeText(window.location.href); showToast('Link copiado al portapapeles ✓'); }
-  catch(e){ showToast('No se pudo copiar — copialo manualmente'); }
-});
+function wireHubHandlers(){
+  document.getElementById('ht-search')?.addEventListener('click', openSearch);
+  document.getElementById('ht-pdf')?.addEventListener('click', ()=>window.print());
+  document.getElementById('ht-share')?.addEventListener('click', async ()=>{
+    try { await navigator.clipboard.writeText(window.location.href); showToast('Link copiado al portapapeles ✓'); }
+    catch(e){ showToast('No se pudo copiar — copialo manualmente'); }
+  });
+  document.getElementById('search-overlay')?.addEventListener('click', e=>{
+    if(e.target.id === 'search-overlay') closeSearch();
+  });
+  document.getElementById('search-input')?.addEventListener('input', e=>renderSearch(e.target.value));
+  document.getElementById('search-results')?.addEventListener('mouseover', e=>{
+    const it = e.target.closest('.search-item');
+    if(!it) return;
+    document.querySelectorAll('.search-item').forEach(x=>x.classList.remove('active'));
+    it.classList.add('active');
+  });
+}
 document.addEventListener('keydown', e=>{
   if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openSearch(); return; }
-  if(e.key==='/' && document.activeElement.tagName !== 'INPUT'){ e.preventDefault(); openSearch(); return; }
-  if(!document.getElementById('search-overlay').hidden){
+  const overlay = document.getElementById('search-overlay');
+  if(overlay && !overlay.hidden){
     if(e.key==='Escape'){ e.preventDefault(); closeSearch(); }
     else if(e.key==='ArrowDown'){ e.preventDefault(); moveActive(1); }
     else if(e.key==='ArrowUp'){ e.preventDefault(); moveActive(-1); }
     else if(e.key==='Enter'){ e.preventDefault(); activateCurrent(); }
+  } else if(e.key==='/' && document.activeElement.tagName !== 'INPUT'){
+    e.preventDefault(); openSearch();
   }
 });
-document.getElementById('search-overlay')?.addEventListener('click', e=>{
-  if(e.target.id === 'search-overlay') closeSearch();
-});
-document.getElementById('search-input')?.addEventListener('input', e=>renderSearch(e.target.value));
-document.getElementById('search-results')?.addEventListener('mouseover', e=>{
-  const it = e.target.closest('.search-item');
-  if(!it) return;
-  document.querySelectorAll('.search-item').forEach(x=>x.classList.remove('active'));
-  it.classList.add('active');
-});
+
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', wireHubHandlers);
+} else {
+  wireHubHandlers();
+}
 
 // ─── Init: fetch kpis.json ─────────────────────────────────────────
 fetch('./kpis.json', {cache:'no-store'})
