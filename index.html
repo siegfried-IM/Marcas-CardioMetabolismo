@@ -137,10 +137,10 @@ body {
 .hero {
   background: var(--white);
   border-bottom: 1px solid var(--gray-200);
-  padding: 40px 32px 36px;
+  padding: 20px 32px 18px;
 }
 .hero-inner {
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   align-items: flex-end;
@@ -221,9 +221,9 @@ body {
 
 /* ─── MAIN ───────────────────────────────────────────────────────── */
 .main {
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 36px 32px 80px;
+  padding: 20px 32px 60px;
 }
 
 /* ─── SECTION LABEL ──────────────────────────────────────────────── */
@@ -251,11 +251,12 @@ body {
 /* ─── GRID ───────────────────────────────────────────────────────── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
 }
-@media(max-width:900px) { .grid { grid-template-columns: repeat(2,1fr); } }
-@media(max-width:560px)  { .grid { grid-template-columns: 1fr; } }
+@media(max-width:1400px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media(max-width:1080px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:640px)  { .grid { grid-template-columns: 1fr; } }
 
 /* ─── FEATURED CARD (span 2) ─────────────────────────────────────── */
 .card.featured {
@@ -484,12 +485,12 @@ body {
   background: var(--red);
   color: #fff;
   border: none;
-  border-radius: 5px;
-  padding: 7px 14px;
+  border-radius: 4px;
+  padding: 5px 10px;
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: .08em;
+  letter-spacing: .06em;
   text-transform: uppercase;
   white-space: nowrap;
   cursor: pointer;
@@ -595,8 +596,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px;
-  gap: 12px;
+  padding: 12px 16px 8px;
+  gap: 10px;
 }
 .card-minimal .card-name-line {
   display: flex;
@@ -625,14 +626,13 @@ body {
 
 /* ─── KPI strip dentro de cards (priority 1) ──────────────────────── */
 .card-kpi-strip {
-  display: flex; align-items: center; gap: 22px;
-  padding: 14px 24px 18px;
+  display: flex; align-items: center; gap: 14px;
+  padding: 10px 16px 12px;
   border-top: 1px dashed var(--gray-200);
   background: transparent;
   min-width: 0;
 }
 .card-kpi-strip.empty { display: none; }
-.card-minimal { padding-bottom: 16px; }
 .kpi-mini {
   display: flex; flex-direction: column;
   align-items: flex-start; gap: 2px;
@@ -769,7 +769,7 @@ body {
   body { background: #fff !important; }
   .nav, .footer, .hub-toolbar, .search-overlay, .toast { display: none !important; }
   .hero { padding: 0 0 12px !important; background: none !important; }
-  .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .grid { grid-template-columns: repeat(4, 1fr) !important; gap: 8px !important; }
   .card { break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
   .card-cta { display: none !important; }
   .card-kpi-strip { border-left: 0 !important; border-right: 0 !important; }
