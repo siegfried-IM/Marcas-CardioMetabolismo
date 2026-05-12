@@ -333,7 +333,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
         <div style="margin-left:auto;"><div class="yr-ctrl" id="bud-yr"></div></div>
       </div>
       <div class="g2">
-        <div><div class="chart-h280"><canvas id="budChart"></canvas></div><div id="bud-iqvia-note" style="display:none;font-size:9px;color:#d97706;margin-top:4px;text-align:center;">⚠ Real derivado de IQVIA PM · dato SAP no disponible</div><div class="bud-cap" style="margin-top:10px;padding:8px 12px;background:#fffaeb;border:1px solid #fde68a;border-radius:6px;font-size:11px;color:#78350f;line-height:1.5;"><div style="display:flex;flex-wrap:wrap;gap:14px;font-family:IBM Plex Mono,monospace;font-size:10px;color:#4b5563;margin-bottom:6px;"><span><span style="display:inline-block;width:11px;height:11px;background:rgba(107,114,128,.25);border:1px solid rgba(55,65,81,.5);border-radius:2px;vertical-align:middle;margin-right:4px;"></span>Budget original (lo planificado para el mes)</span><span><span style="display:inline-block;width:11px;height:11px;background:rgba(245,158,11,.55);border:1px solid rgba(217,119,6,.85);border-radius:2px;vertical-align:middle;margin-right:4px;"></span>Redistribuido (extra agregado por shortfall acumulado)</span><span><span style="display:inline-block;width:11px;height:11px;background:#b01e1e;border-radius:2px;vertical-align:middle;margin-right:4px;"></span>Real PM (vendido)</span></div><div>El segmento <b style="color:#92400e">ámbar</b> en los <b>próximos 3 meses</b> indica la <b>parte redistribuida</b>: el déficit acumulado en meses pasados se reparte en el siguiente trimestre. Eso significa que para cerrar el año en plan, en cada uno de esos 3 meses hay que vender lo planificado <b>más</b> la porción ámbar. El total anual de Budget se mantiene constante.</div></div></div>
+        <div><div class="chart-h280"><canvas id="budChart"></canvas></div><div id="bud-iqvia-note" style="display:none;font-size:9px;color:#d97706;margin-top:4px;text-align:center;">⚠ Real derivado de IQVIA PM · dato SAP no disponible</div><div class="bud-cap" style="margin-top:10px;padding:8px 12px;background:#fffaeb;border:1px solid #fde68a;border-radius:6px;font-size:11px;color:#78350f;line-height:1.5;"><div style="display:flex;flex-wrap:wrap;gap:14px;font-family:IBM Plex Mono,monospace;font-size:10px;color:#4b5563;margin-bottom:6px;"><span><span style="display:inline-block;width:11px;height:11px;background:rgba(107,114,128,.25);border:1px solid rgba(55,65,81,.5);border-radius:2px;vertical-align:middle;margin-right:4px;"></span>Budget original (lo planificado para el mes)</span><span><span style="display:inline-block;width:11px;height:11px;background:rgba(245,158,11,.55);border:1px solid rgba(217,119,6,.85);border-radius:2px;vertical-align:middle;margin-right:4px;"></span>Redistribuido (extra agregado por shortfall acumulado)</span><span><span style="display:inline-block;width:11px;height:11px;background:#b01e1e;border-radius:2px;vertical-align:middle;margin-right:4px;"></span>Real PM (vendido)</span></div><div>El segmento <b style="color:#92400e">ámbar</b> en los <b>próximos 3 meses</b> indica la <b>parte redistribuida</b>: el déficit acumulado en meses pasados se reparte en el siguiente trimestre. Eso significa que para cerrar el año en plan, en cada uno de esos 3 meses hay que vender lo planificado <b>más</b> la porción ámbar. El total anual de Budget se mantiene constante.</div></div><div id="bud-breakdown" style="margin-top:14px;"></div></div>
         <div class="card-sm">
           <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">% Cumplimiento mensual</p>
           <div id="bud-meter"></div>
@@ -882,6 +882,73 @@ function renderBudget(){
       + __triHtml;
   }
   window.__sfBudgetTotals = {budget:__sfBudget, real:__sfReal, pct:__sfPct, pending:__sfPend, adjusted:__adjBudget, triExtra:__sfExtra, triIdx:__sfTriIdx};
+  // ── Breakdown por familia (todos los SIE products del año) ──
+  (function(){
+    const host = document.getElementById('bud-breakdown');
+    if(!host) return;
+    const _MES = (typeof MESES!=='undefined' && MESES.length===12) ? MESES : ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    const fmtU = n=>Number(n||0).toLocaleString('es-AR');
+    // 2026 fallback: derive real from IQVIA mol_perf si la funcion existe
+    const getIqv = (typeof getIQVIAReal2026==='function') ? getIQVIAReal2026 : null;
+    const rows = [];
+    Object.keys(D.budget||{}).forEach(famKey=>{
+      const fy = (D.budget[famKey]||{})[bYear];
+      if(!fy) return;
+      const fBud = fy.budget||[];
+      let fReal = fy.real||[];
+      if(bYear==='2026' && !fReal.some(v=>v!=null) && getIqv){
+        const ar = getIqv(famKey); if(ar) fReal = ar;
+      }
+      let tB=0, tR=0, tShortPast=0, firstPending=-1;
+      for(let i=0;i<12;i++){
+        const b = +fBud[i]||0, r = fReal[i];
+        tB += b;
+        if(r!=null){ tR += +r||0; if(b>0) tShortPast += Math.max(0, b-(+r||0)); }
+        else if(firstPending<0 && b>0) firstPending=i;
+      }
+      if(tB<=0) return; // sin budget no tiene sentido
+      const triIdx = [];
+      if(firstPending>=0){
+        for(let i=firstPending;i<12 && triIdx.length<3;i++){
+          if((+fBud[i]||0)>0) triIdx.push(i);
+        }
+      }
+      let extra = 0;
+      if(triIdx.length>0 && tShortPast>0) extra = tShortPast/triIdx.length;
+      const pct = tB>0 ? Math.round(tR/tB*100) : null;
+      const pend = Math.max(0, tB-tR);
+      rows.push({fam:famKey, bud:tB, real:tR, pct, pend, extra, nextMes:triIdx.length?_MES[triIdx[0]]:null});
+    });
+    // Sort: peor cumplimiento primero (rojo arriba)
+    rows.sort((a,b)=>{ const av = a.pct==null?999:a.pct; const bv=b.pct==null?999:b.pct; return av-bv; });
+    const pctColor = p=>p==null?'#4b5563':p>=100?'#15803d':p>=85?'#ca8a04':'#b01e1e';
+    const head = '<thead><tr>'
+      + '<th style="text-align:left;padding:4px 8px;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;">Familia</th>'
+      + '<th style="text-align:right;padding:4px 8px;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;">Budget</th>'
+      + '<th style="text-align:right;padding:4px 8px;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;">Real</th>'
+      + '<th style="text-align:right;padding:4px 8px;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;">Cumpl.</th>'
+      + '<th style="text-align:right;padding:4px 8px;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;">Pendiente</th>'
+      + '<th style="text-align:right;padding:4px 8px;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;">Próximo +</th>'
+      + '</tr></thead>';
+    const body = '<tbody>' + rows.map(r=>{
+      const isCur = r.fam===bProd;
+      const bg = isCur ? 'background:#fef2f2;' : '';
+      const triText = (r.extra>0 && r.nextMes) ? '+'+fmtU(Math.round(r.extra))+' u. ('+r.nextMes+')' : '—';
+      return '<tr style="border-top:1px solid #f3f4f6;'+bg+'cursor:pointer;" onclick="setBP(\''+r.fam.replace(/\'/g,"\\\\'")+'\')">'
+        + '<td style="padding:6px 8px;font-size:11px;font-weight:'+(isCur?'700':'500')+';color:#111827;">'+r.fam+(isCur?' •':'')+'</td>'
+        + '<td style="padding:6px 8px;font-size:11px;text-align:right;font-family:IBM Plex Mono,monospace;">'+fmtU(r.bud)+'</td>'
+        + '<td style="padding:6px 8px;font-size:11px;text-align:right;font-family:IBM Plex Mono,monospace;">'+fmtU(r.real)+'</td>'
+        + '<td style="padding:6px 8px;font-size:11px;text-align:right;font-family:IBM Plex Mono,monospace;font-weight:700;color:'+pctColor(r.pct)+';">'+(r.pct==null?'—':r.pct+'%')+'</td>'
+        + '<td style="padding:6px 8px;font-size:11px;text-align:right;font-family:IBM Plex Mono,monospace;color:'+(r.pend>0?'#b01e1e':'#9ca3af')+';">'+(r.pend>0?fmtU(r.pend):'—')+'</td>'
+        + '<td style="padding:6px 8px;font-size:11px;text-align:right;font-family:IBM Plex Mono,monospace;color:#92400e;">'+triText+'</td>'
+        + '</tr>';
+    }).join('') + '</tbody>';
+    host.innerHTML = '<p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin:14px 0 8px;">Apertura por familia · Año '+bYear+'</p>'
+      + '<div style="overflow-x:auto;border:1px solid #e5e7eb;border-radius:6px;background:#fff;">'
+      + '<table style="width:100%;border-collapse:collapse;">' + head + body + '</table>'
+      + '</div>';
+  })();
+  
   const isIQVIADerived = bYear==='2026' && !(src.real||[]).some(v=>v!=null) && real.some(v=>v!=null);
   const color  = (COLORS[bProd] && COLORS[bProd]!=='#38bdf8') ? COLORS[bProd] : '#b01e1e';
   const maxVal = Math.max(...[...budget,...real].filter(Boolean), 1);
