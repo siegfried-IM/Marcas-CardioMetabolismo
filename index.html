@@ -801,22 +801,8 @@ body {
   <div class="hero-inner">
     <div class="hero-left">
       <div class="hero-eyebrow">Hub de Tableros · Análisis de Marcas</div>
-      <h1 class="hero-title">Tableros de <span>Marcas</span><br>Siegfried Argentina</h1>
+      <h1 class="hero-title">Tableros de <span>Marcas</span> · Siegfried Argentina</h1>
       <p class="hero-desc">Acceso centralizado a los tableros de análisis por línea terapéutica. Seleccioná una línea para ver mercado IQVIA, recetas CUP, stock, convenios y precios.</p>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-block">
-        <span class="stat-val">7</span>
-        <span class="stat-lbl">Líneas</span>
-      </div>
-      <div class="stat-block">
-        <span class="stat-val" id="live-count"> 3 </span>
-        <span class="stat-lbl">Activos</span>
-      </div>
-      <div class="stat-block">
-        <span class="stat-val">2026</span>
-        <span class="stat-lbl">Período</span>
-      </div>
     </div>
   </div>
 </div>
@@ -1038,7 +1024,7 @@ function applyUrls() {
       live++;
     }
   });
-  document.getElementById('live-count').textContent = live || 1;
+  const lc = document.getElementById('live-count'); if(lc) lc.textContent = live || 1;
 }
 
 // Date
