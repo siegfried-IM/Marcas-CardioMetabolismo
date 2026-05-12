@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-12T10:18:29",
+  "generated_at": "2026-05-12T11:01:27",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -27,6 +27,34 @@
       "iqvia_through": "Mar 2026",
       "venta_through": "Apr 2026",
       "has_recetas": true,
+      "sparkline_units_sie": [
+        343849,
+        344842,
+        331465,
+        372700,
+        335419,
+        333461,
+        354296,
+        309310,
+        354989,
+        336830,
+        286307,
+        339989
+      ],
+      "sparkline_months": [
+        "Apr 2025",
+        "May 2025",
+        "Jun 2025",
+        "Jul 2025",
+        "Aug 2025",
+        "Sep 2025",
+        "Oct 2025",
+        "Nov 2025",
+        "Dec 2025",
+        "Jan 2026",
+        "Feb 2026",
+        "Mar 2026"
+      ],
       "kpis": {
         "mensual": {
           "recetas_sie": {
@@ -216,6 +244,34 @@
       "iqvia_through": "Mar 2026",
       "venta_through": "Apr 2026",
       "has_recetas": true,
+      "sparkline_units_sie": [
+        245071,
+        244144,
+        234573,
+        256448,
+        213488,
+        224553,
+        231894,
+        213815,
+        232871,
+        239593,
+        202130,
+        233730
+      ],
+      "sparkline_months": [
+        "Apr 2025",
+        "May 2025",
+        "Jun 2025",
+        "Jul 2025",
+        "Aug 2025",
+        "Sep 2025",
+        "Oct 2025",
+        "Nov 2025",
+        "Dec 2025",
+        "Jan 2026",
+        "Feb 2026",
+        "Mar 2026"
+      ],
       "kpis": {
         "mensual": {
           "recetas_sie": {
@@ -405,6 +461,34 @@
       "iqvia_through": "Mar 2026",
       "venta_through": "Apr 2026",
       "has_recetas": true,
+      "sparkline_units_sie": [
+        272568,
+        277647,
+        253981,
+        301216,
+        249237,
+        275464,
+        285197,
+        250285,
+        277297,
+        287789,
+        234364,
+        284261
+      ],
+      "sparkline_months": [
+        "Apr 2025",
+        "May 2025",
+        "Jun 2025",
+        "Jul 2025",
+        "Aug 2025",
+        "Sep 2025",
+        "Oct 2025",
+        "Nov 2025",
+        "Dec 2025",
+        "Jan 2026",
+        "Feb 2026",
+        "Mar 2026"
+      ],
       "kpis": {
         "mensual": {
           "recetas_sie": {
@@ -594,6 +678,34 @@
       "iqvia_through": "Mar 2026",
       "venta_through": "Apr 2026",
       "has_recetas": true,
+      "sparkline_units_sie": [
+        95164,
+        95867,
+        91811,
+        100066,
+        91125,
+        84387,
+        93055,
+        79847,
+        85643,
+        101585,
+        80235,
+        91883
+      ],
+      "sparkline_months": [
+        "Apr 2025",
+        "May 2025",
+        "Jun 2025",
+        "Jul 2025",
+        "Aug 2025",
+        "Sep 2025",
+        "Oct 2025",
+        "Nov 2025",
+        "Dec 2025",
+        "Jan 2026",
+        "Feb 2026",
+        "Mar 2026"
+      ],
       "kpis": {
         "mensual": {
           "recetas_sie": {
@@ -783,6 +895,34 @@
       "iqvia_through": "Mar 2026",
       "venta_through": "Apr 2026",
       "has_recetas": true,
+      "sparkline_units_sie": [
+        625208,
+        661904,
+        871902,
+        856100,
+        591932,
+        630864,
+        546670,
+        423647,
+        373150,
+        304964,
+        232691,
+        400053
+      ],
+      "sparkline_months": [
+        "Apr 2025",
+        "May 2025",
+        "Jun 2025",
+        "Jul 2025",
+        "Aug 2025",
+        "Sep 2025",
+        "Oct 2025",
+        "Nov 2025",
+        "Dec 2025",
+        "Jan 2026",
+        "Feb 2026",
+        "Mar 2026"
+      ],
       "kpis": {
         "mensual": {
           "recetas_sie": {
@@ -972,6 +1112,34 @@
       "iqvia_through": "Mar 2026",
       "venta_through": "Apr 2026",
       "has_recetas": true,
+      "sparkline_units_sie": [
+        135345,
+        138130,
+        128816,
+        144002,
+        135984,
+        134716,
+        128768,
+        120911,
+        153029,
+        148199,
+        124115,
+        139427
+      ],
+      "sparkline_months": [
+        "Apr 2025",
+        "May 2025",
+        "Jun 2025",
+        "Jul 2025",
+        "Aug 2025",
+        "Sep 2025",
+        "Oct 2025",
+        "Nov 2025",
+        "Dec 2025",
+        "Jan 2026",
+        "Feb 2026",
+        "Mar 2026"
+      ],
       "kpis": {
         "mensual": {
           "recetas_sie": {

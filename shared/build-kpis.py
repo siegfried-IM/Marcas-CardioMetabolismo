@@ -913,6 +913,38 @@ def main():
                 'venta_interna': {'curr': int_curr, 'prev': int_prev,
                                   'ie': safe_ie(int_curr, int_prev)},
             }
+        # Sparkline: last 12 months of SIE units (IQVIA) — para hub cards
+        sparkline = []
+        sparkline_months = []
+        if iq_latest:
+            mat_window = month_range(iq_latest[0], iq_latest[1], 12)
+            mol = D.get('mol_perf', {})
+            # Reproducir logica de compute_iqvia_kpi pero por mes para sparkline
+            sie_primary_fam = {}
+            for m_key, obj in mol.items():
+                if not isinstance(obj, dict): continue
+                for p in obj.get('products', []):
+                    if not p.get('is_sie'): continue
+                    name = p.get('prod', '')
+                    if not name: continue
+                    base_name = re.sub(r'\s*\(.*?\)\s*$', '', name).strip().upper()
+                    is_primary = (base_name == m_key.upper())
+                    if name not in sie_primary_fam or is_primary:
+                        sie_primary_fam[name] = m_key
+            for mk in mat_window:
+                total = 0
+                for m_key, obj in mol.items():
+                    if not isinstance(obj, dict): continue
+                    for p in obj.get('products', []):
+                        if not p.get('is_sie'): continue
+                        name = p.get('prod', '')
+                        if sie_primary_fam.get(name) != m_key: continue
+                        v = p.get('monthly_vals', {}).get(mk, 0) or 0
+                        try: total += float(v)
+                        except (TypeError, ValueError): pass
+                sparkline.append(int(round(total)))
+            sparkline_months = mat_window
+
         out['lines'].append({
             'key':   line['key'],
             'name':  line['name'],
@@ -924,6 +956,8 @@ def main():
             'iqvia_through':   iq_cut,
             'venta_through':   venta_cut,
             'has_recetas':     not line_no_rec,
+            'sparkline_units_sie': sparkline,
+            'sparkline_months':    sparkline_months,
             'kpis':  kpis,
         })
 
