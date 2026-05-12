@@ -102,6 +102,9 @@ def load_pivot(pivot_path: Path):
 
     brand_recetas = {m: {} for m in months}
     brand_medicos = {m: {} for m in months}
+    # Family-level totals from the (market, 'Totales', '') row — UNIQUE doctor count
+    fam_recetas  = {m: {} for m in months}  # fam_recetas[month][market] = recetas
+    fam_medicos  = {m: {} for m in months}  # fam_medicos[month][market] = medicos UNIQUE
 
     for row in ws.iter_rows(min_row=3, values_only=True):
         if not row: continue
@@ -112,9 +115,20 @@ def load_pivot(pivot_path: Path):
         cur_market = str(merc).strip()
         if cur_market.upper() in EXCLUDED_MARKETS:
             continue
-        # Skip "Totales" rows
-        if (str(droga or '').strip().lower() == 'totales' and not marca):
+        # (market, 'Totales', '') -> MARKET total (medicos unique)
+        is_market_total = (str(droga or '').strip().lower() == 'totales' and not marca)
+        if is_market_total:
+            for col_idx, (month_key, kind) in col_map.items():
+                if col_idx >= len(row): continue
+                val = row[col_idx]
+                try: v = int(val) if val is not None else 0
+                except (TypeError, ValueError): v = 0
+                target = fam_recetas if kind == 'recetas' else fam_medicos
+                # Solo guardar el primero (no agregar drogas internas que tambien tienen Totales)
+                if cur_market not in target[month_key]:
+                    target[month_key][cur_market] = v
             continue
+        # Skip droga-level "Totales" and rows without marca
         if (str(marca or '').strip().lower() == 'totales' or not marca):
             continue
         b = normalize_brand(marca)
@@ -132,7 +146,7 @@ def load_pivot(pivot_path: Path):
                 target[month_key][b] = v
 
     wb.close()
-    return months, brand_recetas, brand_medicos
+    return months, brand_recetas, brand_medicos, fam_recetas, fam_medicos
 
 
 def parse_data_js(text: str):
@@ -187,6 +201,7 @@ def serialize_data_js(text_orig: str, d1: dict, d2: dict | None) -> str:
 
 def merge_line(data_js_path: Path, months_to_merge: list,
                brand_recetas: dict, brand_medicos: dict,
+               fam_recetas: dict = None, fam_medicos: dict = None,
                dry_run: bool = False):
     """Patcha data.js de UNA linea agregando UNO O MAS meses de recetas."""
     text = data_js_path.read_text(encoding='utf-8-sig', errors='replace')
@@ -250,10 +265,21 @@ def merge_line(data_js_path: Path, months_to_merge: list,
             ms_pct = round((sie_total / market_total) * 100, 1) if market_total else 0
             ms_dict[month_key_en] = ms_pct
 
-            # recetas (per family monthly aggregate). Usamos la suma de medicos
-            # del market como aproximacion (CloseUp da medicos por brand sumable).
+            # recetas (per family monthly aggregate).
+            # Medicos: usar el count UNICO del pivot row (mercado, 'Totales', '')
+            # — NO la suma de medicos por marca (CloseUp NO es sumable: un mismo
+            # medico que prescribe varias marcas se contaria multiple veces).
             rec_fam = d2.setdefault('recetas', {}).setdefault(fam, {})
-            rec_fam[month_key_en] = {'recetas': market_total, 'medicos': market_med_total}
+            uniq_med = None
+            uniq_rec = None
+            if fam_medicos is not None:
+                uniq_med = (fam_medicos.get(month_key_en) or {}).get(fam)
+            if fam_recetas is not None:
+                uniq_rec = (fam_recetas.get(month_key_en) or {}).get(fam)
+            rec_fam[month_key_en] = {
+                'recetas': uniq_rec if uniq_rec is not None else market_total,
+                'medicos': uniq_med if uniq_med is not None else market_med_total,
+            }
 
             # OTC_DATA.prescriptions: upsert (no append duplicado si el mes ya existe)
             pres_root = d1.setdefault('prescriptions', {})
@@ -333,7 +359,7 @@ def main() -> int:
         return 2
 
     print(f'Loading pivot: {pivot_path}')
-    months_in_pivot, brand_recetas, brand_medicos = load_pivot(pivot_path)
+    months_in_pivot, brand_recetas, brand_medicos, fam_recetas, fam_medicos = load_pivot(pivot_path)
     print(f'  Meses detectados en pivot: {months_in_pivot}')
     for m in months_in_pivot:
         print(f'    {m}: brands={len(brand_recetas[m])} (con medicos: {len(brand_medicos[m])})')
@@ -363,7 +389,8 @@ def main() -> int:
             print(f'  [{line}] SKIP: no data.js')
             continue
         try:
-            res = merge_line(data_js, months_to_merge, brand_recetas, brand_medicos, dry_run=args.dry_run)
+            res = merge_line(data_js, months_to_merge, brand_recetas, brand_medicos,
+                             fam_recetas=fam_recetas, fam_medicos=fam_medicos, dry_run=args.dry_run)
         except Exception as e:
             print(f'  [{line}] ERROR: {e}')
             continue
