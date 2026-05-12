@@ -447,7 +447,7 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
     sie_per_fam = defaultdict(list)  # fam_key -> [prod_name, ...] de productos SIE primary
     for m_key, obj in mol.items():
         if not isinstance(obj, dict): continue
-        family = obj.get('family', m_key)
+        family = (obj.get('family') or '').strip() or m_key
         for p in obj.get('products', []):
             if not p.get('is_sie'): continue
             name = p.get('prod', '')
@@ -1003,7 +1003,7 @@ def main():
                 # Linea sin recetas: solo units + venta interna
                 for m_key, fam_obj in D.get('mol_perf', {}).items():
                     if not isinstance(fam_obj, dict): continue
-                    family = fam_obj.get('family', m_key)
+                    family = (fam_obj.get('family') or '').strip() or m_key
                     for p in fam_obj.get('products', []):
                         if not p.get('is_sie'): continue
                         name = p.get('prod', '')

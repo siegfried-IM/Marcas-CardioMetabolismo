@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-12T11:46:49",
+  "generated_at": "2026-05-12T11:56:33",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -1919,7 +1919,7 @@
       "name": "VALIUM (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
-      "family": "",
+      "family": "DIAZEPAM",
       "periods": {
         "mensual": {
           "rec_curr": 6312,
@@ -2234,7 +2234,7 @@
       "name": "MADOPAR (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
-      "family": "",
+      "family": "BENSERAZIDE_LEVODOPA",
       "periods": {
         "mensual": {
           "rec_curr": 2828,
@@ -3809,7 +3809,7 @@
       "name": "PGB (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
-      "family": "",
+      "family": "PREGABALIN",
       "periods": {
         "mensual": {
           "rec_curr": 1249,
@@ -4754,7 +4754,7 @@
       "name": "QTP (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
-      "family": "",
+      "family": "QUETIAPINE",
       "periods": {
         "mensual": {
           "rec_curr": 508,
@@ -4817,7 +4817,7 @@
       "name": "MADOPAR HBS (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
-      "family": "",
+      "family": "BENSERAZIDE_LEVODOPA",
       "periods": {
         "mensual": {
           "rec_curr": 197,
@@ -4943,7 +4943,7 @@
       "name": "VISDON (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
-      "family": "",
+      "family": "VILAZODONE",
       "periods": {
         "mensual": {
           "rec_curr": 437,
@@ -5006,7 +5006,7 @@
       "name": "VALQUIR (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
-      "family": "",
+      "family": "VORTIOXETINE",
       "periods": {
         "mensual": {
           "rec_curr": 480,
@@ -5258,7 +5258,7 @@
       "name": "LEVITAL (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
-      "family": "",
+      "family": "LEVETIRACETAM",
       "periods": {
         "mensual": {
           "rec_curr": 208,
@@ -5447,7 +5447,7 @@
       "name": "LURAP (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
-      "family": "",
+      "family": "LURASIDONE",
       "periods": {
         "mensual": {
           "rec_curr": 237,
