@@ -79,10 +79,10 @@ body {
 .hero {
   background: var(--white);
   border-bottom: 1px solid var(--gray-200);
-  padding: 32px 32px 28px;
+  padding: 18px 32px 16px;
 }
 .hero-inner {
-  max-width: 1280px; margin: 0 auto;
+  max-width: 1400px; margin: 0 auto;
   display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap;
 }
 .hero-eyebrow {
@@ -93,8 +93,8 @@ body {
 }
 .hero-eyebrow::before { content:''; display:inline-block; width:24px; height:2px; background: var(--red); }
 .hero-title {
-  font-size: 30px; font-weight: 700; letter-spacing: -.03em;
-  color: var(--gray-900); line-height: 1.1; margin-bottom: 8px;
+  font-size: 24px; font-weight: 700; letter-spacing: -.03em;
+  color: var(--gray-900); line-height: 1.15; margin-bottom: 4px;
 }
 .hero-title span { color: var(--red); }
 .hero-desc { font-size: 13px; color: var(--gray-500); line-height: 1.65; max-width: 520px; }
@@ -111,7 +111,7 @@ body {
 }
 
 /* MAIN */
-.main { max-width: 1280px; margin: 0 auto; padding: 28px 32px 80px; }
+.main { max-width: 1400px; margin: 0 auto; padding: 18px 32px 60px; }
 
 /* CONTROLS */
 .controls {
@@ -157,18 +157,18 @@ body {
 .line-card {
   background: var(--white);
   border: 1px solid var(--gray-200);
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: 220px 1fr;
   border-left: 4px solid var(--line-color, var(--red));
   transition: box-shadow .2s;
 }
 .line-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.06); }
 .line-info {
-  padding: 18px 22px;
-  display: flex; flex-direction: column; gap: 6px;
+  padding: 10px 16px;
+  display: flex; flex-direction: column; gap: 3px;
   border-right: 1px solid var(--gray-100);
   background: var(--gray-50);
 }
@@ -207,8 +207,8 @@ body {
   grid-template-columns: repeat(8, 1fr);
 }
 .tile {
-  padding: 14px 14px;
-  display: flex; flex-direction: column; gap: 3px;
+  padding: 8px 12px;
+  display: flex; flex-direction: column; gap: 2px;
   border-right: 1px solid var(--gray-100);
   min-width: 0;
 }
@@ -220,8 +220,8 @@ body {
 }
 .tile-val {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 17px; font-weight: 700; color: var(--gray-900);
-  letter-spacing: -.01em; line-height: 1.2; margin-top: 2px;
+  font-size: 14px; font-weight: 700; color: var(--gray-900);
+  letter-spacing: -.01em; line-height: 1.2; margin-top: 1px;
 }
 .tile-delta {
   font-size: 11px; font-weight: 600;
@@ -393,20 +393,6 @@ table.products tbody tr:hover td:nth-child(3) { background: var(--gray-50); }
       <div class="hero-eyebrow">Indicadores Clave · SIEGFRIED</div>
       <h1 class="hero-title">KPIs por <span>Línea</span> &amp; <span>Producto</span></h1>
     </div>
-    <div class="hero-meta">
-      <div class="hero-meta-block">
-        <div class="hero-meta-val" id="kpi-asof">—</div>
-        <div class="hero-meta-lbl">Cierre</div>
-      </div>
-      <div class="hero-meta-block">
-        <div class="hero-meta-val" id="kpi-lines-count">—</div>
-        <div class="hero-meta-lbl">Líneas</div>
-      </div>
-      <div class="hero-meta-block">
-        <div class="hero-meta-val" id="kpi-prod-count">—</div>
-        <div class="hero-meta-lbl">Productos SIE</div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -574,7 +560,7 @@ function renderLines() {
     return `
       <div class="line-card" style="--line-color:${line.color};">
         <div class="line-info">
-          <div class="line-name">${line.icon} ${line.name}</div>
+          <div class="line-name">${line.name}</div>
           <div class="line-owner">${line.owner||''}</div>
           <div class="line-cuts">
             ${recPill}
