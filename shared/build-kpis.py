@@ -563,8 +563,82 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
                         break
 
     def safe_ie(c, p):
+        # IE simple (solo crecimiento brand) — usado para Venta Interna
+        # donde NO hay concepto de mercado.
         if c is None or p is None or p <= 0: return None
         return round(c / p * 100, 1)
+
+    # === IE vs Mercado (base 100) ====================================
+    # IE = (brand_curr / brand_prev) / (mkt_curr / mkt_prev) × 100
+    # IE = 100 → la marca crece al mismo ritmo que el mercado
+    # IE > 100 → la marca crece más rápido que el mercado
+    # IE < 100 → la marca crece menos / pierde share
+    def ie_vs_market(brand_c, brand_p, mkt_c, mkt_p):
+        if brand_c is None or brand_p is None or brand_p <= 0: return None
+        if mkt_c is None or mkt_p is None or mkt_p <= 0: return None
+        brand_ratio = brand_c / brand_p
+        mkt_ratio = mkt_c / mkt_p
+        if mkt_ratio == 0: return None
+        return round(brand_ratio / mkt_ratio * 100, 1)
+
+    # Pre-compute IQVIA market (mercado molécula) curr/prev per fam_key
+    mkt_units_by_fam = {}
+    for m_key, obj in mol.items():
+        if not isinstance(obj, dict): continue
+        mc = mp = 0.0
+        for prod in obj.get('products', []):
+            mv = prod.get('monthly_vals', {})
+            mc += sum_window(mv, window_curr)
+            mp += sum_window(mv, window_prev)
+        mkt_units_by_fam[m_key] = (mc, mp)
+
+    # Pre-compute Recetas market (mercado molécula) curr/prev per fam_key.
+    # rec_ms[owner].mkt suele ser sparse (solo meses recientes). Fallback:
+    # reconstruir mkt = sie / (ms/100) por mes cuando ms>0, sumando per-month.
+    def derive_mkt_window(rec_ms_obj, window):
+        """Suma mercado por ventana: usa mkt[mk] si presente y >0, sino
+        deriva como sie/(ms/100). Si ms=0, asume mkt=sie (100% MS)."""
+        if not isinstance(rec_ms_obj, dict): return 0.0
+        mkt_m = rec_ms_obj.get('mkt', {}) or {}
+        sie_m = rec_ms_obj.get('sie', {}) or {}
+        ms_m  = rec_ms_obj.get('ms',  {}) or {}
+        total = 0.0
+        for mk in window:
+            raw = mkt_m.get(mk)
+            if raw not in (None, 0):
+                try: total += float(raw); continue
+                except (TypeError, ValueError): pass
+            s = sie_m.get(mk)
+            ms_v = ms_m.get(mk)
+            if s in (None, 0): continue
+            try: s = float(s)
+            except (TypeError, ValueError): continue
+            try: ms_v = float(ms_v or 0)
+            except (TypeError, ValueError): ms_v = 0.0
+            total += (s / (ms_v / 100.0)) if ms_v > 0 else s
+        return total
+
+    rec_mkt_by_fam = {}
+    for fam_key in sie_per_fam:
+        fam_field = mol.get(fam_key, {}).get('family', '') if isinstance(mol.get(fam_key), dict) else ''
+        rec_ms_obj = find_recms_match(fam_key) or find_recms_match(fam_field)
+        if rec_ms_obj is None:
+            # Fallback: per-product matching
+            for prod_name in sie_per_fam[fam_key]:
+                base = strip_paren(prod_name)
+                base_upper = base.upper()
+                for cand in [f'{base} SIE', base, f'{base_upper} SIE']:
+                    if cand in rec_ms and isinstance(rec_ms[cand], dict):
+                        rec_ms_obj = rec_ms[cand]; break
+                if rec_ms_obj is not None: break
+                for k in rec_ms:
+                    if isinstance(rec_ms[k], dict) and k.upper().startswith(base_upper + ' '):
+                        rec_ms_obj = rec_ms[k]; break
+                if rec_ms_obj is not None: break
+        if rec_ms_obj is not None:
+            mc = derive_mkt_window(rec_ms_obj, rec_window_curr)
+            mp = derive_mkt_window(rec_ms_obj, rec_window_prev)
+            rec_mkt_by_fam[fam_key] = (mc, mp)
 
     # Construir lista final: union de SIE products en units + explicit rec
     # Solo incluimos productos que tienen alguna fuente de recetas trackeada
@@ -664,6 +738,9 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
         int_curr_int = int(round(int_curr_v)) if int_curr_v is not None else None
         int_prev_int = int(round(int_prev_v)) if int_prev_v is not None else None
 
+        fam_k = u_info.get('fam_key', '')
+        mkt_u_c, mkt_u_p = mkt_units_by_fam.get(fam_k, (None, None))
+        mkt_r_c, mkt_r_p = rec_mkt_by_fam.get(fam_k, (None, None))
         out.append({
             'name': prod_name,
             'line': line_key,
@@ -671,10 +748,10 @@ def collect_products(D, window_curr, window_prev, line_key, line_name,
             'family': family,
             'rec_curr': rec_curr,
             'rec_prev': rec_prev,
-            'rec_ie':   safe_ie(rec_curr, rec_prev),
+            'rec_ie':   ie_vs_market(rec_curr, rec_prev, mkt_r_c, mkt_r_p),
             'units_curr': u_curr,
             'units_prev': u_prev,
-            'units_ie':   safe_ie(u_curr, u_prev),
+            'units_ie':   ie_vs_market(u_curr, u_prev, mkt_u_c, mkt_u_p),
             'int_curr':  int_curr_int,
             'int_prev':  int_prev_int,
             'int_ie':    safe_ie(int_curr_int, int_prev_int),

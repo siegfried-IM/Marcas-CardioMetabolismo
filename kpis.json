@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-05T09:32:09",
+  "generated_at": "2026-05-12T10:18:29",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -597,18 +597,18 @@
       "kpis": {
         "mensual": {
           "recetas_sie": {
-            "curr": 11976,
-            "prev": 12742,
-            "ie": 94.0
+            "curr": 12456,
+            "prev": 12773,
+            "ie": 97.5
           },
           "ms_recetas": {
-            "curr": 10.89,
-            "prev": 15.13
+            "curr": 10.76,
+            "prev": 11.92
           },
           "mercado_recetas": {
-            "curr": 109935,
-            "prev": 84239,
-            "ie": 130.5
+            "curr": 115718,
+            "prev": 107182,
+            "ie": 108.0
           },
           "units_sie": {
             "curr": 91883,
@@ -616,13 +616,13 @@
             "ie": 103.5
           },
           "ms_units": {
-            "curr": 7.36,
-            "prev": 7.62
+            "curr": 6.9,
+            "prev": 7.1
           },
           "mercado_units": {
-            "curr": 1248888,
-            "prev": 1164275,
-            "ie": 107.3
+            "curr": 1332124,
+            "prev": 1249528,
+            "ie": 106.6
           },
           "venta_interna": {
             "curr": 100420,
@@ -632,18 +632,18 @@
         },
         "ytd": {
           "recetas_sie": {
-            "curr": 35122,
-            "prev": 39432,
-            "ie": 89.1
+            "curr": 36549,
+            "prev": 39488,
+            "ie": 92.6
           },
           "ms_recetas": {
-            "curr": 10.9,
-            "prev": 15.47
+            "curr": 10.76,
+            "prev": 12.21
           },
           "mercado_recetas": {
-            "curr": 322365,
-            "prev": 254843,
-            "ie": 126.5
+            "curr": 339691,
+            "prev": 323387,
+            "ie": 105.0
           },
           "units_sie": {
             "curr": 273703,
@@ -651,13 +651,13 @@
             "ie": 103.4
           },
           "ms_units": {
-            "curr": 7.59,
-            "prev": 7.79
+            "curr": 7.11,
+            "prev": 7.28
           },
           "mercado_units": {
-            "curr": 3607038,
-            "prev": 3400410,
-            "ie": 106.1
+            "curr": 3848259,
+            "prev": 3638649,
+            "ie": 105.8
           },
           "venta_interna": {
             "curr": 336364,
@@ -667,18 +667,18 @@
         },
         "trimestre": {
           "recetas_sie": {
-            "curr": 35122,
-            "prev": 39432,
-            "ie": 89.1
+            "curr": 36549,
+            "prev": 39488,
+            "ie": 92.6
           },
           "ms_recetas": {
-            "curr": 10.9,
-            "prev": 15.47
+            "curr": 10.76,
+            "prev": 12.21
           },
           "mercado_recetas": {
-            "curr": 322365,
-            "prev": 254843,
-            "ie": 126.5
+            "curr": 339691,
+            "prev": 323387,
+            "ie": 105.0
           },
           "units_sie": {
             "curr": 273703,
@@ -686,13 +686,13 @@
             "ie": 103.4
           },
           "ms_units": {
-            "curr": 7.59,
-            "prev": 7.79
+            "curr": 7.11,
+            "prev": 7.28
           },
           "mercado_units": {
-            "curr": 3607038,
-            "prev": 3400410,
-            "ie": 106.1
+            "curr": 3848259,
+            "prev": 3638649,
+            "ie": 105.8
           },
           "venta_interna": {
             "curr": 336364,
@@ -702,18 +702,18 @@
         },
         "semestre": {
           "recetas_sie": {
-            "curr": 70522,
-            "prev": 82165,
-            "ie": 85.8
+            "curr": 36549,
+            "prev": null,
+            "ie": null
           },
           "ms_recetas": {
-            "curr": 11.82,
-            "prev": 15.76
+            "curr": 10.76,
+            "prev": null
           },
           "mercado_recetas": {
-            "curr": 596535,
-            "prev": 521411,
-            "ie": 114.4
+            "curr": 339691,
+            "prev": null,
+            "ie": null
           },
           "units_sie": {
             "curr": 532248,
@@ -721,13 +721,13 @@
             "ie": 97.1
           },
           "ms_units": {
-            "curr": 7.24,
-            "prev": 7.82
+            "curr": 6.8,
+            "prev": 7.31
           },
           "mercado_units": {
-            "curr": 7347372,
-            "prev": 7008323,
-            "ie": 104.8
+            "curr": 7829735,
+            "prev": 7495428,
+            "ie": 104.5
           },
           "venta_interna": {
             "curr": 602979,
@@ -737,18 +737,18 @@
         },
         "mat": {
           "recetas_sie": {
-            "curr": 148365,
-            "prev": 166955,
-            "ie": 88.9
+            "curr": 36549,
+            "prev": null,
+            "ie": null
           },
           "ms_recetas": {
-            "curr": 13.15,
-            "prev": 16.12
+            "curr": 10.76,
+            "prev": null
           },
           "mercado_recetas": {
-            "curr": 1128607,
-            "prev": 1035867,
-            "ie": 109.0
+            "curr": 339691,
+            "prev": null,
+            "ie": null
           },
           "units_sie": {
             "curr": 1090668,
@@ -756,13 +756,13 @@
             "ie": 96.1
           },
           "ms_units": {
-            "curr": 7.42,
-            "prev": 7.84
+            "curr": 6.97,
+            "prev": 7.35
           },
           "mercado_units": {
-            "curr": 14694879,
-            "prev": 14480036,
-            "ie": 101.5
+            "curr": 15652147,
+            "prev": 15444174,
+            "ie": 101.3
           },
           "venta_interna": {
             "curr": 1202321,
@@ -1161,10 +1161,10 @@
         "mensual": {
           "rec_curr": 18670,
           "rec_prev": 25579,
-          "rec_ie": 73.0,
+          "rec_ie": 98.1,
           "units_curr": 185559,
           "units_prev": 234733,
-          "units_ie": 79.1,
+          "units_ie": 93.0,
           "int_curr": 156289,
           "int_prev": 194926,
           "int_ie": 80.2
@@ -1172,10 +1172,10 @@
         "ytd": {
           "rec_curr": 49238,
           "rec_prev": 63863,
-          "rec_ie": 77.1,
+          "rec_ie": 100.3,
           "units_curr": 405173,
           "units_prev": 511609,
-          "units_ie": 79.2,
+          "units_ie": 95.5,
           "int_curr": 310166,
           "int_prev": 458556,
           "int_ie": 67.6
@@ -1183,10 +1183,10 @@
         "trimestre": {
           "rec_curr": 49238,
           "rec_prev": 63863,
-          "rec_ie": 77.1,
+          "rec_ie": 100.3,
           "units_curr": 405173,
           "units_prev": 511609,
-          "units_ie": 79.2,
+          "units_ie": 95.5,
           "int_curr": 310166,
           "int_prev": 458556,
           "int_ie": 67.6
@@ -1194,10 +1194,10 @@
         "semestre": {
           "rec_curr": 126033,
           "rec_prev": 63863,
-          "rec_ie": 197.3,
+          "rec_ie": 99.6,
           "units_curr": 1062748,
           "units_prev": 1111244,
-          "units_ie": 95.6,
+          "units_ie": 99.4,
           "int_curr": 841398,
           "int_prev": 898436,
           "int_ie": 93.7
@@ -1205,7 +1205,7 @@
         "mat": {
           "rec_curr": 356202,
           "rec_prev": 63863,
-          "rec_ie": 557.8,
+          "rec_ie": 98.8,
           "units_curr": 3484034,
           "units_prev": 3441140,
           "units_ie": 101.2,
@@ -1224,10 +1224,10 @@
         "mensual": {
           "rec_curr": 7695,
           "rec_prev": 7839,
-          "rec_ie": 98.2,
+          "rec_ie": 96.0,
           "units_curr": 95616,
           "units_prev": 83716,
-          "units_ie": 114.2,
+          "units_ie": 104.4,
           "int_curr": 96994,
           "int_prev": 85855,
           "int_ie": 113.0
@@ -1235,10 +1235,10 @@
         "ytd": {
           "rec_curr": 22997,
           "rec_prev": 24152,
-          "rec_ie": 95.2,
+          "rec_ie": 96.4,
           "units_curr": 277879,
           "units_prev": 254919,
-          "units_ie": 109.0,
+          "units_ie": 102.8,
           "int_curr": 302846,
           "int_prev": 271606,
           "int_ie": 111.5
@@ -1246,10 +1246,10 @@
         "trimestre": {
           "rec_curr": 22997,
           "rec_prev": 24152,
-          "rec_ie": 95.2,
+          "rec_ie": 96.4,
           "units_curr": 277879,
           "units_prev": 254919,
-          "units_ie": 109.0,
+          "units_ie": 102.8,
           "int_curr": 302846,
           "int_prev": 271606,
           "int_ie": 111.5
@@ -1257,10 +1257,10 @@
         "semestre": {
           "rec_curr": 44991,
           "rec_prev": 49404,
-          "rec_ie": 91.1,
+          "rec_ie": 96.2,
           "units_curr": 541393,
           "units_prev": 496042,
-          "units_ie": 109.1,
+          "units_ie": 102.1,
           "int_curr": 553415,
           "int_prev": 514248,
           "int_ie": 107.6
@@ -1268,10 +1268,10 @@
         "mat": {
           "rec_curr": 88241,
           "rec_prev": 102575,
-          "rec_ie": 86.0,
+          "rec_ie": 95.8,
           "units_curr": 1067856,
           "units_prev": 968230,
-          "units_ie": 110.3,
+          "units_ie": 102.2,
           "int_curr": 1059091,
           "int_prev": 981604,
           "int_ie": 107.9
@@ -1287,10 +1287,10 @@
         "mensual": {
           "rec_curr": 981,
           "rec_prev": 1133,
-          "rec_ie": 86.6,
+          "rec_ie": 78.1,
           "units_curr": 69271,
           "units_prev": 70345,
-          "units_ie": 98.5,
+          "units_ie": 99.1,
           "int_curr": 54456,
           "int_prev": 0,
           "int_ie": null
@@ -1298,10 +1298,10 @@
         "ytd": {
           "rec_curr": 2917,
           "rec_prev": 3543,
-          "rec_ie": 82.3,
+          "rec_ie": 78.2,
           "units_curr": 202202,
           "units_prev": 202409,
-          "units_ie": 99.9,
+          "units_ie": 102.9,
           "int_curr": 205227,
           "int_prev": 0,
           "int_ie": null
@@ -1309,10 +1309,10 @@
         "trimestre": {
           "rec_curr": 2917,
           "rec_prev": 3543,
-          "rec_ie": 82.3,
+          "rec_ie": 78.2,
           "units_curr": 202202,
           "units_prev": 202409,
-          "units_ie": 99.9,
+          "units_ie": 102.9,
           "int_curr": 205227,
           "int_prev": 0,
           "int_ie": null
@@ -1320,10 +1320,10 @@
         "semestre": {
           "rec_curr": 5946,
           "rec_prev": 7227,
-          "rec_ie": 82.3,
+          "rec_ie": 79.0,
           "units_curr": 386978,
           "units_prev": 415579,
-          "units_ie": 93.1,
+          "units_ie": 98.4,
           "int_curr": 295635,
           "int_prev": 0,
           "int_ie": null
@@ -1331,10 +1331,10 @@
         "mat": {
           "rec_curr": 12409,
           "rec_prev": 14837,
-          "rec_ie": 83.6,
+          "rec_ie": 79.8,
           "units_curr": 781773,
           "units_prev": 811721,
-          "units_ie": 96.3,
+          "units_ie": 97.5,
           "int_curr": 294915,
           "int_prev": 0,
           "int_ie": null
@@ -1350,10 +1350,10 @@
         "mensual": {
           "rec_curr": 8947,
           "rec_prev": 10262,
-          "rec_ie": 87.2,
+          "rec_ie": 93.2,
           "units_curr": 56591,
           "units_prev": 63506,
-          "units_ie": 89.1,
+          "units_ie": 90.3,
           "int_curr": 54233,
           "int_prev": 64710,
           "int_ie": 83.8
@@ -1361,10 +1361,10 @@
         "ytd": {
           "rec_curr": 25913,
           "rec_prev": 31772,
-          "rec_ie": 81.6,
+          "rec_ie": 91.7,
           "units_curr": 163392,
           "units_prev": 180220,
-          "units_ie": 90.7,
+          "units_ie": 92.1,
           "int_curr": 166567,
           "int_prev": 183440,
           "int_ie": 90.8
@@ -1372,10 +1372,10 @@
         "trimestre": {
           "rec_curr": 25913,
           "rec_prev": 31772,
-          "rec_ie": 81.6,
+          "rec_ie": 91.7,
           "units_curr": 163392,
           "units_prev": 180220,
-          "units_ie": 90.7,
+          "units_ie": 92.1,
           "int_curr": 166567,
           "int_prev": 183440,
           "int_ie": 90.8
@@ -1383,10 +1383,10 @@
         "semestre": {
           "rec_curr": 52247,
           "rec_prev": 66827,
-          "rec_ie": 78.2,
+          "rec_ie": 92.4,
           "units_curr": 335930,
           "units_prev": 371394,
-          "units_ie": 90.5,
+          "units_ie": 94.9,
           "int_curr": 319202,
           "int_prev": 356768,
           "int_ie": 89.5
@@ -1394,10 +1394,10 @@
         "mat": {
           "rec_curr": 110855,
           "rec_prev": 137673,
-          "rec_ie": 80.5,
+          "rec_ie": 94.9,
           "units_curr": 700516,
           "units_prev": 803401,
-          "units_ie": 87.2,
+          "units_ie": 93.7,
           "int_curr": 661704,
           "int_prev": 768044,
           "int_ie": 86.2
@@ -1413,10 +1413,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 5156,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 58606,
           "units_prev": 43269,
-          "units_ie": 135.4,
+          "units_ie": 99.0,
           "int_curr": 54397,
           "int_prev": 40319,
           "int_ie": 134.9
@@ -1424,10 +1424,10 @@
         "ytd": {
           "rec_curr": 11709,
           "rec_prev": 16060,
-          "rec_ie": 72.9,
+          "rec_ie": 96.1,
           "units_curr": 167046,
           "units_prev": 137940,
-          "units_ie": 121.1,
+          "units_ie": 95.5,
           "int_curr": 165536,
           "int_prev": 146378,
           "int_ie": 113.1
@@ -1435,10 +1435,10 @@
         "trimestre": {
           "rec_curr": 11709,
           "rec_prev": 16060,
-          "rec_ie": 72.9,
+          "rec_ie": 96.1,
           "units_curr": 167046,
           "units_prev": 137940,
-          "units_ie": 121.1,
+          "units_ie": 95.5,
           "int_curr": 165536,
           "int_prev": 146378,
           "int_ie": 113.1
@@ -1446,10 +1446,10 @@
         "semestre": {
           "rec_curr": 27792,
           "rec_prev": 31987,
-          "rec_ie": 86.9,
+          "rec_ie": 95.0,
           "units_curr": 324268,
           "units_prev": 265082,
-          "units_ie": 122.3,
+          "units_ie": 97.7,
           "int_curr": 305447,
           "int_prev": 281059,
           "int_ie": 108.7
@@ -1460,7 +1460,7 @@
           "rec_ie": 93.5,
           "units_curr": 640759,
           "units_prev": 515139,
-          "units_ie": 124.4,
+          "units_ie": 97.4,
           "int_curr": 598692,
           "int_prev": 538976,
           "int_ie": 111.1
@@ -1476,10 +1476,10 @@
         "mensual": {
           "rec_curr": 11696,
           "rec_prev": 12961,
-          "rec_ie": 90.2,
+          "rec_ie": 81.1,
           "units_curr": 43667,
           "units_prev": 43276,
-          "units_ie": 100.9,
+          "units_ie": 87.4,
           "int_curr": 44658,
           "int_prev": 41558,
           "int_ie": 107.5
@@ -1487,10 +1487,10 @@
         "ytd": {
           "rec_curr": 34632,
           "rec_prev": 39464,
-          "rec_ie": 87.8,
+          "rec_ie": 81.6,
           "units_curr": 123387,
           "units_prev": 126883,
-          "units_ie": 97.2,
+          "units_ie": 86.0,
           "int_curr": 125263,
           "int_prev": 127271,
           "int_ie": 98.4
@@ -1498,10 +1498,10 @@
         "trimestre": {
           "rec_curr": 34632,
           "rec_prev": 39464,
-          "rec_ie": 87.8,
+          "rec_ie": 81.6,
           "units_curr": 123387,
           "units_prev": 126883,
-          "units_ie": 97.2,
+          "units_ie": 86.0,
           "int_curr": 125263,
           "int_prev": 127271,
           "int_ie": 98.4
@@ -1509,10 +1509,10 @@
         "semestre": {
           "rec_curr": 70390,
           "rec_prev": 82993,
-          "rec_ie": 84.8,
+          "rec_ie": 81.6,
           "units_curr": 256518,
           "units_prev": 271281,
-          "units_ie": 94.6,
+          "units_ie": 84.9,
           "int_curr": 246008,
           "int_prev": 267075,
           "int_ie": 92.1
@@ -1520,10 +1520,10 @@
         "mat": {
           "rec_curr": 144950,
           "rec_prev": 172961,
-          "rec_ie": 83.8,
+          "rec_ie": 80.7,
           "units_curr": 530408,
           "units_prev": 571081,
-          "units_ie": 92.9,
+          "units_ie": 84.7,
           "int_curr": 510927,
           "int_prev": 562564,
           "int_ie": 90.8
@@ -1538,55 +1538,55 @@
       "periods": {
         "mensual": {
           "rec_curr": 6312,
-          "rec_prev": 7032,
-          "rec_ie": 89.8,
+          "rec_prev": 6985,
+          "rec_ie": 95.7,
           "units_curr": 43989,
           "units_prev": 44048,
-          "units_ie": 99.9,
+          "units_ie": 96.9,
           "int_curr": 38719,
           "int_prev": 43337,
           "int_ie": 89.3
         },
         "ytd": {
           "rec_curr": 18243,
-          "rec_prev": 21883,
-          "rec_ie": 83.4,
+          "rec_prev": 21708,
+          "rec_ie": 94.2,
           "units_curr": 134500,
           "units_prev": 130042,
-          "units_ie": 103.4,
+          "units_ie": 96.0,
           "int_curr": 158168,
           "int_prev": 138336,
           "int_ie": 114.3
         },
         "trimestre": {
           "rec_curr": 18243,
-          "rec_prev": 21883,
-          "rec_ie": 83.4,
+          "rec_prev": 21708,
+          "rec_ie": 94.2,
           "units_curr": 134500,
           "units_prev": 130042,
-          "units_ie": 103.4,
+          "units_ie": 96.0,
           "int_curr": 158168,
           "int_prev": 138336,
           "int_ie": 114.3
         },
         "semestre": {
-          "rec_curr": 35287,
-          "rec_prev": 45916,
-          "rec_ie": 76.9,
+          "rec_curr": 35244,
+          "rec_prev": 21708,
+          "rec_ie": 92.6,
           "units_curr": 246967,
           "units_prev": 271439,
-          "units_ie": 91.0,
+          "units_ie": 92.2,
           "int_curr": 259721,
           "int_prev": 276868,
           "int_ie": 93.8
         },
         "mat": {
-          "rec_curr": 76958,
-          "rec_prev": 94881,
-          "rec_ie": 81.1,
+          "rec_curr": 76751,
+          "rec_prev": 21708,
+          "rec_ie": 96.4,
           "units_curr": 523569,
           "units_prev": 551360,
-          "units_ie": 95.0,
+          "units_ie": 96.8,
           "int_curr": 524346,
           "int_prev": 570949,
           "int_ie": 91.8
@@ -1602,10 +1602,10 @@
         "mensual": {
           "rec_curr": 8667,
           "rec_prev": 10210,
-          "rec_ie": 84.9,
+          "rec_ie": 96.9,
           "units_curr": 49125,
           "units_prev": 58329,
-          "units_ie": 84.2,
+          "units_ie": 91.8,
           "int_curr": 44187,
           "int_prev": 51237,
           "int_ie": 86.2
@@ -1613,10 +1613,10 @@
         "ytd": {
           "rec_curr": 22556,
           "rec_prev": 25529,
-          "rec_ie": 88.4,
+          "rec_ie": 99.0,
           "units_curr": 109682,
           "units_prev": 124299,
-          "units_ie": 88.2,
+          "units_ie": 89.7,
           "int_curr": 90203,
           "int_prev": 108481,
           "int_ie": 83.2
@@ -1624,10 +1624,10 @@
         "trimestre": {
           "rec_curr": 22556,
           "rec_prev": 25529,
-          "rec_ie": 88.4,
+          "rec_ie": 99.0,
           "units_curr": 109682,
           "units_prev": 124299,
-          "units_ie": 88.2,
+          "units_ie": 89.7,
           "int_curr": 90203,
           "int_prev": 108481,
           "int_ie": 83.2
@@ -1635,10 +1635,10 @@
         "semestre": {
           "rec_curr": 54761,
           "rec_prev": 25529,
-          "rec_ie": 214.5,
+          "rec_ie": 103.0,
           "units_curr": 274773,
           "units_prev": 287457,
-          "units_ie": 95.6,
+          "units_ie": 91.7,
           "int_curr": 231055,
           "int_prev": 246065,
           "int_ie": 93.9
@@ -1646,10 +1646,10 @@
         "mat": {
           "rec_curr": 134293,
           "rec_prev": 25529,
-          "rec_ie": 526.0,
+          "rec_ie": 104.5,
           "units_curr": 766238,
           "units_prev": 792421,
-          "units_ie": 96.7,
+          "units_ie": 93.7,
           "int_curr": 716536,
           "int_prev": 755159,
           "int_ie": 94.9
@@ -1665,10 +1665,10 @@
         "mensual": {
           "rec_curr": 9647,
           "rec_prev": 9334,
-          "rec_ie": 103.4,
+          "rec_ie": 108.2,
           "units_curr": 41266,
           "units_prev": 34823,
-          "units_ie": 118.5,
+          "units_ie": 105.3,
           "int_curr": 52674,
           "int_prev": 41125,
           "int_ie": 128.1
@@ -1676,10 +1676,10 @@
         "ytd": {
           "rec_curr": 25850,
           "rec_prev": 25635,
-          "rec_ie": 100.8,
+          "rec_ie": 107.7,
           "units_curr": 99620,
           "units_prev": 85480,
-          "units_ie": 116.5,
+          "units_ie": 106.6,
           "int_curr": 116023,
           "int_prev": 105809,
           "int_ie": 109.7
@@ -1687,10 +1687,10 @@
         "trimestre": {
           "rec_curr": 25850,
           "rec_prev": 25635,
-          "rec_ie": 100.8,
+          "rec_ie": 107.7,
           "units_curr": 99620,
           "units_prev": 85480,
-          "units_ie": 116.5,
+          "units_ie": 106.6,
           "int_curr": 116023,
           "int_prev": 105809,
           "int_ie": 109.7
@@ -1698,10 +1698,10 @@
         "semestre": {
           "rec_curr": 59330,
           "rec_prev": 25635,
-          "rec_ie": 231.4,
+          "rec_ie": 110.7,
           "units_curr": 225790,
           "units_prev": 189570,
-          "units_ie": 119.1,
+          "units_ie": 107.4,
           "int_curr": 250778,
           "int_prev": 217052,
           "int_ie": 115.5
@@ -1709,10 +1709,10 @@
         "mat": {
           "rec_curr": 131326,
           "rec_prev": 25635,
-          "rec_ie": 512.3,
+          "rec_ie": 108.4,
           "units_curr": 538804,
           "units_prev": 456103,
-          "units_ie": 118.1,
+          "units_ie": 108.8,
           "int_curr": 635364,
           "int_prev": 547033,
           "int_ie": 116.1
@@ -1728,10 +1728,10 @@
         "mensual": {
           "rec_curr": 4783,
           "rec_prev": 5667,
-          "rec_ie": 84.4,
+          "rec_ie": 85.1,
           "units_curr": 29268,
           "units_prev": 27124,
-          "units_ie": 107.9,
+          "units_ie": 100.3,
           "int_curr": 29528,
           "int_prev": 28035,
           "int_ie": 105.3
@@ -1739,10 +1739,10 @@
         "ytd": {
           "rec_curr": 14053,
           "rec_prev": 17468,
-          "rec_ie": 80.4,
+          "rec_ie": 84.4,
           "units_curr": 82749,
           "units_prev": 82030,
-          "units_ie": 100.9,
+          "units_ie": 94.5,
           "int_curr": 99923,
           "int_prev": 86934,
           "int_ie": 114.9
@@ -1750,10 +1750,10 @@
         "trimestre": {
           "rec_curr": 14053,
           "rec_prev": 17468,
-          "rec_ie": 80.4,
+          "rec_ie": 84.4,
           "units_curr": 82749,
           "units_prev": 82030,
-          "units_ie": 100.9,
+          "units_ie": 94.5,
           "int_curr": 99923,
           "int_prev": 86934,
           "int_ie": 114.9
@@ -1761,10 +1761,10 @@
         "semestre": {
           "rec_curr": 29115,
           "rec_prev": 37314,
-          "rec_ie": 78.0,
+          "rec_ie": 85.0,
           "units_curr": 165853,
           "units_prev": 174501,
-          "units_ie": 95.0,
+          "units_ie": 92.2,
           "int_curr": 161858,
           "int_prev": 163275,
           "int_ie": 99.1
@@ -1772,10 +1772,10 @@
         "mat": {
           "rec_curr": 61638,
           "rec_prev": 79804,
-          "rec_ie": 77.2,
+          "rec_ie": 84.0,
           "units_curr": 345401,
           "units_prev": 425204,
-          "units_ie": 81.2,
+          "units_ie": 82.9,
           "int_curr": 352438,
           "int_prev": 173145,
           "int_ie": 203.6
@@ -1791,10 +1791,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 3201,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 28224,
           "units_prev": 28769,
-          "units_ie": 98.1,
+          "units_ie": 100.4,
           "int_curr": 29509,
           "int_prev": 25524,
           "int_ie": 115.6
@@ -1802,10 +1802,10 @@
         "ytd": {
           "rec_curr": 5822,
           "rec_prev": 10533,
-          "rec_ie": 55.3,
+          "rec_ie": 99.7,
           "units_curr": 82062,
           "units_prev": 89492,
-          "units_ie": 91.7,
+          "units_ie": 97.6,
           "int_curr": 80616,
           "int_prev": 87239,
           "int_ie": 92.4
@@ -1813,10 +1813,10 @@
         "trimestre": {
           "rec_curr": 5822,
           "rec_prev": 10533,
-          "rec_ie": 55.3,
+          "rec_ie": 99.7,
           "units_curr": 82062,
           "units_prev": 89492,
-          "units_ie": 91.7,
+          "units_ie": 97.6,
           "int_curr": 80616,
           "int_prev": 87239,
           "int_ie": 92.4
@@ -1824,10 +1824,10 @@
         "semestre": {
           "rec_curr": 14269,
           "rec_prev": 22320,
-          "rec_ie": 63.9,
+          "rec_ie": 98.6,
           "units_curr": 163853,
           "units_prev": 177144,
-          "units_ie": 92.5,
+          "units_ie": 99.7,
           "int_curr": 154785,
           "int_prev": 168397,
           "int_ie": 91.9
@@ -1835,10 +1835,10 @@
         "mat": {
           "rec_curr": 32098,
           "rec_prev": 47901,
-          "rec_ie": 67.0,
+          "rec_ie": 97.1,
           "units_curr": 346728,
           "units_prev": 363834,
-          "units_ie": 95.3,
+          "units_ie": 101.2,
           "int_curr": 325291,
           "int_prev": 343184,
           "int_ie": 94.8
@@ -1853,55 +1853,55 @@
       "periods": {
         "mensual": {
           "rec_curr": 2828,
-          "rec_prev": 3012,
-          "rec_ie": 93.9,
+          "rec_prev": 2986,
+          "rec_ie": 90.6,
           "units_curr": 25684,
           "units_prev": 25552,
-          "units_ie": 100.5,
+          "units_ie": 101.6,
           "int_curr": 26840,
           "int_prev": 23449,
           "int_ie": 114.5
         },
         "ytd": {
           "rec_curr": 8312,
-          "rec_prev": 9290,
-          "rec_ie": 89.5,
+          "rec_prev": 9215,
+          "rec_ie": 90.8,
           "units_curr": 74983,
           "units_prev": 75716,
-          "units_ie": 99.0,
+          "units_ie": 97.9,
           "int_curr": 80367,
           "int_prev": 76321,
           "int_ie": 105.3
         },
         "trimestre": {
           "rec_curr": 8312,
-          "rec_prev": 9290,
-          "rec_ie": 89.5,
+          "rec_prev": 9215,
+          "rec_ie": 90.8,
           "units_curr": 74983,
           "units_prev": 75716,
-          "units_ie": 99.0,
+          "units_ie": 97.9,
           "int_curr": 80367,
           "int_prev": 76321,
           "int_ie": 105.3
         },
         "semestre": {
-          "rec_curr": 16527,
-          "rec_prev": 18958,
-          "rec_ie": 87.2,
+          "rec_curr": 16558,
+          "rec_prev": 9215,
+          "rec_ie": 92.1,
           "units_curr": 153424,
           "units_prev": 154956,
-          "units_ie": 99.0,
+          "units_ie": 99.6,
           "int_curr": 151377,
           "int_prev": 150625,
           "int_ie": 100.5
         },
         "mat": {
-          "rec_curr": 34051,
-          "rec_prev": 38114,
-          "rec_ie": 89.3,
+          "rec_curr": 33950,
+          "rec_prev": 9215,
+          "rec_ie": 94.2,
           "units_curr": 309294,
           "units_prev": 318370,
-          "units_ie": 97.1,
+          "units_ie": 98.0,
           "int_curr": 301547,
           "int_prev": 308974,
           "int_ie": 97.6
@@ -1917,10 +1917,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 4115,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 26082,
           "units_prev": 23500,
-          "units_ie": 111.0,
+          "units_ie": 98.6,
           "int_curr": 27033,
           "int_prev": 22240,
           "int_ie": 121.6
@@ -1928,10 +1928,10 @@
         "ytd": {
           "rec_curr": 8477,
           "rec_prev": 12450,
-          "rec_ie": 68.1,
+          "rec_ie": 104.4,
           "units_curr": 72571,
           "units_prev": 67065,
-          "units_ie": 108.2,
+          "units_ie": 103.2,
           "int_curr": 74104,
           "int_prev": 67645,
           "int_ie": 109.5
@@ -1939,10 +1939,10 @@
         "trimestre": {
           "rec_curr": 8477,
           "rec_prev": 12450,
-          "rec_ie": 68.1,
+          "rec_ie": 104.4,
           "units_curr": 72571,
           "units_prev": 67065,
-          "units_ie": 108.2,
+          "units_ie": 103.2,
           "int_curr": 74104,
           "int_prev": 67645,
           "int_ie": 109.5
@@ -1950,10 +1950,10 @@
         "semestre": {
           "rec_curr": 20974,
           "rec_prev": 25055,
-          "rec_ie": 83.7,
+          "rec_ie": 105.4,
           "units_curr": 142812,
           "units_prev": 133577,
-          "units_ie": 106.9,
+          "units_ie": 105.0,
           "int_curr": 137413,
           "int_prev": 129559,
           "int_ie": 106.1
@@ -1961,10 +1961,10 @@
         "mat": {
           "rec_curr": 45975,
           "rec_prev": 50032,
-          "rec_ie": 91.9,
+          "rec_ie": 107.5,
           "units_curr": 284824,
           "units_prev": 268478,
-          "units_ie": 106.1,
+          "units_ie": 106.8,
           "int_curr": 274220,
           "int_prev": 255154,
           "int_ie": 107.5
@@ -1980,10 +1980,10 @@
         "mensual": {
           "rec_curr": 7152,
           "rec_prev": 5938,
-          "rec_ie": 120.4,
+          "rec_ie": 111.6,
           "units_curr": 21916,
           "units_prev": 16851,
-          "units_ie": 130.1,
+          "units_ie": 112.6,
           "int_curr": 41406,
           "int_prev": 28077,
           "int_ie": 147.5
@@ -1991,10 +1991,10 @@
         "ytd": {
           "rec_curr": 20784,
           "rec_prev": 17740,
-          "rec_ie": 117.2,
+          "rec_ie": 112.5,
           "units_curr": 58991,
           "units_prev": 46621,
-          "units_ie": 126.5,
+          "units_ie": 112.5,
           "int_curr": 108821,
           "int_prev": 98250,
           "int_ie": 110.8
@@ -2002,10 +2002,10 @@
         "trimestre": {
           "rec_curr": 20784,
           "rec_prev": 17740,
-          "rec_ie": 117.2,
+          "rec_ie": 112.5,
           "units_curr": 58991,
           "units_prev": 46621,
-          "units_ie": 126.5,
+          "units_ie": 112.5,
           "int_curr": 108821,
           "int_prev": 98250,
           "int_ie": 110.8
@@ -2013,10 +2013,10 @@
         "semestre": {
           "rec_curr": 44387,
           "rec_prev": 17740,
-          "rec_ie": 250.2,
+          "rec_ie": 116.0,
           "units_curr": 132074,
           "units_prev": 104302,
-          "units_ie": 126.6,
+          "units_ie": 117.7,
           "int_curr": 239928,
           "int_prev": 199329,
           "int_ie": 120.4
@@ -2024,10 +2024,10 @@
         "mat": {
           "rec_curr": 89440,
           "rec_prev": 17740,
-          "rec_ie": 504.2,
+          "rec_ie": 114.9,
           "units_curr": 276665,
           "units_prev": 217854,
-          "units_ie": 127.0,
+          "units_ie": 120.7,
           "int_curr": 501270,
           "int_prev": 404102,
           "int_ie": 124.0
@@ -2043,10 +2043,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 3931,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 24104,
           "units_prev": 21968,
-          "units_ie": 109.7,
+          "units_ie": 100.9,
           "int_curr": 24224,
           "int_prev": 21038,
           "int_ie": 115.1
@@ -2054,10 +2054,10 @@
         "ytd": {
           "rec_curr": 7263,
           "rec_prev": 11879,
-          "rec_ie": 61.1,
+          "rec_ie": 97.5,
           "units_curr": 69036,
           "units_prev": 65973,
-          "units_ie": 104.6,
+          "units_ie": 98.7,
           "int_curr": 70954,
           "int_prev": 69138,
           "int_ie": 102.6
@@ -2065,10 +2065,10 @@
         "trimestre": {
           "rec_curr": 7263,
           "rec_prev": 11879,
-          "rec_ie": 61.1,
+          "rec_ie": 97.5,
           "units_curr": 69036,
           "units_prev": 65973,
-          "units_ie": 104.6,
+          "units_ie": 98.7,
           "int_curr": 70954,
           "int_prev": 69138,
           "int_ie": 102.6
@@ -2076,10 +2076,10 @@
         "semestre": {
           "rec_curr": 18515,
           "rec_prev": 24546,
-          "rec_ie": 75.4,
+          "rec_ie": 96.5,
           "units_curr": 144128,
           "units_prev": 137010,
-          "units_ie": 105.2,
+          "units_ie": 101.8,
           "int_curr": 139101,
           "int_prev": 139377,
           "int_ie": 99.8
@@ -2087,10 +2087,10 @@
         "mat": {
           "rec_curr": 41263,
           "rec_prev": 52731,
-          "rec_ie": 78.3,
+          "rec_ie": 93.9,
           "units_curr": 295392,
           "units_prev": 295122,
-          "units_ie": 100.1,
+          "units_ie": 101.1,
           "int_curr": 289481,
           "int_prev": 299199,
           "int_ie": 96.8
@@ -2106,10 +2106,10 @@
         "mensual": {
           "rec_curr": 1480,
           "rec_prev": 1444,
-          "rec_ie": 102.5,
+          "rec_ie": 103.9,
           "units_curr": 23068,
           "units_prev": 25558,
-          "units_ie": 90.3,
+          "units_ie": 101.8,
           "int_curr": 24074,
           "int_prev": 25708,
           "int_ie": 93.6
@@ -2117,10 +2117,10 @@
         "ytd": {
           "rec_curr": 4199,
           "rec_prev": 4388,
-          "rec_ie": 95.7,
+          "rec_ie": 106.3,
           "units_curr": 59584,
           "units_prev": 62257,
-          "units_ie": 95.7,
+          "units_ie": 101.8,
           "int_curr": 60110,
           "int_prev": 61909,
           "int_ie": 97.1
@@ -2128,10 +2128,10 @@
         "trimestre": {
           "rec_curr": 4199,
           "rec_prev": 4388,
-          "rec_ie": 95.7,
+          "rec_ie": 106.3,
           "units_curr": 59584,
           "units_prev": 62257,
-          "units_ie": 95.7,
+          "units_ie": 101.8,
           "int_curr": 60110,
           "int_prev": 61909,
           "int_ie": 97.1
@@ -2139,10 +2139,10 @@
         "semestre": {
           "rec_curr": 8743,
           "rec_prev": 9847,
-          "rec_ie": 88.8,
+          "rec_ie": 105.9,
           "units_curr": 125173,
           "units_prev": 128024,
-          "units_ie": 97.8,
+          "units_ie": 102.5,
           "int_curr": 118429,
           "int_prev": 113245,
           "int_ie": 104.6
@@ -2150,10 +2150,10 @@
         "mat": {
           "rec_curr": 20374,
           "rec_prev": 22785,
-          "rec_ie": 89.4,
+          "rec_ie": 104.2,
           "units_curr": 315591,
           "units_prev": 366338,
-          "units_ie": 86.1,
+          "units_ie": 102.2,
           "int_curr": 310996,
           "int_prev": 351781,
           "int_ie": 88.4
@@ -2169,10 +2169,10 @@
         "mensual": {
           "rec_curr": 3842,
           "rec_prev": 3023,
-          "rec_ie": 127.1,
+          "rec_ie": 107.8,
           "units_curr": 18050,
           "units_prev": 15730,
-          "units_ie": 114.7,
+          "units_ie": 99.9,
           "int_curr": 16786,
           "int_prev": 14295,
           "int_ie": 117.4
@@ -2180,10 +2180,10 @@
         "ytd": {
           "rec_curr": 10901,
           "rec_prev": 9268,
-          "rec_ie": 117.6,
+          "rec_ie": 105.2,
           "units_curr": 50593,
           "units_prev": 45021,
-          "units_ie": 112.4,
+          "units_ie": 98.7,
           "int_curr": 50504,
           "int_prev": 38891,
           "int_ie": 129.9
@@ -2191,10 +2191,10 @@
         "trimestre": {
           "rec_curr": 10901,
           "rec_prev": 9268,
-          "rec_ie": 117.6,
+          "rec_ie": 105.2,
           "units_curr": 50593,
           "units_prev": 45021,
-          "units_ie": 112.4,
+          "units_ie": 98.7,
           "int_curr": 50504,
           "int_prev": 38891,
           "int_ie": 129.9
@@ -2202,10 +2202,10 @@
         "semestre": {
           "rec_curr": 22335,
           "rec_prev": 19858,
-          "rec_ie": 112.5,
+          "rec_ie": 104.6,
           "units_curr": 102717,
           "units_prev": 97425,
-          "units_ie": 105.4,
+          "units_ie": 98.1,
           "int_curr": 94464,
           "int_prev": 84048,
           "int_ie": 112.4
@@ -2213,10 +2213,10 @@
         "mat": {
           "rec_curr": 44124,
           "rec_prev": 40177,
-          "rec_ie": 109.8,
+          "rec_ie": 105.0,
           "units_curr": 205626,
           "units_prev": 204883,
-          "units_ie": 100.4,
+          "units_ie": 98.4,
           "int_curr": 195964,
           "int_prev": 181858,
           "int_ie": 107.8
@@ -2232,10 +2232,10 @@
         "mensual": {
           "rec_curr": 3074,
           "rec_prev": 2934,
-          "rec_ie": 104.8,
+          "rec_ie": 95.1,
           "units_curr": 19389,
           "units_prev": 17260,
-          "units_ie": 112.3,
+          "units_ie": 100.8,
           "int_curr": 21323,
           "int_prev": 14669,
           "int_ie": 145.4
@@ -2243,10 +2243,10 @@
         "ytd": {
           "rec_curr": 8649,
           "rec_prev": 9021,
-          "rec_ie": 95.9,
+          "rec_ie": 89.6,
           "units_curr": 52426,
           "units_prev": 52504,
-          "units_ie": 99.9,
+          "units_ie": 93.6,
           "int_curr": 57476,
           "int_prev": 53396,
           "int_ie": 107.6
@@ -2254,10 +2254,10 @@
         "trimestre": {
           "rec_curr": 8649,
           "rec_prev": 9021,
-          "rec_ie": 95.9,
+          "rec_ie": 89.6,
           "units_curr": 52426,
           "units_prev": 52504,
-          "units_ie": 99.9,
+          "units_ie": 93.6,
           "int_curr": 57476,
           "int_prev": 53396,
           "int_ie": 107.6
@@ -2265,10 +2265,10 @@
         "semestre": {
           "rec_curr": 17614,
           "rec_prev": 17598,
-          "rec_ie": 100.1,
+          "rec_ie": 92.8,
           "units_curr": 106525,
           "units_prev": 103081,
-          "units_ie": 103.3,
+          "units_ie": 97.0,
           "int_curr": 101707,
           "int_prev": 100027,
           "int_ie": 101.7
@@ -2276,10 +2276,10 @@
         "mat": {
           "rec_curr": 35280,
           "rec_prev": 32491,
-          "rec_ie": 108.6,
+          "rec_ie": 95.5,
           "units_curr": 216069,
           "units_prev": 195609,
-          "units_ie": 110.5,
+          "units_ie": 99.2,
           "int_curr": 208707,
           "int_prev": 187617,
           "int_ie": 111.2
@@ -2295,10 +2295,10 @@
         "mensual": {
           "rec_curr": 874,
           "rec_prev": 1021,
-          "rec_ie": 85.6,
+          "rec_ie": 95.7,
           "units_curr": 18991,
           "units_prev": 19593,
-          "units_ie": 96.9,
+          "units_ie": 102.8,
           "int_curr": 15638,
           "int_prev": 0,
           "int_ie": null
@@ -2306,10 +2306,10 @@
         "ytd": {
           "rec_curr": 2619,
           "rec_prev": 3109,
-          "rec_ie": 84.2,
+          "rec_ie": 94.7,
           "units_curr": 55877,
           "units_prev": 54263,
-          "units_ie": 103.0,
+          "units_ie": 100.3,
           "int_curr": 53910,
           "int_prev": 0,
           "int_ie": null
@@ -2317,10 +2317,10 @@
         "trimestre": {
           "rec_curr": 2619,
           "rec_prev": 3109,
-          "rec_ie": 84.2,
+          "rec_ie": 94.7,
           "units_curr": 55877,
           "units_prev": 54263,
-          "units_ie": 103.0,
+          "units_ie": 100.3,
           "int_curr": 53910,
           "int_prev": 0,
           "int_ie": null
@@ -2328,10 +2328,10 @@
         "semestre": {
           "rec_curr": 5602,
           "rec_prev": 3109,
-          "rec_ie": 180.2,
+          "rec_ie": 92.4,
           "units_curr": 111897,
           "units_prev": 116360,
-          "units_ie": 96.2,
+          "units_ie": 97.8,
           "int_curr": 72807,
           "int_prev": 0,
           "int_ie": null
@@ -2339,10 +2339,10 @@
         "mat": {
           "rec_curr": 12243,
           "rec_prev": 3109,
-          "rec_ie": 393.8,
+          "rec_ie": 88.0,
           "units_curr": 236782,
           "units_prev": 246077,
-          "units_ie": 96.2,
+          "units_ie": 100.3,
           "int_curr": 73312,
           "int_prev": 0,
           "int_ie": null
@@ -2358,10 +2358,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 2070,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 17640,
           "units_prev": 17104,
-          "units_ie": 103.1,
+          "units_ie": 103.0,
           "int_curr": 15065,
           "int_prev": 14173,
           "int_ie": 106.3
@@ -2369,10 +2369,10 @@
         "ytd": {
           "rec_curr": 3981,
           "rec_prev": 6670,
-          "rec_ie": 59.7,
+          "rec_ie": 103.1,
           "units_curr": 52698,
           "units_prev": 53380,
-          "units_ie": 98.7,
+          "units_ie": 100.9,
           "int_curr": 48613,
           "int_prev": 49061,
           "int_ie": 99.1
@@ -2380,10 +2380,10 @@
         "trimestre": {
           "rec_curr": 3981,
           "rec_prev": 6670,
-          "rec_ie": 59.7,
+          "rec_ie": 103.1,
           "units_curr": 52698,
           "units_prev": 53380,
-          "units_ie": 98.7,
+          "units_ie": 100.9,
           "int_curr": 48613,
           "int_prev": 49061,
           "int_ie": 99.1
@@ -2391,10 +2391,10 @@
         "semestre": {
           "rec_curr": 9643,
           "rec_prev": 14139,
-          "rec_ie": 68.2,
+          "rec_ie": 101.3,
           "units_curr": 103219,
           "units_prev": 104128,
-          "units_ie": 99.1,
+          "units_ie": 102.5,
           "int_curr": 92511,
           "int_prev": 96032,
           "int_ie": 96.3
@@ -2402,10 +2402,10 @@
         "mat": {
           "rec_curr": 21111,
           "rec_prev": 30305,
-          "rec_ie": 69.7,
+          "rec_ie": 98.6,
           "units_curr": 214643,
           "units_prev": 215652,
-          "units_ie": 99.5,
+          "units_ie": 101.7,
           "int_curr": 192957,
           "int_prev": 200580,
           "int_ie": 96.2
@@ -2421,10 +2421,10 @@
         "mensual": {
           "rec_curr": 3916,
           "rec_prev": 3355,
-          "rec_ie": 116.7,
+          "rec_ie": 116.9,
           "units_curr": 16672,
           "units_prev": 12751,
-          "units_ie": 130.8,
+          "units_ie": 123.5,
           "int_curr": 15626,
           "int_prev": 10839,
           "int_ie": 144.2
@@ -2432,10 +2432,10 @@
         "ytd": {
           "rec_curr": 11499,
           "rec_prev": 9632,
-          "rec_ie": 119.4,
+          "rec_ie": 123.1,
           "units_curr": 43748,
           "units_prev": 34686,
-          "units_ie": 126.1,
+          "units_ie": 117.1,
           "int_curr": 41623,
           "int_prev": 30621,
           "int_ie": 135.9
@@ -2443,10 +2443,10 @@
         "trimestre": {
           "rec_curr": 11499,
           "rec_prev": 9632,
-          "rec_ie": 119.4,
+          "rec_ie": 123.1,
           "units_curr": 43748,
           "units_prev": 34686,
-          "units_ie": 126.1,
+          "units_ie": 117.1,
           "int_curr": 41623,
           "int_prev": 30621,
           "int_ie": 135.9
@@ -2454,10 +2454,10 @@
         "semestre": {
           "rec_curr": 24750,
           "rec_prev": 9632,
-          "rec_ie": 257.0,
+          "rec_ie": 122.4,
           "units_curr": 98032,
           "units_prev": 75518,
-          "units_ie": 129.8,
+          "units_ie": 115.0,
           "int_curr": 94054,
           "int_prev": 66711,
           "int_ie": 141.0
@@ -2465,10 +2465,10 @@
         "mat": {
           "rec_curr": 47674,
           "rec_prev": 9632,
-          "rec_ie": 495.0,
+          "rec_ie": 117.0,
           "units_curr": 198603,
           "units_prev": 153463,
-          "units_ie": 129.4,
+          "units_ie": 117.4,
           "int_curr": 196347,
           "int_prev": 141718,
           "int_ie": 138.5
@@ -2484,10 +2484,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 1770,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 16578,
           "units_prev": 14733,
-          "units_ie": 112.5,
+          "units_ie": 115.6,
           "int_curr": 14886,
           "int_prev": 12909,
           "int_ie": 115.3
@@ -2495,10 +2495,10 @@
         "ytd": {
           "rec_curr": 3828,
           "rec_prev": 5681,
-          "rec_ie": 67.4,
+          "rec_ie": 112.7,
           "units_curr": 48723,
           "units_prev": 43830,
-          "units_ie": 111.2,
+          "units_ie": 114.5,
           "int_curr": 45850,
           "int_prev": 42213,
           "int_ie": 108.6
@@ -2506,10 +2506,10 @@
         "trimestre": {
           "rec_curr": 3828,
           "rec_prev": 5681,
-          "rec_ie": 67.4,
+          "rec_ie": 112.7,
           "units_curr": 48723,
           "units_prev": 43830,
-          "units_ie": 111.2,
+          "units_ie": 114.5,
           "int_curr": 45850,
           "int_prev": 42213,
           "int_ie": 108.6
@@ -2517,10 +2517,10 @@
         "semestre": {
           "rec_curr": 9115,
           "rec_prev": 11910,
-          "rec_ie": 76.5,
+          "rec_ie": 109.6,
           "units_curr": 95669,
           "units_prev": 87190,
-          "units_ie": 109.7,
+          "units_ie": 113.5,
           "int_curr": 88562,
           "int_prev": 82703,
           "int_ie": 107.1
@@ -2528,10 +2528,10 @@
         "mat": {
           "rec_curr": 19800,
           "rec_prev": 24530,
-          "rec_ie": 80.7,
+          "rec_ie": 111.3,
           "units_curr": 193650,
           "units_prev": 179777,
-          "units_ie": 107.7,
+          "units_ie": 111.3,
           "int_curr": 179701,
           "int_prev": 169078,
           "int_ie": 106.3
@@ -2547,10 +2547,10 @@
         "mensual": {
           "rec_curr": 923,
           "rec_prev": 1095,
-          "rec_ie": 84.3,
+          "rec_ie": null,
           "units_curr": 13540,
           "units_prev": 13092,
-          "units_ie": 103.4,
+          "units_ie": 109.8,
           "int_curr": 11525,
           "int_prev": 0,
           "int_ie": null
@@ -2558,10 +2558,10 @@
         "ytd": {
           "rec_curr": 2674,
           "rec_prev": 3360,
-          "rec_ie": 79.6,
+          "rec_ie": null,
           "units_curr": 38576,
           "units_prev": 35574,
-          "units_ie": 108.4,
+          "units_ie": 106.3,
           "int_curr": 37905,
           "int_prev": 0,
           "int_ie": null
@@ -2569,10 +2569,10 @@
         "trimestre": {
           "rec_curr": 2674,
           "rec_prev": 3360,
-          "rec_ie": 79.6,
+          "rec_ie": null,
           "units_curr": 38576,
           "units_prev": 35574,
-          "units_ie": 108.4,
+          "units_ie": 106.3,
           "int_curr": 37905,
           "int_prev": 0,
           "int_ie": null
@@ -2580,10 +2580,10 @@
         "semestre": {
           "rec_curr": 5665,
           "rec_prev": 3360,
-          "rec_ie": 168.6,
+          "rec_ie": null,
           "units_curr": 76527,
           "units_prev": 77919,
-          "units_ie": 98.2,
+          "units_ie": 100.1,
           "int_curr": 61064,
           "int_prev": 0,
           "int_ie": null
@@ -2591,10 +2591,10 @@
         "mat": {
           "rec_curr": 11988,
           "rec_prev": 3360,
-          "rec_ie": 356.8,
+          "rec_ie": null,
           "units_curr": 157225,
           "units_prev": 170841,
-          "units_ie": 92.0,
+          "units_ie": 96.4,
           "int_curr": 61064,
           "int_prev": 0,
           "int_ie": null
@@ -2610,10 +2610,10 @@
         "mensual": {
           "rec_curr": 1090,
           "rec_prev": 1207,
-          "rec_ie": 90.3,
+          "rec_ie": 428.6,
           "units_curr": 11361,
           "units_prev": 12233,
-          "units_ie": 92.9,
+          "units_ie": 84.6,
           "int_curr": 11888,
           "int_prev": 11835,
           "int_ie": 100.4
@@ -2621,10 +2621,10 @@
         "ytd": {
           "rec_curr": 3192,
           "rec_prev": 3770,
-          "rec_ie": 84.7,
+          "rec_ie": 430.0,
           "units_curr": 34771,
           "units_prev": 35980,
-          "units_ie": 96.6,
+          "units_ie": 90.9,
           "int_curr": 39278,
           "int_prev": 41617,
           "int_ie": 94.4
@@ -2632,10 +2632,10 @@
         "trimestre": {
           "rec_curr": 3192,
           "rec_prev": 3770,
-          "rec_ie": 84.7,
+          "rec_ie": 430.0,
           "units_curr": 34771,
           "units_prev": 35980,
-          "units_ie": 96.6,
+          "units_ie": 90.9,
           "int_curr": 39278,
           "int_prev": 41617,
           "int_ie": 94.4
@@ -2643,10 +2643,10 @@
         "semestre": {
           "rec_curr": 6457,
           "rec_prev": 8148,
-          "rec_ie": 79.2,
+          "rec_ie": 145.5,
           "units_curr": 70166,
           "units_prev": 69645,
-          "units_ie": 100.7,
+          "units_ie": 94.1,
           "int_curr": 71690,
           "int_prev": 78340,
           "int_ie": 91.5
@@ -2654,10 +2654,10 @@
         "mat": {
           "rec_curr": 13184,
           "rec_prev": 17382,
-          "rec_ie": 75.8,
+          "rec_ie": 110.3,
           "units_curr": 140058,
           "units_prev": 138052,
-          "units_ie": 101.5,
+          "units_ie": 93.9,
           "int_curr": 152053,
           "int_prev": 149772,
           "int_ie": 101.5
@@ -2673,10 +2673,10 @@
         "mensual": {
           "rec_curr": 1122,
           "rec_prev": 1243,
-          "rec_ie": 90.3,
+          "rec_ie": 428.4,
           "units_curr": 11697,
           "units_prev": 12628,
-          "units_ie": 92.6,
+          "units_ie": 84.4,
           "int_curr": 12240,
           "int_prev": 12185,
           "int_ie": 100.5
@@ -2684,10 +2684,10 @@
         "ytd": {
           "rec_curr": 3158,
           "rec_prev": 3730,
-          "rec_ie": 84.7,
+          "rec_ie": 429.9,
           "units_curr": 34403,
           "units_prev": 37328,
-          "units_ie": 92.2,
+          "units_ie": 86.7,
           "int_curr": 38862,
           "int_prev": 41177,
           "int_ie": 94.4
@@ -2695,10 +2695,10 @@
         "trimestre": {
           "rec_curr": 3158,
           "rec_prev": 3730,
-          "rec_ie": 84.7,
+          "rec_ie": 429.9,
           "units_curr": 34403,
           "units_prev": 37328,
-          "units_ie": 92.2,
+          "units_ie": 86.7,
           "int_curr": 38862,
           "int_prev": 41177,
           "int_ie": 94.4
@@ -2706,10 +2706,10 @@
         "semestre": {
           "rec_curr": 6267,
           "rec_prev": 7908,
-          "rec_ie": 79.2,
+          "rec_ie": 145.5,
           "units_curr": 68105,
           "units_prev": 73903,
-          "units_ie": 92.2,
+          "units_ie": 86.0,
           "int_curr": 69584,
           "int_prev": 76039,
           "int_ie": 91.5
@@ -2717,10 +2717,10 @@
         "mat": {
           "rec_curr": 13062,
           "rec_prev": 17220,
-          "rec_ie": 75.9,
+          "rec_ie": 110.3,
           "units_curr": 138757,
           "units_prev": 147492,
-          "units_ie": 94.1,
+          "units_ie": 87.1,
           "int_curr": 150641,
           "int_prev": 148380,
           "int_ie": 101.5
@@ -2736,10 +2736,10 @@
         "mensual": {
           "rec_curr": 1268,
           "rec_prev": 1326,
-          "rec_ie": 95.6,
+          "rec_ie": 100.5,
           "units_curr": 10792,
           "units_prev": 10052,
-          "units_ie": 107.4,
+          "units_ie": 103.2,
           "int_curr": 8606,
           "int_prev": 0,
           "int_ie": null
@@ -2747,10 +2747,10 @@
         "ytd": {
           "rec_curr": 3824,
           "rec_prev": 4052,
-          "rec_ie": 94.4,
+          "rec_ie": 103.8,
           "units_curr": 32222,
           "units_prev": 27402,
-          "units_ie": 117.6,
+          "units_ie": 104.7,
           "int_curr": 32811,
           "int_prev": 0,
           "int_ie": null
@@ -2758,10 +2758,10 @@
         "trimestre": {
           "rec_curr": 3824,
           "rec_prev": 4052,
-          "rec_ie": 94.4,
+          "rec_ie": 103.8,
           "units_curr": 32222,
           "units_prev": 27402,
-          "units_ie": 117.6,
+          "units_ie": 104.7,
           "int_curr": 32811,
           "int_prev": 0,
           "int_ie": null
@@ -2769,10 +2769,10 @@
         "semestre": {
           "rec_curr": 7782,
           "rec_prev": 8552,
-          "rec_ie": 91.0,
+          "rec_ie": 102.4,
           "units_curr": 62711,
           "units_prev": 61462,
-          "units_ie": 102.0,
+          "units_ie": 107.7,
           "int_curr": 53820,
           "int_prev": 0,
           "int_ie": null
@@ -2780,10 +2780,10 @@
         "mat": {
           "rec_curr": 16415,
           "rec_prev": 18038,
-          "rec_ie": 91.0,
+          "rec_ie": 102.9,
           "units_curr": 127486,
           "units_prev": 125962,
-          "units_ie": 101.2,
+          "units_ie": 101.9,
           "int_curr": 53820,
           "int_prev": 0,
           "int_ie": null
@@ -2799,10 +2799,10 @@
         "mensual": {
           "rec_curr": 2378,
           "rec_prev": 1530,
-          "rec_ie": 155.4,
+          "rec_ie": 119.1,
           "units_curr": 10325,
           "units_prev": 6012,
-          "units_ie": 171.7,
+          "units_ie": 130.1,
           "int_curr": 9450,
           "int_prev": 5330,
           "int_ie": 177.3
@@ -2810,10 +2810,10 @@
         "ytd": {
           "rec_curr": 6458,
           "rec_prev": 4045,
-          "rec_ie": 159.7,
+          "rec_ie": 120.2,
           "units_curr": 25558,
           "units_prev": 15185,
-          "units_ie": 168.3,
+          "units_ie": 129.6,
           "int_curr": 23439,
           "int_prev": 14733,
           "int_ie": 159.1
@@ -2821,10 +2821,10 @@
         "trimestre": {
           "rec_curr": 6458,
           "rec_prev": 4045,
-          "rec_ie": 159.7,
+          "rec_ie": 120.2,
           "units_curr": 25558,
           "units_prev": 15185,
-          "units_ie": 168.3,
+          "units_ie": 129.6,
           "int_curr": 23439,
           "int_prev": 14733,
           "int_ie": 159.1
@@ -2832,10 +2832,10 @@
         "semestre": {
           "rec_curr": 14201,
           "rec_prev": 4045,
-          "rec_ie": 351.1,
+          "rec_ie": 119.9,
           "units_curr": 57218,
           "units_prev": 34785,
-          "units_ie": 164.5,
+          "units_ie": 123.9,
           "int_curr": 53653,
           "int_prev": 32937,
           "int_ie": 162.9
@@ -2843,10 +2843,10 @@
         "mat": {
           "rec_curr": 27016,
           "rec_prev": 4045,
-          "rec_ie": 667.9,
+          "rec_ie": 113.7,
           "units_curr": 115955,
           "units_prev": 74766,
-          "units_ie": 155.1,
+          "units_ie": 118.5,
           "int_curr": 112742,
           "int_prev": 74147,
           "int_ie": 152.1
@@ -2862,10 +2862,10 @@
         "mensual": {
           "rec_curr": 2303,
           "rec_prev": 2004,
-          "rec_ie": 114.9,
+          "rec_ie": 123.0,
           "units_curr": 8591,
           "units_prev": 7291,
-          "units_ie": 117.8,
+          "units_ie": 130.2,
           "int_curr": 8841,
           "int_prev": 6476,
           "int_ie": 136.5
@@ -2873,10 +2873,10 @@
         "ytd": {
           "rec_curr": 5924,
           "rec_prev": 5403,
-          "rec_ie": 109.6,
+          "rec_ie": 120.9,
           "units_curr": 21074,
           "units_prev": 18176,
-          "units_ie": 115.9,
+          "units_ie": 126.2,
           "int_curr": 18938,
           "int_prev": 15235,
           "int_ie": 124.3
@@ -2884,10 +2884,10 @@
         "trimestre": {
           "rec_curr": 5924,
           "rec_prev": 5403,
-          "rec_ie": 109.6,
+          "rec_ie": 120.9,
           "units_curr": 21074,
           "units_prev": 18176,
-          "units_ie": 115.9,
+          "units_ie": 126.2,
           "int_curr": 18938,
           "int_prev": 15235,
           "int_ie": 124.3
@@ -2895,10 +2895,10 @@
         "semestre": {
           "rec_curr": 13016,
           "rec_prev": 5403,
-          "rec_ie": 240.9,
+          "rec_ie": 119.0,
           "units_curr": 47721,
           "units_prev": 41340,
-          "units_ie": 115.4,
+          "units_ie": 123.9,
           "int_curr": 42208,
           "int_prev": 35882,
           "int_ie": 117.6
@@ -2906,10 +2906,10 @@
         "mat": {
           "rec_curr": 28403,
           "rec_prev": 5403,
-          "rec_ie": 525.7,
+          "rec_ie": 114.8,
           "units_curr": 111419,
           "units_prev": 98402,
-          "units_ie": 113.2,
+          "units_ie": 121.2,
           "int_curr": 106129,
           "int_prev": 92005,
           "int_ie": 115.4
@@ -2924,55 +2924,55 @@
       "periods": {
         "mensual": {
           "rec_curr": 1249,
-          "rec_prev": 1226,
-          "rec_ie": 101.9,
+          "rec_prev": 1216,
+          "rec_ie": 91.6,
           "units_curr": 6468,
           "units_prev": 5245,
-          "units_ie": 123.3,
+          "units_ie": 114.2,
           "int_curr": 8407,
           "int_prev": 5124,
           "int_ie": 164.1
         },
         "ytd": {
           "rec_curr": 3735,
-          "rec_prev": 3859,
-          "rec_ie": 96.8,
+          "rec_prev": 3838,
+          "rec_ie": 89.4,
           "units_curr": 18259,
           "units_prev": 16968,
-          "units_ie": 107.6,
+          "units_ie": 101.7,
           "int_curr": 20076,
           "int_prev": 18918,
           "int_ie": 106.1
         },
         "trimestre": {
           "rec_curr": 3735,
-          "rec_prev": 3859,
-          "rec_ie": 96.8,
+          "rec_prev": 3838,
+          "rec_ie": 89.4,
           "units_curr": 18259,
           "units_prev": 16968,
-          "units_ie": 107.6,
+          "units_ie": 101.7,
           "int_curr": 20076,
           "int_prev": 18918,
           "int_ie": 106.1
         },
         "semestre": {
-          "rec_curr": 7630,
-          "rec_prev": 8015,
-          "rec_ie": 95.2,
+          "rec_curr": 7616,
+          "rec_prev": 3838,
+          "rec_ie": 92.0,
           "units_curr": 37710,
           "units_prev": 35586,
-          "units_ie": 106.0,
+          "units_ie": 99.0,
           "int_curr": 42030,
           "int_prev": 37158,
           "int_ie": 113.1
         },
         "mat": {
-          "rec_curr": 15355,
-          "rec_prev": 16519,
-          "rec_ie": 93.0,
+          "rec_curr": 15279,
+          "rec_prev": 3838,
+          "rec_ie": 94.5,
           "units_curr": 74930,
           "units_prev": 82268,
-          "units_ie": 91.1,
+          "units_ie": 90.5,
           "int_curr": 83437,
           "int_prev": 85217,
           "int_ie": 97.9
@@ -2988,10 +2988,10 @@
         "mensual": {
           "rec_curr": 1077,
           "rec_prev": 1481,
-          "rec_ie": 72.7,
+          "rec_ie": 73.2,
           "units_curr": 7330,
           "units_prev": 8924,
-          "units_ie": 82.1,
+          "units_ie": 94.2,
           "int_curr": 6757,
           "int_prev": 8283,
           "int_ie": 81.6
@@ -2999,10 +2999,10 @@
         "ytd": {
           "rec_curr": 2969,
           "rec_prev": 3804,
-          "rec_ie": 78.0,
+          "rec_ie": 80.6,
           "units_curr": 17993,
           "units_prev": 21240,
-          "units_ie": 84.7,
+          "units_ie": 91.5,
           "int_curr": 15801,
           "int_prev": 17434,
           "int_ie": 90.6
@@ -3010,10 +3010,10 @@
         "trimestre": {
           "rec_curr": 2969,
           "rec_prev": 3804,
-          "rec_ie": 78.0,
+          "rec_ie": 80.6,
           "units_curr": 17993,
           "units_prev": 21240,
-          "units_ie": 84.7,
+          "units_ie": 91.5,
           "int_curr": 15801,
           "int_prev": 17434,
           "int_ie": 90.6
@@ -3021,10 +3021,10 @@
         "semestre": {
           "rec_curr": 6802,
           "rec_prev": 3804,
-          "rec_ie": 178.8,
+          "rec_ie": 85.2,
           "units_curr": 44185,
           "units_prev": 52106,
-          "units_ie": 84.8,
+          "units_ie": 87.9,
           "int_curr": 38274,
           "int_prev": 45048,
           "int_ie": 85.0
@@ -3032,10 +3032,10 @@
         "mat": {
           "rec_curr": 15740,
           "rec_prev": 3804,
-          "rec_ie": 413.8,
+          "rec_ie": 95.6,
           "units_curr": 115624,
           "units_prev": 135317,
-          "units_ie": 85.4,
+          "units_ie": 94.2,
           "int_curr": 112649,
           "int_prev": 126190,
           "int_ie": 89.3
@@ -3051,10 +3051,10 @@
         "mensual": {
           "rec_curr": 1314,
           "rec_prev": 1315,
-          "rec_ie": 99.9,
+          "rec_ie": 111.8,
           "units_curr": 8654,
           "units_prev": 9062,
-          "units_ie": 95.5,
+          "units_ie": 100.0,
           "int_curr": 10121,
           "int_prev": 7715,
           "int_ie": 131.2
@@ -3062,10 +3062,10 @@
         "ytd": {
           "rec_curr": 2986,
           "rec_prev": 2903,
-          "rec_ie": 102.9,
+          "rec_ie": 120.2,
           "units_curr": 17071,
           "units_prev": 16366,
-          "units_ie": 104.3,
+          "units_ie": 100.0,
           "int_curr": 15218,
           "int_prev": 13351,
           "int_ie": 114.0
@@ -3073,10 +3073,10 @@
         "trimestre": {
           "rec_curr": 2986,
           "rec_prev": 2903,
-          "rec_ie": 102.9,
+          "rec_ie": 120.2,
           "units_curr": 17071,
           "units_prev": 16366,
-          "units_ie": 104.3,
+          "units_ie": 100.0,
           "int_curr": 15218,
           "int_prev": 13351,
           "int_ie": 114.0
@@ -3084,10 +3084,10 @@
         "semestre": {
           "rec_curr": 7855,
           "rec_prev": 2903,
-          "rec_ie": 270.6,
+          "rec_ie": 126.5,
           "units_curr": 45281,
           "units_prev": 37415,
-          "units_ie": 121.0,
+          "units_ie": 100.0,
           "int_curr": 38578,
           "int_prev": 28157,
           "int_ie": 137.0
@@ -3095,10 +3095,10 @@
         "mat": {
           "rec_curr": 22578,
           "rec_prev": 2903,
-          "rec_ie": 777.7,
+          "rec_ie": 124.1,
           "units_curr": 167799,
           "units_prev": 136245,
-          "units_ie": 123.2,
+          "units_ie": 100.0,
           "int_curr": 172342,
           "int_prev": 142272,
           "int_ie": 121.1
@@ -3114,10 +3114,10 @@
         "mensual": {
           "rec_curr": 686,
           "rec_prev": 940,
-          "rec_ie": 73.0,
+          "rec_ie": 98.1,
           "units_curr": 7077,
           "units_prev": 8809,
-          "units_ie": 80.3,
+          "units_ie": 94.5,
           "int_curr": 5961,
           "int_prev": 7434,
           "int_ie": 80.2
@@ -3125,10 +3125,10 @@
         "ytd": {
           "rec_curr": 1902,
           "rec_prev": 2467,
-          "rec_ie": 77.1,
+          "rec_ie": 100.3,
           "units_curr": 16280,
           "units_prev": 23160,
-          "units_ie": 70.3,
+          "units_ie": 84.7,
           "int_curr": 12463,
           "int_prev": 18425,
           "int_ie": 67.6
@@ -3136,10 +3136,10 @@
         "trimestre": {
           "rec_curr": 1902,
           "rec_prev": 2467,
-          "rec_ie": 77.1,
+          "rec_ie": 100.3,
           "units_curr": 16280,
           "units_prev": 23160,
-          "units_ie": 70.3,
+          "units_ie": 84.7,
           "int_curr": 12463,
           "int_prev": 18425,
           "int_ie": 67.6
@@ -3147,10 +3147,10 @@
         "semestre": {
           "rec_curr": 4503,
           "rec_prev": 2282,
-          "rec_ie": 197.3,
+          "rec_ie": 99.6,
           "units_curr": 39376,
           "units_prev": 60306,
-          "units_ie": 65.3,
+          "units_ie": 67.8,
           "int_curr": 31175,
           "int_prev": 33288,
           "int_ie": 93.7
@@ -3158,7 +3158,7 @@
         "mat": {
           "rec_curr": 12813,
           "rec_prev": 2297,
-          "rec_ie": 557.8,
+          "rec_ie": 98.8,
           "units_curr": 130003,
           "units_prev": 238478,
           "units_ie": 54.5,
@@ -3177,10 +3177,10 @@
         "mensual": {
           "rec_curr": 257,
           "rec_prev": 240,
-          "rec_ie": 107.1,
+          "rec_ie": 99.5,
           "units_curr": 4995,
           "units_prev": 4652,
-          "units_ie": 107.4,
+          "units_ie": 88.2,
           "int_curr": 4294,
           "int_prev": 3551,
           "int_ie": 120.9
@@ -3188,10 +3188,10 @@
         "ytd": {
           "rec_curr": 807,
           "rec_prev": 715,
-          "rec_ie": 112.9,
+          "rec_ie": 105.0,
           "units_curr": 16490,
           "units_prev": 15316,
-          "units_ie": 107.7,
+          "units_ie": 90.4,
           "int_curr": 16945,
           "int_prev": 14265,
           "int_ie": 118.8
@@ -3199,10 +3199,10 @@
         "trimestre": {
           "rec_curr": 807,
           "rec_prev": 715,
-          "rec_ie": 112.9,
+          "rec_ie": 105.0,
           "units_curr": 16490,
           "units_prev": 15316,
-          "units_ie": 107.7,
+          "units_ie": 90.4,
           "int_curr": 16945,
           "int_prev": 14265,
           "int_ie": 118.8
@@ -3210,10 +3210,10 @@
         "semestre": {
           "rec_curr": 1611,
           "rec_prev": 1356,
-          "rec_ie": 118.8,
+          "rec_ie": 113.2,
           "units_curr": 32421,
           "units_prev": 29741,
-          "units_ie": 109.0,
+          "units_ie": 94.1,
           "int_curr": 30898,
           "int_prev": 25539,
           "int_ie": 121.0
@@ -3221,10 +3221,10 @@
         "mat": {
           "rec_curr": 3255,
           "rec_prev": 2690,
-          "rec_ie": 121.0,
+          "rec_ie": 118.5,
           "units_curr": 66448,
           "units_prev": 65250,
-          "units_ie": 101.8,
+          "units_ie": 89.6,
           "int_curr": 61905,
           "int_prev": 52586,
           "int_ie": 117.7
@@ -3240,10 +3240,10 @@
         "mensual": {
           "rec_curr": 874,
           "rec_prev": 1021,
-          "rec_ie": 85.6,
+          "rec_ie": 95.7,
           "units_curr": 3676,
           "units_prev": 3890,
-          "units_ie": 94.5,
+          "units_ie": 100.3,
           "int_curr": 3027,
           "int_prev": 0,
           "int_ie": null
@@ -3251,10 +3251,10 @@
         "ytd": {
           "rec_curr": 2619,
           "rec_prev": 3109,
-          "rec_ie": 84.2,
+          "rec_ie": 94.7,
           "units_curr": 11297,
           "units_prev": 11696,
-          "units_ie": 96.6,
+          "units_ie": 94.1,
           "int_curr": 10899,
           "int_prev": 0,
           "int_ie": null
@@ -3262,10 +3262,10 @@
         "trimestre": {
           "rec_curr": 2619,
           "rec_prev": 3109,
-          "rec_ie": 84.2,
+          "rec_ie": 94.7,
           "units_curr": 11297,
           "units_prev": 11696,
-          "units_ie": 96.6,
+          "units_ie": 94.1,
           "int_curr": 10899,
           "int_prev": 0,
           "int_ie": null
@@ -3273,10 +3273,10 @@
         "semestre": {
           "rec_curr": 5602,
           "rec_prev": 3109,
-          "rec_ie": 180.2,
+          "rec_ie": 92.4,
           "units_curr": 22745,
           "units_prev": 24556,
-          "units_ie": 92.6,
+          "units_ie": 94.2,
           "int_curr": 14799,
           "int_prev": 0,
           "int_ie": null
@@ -3284,10 +3284,10 @@
         "mat": {
           "rec_curr": 12243,
           "rec_prev": 3109,
-          "rec_ie": 393.8,
+          "rec_ie": 88.0,
           "units_curr": 46325,
           "units_prev": 54167,
-          "units_ie": 85.5,
+          "units_ie": 89.2,
           "int_curr": 14343,
           "int_prev": 0,
           "int_ie": null
@@ -3303,10 +3303,10 @@
         "mensual": {
           "rec_curr": 714,
           "rec_prev": 870,
-          "rec_ie": 82.1,
+          "rec_ie": 80.9,
           "units_curr": 4090,
           "units_prev": 5315,
-          "units_ie": 77.0,
+          "units_ie": 80.8,
           "int_curr": 3756,
           "int_prev": 0,
           "int_ie": null
@@ -3314,10 +3314,10 @@
         "ytd": {
           "rec_curr": 2186,
           "rec_prev": 2628,
-          "rec_ie": 83.2,
+          "rec_ie": 85.0,
           "units_curr": 10695,
           "units_prev": 15474,
-          "units_ie": 69.1,
+          "units_ie": 74.5,
           "int_curr": 12156,
           "int_prev": 0,
           "int_ie": null
@@ -3325,10 +3325,10 @@
         "trimestre": {
           "rec_curr": 2186,
           "rec_prev": 2628,
-          "rec_ie": 83.2,
+          "rec_ie": 85.0,
           "units_curr": 10695,
           "units_prev": 15474,
-          "units_ie": 69.1,
+          "units_ie": 74.5,
           "int_curr": 12156,
           "int_prev": 0,
           "int_ie": null
@@ -3336,10 +3336,10 @@
         "semestre": {
           "rec_curr": 4983,
           "rec_prev": 5145,
-          "rec_ie": 96.9,
+          "rec_ie": 102.6,
           "units_curr": 25796,
           "units_prev": 31515,
-          "units_ie": 81.9,
+          "units_ie": 89.6,
           "int_curr": 13069,
           "int_prev": 0,
           "int_ie": null
@@ -3347,10 +3347,10 @@
         "mat": {
           "rec_curr": 10237,
           "rec_prev": 9555,
-          "rec_ie": 107.1,
+          "rec_ie": 116.9,
           "units_curr": 56662,
           "units_prev": 63028,
-          "units_ie": 89.9,
+          "units_ie": 98.4,
           "int_curr": 13069,
           "int_prev": 0,
           "int_ie": null
@@ -3366,10 +3366,10 @@
         "mensual": {
           "rec_curr": 781,
           "rec_prev": 614,
-          "rec_ie": 127.2,
+          "rec_ie": 107.8,
           "units_curr": 3668,
           "units_prev": 1826,
-          "units_ie": 200.9,
+          "units_ie": 174.9,
           "int_curr": 3411,
           "int_prev": 2905,
           "int_ie": 117.4
@@ -3377,10 +3377,10 @@
         "ytd": {
           "rec_curr": 2184,
           "rec_prev": 1857,
-          "rec_ie": 117.6,
+          "rec_ie": 105.2,
           "units_curr": 10137,
           "units_prev": 5080,
-          "units_ie": 199.5,
+          "units_ie": 175.3,
           "int_curr": 10119,
           "int_prev": 7792,
           "int_ie": 129.9
@@ -3388,10 +3388,10 @@
         "trimestre": {
           "rec_curr": 2184,
           "rec_prev": 1857,
-          "rec_ie": 117.6,
+          "rec_ie": 105.2,
           "units_curr": 10137,
           "units_prev": 5080,
-          "units_ie": 199.5,
+          "units_ie": 175.3,
           "int_curr": 10119,
           "int_prev": 7792,
           "int_ie": 129.9
@@ -3399,10 +3399,10 @@
         "semestre": {
           "rec_curr": 4360,
           "rec_prev": 3876,
-          "rec_ie": 112.5,
+          "rec_ie": 104.6,
           "units_curr": 20051,
           "units_prev": 10340,
-          "units_ie": 193.9,
+          "units_ie": 180.3,
           "int_curr": 18440,
           "int_prev": 16407,
           "int_ie": 112.4
@@ -3410,10 +3410,10 @@
         "mat": {
           "rec_curr": 7566,
           "rec_prev": 6890,
-          "rec_ie": 109.8,
+          "rec_ie": 105.0,
           "units_curr": 35261,
           "units_prev": 17608,
-          "units_ie": 200.3,
+          "units_ie": 196.4,
           "int_curr": 33604,
           "int_prev": 31185,
           "int_ie": 107.8
@@ -3429,10 +3429,10 @@
         "mensual": {
           "rec_curr": 60,
           "rec_prev": 69,
-          "rec_ie": 87.0,
+          "rec_ie": 78.4,
           "units_curr": 4250,
           "units_prev": 4102,
-          "units_ie": 103.6,
+          "units_ie": 104.3,
           "int_curr": 3341,
           "int_prev": 0,
           "int_ie": null
@@ -3440,10 +3440,10 @@
         "ytd": {
           "rec_curr": 172,
           "rec_prev": 209,
-          "rec_ie": 82.3,
+          "rec_ie": 78.1,
           "units_curr": 11933,
           "units_prev": 12478,
-          "units_ie": 95.6,
+          "units_ie": 98.5,
           "int_curr": 12112,
           "int_prev": 0,
           "int_ie": null
@@ -3451,10 +3451,10 @@
         "trimestre": {
           "rec_curr": 172,
           "rec_prev": 209,
-          "rec_ie": 82.3,
+          "rec_ie": 78.1,
           "units_curr": 11933,
           "units_prev": 12478,
-          "units_ie": 95.6,
+          "units_ie": 98.5,
           "int_curr": 12112,
           "int_prev": 0,
           "int_ie": null
@@ -3462,10 +3462,10 @@
         "semestre": {
           "rec_curr": 354,
           "rec_prev": 430,
-          "rec_ie": 82.3,
+          "rec_ie": 79.1,
           "units_curr": 23032,
           "units_prev": 25260,
-          "units_ie": 91.2,
+          "units_ie": 96.4,
           "int_curr": 17595,
           "int_prev": 0,
           "int_ie": null
@@ -3473,10 +3473,10 @@
         "mat": {
           "rec_curr": 771,
           "rec_prev": 921,
-          "rec_ie": 83.7,
+          "rec_ie": 79.9,
           "units_curr": 48550,
           "units_prev": 50617,
-          "units_ie": 95.9,
+          "units_ie": 97.1,
           "int_curr": 18315,
           "int_prev": 0,
           "int_ie": null
@@ -3492,10 +3492,10 @@
         "mensual": {
           "rec_curr": 399,
           "rec_prev": 672,
-          "rec_ie": 59.4,
+          "rec_ie": 58.9,
           "units_curr": 3398,
           "units_prev": 5116,
-          "units_ie": 66.4,
+          "units_ie": 51.0,
           "int_curr": 2994,
           "int_prev": 0,
           "int_ie": null
@@ -3503,10 +3503,10 @@
         "ytd": {
           "rec_curr": 1215,
           "rec_prev": 1998,
-          "rec_ie": 60.8,
+          "rec_ie": 62.6,
           "units_curr": 9577,
           "units_prev": 13660,
-          "units_ie": 70.1,
+          "units_ie": 49.6,
           "int_curr": 8262,
           "int_prev": 0,
           "int_ie": null
@@ -3514,10 +3514,10 @@
         "trimestre": {
           "rec_curr": 1215,
           "rec_prev": 1998,
-          "rec_ie": 60.8,
+          "rec_ie": 62.6,
           "units_curr": 9577,
           "units_prev": 13660,
-          "units_ie": 70.1,
+          "units_ie": 49.6,
           "int_curr": 8262,
           "int_prev": 0,
           "int_ie": null
@@ -3525,10 +3525,10 @@
         "semestre": {
           "rec_curr": 2982,
           "rec_prev": 4084,
-          "rec_ie": 73.0,
+          "rec_ie": 76.4,
           "units_curr": 20641,
           "units_prev": 29078,
-          "units_ie": 71.0,
+          "units_ie": 57.1,
           "int_curr": 11796,
           "int_prev": 0,
           "int_ie": null
@@ -3536,10 +3536,10 @@
         "mat": {
           "rec_curr": 6936,
           "rec_prev": 8548,
-          "rec_ie": 81.1,
+          "rec_ie": 84.4,
           "units_curr": 50071,
           "units_prev": 59697,
-          "units_ie": 83.9,
+          "units_ie": 62.8,
           "int_curr": 11796,
           "int_prev": 0,
           "int_ie": null
@@ -3555,10 +3555,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 158,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 3847,
           "units_prev": 2805,
-          "units_ie": 137.1,
+          "units_ie": 121.8,
           "int_curr": 3987,
           "int_prev": 3280,
           "int_ie": 121.6
@@ -3566,10 +3566,10 @@
         "ytd": {
           "rec_curr": 344,
           "rec_prev": 546,
-          "rec_ie": 63.0,
+          "rec_ie": 96.6,
           "units_curr": 10359,
           "units_prev": 8027,
-          "units_ie": 129.1,
+          "units_ie": 123.1,
           "int_curr": 10578,
           "int_prev": 9656,
           "int_ie": 109.5
@@ -3577,10 +3577,10 @@
         "trimestre": {
           "rec_curr": 344,
           "rec_prev": 546,
-          "rec_ie": 63.0,
+          "rec_ie": 96.6,
           "units_curr": 10359,
           "units_prev": 8027,
-          "units_ie": 129.1,
+          "units_ie": 123.1,
           "int_curr": 10578,
           "int_prev": 9656,
           "int_ie": 109.5
@@ -3588,10 +3588,10 @@
         "semestre": {
           "rec_curr": 868,
           "rec_prev": 1151,
-          "rec_ie": 75.4,
+          "rec_ie": 95.0,
           "units_curr": 19654,
           "units_prev": 15620,
-          "units_ie": 125.8,
+          "units_ie": 123.5,
           "int_curr": 18911,
           "int_prev": 17830,
           "int_ie": 106.1
@@ -3599,10 +3599,10 @@
         "mat": {
           "rec_curr": 1912,
           "rec_prev": 2473,
-          "rec_ie": 77.3,
+          "rec_ie": 90.5,
           "units_curr": 38307,
           "units_prev": 29781,
-          "units_ie": 128.6,
+          "units_ie": 129.5,
           "int_curr": 36881,
           "int_prev": 34317,
           "int_ie": 107.5
@@ -3618,10 +3618,10 @@
         "mensual": {
           "rec_curr": 617,
           "rec_prev": 334,
-          "rec_ie": 184.7,
+          "rec_ie": 161.7,
           "units_curr": 2847,
           "units_prev": 1614,
-          "units_ie": 176.4,
+          "units_ie": 164.6,
           "int_curr": 2956,
           "int_prev": 1513,
           "int_ie": 195.4
@@ -3629,10 +3629,10 @@
         "ytd": {
           "rec_curr": 1735,
           "rec_prev": 901,
-          "rec_ie": 192.6,
+          "rec_ie": 173.6,
           "units_curr": 8192,
           "units_prev": 4346,
-          "units_ie": 188.5,
+          "units_ie": 172.1,
           "int_curr": 8160,
           "int_prev": 4454,
           "int_ie": 183.2
@@ -3640,10 +3640,10 @@
         "trimestre": {
           "rec_curr": 1735,
           "rec_prev": 901,
-          "rec_ie": 192.6,
+          "rec_ie": 173.6,
           "units_curr": 8192,
           "units_prev": 4346,
-          "units_ie": 188.5,
+          "units_ie": 172.1,
           "int_curr": 8160,
           "int_prev": 4454,
           "int_ie": 183.2
@@ -3651,10 +3651,10 @@
         "semestre": {
           "rec_curr": 3368,
           "rec_prev": 1626,
-          "rec_ie": 207.1,
+          "rec_ie": 191.6,
           "units_curr": 16660,
           "units_prev": 8011,
-          "units_ie": 208.0,
+          "units_ie": 195.4,
           "int_curr": 15957,
           "int_prev": 7933,
           "int_ie": 201.1
@@ -3662,10 +3662,10 @@
         "mat": {
           "rec_curr": 5954,
           "rec_prev": 2419,
-          "rec_ie": 246.1,
+          "rec_ie": 221.2,
           "units_curr": 29640,
           "units_prev": 12677,
-          "units_ie": 233.8,
+          "units_ie": 223.4,
           "int_curr": 28797,
           "int_prev": 12602,
           "int_ie": 228.5
@@ -3681,10 +3681,10 @@
         "mensual": {
           "rec_curr": 787,
           "rec_prev": 6,
-          "rec_ie": 13116.7,
+          "rec_ie": 7723.3,
           "units_curr": 2293,
           "units_prev": 513,
-          "units_ie": 447.0,
+          "units_ie": 395.1,
           "int_curr": 2000,
           "int_prev": 2016,
           "int_ie": 99.2
@@ -3692,10 +3692,10 @@
         "ytd": {
           "rec_curr": 2260,
           "rec_prev": 6,
-          "rec_ie": 37666.7,
+          "rec_ie": 7523.6,
           "units_curr": 6617,
           "units_prev": 513,
-          "units_ie": 1289.9,
+          "units_ie": 1009.5,
           "int_curr": 6472,
           "int_prev": 2016,
           "int_ie": 321.0
@@ -3703,10 +3703,10 @@
         "trimestre": {
           "rec_curr": 2260,
           "rec_prev": 6,
-          "rec_ie": 37666.7,
+          "rec_ie": 7523.6,
           "units_curr": 6617,
           "units_prev": 513,
-          "units_ie": 1289.9,
+          "units_ie": 1009.5,
           "int_curr": 6472,
           "int_prev": 2016,
           "int_ie": 321.0
@@ -3714,10 +3714,10 @@
         "semestre": {
           "rec_curr": 4077,
           "rec_prev": 6,
-          "rec_ie": 67950.0,
+          "rec_ie": 7110.5,
           "units_curr": 12489,
           "units_prev": 513,
-          "units_ie": 2434.5,
+          "units_ie": 1975.3,
           "int_curr": 11672,
           "int_prev": 2016,
           "int_ie": 579.0
@@ -3725,10 +3725,10 @@
         "mat": {
           "rec_curr": 5624,
           "rec_prev": 6,
-          "rec_ie": 93733.3,
+          "rec_ie": 5357.6,
           "units_curr": 19525,
           "units_prev": 513,
-          "units_ie": 3806.0,
+          "units_ie": 3198.2,
           "int_curr": 19232,
           "int_prev": 2016,
           "int_ie": 954.0
@@ -3744,10 +3744,10 @@
         "mensual": {
           "rec_curr": 137,
           "rec_prev": 128,
-          "rec_ie": 107.0,
+          "rec_ie": 99.4,
           "units_curr": 2662,
           "units_prev": 2732,
-          "units_ie": 97.4,
+          "units_ie": 80.1,
           "int_curr": 2288,
           "int_prev": 1892,
           "int_ie": 120.9
@@ -3755,10 +3755,10 @@
         "ytd": {
           "rec_curr": 409,
           "rec_prev": 362,
-          "rec_ie": 113.0,
+          "rec_ie": 105.1,
           "units_curr": 8348,
           "units_prev": 8312,
-          "units_ie": 100.4,
+          "units_ie": 84.3,
           "int_curr": 8578,
           "int_prev": 7222,
           "int_ie": 118.8
@@ -3766,10 +3766,10 @@
         "trimestre": {
           "rec_curr": 409,
           "rec_prev": 362,
-          "rec_ie": 113.0,
+          "rec_ie": 105.1,
           "units_curr": 8348,
           "units_prev": 8312,
-          "units_ie": 100.4,
+          "units_ie": 84.3,
           "int_curr": 8578,
           "int_prev": 7222,
           "int_ie": 118.8
@@ -3777,10 +3777,10 @@
         "semestre": {
           "rec_curr": 863,
           "rec_prev": 727,
-          "rec_ie": 118.7,
+          "rec_ie": 113.1,
           "units_curr": 17373,
           "units_prev": 15830,
-          "units_ie": 109.7,
+          "units_ie": 94.8,
           "int_curr": 16557,
           "int_prev": 13686,
           "int_ie": 121.0
@@ -3788,10 +3788,10 @@
         "mat": {
           "rec_curr": 1713,
           "rec_prev": 1416,
-          "rec_ie": 121.0,
+          "rec_ie": 118.5,
           "units_curr": 34966,
           "units_prev": 29978,
-          "units_ie": 116.6,
+          "units_ie": 102.6,
           "int_curr": 32576,
           "int_prev": 27671,
           "int_ie": 117.7
@@ -3806,55 +3806,55 @@
       "periods": {
         "mensual": {
           "rec_curr": 508,
-          "rec_prev": 478,
-          "rec_ie": 106.3,
+          "rec_prev": 475,
+          "rec_ie": 100.4,
           "units_curr": 1897,
           "units_prev": 1446,
-          "units_ie": 131.2,
+          "units_ie": 121.0,
           "int_curr": 1390,
           "int_prev": 1377,
           "int_ie": 100.9
         },
         "ytd": {
           "rec_curr": 1549,
-          "rec_prev": 1474,
-          "rec_ie": 105.1,
+          "rec_prev": 1464,
+          "rec_ie": 101.0,
           "units_curr": 5824,
           "units_prev": 4937,
-          "units_ie": 118.0,
+          "units_ie": 109.8,
           "int_curr": 4988,
           "int_prev": 4871,
           "int_ie": 102.4
         },
         "trimestre": {
           "rec_curr": 1549,
-          "rec_prev": 1474,
-          "rec_ie": 105.1,
+          "rec_prev": 1464,
+          "rec_ie": 101.0,
           "units_curr": 5824,
           "units_prev": 4937,
-          "units_ie": 118.0,
+          "units_ie": 109.8,
           "int_curr": 4988,
           "int_prev": 4871,
           "int_ie": 102.4
         },
         "semestre": {
-          "rec_curr": 3171,
-          "rec_prev": 2957,
-          "rec_ie": 107.2,
+          "rec_curr": 3163,
+          "rec_prev": 1464,
+          "rec_ie": 103.6,
           "units_curr": 12067,
           "units_prev": 10161,
-          "units_ie": 118.8,
+          "units_ie": 108.9,
           "int_curr": 12014,
           "int_prev": 7876,
           "int_ie": 152.5
         },
         "mat": {
-          "rec_curr": 6425,
-          "rec_prev": 5279,
-          "rec_ie": 121.7,
+          "rec_curr": 6370,
+          "rec_prev": 1464,
+          "rec_ie": 106.1,
           "units_curr": 22648,
           "units_prev": 28973,
-          "units_ie": 78.2,
+          "units_ie": 74.7,
           "int_curr": 22275,
           "int_prev": 26077,
           "int_ie": 85.4
@@ -3869,55 +3869,55 @@
       "periods": {
         "mensual": {
           "rec_curr": 197,
-          "rec_prev": 182,
-          "rec_ie": 108.2,
+          "rec_prev": 181,
+          "rec_ie": 104.1,
           "units_curr": 2512,
           "units_prev": 1783,
-          "units_ie": 140.9,
+          "units_ie": 142.3,
           "int_curr": 2677,
           "int_prev": 1881,
           "int_ie": 142.3
         },
         "ytd": {
           "rec_curr": 612,
-          "rec_prev": 550,
-          "rec_ie": 111.3,
+          "rec_prev": 552,
+          "rec_ie": 111.6,
           "units_curr": 6751,
           "units_prev": 5452,
-          "units_ie": 123.8,
+          "units_ie": 122.5,
           "int_curr": 7229,
           "int_prev": 5788,
           "int_ie": 124.9
         },
         "trimestre": {
           "rec_curr": 612,
-          "rec_prev": 550,
-          "rec_ie": 111.3,
+          "rec_prev": 552,
+          "rec_ie": 111.6,
           "units_curr": 6751,
           "units_prev": 5452,
-          "units_ie": 123.8,
+          "units_ie": 122.5,
           "int_curr": 7229,
           "int_prev": 5788,
           "int_ie": 124.9
         },
         "semestre": {
-          "rec_curr": 1202,
-          "rec_prev": 1066,
-          "rec_ie": 112.8,
+          "rec_curr": 1221,
+          "rec_prev": 552,
+          "rec_ie": 113.4,
           "units_curr": 13461,
           "units_prev": 10880,
-          "units_ie": 123.7,
+          "units_ie": 124.4,
           "int_curr": 13234,
           "int_prev": 10951,
           "int_ie": 120.8
         },
         "mat": {
-          "rec_curr": 2288,
-          "rec_prev": 1845,
-          "rec_ie": 124.0,
+          "rec_curr": 2321,
+          "rec_prev": 552,
+          "rec_ie": 107.5,
           "units_curr": 25112,
           "units_prev": 19870,
-          "units_ie": 126.4,
+          "units_ie": 127.4,
           "int_curr": 24977,
           "int_prev": 19005,
           "int_ie": 131.4
@@ -3933,10 +3933,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 327,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 1872,
           "units_prev": 1903,
-          "units_ie": 98.4,
+          "units_ie": 100.0,
           "int_curr": 8658,
           "int_prev": 7041,
           "int_ie": 123.0
@@ -3944,10 +3944,10 @@
         "ytd": {
           "rec_curr": 615,
           "rec_prev": 1072,
-          "rec_ie": 57.4,
+          "rec_ie": 98.2,
           "units_curr": 5735,
           "units_prev": 5469,
-          "units_ie": 104.9,
+          "units_ie": 100.0,
           "int_curr": 27066,
           "int_prev": 21555,
           "int_ie": 125.6
@@ -3955,10 +3955,10 @@
         "trimestre": {
           "rec_curr": 615,
           "rec_prev": 1072,
-          "rec_ie": 57.4,
+          "rec_ie": 98.2,
           "units_curr": 5735,
           "units_prev": 5469,
-          "units_ie": 104.9,
+          "units_ie": 100.0,
           "int_curr": 27066,
           "int_prev": 21555,
           "int_ie": 125.6
@@ -3966,10 +3966,10 @@
         "semestre": {
           "rec_curr": 1586,
           "rec_prev": 2125,
-          "rec_ie": 74.6,
+          "rec_ie": 99.6,
           "units_curr": 12042,
           "units_prev": 11303,
-          "units_ie": 106.5,
+          "units_ie": 100.0,
           "int_curr": 59867,
           "int_prev": 44985,
           "int_ie": 133.1
@@ -3977,10 +3977,10 @@
         "mat": {
           "rec_curr": 3540,
           "rec_prev": 4192,
-          "rec_ie": 84.4,
+          "rec_ie": 98.2,
           "units_curr": 24898,
           "units_prev": 23880,
-          "units_ie": 104.3,
+          "units_ie": 100.0,
           "int_curr": 114008,
           "int_prev": 98190,
           "int_ie": 116.1
@@ -3995,58 +3995,121 @@
       "periods": {
         "mensual": {
           "rec_curr": 437,
-          "rec_prev": 455,
-          "rec_ie": 96.0,
+          "rec_prev": 447,
+          "rec_ie": 92.9,
           "units_curr": 1591,
           "units_prev": 1601,
-          "units_ie": 99.4,
+          "units_ie": 90.3,
           "int_curr": 1764,
           "int_prev": 1480,
           "int_ie": 119.2
         },
         "ytd": {
           "rec_curr": 1325,
-          "rec_prev": 1334,
-          "rec_ie": 99.3,
+          "rec_prev": 1306,
+          "rec_ie": 94.3,
           "units_curr": 4636,
           "units_prev": 4742,
-          "units_ie": 97.8,
+          "units_ie": 91.5,
           "int_curr": 5088,
           "int_prev": 5042,
           "int_ie": 100.9
         },
         "trimestre": {
           "rec_curr": 1325,
-          "rec_prev": 1334,
-          "rec_ie": 99.3,
+          "rec_prev": 1306,
+          "rec_ie": 94.3,
           "units_curr": 4636,
           "units_prev": 4742,
-          "units_ie": 97.8,
+          "units_ie": 91.5,
           "int_curr": 5088,
           "int_prev": 5042,
           "int_ie": 100.9
         },
         "semestre": {
-          "rec_curr": 2719,
-          "rec_prev": 2761,
-          "rec_ie": 98.5,
+          "rec_curr": 2696,
+          "rec_prev": 1306,
+          "rec_ie": 94.2,
           "units_curr": 9655,
           "units_prev": 9952,
-          "units_ie": 97.0,
+          "units_ie": 89.8,
           "int_curr": 9380,
           "int_prev": 9563,
           "int_ie": 98.1
         },
         "mat": {
-          "rec_curr": 5441,
-          "rec_prev": 5513,
-          "rec_ie": 98.7,
+          "rec_curr": 5375,
+          "rec_prev": 1306,
+          "rec_ie": 95.7,
           "units_curr": 19571,
           "units_prev": 20992,
-          "units_ie": 93.2,
+          "units_ie": 91.1,
           "int_curr": 18768,
           "int_prev": 19912,
           "int_ie": 94.3
+        }
+      }
+    },
+    {
+      "name": "VALQUIR (SIE)",
+      "line": "snc",
+      "lineName": "S.N.C.",
+      "family": "",
+      "periods": {
+        "mensual": {
+          "rec_curr": 480,
+          "rec_prev": 136,
+          "rec_ie": 235.3,
+          "units_curr": 1406,
+          "units_prev": 639,
+          "units_ie": 169.8,
+          "int_curr": 1316,
+          "int_prev": 588,
+          "int_ie": 223.8
+        },
+        "ytd": {
+          "rec_curr": 1427,
+          "rec_prev": 389,
+          "rec_ie": 236.7,
+          "units_curr": 3963,
+          "units_prev": 1754,
+          "units_ie": 172.0,
+          "int_curr": 4430,
+          "int_prev": 1905,
+          "int_ie": 232.5
+        },
+        "trimestre": {
+          "rec_curr": 1427,
+          "rec_prev": 389,
+          "rec_ie": 236.7,
+          "units_curr": 3963,
+          "units_prev": 1754,
+          "units_ie": 172.0,
+          "int_curr": 4430,
+          "int_prev": 1905,
+          "int_ie": 232.5
+        },
+        "semestre": {
+          "rec_curr": 2668,
+          "rec_prev": 389,
+          "rec_ie": 226.7,
+          "units_curr": 7852,
+          "units_prev": 3426,
+          "units_ie": 182.2,
+          "int_curr": 7536,
+          "int_prev": 3033,
+          "int_ie": 248.5
+        },
+        "mat": {
+          "rec_curr": 4217,
+          "rec_prev": 389,
+          "rec_ie": 203.8,
+          "units_curr": 12824,
+          "units_prev": 6840,
+          "units_ie": 156.2,
+          "int_curr": 12082,
+          "int_prev": 8469,
+          "int_ie": 142.7
         }
       }
     },
@@ -4059,10 +4122,10 @@
         "mensual": {
           "rec_curr": 376,
           "rec_prev": 123,
-          "rec_ie": 305.7,
+          "rec_ie": 228.3,
           "units_curr": 1389,
           "units_prev": 510,
-          "units_ie": 272.4,
+          "units_ie": 246.7,
           "int_curr": 2119,
           "int_prev": 520,
           "int_ie": 407.5
@@ -4070,10 +4133,10 @@
         "ytd": {
           "rec_curr": 1068,
           "rec_prev": 295,
-          "rec_ie": 362.0,
+          "rec_ie": 289.6,
           "units_curr": 3705,
           "units_prev": 1305,
-          "units_ie": 283.9,
+          "units_ie": 251.0,
           "int_curr": 5446,
           "int_prev": 1319,
           "int_ie": 412.9
@@ -4081,10 +4144,10 @@
         "trimestre": {
           "rec_curr": 1068,
           "rec_prev": 295,
-          "rec_ie": 362.0,
+          "rec_ie": 289.6,
           "units_curr": 3705,
           "units_prev": 1305,
-          "units_ie": 283.9,
+          "units_ie": 251.0,
           "int_curr": 5446,
           "int_prev": 1319,
           "int_ie": 412.9
@@ -4092,10 +4155,10 @@
         "semestre": {
           "rec_curr": 2041,
           "rec_prev": 493,
-          "rec_ie": 414.0,
+          "rec_ie": 321.5,
           "units_curr": 7109,
           "units_prev": 2327,
-          "units_ie": 305.5,
+          "units_ie": 269.4,
           "int_curr": 9082,
           "int_prev": 2199,
           "int_ie": 413.0
@@ -4103,10 +4166,10 @@
         "mat": {
           "rec_curr": 3406,
           "rec_prev": 577,
-          "rec_ie": 590.3,
+          "rec_ie": 359.7,
           "units_curr": 12955,
           "units_prev": 2852,
-          "units_ie": 454.2,
+          "units_ie": 379.9,
           "int_curr": 14875,
           "int_prev": 3566,
           "int_ie": 417.1
@@ -4122,10 +4185,10 @@
         "mensual": {
           "rec_curr": 259,
           "rec_prev": 260,
-          "rec_ie": 99.6,
+          "rec_ie": null,
           "units_curr": 1873,
           "units_prev": 2483,
-          "units_ie": 75.4,
+          "units_ie": 100.0,
           "int_curr": 1491,
           "int_prev": 1468,
           "int_ie": 101.6
@@ -4133,10 +4196,10 @@
         "ytd": {
           "rec_curr": 588,
           "rec_prev": 561,
-          "rec_ie": 104.8,
+          "rec_ie": null,
           "units_curr": 3719,
           "units_prev": 5690,
-          "units_ie": 65.4,
+          "units_ie": 100.0,
           "int_curr": 3026,
           "int_prev": 3821,
           "int_ie": 79.2
@@ -4144,10 +4207,10 @@
         "trimestre": {
           "rec_curr": 588,
           "rec_prev": 561,
-          "rec_ie": 104.8,
+          "rec_ie": null,
           "units_curr": 3719,
           "units_prev": 5690,
-          "units_ie": 65.4,
+          "units_ie": 100.0,
           "int_curr": 3026,
           "int_prev": 3821,
           "int_ie": 79.2
@@ -4155,10 +4218,10 @@
         "semestre": {
           "rec_curr": 1560,
           "rec_prev": 561,
-          "rec_ie": 278.1,
+          "rec_ie": null,
           "units_curr": 8868,
           "units_prev": 11693,
-          "units_ie": 75.8,
+          "units_ie": 100.0,
           "int_curr": 7276,
           "int_prev": 6717,
           "int_ie": 108.3
@@ -4166,10 +4229,10 @@
         "mat": {
           "rec_curr": 4559,
           "rec_prev": 561,
-          "rec_ie": 812.7,
+          "rec_ie": null,
           "units_curr": 36411,
           "units_prev": 37752,
-          "units_ie": 96.4,
+          "units_ie": 100.0,
           "int_curr": 30281,
           "int_prev": 37391,
           "int_ie": 81.0
@@ -4248,120 +4311,57 @@
         "mensual": {
           "rec_curr": 208,
           "rec_prev": 145,
-          "rec_ie": 143.4,
+          "rec_ie": 124.3,
           "units_curr": 1168,
           "units_prev": 949,
-          "units_ie": 123.1,
+          "units_ie": 111.5,
           "int_curr": 1245,
           "int_prev": 1379,
           "int_ie": 90.3
         },
         "ytd": {
           "rec_curr": 621,
-          "rec_prev": 418,
-          "rec_ie": 148.6,
+          "rec_prev": 422,
+          "rec_ie": 131.3,
           "units_curr": 3486,
           "units_prev": 3059,
-          "units_ie": 114.0,
+          "units_ie": 106.4,
           "int_curr": 3776,
           "int_prev": 4061,
           "int_ie": 93.0
         },
         "trimestre": {
           "rec_curr": 621,
-          "rec_prev": 418,
-          "rec_ie": 148.6,
+          "rec_prev": 422,
+          "rec_ie": 131.3,
           "units_curr": 3486,
           "units_prev": 3059,
-          "units_ie": 114.0,
+          "units_ie": 106.4,
           "int_curr": 3776,
           "int_prev": 4061,
           "int_ie": 93.0
         },
         "semestre": {
-          "rec_curr": 1228,
-          "rec_prev": 873,
-          "rec_ie": 140.7,
+          "rec_curr": 1235,
+          "rec_prev": 422,
+          "rec_ie": 134.6,
           "units_curr": 7142,
           "units_prev": 6028,
-          "units_ie": 118.5,
+          "units_ie": 111.7,
           "int_curr": 6930,
           "int_prev": 7132,
           "int_ie": 97.2
         },
         "mat": {
-          "rec_curr": 2406,
-          "rec_prev": 1649,
-          "rec_ie": 145.9,
+          "rec_curr": 2415,
+          "rec_prev": 422,
+          "rec_ie": 136.6,
           "units_curr": 14063,
           "units_prev": 12548,
-          "units_ie": 112.1,
+          "units_ie": 109.9,
           "int_curr": 15678,
           "int_prev": 15244,
           "int_ie": 102.8
-        }
-      }
-    },
-    {
-      "name": "VALQUIR (SIE)",
-      "line": "snc",
-      "lineName": "S.N.C.",
-      "family": "",
-      "periods": {
-        "mensual": {
-          "rec_curr": 0,
-          "rec_prev": 140,
-          "rec_ie": 0.0,
-          "units_curr": 1406,
-          "units_prev": 639,
-          "units_ie": 220.0,
-          "int_curr": 1316,
-          "int_prev": 588,
-          "int_ie": 223.8
-        },
-        "ytd": {
-          "rec_curr": 0,
-          "rec_prev": 396,
-          "rec_ie": 0.0,
-          "units_curr": 3963,
-          "units_prev": 1754,
-          "units_ie": 225.9,
-          "int_curr": 4430,
-          "int_prev": 1905,
-          "int_ie": 232.5
-        },
-        "trimestre": {
-          "rec_curr": 0,
-          "rec_prev": 396,
-          "rec_ie": 0.0,
-          "units_curr": 3963,
-          "units_prev": 1754,
-          "units_ie": 225.9,
-          "int_curr": 4430,
-          "int_prev": 1905,
-          "int_ie": 232.5
-        },
-        "semestre": {
-          "rec_curr": 1244,
-          "rec_prev": 748,
-          "rec_ie": 166.3,
-          "units_curr": 7852,
-          "units_prev": 3426,
-          "units_ie": 229.2,
-          "int_curr": 7536,
-          "int_prev": 3033,
-          "int_ie": 248.5
-        },
-        "mat": {
-          "rec_curr": 2810,
-          "rec_prev": 1070,
-          "rec_ie": 262.6,
-          "units_curr": 12824,
-          "units_prev": 6840,
-          "units_ie": 187.5,
-          "int_curr": 12082,
-          "int_prev": 8469,
-          "int_ie": 142.7
         }
       }
     },
@@ -4374,10 +4374,10 @@
         "mensual": {
           "rec_curr": 266,
           "rec_prev": 295,
-          "rec_ie": 90.2,
+          "rec_ie": 81.0,
           "units_curr": 995,
           "units_prev": 845,
-          "units_ie": 117.8,
+          "units_ie": 102.0,
           "int_curr": 1018,
           "int_prev": 947,
           "int_ie": 107.5
@@ -4385,10 +4385,10 @@
         "ytd": {
           "rec_curr": 815,
           "rec_prev": 928,
-          "rec_ie": 87.8,
+          "rec_ie": 81.7,
           "units_curr": 2902,
           "units_prev": 2553,
-          "units_ie": 113.7,
+          "units_ie": 100.6,
           "int_curr": 2946,
           "int_prev": 2993,
           "int_ie": 98.4
@@ -4396,10 +4396,10 @@
         "trimestre": {
           "rec_curr": 815,
           "rec_prev": 928,
-          "rec_ie": 87.8,
+          "rec_ie": 81.7,
           "units_curr": 2902,
           "units_prev": 2553,
-          "units_ie": 113.7,
+          "units_ie": 100.6,
           "int_curr": 2946,
           "int_prev": 2993,
           "int_ie": 98.4
@@ -4407,10 +4407,10 @@
         "semestre": {
           "rec_curr": 1596,
           "rec_prev": 1881,
-          "rec_ie": 84.8,
+          "rec_ie": 81.7,
           "units_curr": 5815,
           "units_prev": 5199,
-          "units_ie": 111.8,
+          "units_ie": 100.4,
           "int_curr": 5577,
           "int_prev": 6054,
           "int_ie": 92.1
@@ -4418,10 +4418,10 @@
         "mat": {
           "rec_curr": 3077,
           "rec_prev": 3672,
-          "rec_ie": 83.8,
+          "rec_ie": 80.7,
           "units_curr": 11260,
           "units_prev": 10815,
-          "units_ie": 104.1,
+          "units_ie": 94.9,
           "int_curr": 10846,
           "int_prev": 11943,
           "int_ie": 90.8
@@ -4436,55 +4436,55 @@
       "periods": {
         "mensual": {
           "rec_curr": 237,
-          "rec_prev": 212,
-          "rec_ie": 111.8,
+          "rec_prev": 202,
+          "rec_ie": 99.3,
           "units_curr": 952,
           "units_prev": 809,
-          "units_ie": 117.7,
+          "units_ie": 112.5,
           "int_curr": 936,
           "int_prev": 908,
           "int_ie": 103.1
         },
         "ytd": {
           "rec_curr": 725,
-          "rec_prev": 624,
-          "rec_ie": 116.2,
+          "rec_prev": 594,
+          "rec_ie": 101.7,
           "units_curr": 2806,
           "units_prev": 2495,
-          "units_ie": 112.5,
+          "units_ie": 108.4,
           "int_curr": 3073,
           "int_prev": 2552,
           "int_ie": 120.4
         },
         "trimestre": {
           "rec_curr": 725,
-          "rec_prev": 624,
-          "rec_ie": 116.2,
+          "rec_prev": 594,
+          "rec_ie": 101.7,
           "units_curr": 2806,
           "units_prev": 2495,
-          "units_ie": 112.5,
+          "units_ie": 108.4,
           "int_curr": 3073,
           "int_prev": 2552,
           "int_ie": 120.4
         },
         "semestre": {
-          "rec_curr": 1514,
-          "rec_prev": 1267,
-          "rec_ie": 119.5,
+          "rec_curr": 1488,
+          "rec_prev": 594,
+          "rec_ie": 101.3,
           "units_curr": 5756,
           "units_prev": 5302,
-          "units_ie": 108.6,
+          "units_ie": 106.1,
           "int_curr": 5866,
           "int_prev": 4502,
           "int_ie": 130.3
         },
         "mat": {
-          "rec_curr": 2799,
-          "rec_prev": 2481,
-          "rec_ie": 112.8,
+          "rec_curr": 2725,
+          "rec_prev": 594,
+          "rec_ie": 98.9,
           "units_curr": 11163,
           "units_prev": 12569,
-          "units_ie": 88.8,
+          "units_ie": 91.6,
           "int_curr": 10941,
           "int_prev": 11795,
           "int_ie": 92.8
@@ -4500,7 +4500,7 @@
         "mensual": {
           "rec_curr": 151,
           "rec_prev": 96,
-          "rec_ie": 157.3,
+          "rec_ie": 157.6,
           "units_curr": 1062,
           "units_prev": 0,
           "units_ie": null,
@@ -4511,7 +4511,7 @@
         "ytd": {
           "rec_curr": 351,
           "rec_prev": 276,
-          "rec_ie": 127.2,
+          "rec_ie": 131.2,
           "units_curr": 2425,
           "units_prev": 0,
           "units_ie": null,
@@ -4522,7 +4522,7 @@
         "trimestre": {
           "rec_curr": 351,
           "rec_prev": 276,
-          "rec_ie": 127.2,
+          "rec_ie": 131.2,
           "units_curr": 2425,
           "units_prev": 0,
           "units_ie": null,
@@ -4533,7 +4533,7 @@
         "semestre": {
           "rec_curr": 527,
           "rec_prev": 276,
-          "rec_ie": 190.9,
+          "rec_ie": 90.9,
           "units_curr": 4850,
           "units_prev": 0,
           "units_ie": null,
@@ -4544,7 +4544,7 @@
         "mat": {
           "rec_curr": 1261,
           "rec_prev": 276,
-          "rec_ie": 456.9,
+          "rec_ie": 108.0,
           "units_curr": 4850,
           "units_prev": 0,
           "units_ie": null,
@@ -4563,10 +4563,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 80,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 754,
           "units_prev": 686,
-          "units_ie": 109.9,
+          "units_ie": 112.9,
           "int_curr": 677,
           "int_prev": 587,
           "int_ie": 115.3
@@ -4574,10 +4574,10 @@
         "ytd": {
           "rec_curr": 176,
           "rec_prev": 261,
-          "rec_ie": 67.4,
+          "rec_ie": 112.8,
           "units_curr": 2238,
           "units_prev": 2061,
-          "units_ie": 108.6,
+          "units_ie": 111.8,
           "int_curr": 2106,
           "int_prev": 1939,
           "int_ie": 108.6
@@ -4585,10 +4585,10 @@
         "trimestre": {
           "rec_curr": 176,
           "rec_prev": 261,
-          "rec_ie": 67.4,
+          "rec_ie": 112.8,
           "units_curr": 2238,
           "units_prev": 2061,
-          "units_ie": 108.6,
+          "units_ie": 111.8,
           "int_curr": 2106,
           "int_prev": 1939,
           "int_ie": 108.6
@@ -4596,10 +4596,10 @@
         "semestre": {
           "rec_curr": 434,
           "rec_prev": 568,
-          "rec_ie": 76.4,
+          "rec_ie": 109.4,
           "units_curr": 4559,
           "units_prev": 4113,
-          "units_ie": 110.8,
+          "units_ie": 114.6,
           "int_curr": 4220,
           "int_prev": 3941,
           "int_ie": 107.1
@@ -4607,10 +4607,10 @@
         "mat": {
           "rec_curr": 893,
           "rec_prev": 1106,
-          "rec_ie": 80.7,
+          "rec_ie": 111.4,
           "units_curr": 8735,
           "units_prev": 8488,
-          "units_ie": 102.9,
+          "units_ie": 106.3,
           "int_curr": 8106,
           "int_prev": 7627,
           "int_ie": 106.3
@@ -4626,10 +4626,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 50,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 467,
           "units_prev": 699,
-          "units_ie": 66.8,
+          "units_ie": 68.6,
           "int_curr": 419,
           "int_prev": 364,
           "int_ie": 115.1
@@ -4637,10 +4637,10 @@
         "ytd": {
           "rec_curr": 120,
           "rec_prev": 178,
-          "rec_ie": 67.4,
+          "rec_ie": 112.8,
           "units_curr": 1524,
           "units_prev": 1820,
-          "units_ie": 83.7,
+          "units_ie": 86.2,
           "int_curr": 1434,
           "int_prev": 1320,
           "int_ie": 108.6
@@ -4648,10 +4648,10 @@
         "trimestre": {
           "rec_curr": 120,
           "rec_prev": 178,
-          "rec_ie": 67.4,
+          "rec_ie": 112.8,
           "units_curr": 1524,
           "units_prev": 1820,
-          "units_ie": 83.7,
+          "units_ie": 86.2,
           "int_curr": 1434,
           "int_prev": 1320,
           "int_ie": 108.6
@@ -4659,10 +4659,10 @@
         "semestre": {
           "rec_curr": 281,
           "rec_prev": 368,
-          "rec_ie": 76.4,
+          "rec_ie": 109.4,
           "units_curr": 2954,
           "units_prev": 4145,
-          "units_ie": 71.3,
+          "units_ie": 73.7,
           "int_curr": 2735,
           "int_prev": 2554,
           "int_ie": 107.1
@@ -4670,10 +4670,10 @@
         "mat": {
           "rec_curr": 655,
           "rec_prev": 812,
-          "rec_ie": 80.7,
+          "rec_ie": 111.3,
           "units_curr": 6409,
           "units_prev": 8692,
-          "units_ie": 73.7,
+          "units_ie": 76.2,
           "int_curr": 5947,
           "int_prev": 5596,
           "int_ie": 106.3
@@ -4689,10 +4689,10 @@
         "mensual": {
           "rec_curr": 0,
           "rec_prev": 47,
-          "rec_ie": 0.0,
+          "rec_ie": null,
           "units_curr": 468,
           "units_prev": 402,
-          "units_ie": 116.4,
+          "units_ie": 115.5,
           "int_curr": 223,
           "int_prev": 335,
           "int_ie": 66.6
@@ -4700,10 +4700,10 @@
         "ytd": {
           "rec_curr": 250,
           "rec_prev": 132,
-          "rec_ie": 189.4,
+          "rec_ie": 317.9,
           "units_curr": 1257,
           "units_prev": 953,
-          "units_ie": 131.9,
+          "units_ie": 132.4,
           "int_curr": 663,
           "int_prev": 949,
           "int_ie": 69.9
@@ -4711,10 +4711,10 @@
         "trimestre": {
           "rec_curr": 250,
           "rec_prev": 132,
-          "rec_ie": 189.4,
+          "rec_ie": 317.9,
           "units_curr": 1257,
           "units_prev": 953,
-          "units_ie": 131.9,
+          "units_ie": 132.4,
           "int_curr": 663,
           "int_prev": 949,
           "int_ie": 69.9
@@ -4722,10 +4722,10 @@
         "semestre": {
           "rec_curr": 515,
           "rec_prev": 257,
-          "rec_ie": 200.4,
+          "rec_ie": 277.7,
           "units_curr": 3182,
           "units_prev": 1919,
-          "units_ie": 165.8,
+          "units_ie": 172.8,
           "int_curr": 2578,
           "int_prev": 2025,
           "int_ie": 127.3
@@ -4733,10 +4733,10 @@
         "mat": {
           "rec_curr": 871,
           "rec_prev": 505,
-          "rec_ie": 172.5,
+          "rec_ie": 213.2,
           "units_curr": 6459,
           "units_prev": 3963,
-          "units_ie": 163.0,
+          "units_ie": 177.1,
           "int_curr": 6245,
           "int_prev": 3502,
           "int_ie": 178.3
@@ -4752,10 +4752,10 @@
         "mensual": {
           "rec_curr": 32,
           "rec_prev": 22,
-          "rec_ie": 145.5,
+          "rec_ie": 162.6,
           "units_curr": 181,
           "units_prev": 187,
-          "units_ie": 96.8,
+          "units_ie": 102.7,
           "int_curr": 149,
           "int_prev": 0,
           "int_ie": null
@@ -4763,10 +4763,10 @@
         "ytd": {
           "rec_curr": 87,
           "rec_prev": 69,
-          "rec_ie": 126.1,
+          "rec_ie": 141.8,
           "units_curr": 566,
           "units_prev": 506,
-          "units_ie": 111.9,
+          "units_ie": 109.0,
           "int_curr": 546,
           "int_prev": 0,
           "int_ie": null
@@ -4774,10 +4774,10 @@
         "trimestre": {
           "rec_curr": 87,
           "rec_prev": 69,
-          "rec_ie": 126.1,
+          "rec_ie": 141.8,
           "units_curr": 566,
           "units_prev": 506,
-          "units_ie": 111.9,
+          "units_ie": 109.0,
           "int_curr": 546,
           "int_prev": 0,
           "int_ie": null
@@ -4785,10 +4785,10 @@
         "semestre": {
           "rec_curr": 164,
           "rec_prev": 69,
-          "rec_ie": 237.7,
+          "rec_ie": 121.9,
           "units_curr": 1199,
           "units_prev": 1088,
-          "units_ie": 110.2,
+          "units_ie": 112.1,
           "int_curr": 780,
           "int_prev": 0,
           "int_ie": null
@@ -4796,10 +4796,10 @@
         "mat": {
           "rec_curr": 328,
           "rec_prev": 69,
-          "rec_ie": 475.4,
+          "rec_ie": 106.2,
           "units_curr": 2361,
           "units_prev": 2283,
-          "units_ie": 103.4,
+          "units_ie": 107.8,
           "int_curr": 731,
           "int_prev": 0,
           "int_ie": null
@@ -4941,7 +4941,7 @@
         "mensual": {
           "rec_curr": 9,
           "rec_prev": 42,
-          "rec_ie": 21.4,
+          "rec_ie": 19.8,
           "units_curr": 0,
           "units_prev": 154,
           "units_ie": 0.0,
@@ -4952,7 +4952,7 @@
         "ytd": {
           "rec_curr": 21,
           "rec_prev": 135,
-          "rec_ie": 15.6,
+          "rec_ie": 14.9,
           "units_curr": 0,
           "units_prev": 476,
           "units_ie": 0.0,
@@ -4963,7 +4963,7 @@
         "trimestre": {
           "rec_curr": 21,
           "rec_prev": 135,
-          "rec_ie": 15.6,
+          "rec_ie": 14.9,
           "units_curr": 0,
           "units_prev": 476,
           "units_ie": 0.0,
@@ -4974,7 +4974,7 @@
         "semestre": {
           "rec_curr": 53,
           "rec_prev": 135,
-          "rec_ie": 39.3,
+          "rec_ie": 18.2,
           "units_curr": 1,
           "units_prev": 1093,
           "units_ie": 0.1,
@@ -4985,10 +4985,10 @@
         "mat": {
           "rec_curr": 229,
           "rec_prev": 135,
-          "rec_ie": 169.6,
+          "rec_ie": 38.7,
           "units_curr": 267,
           "units_prev": 2862,
-          "units_ie": 9.3,
+          "units_ie": 8.9,
           "int_curr": 484,
           "int_prev": 390,
           "int_ie": 124.1
