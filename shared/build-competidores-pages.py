@@ -209,8 +209,8 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
       <span class="lbl">Métrica</span>
       <div class="seg" id="ctl-metric">
         <button data-m="ms" class="on">MS%</button>
-        <button data-m="dms">Δ MS% (pp)</button>
-        <button data-m="du">Δ Unidades %</button>
+        <button data-m="dms">VAR MS%</button>
+        <button data-m="du">VAR UNIDADES%</button>
       </div>
       <span class="meta" id="period-label"></span>
     </div>
@@ -541,8 +541,8 @@ __DATA_LOADER__
     const ppLab = period.prevLabel || '';
     let metricLabel;
     if (HEAT_METRIC==='ms')       metricLabel = `MS% · ${pLab}`;
-    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `Δ MS% pp · ${pLab} vs ${ppLab}` : `Δ MS% pp · sin comparador`;
-    else                          metricLabel = ppLab ? `Δ Units % · ${pLab} vs ${ppLab}` : `Δ Units % · sin comparador`;
+    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `VAR MS% · ${pLab} vs ${ppLab}` : `VAR MS% · sin comparador`;
+    else                          metricLabel = ppLab ? `VAR UNIDADES% · ${pLab} vs ${ppLab}` : `VAR UNIDADES% · sin comparador`;
     const unitsLabel = `Unidades · ${pLab}`;
     let h = '<tr><th rowspan="2">Región / Provincia</th>';
     for (const row of grid.rows){
@@ -649,8 +649,8 @@ __DATA_LOADER__
     const ppLab = period.prevLabel || '';
     let metricLabel;
     if (HEAT_METRIC==='ms')       metricLabel = `MS% · ${pLab}`;
-    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `Δ MS% pp · ${pLab} vs ${ppLab}` : `Δ MS% pp · sin comparador`;
-    else                          metricLabel = ppLab ? `Δ Units % · ${pLab} vs ${ppLab}` : `Δ Units % · sin comparador`;
+    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `VAR MS% · ${pLab} vs ${ppLab}` : `VAR MS% · sin comparador`;
+    else                          metricLabel = ppLab ? `VAR UNIDADES% · ${pLab} vs ${ppLab}` : `VAR UNIDADES% · sin comparador`;
     const unitsLabel = `Unidades · ${pLab}`;
     let h = '<tr><th rowspan="2">Región / Provincia</th>';
     for (const s of series){
@@ -764,8 +764,8 @@ __DATA_LOADER__
     const ppLab = period.prevLabel || '';
     let metricLabel;
     if (HEAT_METRIC==='ms')       metricLabel = `MS% · ${pLab}`;
-    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `Δ MS% pp · ${pLab} vs ${ppLab}` : `Δ MS% pp · sin comparador`;
-    else                          metricLabel = ppLab ? `Δ Units % · ${pLab} vs ${ppLab}` : `Δ Units % · sin comparador`;
+    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `VAR MS% · ${pLab} vs ${ppLab}` : `VAR MS% · sin comparador`;
+    else                          metricLabel = ppLab ? `VAR UNIDADES% · ${pLab} vs ${ppLab}` : `VAR UNIDADES% · sin comparador`;
     const unitsLabel = `Unidades · ${pLab}`;
     let h = '<tr><th rowspan="2">Provincia</th>';
     for (const s of series){
