@@ -237,45 +237,57 @@ def coverage(monthly_dicts, window_keys):
 
 def compute_recetas_kpi(D, window_curr, window_prev):
     """Suma recetas SIE en la ventana sumando rec_ms[fam].sie.
-    Devuelve None en prev si la ventana prev no esta cubierta al menos al 80%."""
+
+    - sie_curr / mkt_curr: sumados sobre TODA la ventana curr (sin sym).
+      Asi MAT siempre representa 12 meses reales aunque prev no exista.
+    - sie_prev / mkt_prev: sumados con inclusion SIMETRICA por (mes_curr,
+      mes_prev) por familia, para que el comparable sea coherente cuando
+      hay data parcial. None si la ventana prev no esta cubierta >=80%.
+    """
     rec_ms = D.get('rec_ms', {})
     if not rec_ms:
         return {'sie_curr': 0, 'sie_prev': None, 'mkt_curr': 0, 'mkt_prev': None}
     sie_dicts = [obj.get('sie', {}) for obj in rec_ms.values() if isinstance(obj, dict)]
     cov_curr = coverage(sie_dicts, window_curr)
     cov_prev = coverage(sie_dicts, window_prev)
-    sie_curr = sie_prev = 0.0
-    mkt_curr = mkt_prev = 0.0
-    # Sumar PER-FAMILY con inclusion simetrica: si el month_key falta en
-    # curr para una familia, tambien se excluye del prev (y viceversa).
-    # Esto evita falsos drops cuando una familia tiene Mar 2025 pero no
-    # Mar 2026 (data parcial / no actualizada).
+
+    sie_curr = mkt_curr = 0.0  # full window (display)
+    sie_prev_sym = mkt_prev_sym = 0.0  # symmetric (comparable)
+    sie_curr_sym = mkt_curr_sym = 0.0  # symmetric curr (para IE coherente)
+
     for fam, obj in rec_ms.items():
         if not isinstance(obj, dict): continue
         sie_m = obj.get('sie', {})
         ms_m  = obj.get('ms', {})
-        # Por posicion: window_curr y window_prev deben tener mismo length
-        # y representar mismos meses-de-año (Ene curr <-> Ene prev, etc).
-        for i, (mk_c, mk_p) in enumerate(zip(window_curr, window_prev)):
-            has_c = mk_c in sie_m
-            has_p = mk_p in sie_m
-            if not (has_c and has_p):
-                continue   # skip ambos si falta uno
+        # full curr (display): suma todos los meses curr disponibles
+        for mk_c in window_curr:
+            if mk_c not in sie_m: continue
+            v_c = float(sie_m.get(mk_c, 0) or 0)
+            ms_c = float(ms_m.get(mk_c, 0) or 0)
+            sie_curr += v_c
+            mkt_curr += (v_c / (ms_c/100.0)) if ms_c > 0 else v_c
+        # symmetric (para prev y para IE): solo cuando ambos meses estan
+        for mk_c, mk_p in zip(window_curr, window_prev):
+            if mk_c not in sie_m or mk_p not in sie_m: continue
             v_c = float(sie_m.get(mk_c, 0) or 0)
             v_p = float(sie_m.get(mk_p, 0) or 0)
-            sie_curr += v_c
-            sie_prev += v_p
             ms_c = float(ms_m.get(mk_c, 0) or 0)
             ms_p = float(ms_m.get(mk_p, 0) or 0)
-            mkt_curr += (v_c / (ms_c/100.0)) if ms_c > 0 else v_c
-            mkt_prev += (v_p / (ms_p/100.0)) if ms_p > 0 else v_p
+            sie_curr_sym += v_c
+            sie_prev_sym += v_p
+            mkt_curr_sym += (v_c / (ms_c/100.0)) if ms_c > 0 else v_c
+            mkt_prev_sym += (v_p / (ms_p/100.0)) if ms_p > 0 else v_p
+
     incomplete_prev = cov_prev < len(window_prev) * 0.8
     incomplete_curr = cov_curr < len(window_curr) * 0.8
     return {
         'sie_curr': int(round(sie_curr)) if not incomplete_curr else None,
-        'sie_prev': int(round(sie_prev)) if not incomplete_prev else None,
+        'sie_prev': int(round(sie_prev_sym)) if not incomplete_prev else None,
         'mkt_curr': int(round(mkt_curr)) if not incomplete_curr else None,
-        'mkt_prev': int(round(mkt_prev)) if not incomplete_prev else None,
+        'mkt_prev': int(round(mkt_prev_sym)) if not incomplete_prev else None,
+        # Para IE necesitamos comparable: sym curr emparejado a sym prev
+        'sie_curr_sym': int(round(sie_curr_sym)) if not incomplete_prev else None,
+        'mkt_curr_sym': int(round(mkt_curr_sym)) if not incomplete_prev else None,
     }
 
 
@@ -900,13 +912,16 @@ def main():
                 """IE = (curr/prev)*100. None si prev<=0 o falta."""
                 if c is None or p is None or p <= 0: return None
                 return round(c / p * 100, 1)
+            # IE / MS comparable usan sym (curr emparejado a meses prev disponibles)
+            rec_sie_c_sym = rec.get('sie_curr_sym', rec['sie_curr'])
+            rec_mkt_c_sym = rec.get('mkt_curr_sym', rec['mkt_curr'])
             kpis[period] = {
                 'recetas_sie':   {'curr': rec['sie_curr'],   'prev': rec['sie_prev'],
-                                  'ie': safe_ie(rec['sie_curr'], rec['sie_prev'])},
+                                  'ie': safe_ie(rec_sie_c_sym, rec['sie_prev'])},
                 'ms_recetas':    {'curr': safe_ms(rec['sie_curr'], rec['mkt_curr']),
                                   'prev': safe_ms(rec['sie_prev'], rec['mkt_prev'])},
                 'mercado_recetas': {'curr': rec['mkt_curr'], 'prev': rec['mkt_prev'],
-                                    'ie': safe_ie(rec['mkt_curr'], rec['mkt_prev'])},
+                                    'ie': safe_ie(rec_mkt_c_sym, rec['mkt_prev'])},
                 'units_sie':     {'curr': iqvia['sie_curr'], 'prev': iqvia['sie_prev'],
                                   'ie': safe_ie(iqvia['sie_curr'], iqvia['sie_prev'])},
                 'ms_units':      {'curr': safe_ms(iqvia['sie_curr'], iqvia['mkt_curr']),
