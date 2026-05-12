@@ -1133,7 +1133,7 @@ function populateCardKpis(){
         <span class="kpi-mini-val ${ieClass(ie)}">${fmtIE(ie)}</span>
       </div>
       <div class="kpi-mini" title="${tipVAR}">
-        <span class="kpi-mini-lbl">Δ MS% (pp)</span>
+        <span class="kpi-mini-lbl">VAR MS%</span>
         <span class="kpi-mini-val ${varClass(varPP)}">${varPP==null?'—':(varPP>=0?'+':'')+varPP.toFixed(2)}</span>
       </div>
       <span title="${tipSpark}">${renderSparkline(line.sparkline_units_sie, color)}</span>
