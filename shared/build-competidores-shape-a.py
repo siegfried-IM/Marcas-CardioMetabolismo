@@ -29,6 +29,8 @@ LINES = [
     ('ATB',          INPUTS / 'ATB/2026-04/fuentes-originales/DDD ATB.xlsx',                                  REPO / 'ATB/DDD/competidores-data.js'),
     ('respiratorio', INPUTS / 'respiratorio/2026-04/ddd/Producto-Molécula-ATC-provincia - 6 de abril de 2026.xlsx',
                                                                                                               REPO / 'respiratorio/DDD/competidores-data.js'),
+    ('OTC',          INPUTS / 'OTC/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 12 de mayo de 2026.xlsx',
+                                                                                                              REPO / 'OTC/DDD/competidores-data.js'),
 ]
 
 MONTH_ORDER = {'Ene':1,'Feb':2,'Mar':3,'Abr':4,'May':5,'Jun':6,
@@ -91,6 +93,8 @@ SIE_PATTERNS_BY_LINE = {
     'ATB': [r'^ACANTEX\b', r'^BACTRIM\b', r'^CEFALEXINA ARG', r'^MACROMAX\b'],
     'respiratorio': [r'^ACEMUK\b', r'^AIREAL\b', r'^ALIDIAL\b', r'^DECADRON\b',
                      r'^DUO-DECADRON\b', r'^HEXALER\b'],
+    'OTC': [r'^ACERPES\b', r'^ACI-TIP\b', r'^ALUMPAK\b', r'^ARTRO RED\b',
+            r'^FLEXINA\b', r'^MAGNUS\b', r'^TETRALGIN\b'],
 }
 
 
