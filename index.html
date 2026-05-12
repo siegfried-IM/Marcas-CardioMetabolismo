@@ -624,41 +624,36 @@ body {
 }
 
 /* ─── KPI strip dentro de cards (priority 1) ──────────────────────── */
-.card-minimal { gap: 16px; }
 .card-kpi-strip {
-  display: flex; align-items: center; gap: 14px;
-  flex: 1; justify-content: flex-end;
-  padding: 0 18px;
-  border-left: 1px solid var(--gray-200);
-  border-right: 1px solid var(--gray-200);
+  display: flex; align-items: center; gap: 18px;
+  padding: 12px 24px;
+  border-top: 1px solid var(--gray-100);
+  background: #fafbfc;
   min-width: 0;
 }
-.card-kpi-strip.empty { visibility: hidden; }
+.card-kpi-strip.empty { display: none; }
 .kpi-mini {
   display: flex; flex-direction: column;
   align-items: flex-start; gap: 2px;
-  min-width: 54px;
+  min-width: 0;
 }
 .kpi-mini-lbl {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 9px; letter-spacing: .1em;
   color: var(--gray-400); text-transform: uppercase; font-weight: 600;
+  white-space: nowrap;
 }
 .kpi-mini-val {
   font-size: 15px; font-weight: 700;
   color: var(--gray-900); letter-spacing: -.01em;
   font-variant-numeric: tabular-nums; line-height: 1.1;
+  white-space: nowrap;
 }
 .kpi-mini-val.up   { color: #166534; }
 .kpi-mini-val.down { color: #b01e1e; }
 .kpi-mini-val.flat { color: var(--gray-500); }
-.kpi-spark { display: block; margin-left: 6px; flex-shrink: 0; }
-@media(max-width:1100px){
-  .card-kpi-strip { gap:10px; padding: 0 10px; }
-  .kpi-mini { min-width: 46px; }
-  .kpi-spark { display:none; }
-}
-@media(max-width:780px){ .card-kpi-strip { display:none; } }
+.kpi-spark { display: block; margin-left: auto; flex-shrink: 0; }
+@media(max-width:780px){ .kpi-spark { display:none; } }
 
 /* ─── Hub toolbar (priority 6 + 2) ────────────────────────────────── */
 .hub-toolbar {
@@ -1114,13 +1109,12 @@ function populateCardKpis(){
     const key = HUB_LINE_MAP[dl];
     const minimal = card.querySelector('.card-minimal');
     if(!minimal) return;
-    let strip = minimal.querySelector('.card-kpi-strip');
+    let strip = card.querySelector(':scope > .card-kpi-strip');
     if(!strip){
       strip = document.createElement('div');
       strip.className = 'card-kpi-strip';
-      // Insertar antes del bloque de acciones (último hijo)
-      const actions = minimal.lastElementChild;
-      minimal.insertBefore(strip, actions);
+      // Insertar DESPUÉS del card-minimal, como fila propia debajo
+      minimal.after(strip);
     }
     if(!HUB_KPI || !key){
       strip.classList.add('empty');
