@@ -31,6 +31,8 @@ LINES = [
                                                                                                               REPO / 'respiratorio/DDD/competidores-data.js'),
     ('OTC',          INPUTS / 'OTC/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 12 de mayo de 2026.xlsx',
                                                                                                               REPO / 'OTC/DDD/competidores-data.js'),
+    ('dermato',      INPUTS / 'dermato/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 12 de mayo de 2026 (2).xlsx',
+                                                                                                              REPO / 'dermatologia/competidores-data.js'),
 ]
 
 MONTH_ORDER = {'Ene':1,'Feb':2,'Mar':3,'Abr':4,'May':5,'Jun':6,
@@ -95,6 +97,8 @@ SIE_PATTERNS_BY_LINE = {
                      r'^DUO-DECADRON\b', r'^HEXALER\b'],
     'OTC': [r'^ACERPES\b', r'^ACI-TIP\b', r'^ALUMPAK\b', r'^ARTRO RED\b',
             r'^FLEXINA\b', r'^MAGNUS\b', r'^TETRALGIN\b'],
+    'dermato': [r'^ACNECLIN\b', r'^CLOBESOL\b', r'^MICOMAZOL\b',
+                r'^MICROSONA\b', r'^MOMETAX\b', r'^PALDAR\b', r'^ROACCUTAN\b'],
 }
 
 
