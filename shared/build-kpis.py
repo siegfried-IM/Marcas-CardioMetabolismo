@@ -61,6 +61,9 @@ LINES = [
     {'key':'otx',     'name':'OTC',              'icon':'🩹', 'color':'#0284C7',
      'href':'OTC/',           'owner':'Tatiana Peker',
      'source':('data.js','OTC/data.js')},
+    {'key':'derma',   'name':'Dermatología',     'icon':'🩹', 'color':'#D97706',
+     'href':'dermatologia/',  'owner':'Javier Rodríguez',
+     'source':('inline','dermatologia/dermato_dashboard.html')},
 ]
 
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-12T11:01:27",
+  "generated_at": "2026-05-12T11:12:53",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -1317,6 +1317,223 @@
           }
         }
       }
+    },
+    {
+      "key": "derma",
+      "name": "Dermatología",
+      "icon": "🩹",
+      "color": "#D97706",
+      "href": "dermatologia/",
+      "owner": "Javier Rodríguez",
+      "recetas_through": "Mar 2026",
+      "iqvia_through": "Mar 2026",
+      "venta_through": "Apr 2026",
+      "has_recetas": true,
+      "sparkline_units_sie": [
+        154675,
+        166123,
+        165004,
+        186832,
+        168581,
+        183784,
+        184812,
+        151923,
+        167741,
+        152070,
+        126363,
+        159525
+      ],
+      "sparkline_months": [
+        "Apr 2025",
+        "May 2025",
+        "Jun 2025",
+        "Jul 2025",
+        "Aug 2025",
+        "Sep 2025",
+        "Oct 2025",
+        "Nov 2025",
+        "Dec 2025",
+        "Jan 2026",
+        "Feb 2026",
+        "Mar 2026"
+      ],
+      "kpis": {
+        "mensual": {
+          "recetas_sie": {
+            "curr": 2244,
+            "prev": 2534,
+            "ie": 88.6
+          },
+          "ms_recetas": {
+            "curr": 67.77,
+            "prev": 67.5
+          },
+          "mercado_recetas": {
+            "curr": 3311,
+            "prev": 3754,
+            "ie": 88.2
+          },
+          "units_sie": {
+            "curr": 159525,
+            "prev": 139999,
+            "ie": 113.9
+          },
+          "ms_units": {
+            "curr": 34.66,
+            "prev": 31.87
+          },
+          "mercado_units": {
+            "curr": 460251,
+            "prev": 439225,
+            "ie": 104.8
+          },
+          "venta_interna": {
+            "curr": 102649,
+            "prev": 84235,
+            "ie": 121.9
+          }
+        },
+        "ytd": {
+          "recetas_sie": {
+            "curr": 39813,
+            "prev": 45167,
+            "ie": 88.1
+          },
+          "ms_recetas": {
+            "curr": 33.58,
+            "prev": 34.48
+          },
+          "mercado_recetas": {
+            "curr": 118546,
+            "prev": 130986,
+            "ie": 90.5
+          },
+          "units_sie": {
+            "curr": 437958,
+            "prev": 394873,
+            "ie": 110.9
+          },
+          "ms_units": {
+            "curr": 32.92,
+            "prev": 30.93
+          },
+          "mercado_units": {
+            "curr": 1330544,
+            "prev": 1276621,
+            "ie": 104.2
+          },
+          "venta_interna": {
+            "curr": 310619,
+            "prev": 275962,
+            "ie": 112.6
+          }
+        },
+        "trimestre": {
+          "recetas_sie": {
+            "curr": 39813,
+            "prev": 45167,
+            "ie": 88.1
+          },
+          "ms_recetas": {
+            "curr": 33.58,
+            "prev": 34.48
+          },
+          "mercado_recetas": {
+            "curr": 118546,
+            "prev": 130986,
+            "ie": 90.5
+          },
+          "units_sie": {
+            "curr": 437958,
+            "prev": 394873,
+            "ie": 110.9
+          },
+          "ms_units": {
+            "curr": 32.92,
+            "prev": 30.93
+          },
+          "mercado_units": {
+            "curr": 1330544,
+            "prev": 1276621,
+            "ie": 104.2
+          },
+          "venta_interna": {
+            "curr": 310619,
+            "prev": 275962,
+            "ie": 112.6
+          }
+        },
+        "semestre": {
+          "recetas_sie": {
+            "curr": 95417,
+            "prev": 116343,
+            "ie": 82.0
+          },
+          "ms_recetas": {
+            "curr": 32.31,
+            "prev": 34.43
+          },
+          "mercado_recetas": {
+            "curr": 295296,
+            "prev": 337872,
+            "ie": 87.4
+          },
+          "units_sie": {
+            "curr": 942434,
+            "prev": 832874,
+            "ie": 113.2
+          },
+          "ms_units": {
+            "curr": 33.69,
+            "prev": 31.24
+          },
+          "mercado_units": {
+            "curr": 2797640,
+            "prev": 2666327,
+            "ie": 104.9
+          },
+          "venta_interna": {
+            "curr": 614099,
+            "prev": 544382,
+            "ie": 112.8
+          }
+        },
+        "mat": {
+          "recetas_sie": {
+            "curr": 206940,
+            "prev": 252756,
+            "ie": 81.9
+          },
+          "ms_recetas": {
+            "curr": 32.07,
+            "prev": 34.04
+          },
+          "mercado_recetas": {
+            "curr": 645318,
+            "prev": 742634,
+            "ie": 86.9
+          },
+          "units_sie": {
+            "curr": 1967433,
+            "prev": 1748703,
+            "ie": 112.5
+          },
+          "ms_units": {
+            "curr": 35.04,
+            "prev": 32.62
+          },
+          "mercado_units": {
+            "curr": 5614719,
+            "prev": 5361540,
+            "ie": 104.7
+          },
+          "venta_interna": {
+            "curr": 1234038,
+            "prev": 1113097,
+            "ie": 110.9
+          }
+        }
+      }
     }
   ],
   "products": [
@@ -2329,6 +2546,69 @@
       }
     },
     {
+      "name": "MICOMAZOL (SIE)",
+      "line": "derma",
+      "lineName": "Dermatología",
+      "family": "CLOTRIMAZOLE",
+      "periods": {
+        "mensual": {
+          "rec_curr": 0,
+          "rec_prev": 2601,
+          "rec_ie": null,
+          "units_curr": 21060,
+          "units_prev": 16322,
+          "units_ie": 123.6,
+          "int_curr": 22210,
+          "int_prev": 15258,
+          "int_ie": 145.6
+        },
+        "ytd": {
+          "rec_curr": 5092,
+          "rec_prev": 7901,
+          "rec_ie": 101.8,
+          "units_curr": 56549,
+          "units_prev": 47363,
+          "units_ie": 116.3,
+          "int_curr": 61080,
+          "int_prev": 52371,
+          "int_ie": 116.6
+        },
+        "trimestre": {
+          "rec_curr": 5092,
+          "rec_prev": 7901,
+          "rec_ie": 101.8,
+          "units_curr": 56549,
+          "units_prev": 47363,
+          "units_ie": 116.3,
+          "int_curr": 61080,
+          "int_prev": 52371,
+          "int_ie": 116.6
+        },
+        "semestre": {
+          "rec_curr": 13097,
+          "rec_prev": 16455,
+          "rec_ie": 101.6,
+          "units_curr": 113601,
+          "units_prev": 95440,
+          "units_ie": 113.4,
+          "int_curr": 116368,
+          "int_prev": 98724,
+          "int_ie": 117.9
+        },
+        "mat": {
+          "rec_curr": 28242,
+          "rec_prev": 32396,
+          "rec_ie": 102.7,
+          "units_curr": 216385,
+          "units_prev": 186144,
+          "units_ie": 109.2,
+          "int_curr": 219705,
+          "int_prev": 198115,
+          "int_ie": 110.9
+        }
+      }
+    },
+    {
       "name": "ROXOLAN (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -2581,6 +2861,69 @@
       }
     },
     {
+      "name": "MICROSONA (SIE)",
+      "line": "derma",
+      "lineName": "Dermatología",
+      "family": "HYDROCORTISONE",
+      "periods": {
+        "mensual": {
+          "rec_curr": 0,
+          "rec_prev": 3884,
+          "rec_ie": null,
+          "units_curr": 16083,
+          "units_prev": 14816,
+          "units_ie": 100.0,
+          "int_curr": 13618,
+          "int_prev": 13571,
+          "int_ie": 100.3
+        },
+        "ytd": {
+          "rec_curr": 3758,
+          "rec_prev": 12577,
+          "rec_ie": 93.2,
+          "units_curr": 52416,
+          "units_prev": 46705,
+          "units_ie": 99.1,
+          "int_curr": 56454,
+          "int_prev": 46762,
+          "int_ie": 120.7
+        },
+        "trimestre": {
+          "rec_curr": 3758,
+          "rec_prev": 12577,
+          "rec_ie": 93.2,
+          "units_curr": 52416,
+          "units_prev": 46705,
+          "units_ie": 99.1,
+          "int_curr": 56454,
+          "int_prev": 46762,
+          "int_ie": 120.7
+        },
+        "semestre": {
+          "rec_curr": 10458,
+          "rec_prev": 27371,
+          "rec_ie": 93.4,
+          "units_curr": 112313,
+          "units_prev": 100436,
+          "units_ie": 100.8,
+          "int_curr": 109936,
+          "int_prev": 95397,
+          "int_ie": 115.2
+        },
+        "mat": {
+          "rec_curr": 24947,
+          "rec_prev": 56608,
+          "rec_ie": 92.1,
+          "units_curr": 214766,
+          "units_prev": 206246,
+          "units_ie": 97.2,
+          "int_curr": 210133,
+          "int_prev": 198865,
+          "int_ie": 105.7
+        }
+      }
+    },
+    {
       "name": "ALIDIAL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
@@ -2703,6 +3046,195 @@
           "int_curr": 179701,
           "int_prev": 169078,
           "int_ie": 106.3
+        }
+      }
+    },
+    {
+      "name": "CLOBESOL (SIE)",
+      "line": "derma",
+      "lineName": "Dermatología",
+      "family": "CLOBETASOL",
+      "periods": {
+        "mensual": {
+          "rec_curr": 0,
+          "rec_prev": 2617,
+          "rec_ie": null,
+          "units_curr": 14996,
+          "units_prev": 12545,
+          "units_ie": 121.0,
+          "int_curr": 15051,
+          "int_prev": 11115,
+          "int_ie": 135.4
+        },
+        "ytd": {
+          "rec_curr": 5333,
+          "rec_prev": 7940,
+          "rec_ie": 107.9,
+          "units_curr": 42730,
+          "units_prev": 39183,
+          "units_ie": 113.3,
+          "int_curr": 44317,
+          "int_prev": 41855,
+          "int_ie": 105.9
+        },
+        "trimestre": {
+          "rec_curr": 5333,
+          "rec_prev": 7940,
+          "rec_ie": 107.9,
+          "units_curr": 42730,
+          "units_prev": 39183,
+          "units_ie": 113.3,
+          "int_curr": 44317,
+          "int_prev": 41855,
+          "int_ie": 105.9
+        },
+        "semestre": {
+          "rec_curr": 14120,
+          "rec_prev": 16365,
+          "rec_ie": 110.6,
+          "units_curr": 90874,
+          "units_prev": 77873,
+          "units_ie": 119.9,
+          "int_curr": 89163,
+          "int_prev": 77574,
+          "int_ie": 114.9
+        },
+        "mat": {
+          "rec_curr": 29861,
+          "rec_prev": 31757,
+          "rec_ie": 113.1,
+          "units_curr": 173522,
+          "units_prev": 153460,
+          "units_ie": 117.6,
+          "int_curr": 171462,
+          "int_prev": 152898,
+          "int_ie": 112.1
+        }
+      }
+    },
+    {
+      "name": "ROACCUTAN (SIE)",
+      "line": "derma",
+      "lineName": "Dermatología",
+      "family": "ISOTRETINOIN",
+      "periods": {
+        "mensual": {
+          "rec_curr": 0,
+          "rec_prev": 3702,
+          "rec_ie": null,
+          "units_curr": 15110,
+          "units_prev": 13239,
+          "units_ie": 101.3,
+          "int_curr": 16480,
+          "int_prev": 11426,
+          "int_ie": 144.2
+        },
+        "ytd": {
+          "rec_curr": 7856,
+          "rec_prev": 10813,
+          "rec_ie": 101.5,
+          "units_curr": 38719,
+          "units_prev": 36388,
+          "units_ie": 97.4,
+          "int_curr": 41517,
+          "int_prev": 34655,
+          "int_ie": 119.8
+        },
+        "trimestre": {
+          "rec_curr": 7856,
+          "rec_prev": 10813,
+          "rec_ie": 101.5,
+          "units_curr": 38719,
+          "units_prev": 36388,
+          "units_ie": 97.4,
+          "int_curr": 41517,
+          "int_prev": 34655,
+          "int_ie": 119.8
+        },
+        "semestre": {
+          "rec_curr": 22368,
+          "rec_prev": 23548,
+          "rec_ie": 102.8,
+          "units_curr": 89586,
+          "units_prev": 81288,
+          "units_ie": 100.4,
+          "int_curr": 87275,
+          "int_prev": 77225,
+          "int_ie": 113.0
+        },
+        "mat": {
+          "rec_curr": 50355,
+          "rec_prev": 46461,
+          "rec_ie": 104.4,
+          "units_curr": 198048,
+          "units_prev": 162030,
+          "units_ie": 106.4,
+          "int_curr": 197490,
+          "int_prev": 160034,
+          "int_ie": 123.4
+        }
+      }
+    },
+    {
+      "name": "MOMETAX (SIE)",
+      "line": "derma",
+      "lineName": "Dermatología",
+      "family": "MOMETASONE",
+      "periods": {
+        "mensual": {
+          "rec_curr": 2244,
+          "rec_prev": 2534,
+          "rec_ie": 100.4,
+          "units_curr": 12438,
+          "units_prev": 11341,
+          "units_ie": 98.8,
+          "int_curr": null,
+          "int_prev": null,
+          "int_ie": null
+        },
+        "ytd": {
+          "rec_curr": 7131,
+          "rec_prev": 7560,
+          "rec_ie": 99.5,
+          "units_curr": 37337,
+          "units_prev": 34940,
+          "units_ie": 98.8,
+          "int_curr": null,
+          "int_prev": null,
+          "int_ie": null
+        },
+        "trimestre": {
+          "rec_curr": 7131,
+          "rec_prev": 7560,
+          "rec_ie": 99.5,
+          "units_curr": 37337,
+          "units_prev": 34940,
+          "units_ie": 98.8,
+          "int_curr": null,
+          "int_prev": null,
+          "int_ie": null
+        },
+        "semestre": {
+          "rec_curr": 7131,
+          "rec_prev": 15279,
+          "rec_ie": 99.2,
+          "units_curr": 78907,
+          "units_prev": 73503,
+          "units_ie": 97.7,
+          "int_curr": null,
+          "int_prev": null,
+          "int_ie": null
+        },
+        "mat": {
+          "rec_curr": 9450,
+          "rec_prev": 29267,
+          "rec_ie": 100.5,
+          "units_curr": 153446,
+          "units_prev": 149288,
+          "units_ie": 95.6,
+          "int_curr": null,
+          "int_prev": null,
+          "int_ie": null
         }
       }
     },
@@ -2959,6 +3491,69 @@
       }
     },
     {
+      "name": "PALDAR (SIE)",
+      "line": "derma",
+      "lineName": "Dermatología",
+      "family": "MUPIROCIN",
+      "periods": {
+        "mensual": {
+          "rec_curr": 0,
+          "rec_prev": 1530,
+          "rec_ie": null,
+          "units_curr": 11161,
+          "units_prev": 9705,
+          "units_ie": 107.0,
+          "int_curr": 10114,
+          "int_prev": 9812,
+          "int_ie": 103.1
+        },
+        "ytd": {
+          "rec_curr": 2687,
+          "rec_prev": 4619,
+          "rec_ie": 92.7,
+          "units_curr": 31456,
+          "units_prev": 25887,
+          "units_ie": 107.2,
+          "int_curr": 31681,
+          "int_prev": 28379,
+          "int_ie": 111.6
+        },
+        "trimestre": {
+          "rec_curr": 2687,
+          "rec_prev": 4619,
+          "rec_ie": 92.7,
+          "units_curr": 31456,
+          "units_prev": 25887,
+          "units_ie": 107.2,
+          "int_curr": 31681,
+          "int_prev": 28379,
+          "int_ie": 111.6
+        },
+        "semestre": {
+          "rec_curr": 6751,
+          "rec_prev": 9708,
+          "rec_ie": 90.5,
+          "units_curr": 61141,
+          "units_prev": 50084,
+          "units_ie": 109.0,
+          "int_curr": 59742,
+          "int_prev": 52775,
+          "int_ie": 113.2
+        },
+        "mat": {
+          "rec_curr": 15203,
+          "rec_prev": 20345,
+          "rec_ie": 91.0,
+          "units_curr": 115428,
+          "units_prev": 95963,
+          "units_ie": 106.0,
+          "int_curr": 112118,
+          "int_prev": 100827,
+          "int_ie": 111.2
+        }
+      }
+    },
+    {
       "name": "AIREAL PLUS (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
@@ -3022,6 +3617,69 @@
       }
     },
     {
+      "name": "ACNECLIN AP (SIE)",
+      "line": "derma",
+      "lineName": "Dermatología",
+      "family": "MINOCYCLINE",
+      "periods": {
+        "mensual": {
+          "rec_curr": 0,
+          "rec_prev": 2224,
+          "rec_ie": null,
+          "units_curr": 9430,
+          "units_prev": 9386,
+          "units_ie": 96.2,
+          "int_curr": 9928,
+          "int_prev": 9071,
+          "int_ie": 109.4
+        },
+        "ytd": {
+          "rec_curr": 4058,
+          "rec_prev": 6529,
+          "rec_ie": 96.0,
+          "units_curr": 24300,
+          "units_prev": 26218,
+          "units_ie": 93.8,
+          "int_curr": 22809,
+          "int_prev": 25191,
+          "int_ie": 90.5
+        },
+        "trimestre": {
+          "rec_curr": 4058,
+          "rec_prev": 6529,
+          "rec_ie": 96.0,
+          "units_curr": 24300,
+          "units_prev": 26218,
+          "units_ie": 93.8,
+          "int_curr": 22809,
+          "int_prev": 25191,
+          "int_ie": 90.5
+        },
+        "semestre": {
+          "rec_curr": 11527,
+          "rec_prev": 14403,
+          "rec_ie": 96.8,
+          "units_curr": 56012,
+          "units_prev": 57160,
+          "units_ie": 97.0,
+          "int_curr": 52385,
+          "int_prev": 52348,
+          "int_ie": 100.1
+        },
+        "mat": {
+          "rec_curr": 27527,
+          "rec_prev": 31236,
+          "rec_ie": 95.8,
+          "units_curr": 128163,
+          "units_prev": 127930,
+          "units_ie": 98.4,
+          "int_curr": 122391,
+          "int_prev": 118995,
+          "int_ie": 102.9
+        }
+      }
+    },
+    {
       "name": "AIREAL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
@@ -3081,6 +3739,69 @@
           "int_curr": 106129,
           "int_prev": 92005,
           "int_ie": 115.4
+        }
+      }
+    },
+    {
+      "name": "MICROSONA C (SIE)",
+      "line": "derma",
+      "lineName": "Dermatología",
+      "family": "GENTAMICIN_HYDROCORTISONE_KETOCONAZOLE",
+      "periods": {
+        "mensual": {
+          "rec_curr": 0,
+          "rec_prev": 795,
+          "rec_ie": null,
+          "units_curr": 7227,
+          "units_prev": 7295,
+          "units_ie": 98.4,
+          "int_curr": 6236,
+          "int_prev": 6249,
+          "int_ie": 99.8
+        },
+        "ytd": {
+          "rec_curr": 1638,
+          "rec_prev": 2471,
+          "rec_ie": 102.3,
+          "units_curr": 21758,
+          "units_prev": 21262,
+          "units_ie": 100.2,
+          "int_curr": 21269,
+          "int_prev": 20337,
+          "int_ie": 104.6
+        },
+        "trimestre": {
+          "rec_curr": 1638,
+          "rec_prev": 2471,
+          "rec_ie": 102.3,
+          "units_curr": 21758,
+          "units_prev": 21262,
+          "units_ie": 100.2,
+          "int_curr": 21269,
+          "int_prev": 20337,
+          "int_ie": 104.6
+        },
+        "semestre": {
+          "rec_curr": 4215,
+          "rec_prev": 5299,
+          "rec_ie": 99.0,
+          "units_curr": 44478,
+          "units_prev": 43745,
+          "units_ie": 98.2,
+          "int_curr": 42015,
+          "int_prev": 39041,
+          "int_ie": 107.6
+        },
+        "mat": {
+          "rec_curr": 9539,
+          "rec_prev": 10993,
+          "rec_ie": 98.0,
+          "units_curr": 91119,
+          "units_prev": 88095,
+          "units_ie": 98.3,
+          "int_curr": 86908,
+          "int_prev": 85868,
+          "int_ie": 101.2
         }
       }
     },
@@ -3396,6 +4117,69 @@
           "int_curr": 61905,
           "int_prev": 52586,
           "int_ie": 117.7
+        }
+      }
+    },
+    {
+      "name": "PALDAR H (SIE)",
+      "line": "derma",
+      "lineName": "Dermatología",
+      "family": "HYDROCORTISONE_MUPIROCIN",
+      "periods": {
+        "mensual": {
+          "rec_curr": 0,
+          "rec_prev": 823,
+          "rec_ie": null,
+          "units_curr": 4544,
+          "units_prev": 4011,
+          "units_ie": 101.4,
+          "int_curr": 3334,
+          "int_prev": 3518,
+          "int_ie": 94.8
+        },
+        "ytd": {
+          "rec_curr": 1950,
+          "rec_prev": 2600,
+          "rec_ie": 93.3,
+          "units_curr": 13602,
+          "units_prev": 12272,
+          "units_ie": 93.9,
+          "int_curr": 15033,
+          "int_prev": 12254,
+          "int_ie": 122.7
+        },
+        "trimestre": {
+          "rec_curr": 1950,
+          "rec_prev": 2600,
+          "rec_ie": 93.3,
+          "units_curr": 13602,
+          "units_prev": 12272,
+          "units_ie": 93.9,
+          "int_curr": 15033,
+          "int_prev": 12254,
+          "int_ie": 122.7
+        },
+        "semestre": {
+          "rec_curr": 4902,
+          "rec_prev": 5149,
+          "rec_ie": 95.8,
+          "units_curr": 27981,
+          "units_prev": 24622,
+          "units_ie": 98.7,
+          "int_curr": 25969,
+          "int_prev": 23528,
+          "int_ie": 110.4
+        },
+        "mat": {
+          "rec_curr": 9775,
+          "rec_prev": 9641,
+          "rec_ie": 94.4,
+          "units_curr": 53050,
+          "units_prev": 46410,
+          "units_ie": 98.0,
+          "int_curr": 49619,
+          "int_prev": 43131,
+          "int_ie": 115.0
         }
       }
     },
@@ -4530,6 +5314,69 @@
           "int_curr": 15678,
           "int_prev": 15244,
           "int_ie": 102.8
+        }
+      }
+    },
+    {
+      "name": "ACNECLIN (SIE)",
+      "line": "derma",
+      "lineName": "Dermatología",
+      "family": "MINOCYCLINE",
+      "periods": {
+        "mensual": {
+          "rec_curr": 0,
+          "rec_prev": 160,
+          "rec_ie": null,
+          "units_curr": 1111,
+          "units_prev": 1170,
+          "units_ie": 91.0,
+          "int_curr": 1149,
+          "int_prev": 900,
+          "int_ie": 127.7
+        },
+        "ytd": {
+          "rec_curr": 310,
+          "rec_prev": 493,
+          "rec_ie": 97.2,
+          "units_curr": 3443,
+          "units_prev": 3280,
+          "units_ie": 106.3,
+          "int_curr": 3320,
+          "int_prev": 2799,
+          "int_ie": 118.6
+        },
+        "trimestre": {
+          "rec_curr": 310,
+          "rec_prev": 493,
+          "rec_ie": 97.2,
+          "units_curr": 3443,
+          "units_prev": 3280,
+          "units_ie": 106.3,
+          "int_curr": 3320,
+          "int_prev": 2799,
+          "int_ie": 118.6
+        },
+        "semestre": {
+          "rec_curr": 848,
+          "rec_prev": 1102,
+          "rec_ie": 93.1,
+          "units_curr": 7570,
+          "units_prev": 7007,
+          "units_ie": 107.0,
+          "int_curr": 6482,
+          "int_prev": 5557,
+          "int_ie": 116.6
+        },
+        "mat": {
+          "rec_curr": 2041,
+          "rec_prev": 2388,
+          "rec_ie": 92.9,
+          "units_curr": 16433,
+          "units_prev": 15070,
+          "units_ie": 107.1,
+          "int_curr": 14827,
+          "int_prev": 13415,
+          "int_ie": 110.5
         }
       }
     },
