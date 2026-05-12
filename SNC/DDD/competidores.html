@@ -357,7 +357,7 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
           if (ms_a!==null && ms_p!==null) dms = ms_a-ms_p;
           if (u_p>0) du = (u_a-u_p)/u_p*100;
         }
-        cells[b][r] = {u_act:u_a, u_prev:u_p, ms_act:ms_a, ms_prev:ms_p, dms, du};
+        cells[b][r] = {u_act:u_a, u_prev:u_p, mkt_act:mkt_a, mkt_prev:mkt_p, ms_act:ms_a, ms_prev:ms_p, dms, du};
         if (ms_a!==null && ms_a>max_ms) max_ms = ms_a;
         if (dms!==null && Math.abs(dms)>max_abs_dms) max_abs_dms = Math.abs(dms);
         if (du!==null && Math.abs(du)>max_abs_du) max_abs_du = Math.abs(du);
