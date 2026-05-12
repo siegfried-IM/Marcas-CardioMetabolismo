@@ -130,6 +130,7 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
         <button data-m="du">VAR UNIDADES%</button>
       </div>
       <span class="meta" id="period-label"></span>
+      <button id="btn-export" style="padding:7px 14px;background:#16a34a;color:#fff;border:0;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.04em;margin-left:8px;">📥 Exportar Excel</button>
     </div>
 
     <div class="flt-bar">
@@ -156,6 +157,7 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
 </div>
 
 <script src="../data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
 /* === Competidores DDD — heatmap por provincia + region CUP ========= */
@@ -912,6 +914,54 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
       renderPills(HEAT_MARKET, allRanked, visibleSet);
     }
   });
+
+  // === Export to Excel =================================================
+  function tableToAoA(tableId){
+    const tbl = document.getElementById(tableId);
+    if (!tbl) return [];
+    const rows = [];
+    tbl.querySelectorAll('thead tr').forEach(tr => {
+      const r = [];
+      tr.querySelectorAll('th').forEach(th => {
+        const cs = parseInt(th.getAttribute('colspan')||'1', 10);
+        const txt = (th.textContent || '').trim();
+        r.push(txt);
+        for (let i=1;i<cs;i++) r.push('');
+      });
+      rows.push(r);
+    });
+    tbl.querySelectorAll('tbody tr').forEach(tr => {
+      const r = [];
+      tr.querySelectorAll('th, td').forEach(c => r.push((c.textContent||'').trim()));
+      rows.push(r);
+    });
+    return rows;
+  }
+
+  function exportExcel(){
+    if (typeof XLSX === 'undefined'){
+      alert('Librería XLSX no cargó — revisá tu conexión.'); return;
+    }
+    const market = HEAT_MARKET || 'mercado';
+    const periodLabel = (document.getElementById('period-label').textContent || '').replace(/[\/?*\[\]:]/g, '-').slice(0, 60);
+    const metricNice = HEAT_METRIC==='ms' ? 'MS%' : (HEAT_METRIC==='dms' ? 'VAR_MS%' : 'VAR_UNIDADES%');
+    const wb = XLSX.utils.book_new();
+    const provAoA = tableToAoA('hm-prov');
+    const cupAoA  = tableToAoA('hm-cup');
+    if (provAoA.length){
+      const ws = XLSX.utils.aoa_to_sheet(provAoA);
+      XLSX.utils.book_append_sheet(wb, ws, 'Por Provincia');
+    }
+    if (cupAoA.length){
+      const ws = XLSX.utils.aoa_to_sheet(cupAoA);
+      XLSX.utils.book_append_sheet(wb, ws, 'Por Region CUP');
+    }
+    // Filename: Competidores_<linea>_<mercado>_<metrica>_<periodo>.xlsx
+    const safe = s => String(s||'').replace(/[\/?*\[\]:]/g, '-').replace(/\s+/g, '_').slice(0, 50);
+    const fname = `Competidores_${safe(market)}_${safe(metricNice)}_${safe(periodLabel)}.xlsx`;
+    XLSX.writeFile(wb, fname);
+  }
+  document.getElementById('btn-export').addEventListener('click', exportExcel);
 
   // Init
   renderMktGrid();
