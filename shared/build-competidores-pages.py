@@ -122,7 +122,7 @@ h1{margin:0 0 6px;font-size:22px;font-weight:700;}
 .ctrl .seg button:last-child{border-right:0;}
 .ctrl .seg button.on{background:var(--sie);color:#fff;}
 .ctrl .seg button:hover:not(.on){background:#f5f5f5;}
-.ctrl .meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mut);margin-left:auto;}
+.ctrl .meta{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#1f2937;font-weight:600;margin-left:auto;padding:4px 12px;background:#fff;border:1px solid var(--bord);border-radius:5px;}
 
 /* Competitor filter */
 .flt-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;padding:12px 14px;background:#fafafa;border-radius:6px;margin-bottom:14px;}
@@ -530,8 +530,15 @@ __DATA_LOADER__
     if (!grid || !grid.rows.length){ thead.innerHTML=''; tbody.innerHTML='<tr><td class="empty">Sin datos visibles. Activá competidores en el filtro.</td></tr>'; return; }
     const max = {ms: Math.max(grid.max_ms,1), dms: Math.max(grid.max_abs_dms, 0.1), du: Math.max(grid.max_abs_du, 1)};
     const cleanReg = r => r.startsWith('_') ? r.slice(1) : r;
-    // Header con DOS filas: competidor (colspan=2) y abajo sub-headers MS% | Unidades
-    const metricLabel = HEAT_METRIC==='ms' ? 'MS%' : (HEAT_METRIC==='dms' ? 'Δ MS% pp' : 'Δ Units %');
+    // Header con DOS filas: competidor (colspan=2) y abajo sub-headers metric | Unidades
+    // Las sub-headers incluyen el periodo activo y, si es Δ, el comparador
+    const pLab = period.label || '';
+    const ppLab = period.prevLabel || '';
+    let metricLabel;
+    if (HEAT_METRIC==='ms')       metricLabel = `MS% · ${pLab}`;
+    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `Δ MS% pp · ${pLab} vs ${ppLab}` : `Δ MS% pp · sin comparador`;
+    else                          metricLabel = ppLab ? `Δ Units % · ${pLab} vs ${ppLab}` : `Δ Units % · sin comparador`;
+    const unitsLabel = `Unidades · ${pLab}`;
     let h = '<tr><th rowspan="2">Región / Provincia</th>';
     for (const row of grid.rows){
       const cls = row.isSie ? 'sie sie-col' : '';
@@ -540,8 +547,8 @@ __DATA_LOADER__
     h += '</tr><tr>';
     for (const row of grid.rows){
       const cls = row.isSie ? 'sie sie-col sub' : 'sub';
-      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">${metricLabel}</th>`;
-      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">Unidades</th>`;
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.9;letter-spacing:.02em;white-space:nowrap;" title="${metricLabel}">${metricLabel}</th>`;
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.9;letter-spacing:.02em;white-space:nowrap;" title="${unitsLabel}">${unitsLabel}</th>`;
     }
     h += '</tr>';
     thead.innerHTML = h;
@@ -628,7 +635,13 @@ __DATA_LOADER__
     }
     // Header con DOS filas: serie (colspan=2) y abajo metric | Unidades
     const series = ['SIE','Mercado total'];
-    const metricLabel = HEAT_METRIC==='ms' ? 'MS%' : (HEAT_METRIC==='dms' ? 'Δ MS% pp' : 'Δ Units %');
+    const pLab = period.label || '';
+    const ppLab = period.prevLabel || '';
+    let metricLabel;
+    if (HEAT_METRIC==='ms')       metricLabel = `MS% · ${pLab}`;
+    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `Δ MS% pp · ${pLab} vs ${ppLab}` : `Δ MS% pp · sin comparador`;
+    else                          metricLabel = ppLab ? `Δ Units % · ${pLab} vs ${ppLab}` : `Δ Units % · sin comparador`;
+    const unitsLabel = `Unidades · ${pLab}`;
     let h = '<tr><th rowspan="2">Región / Provincia</th>';
     for (const s of series){
       const cls = s==='SIE' ? 'sie sie-col' : '';
@@ -637,8 +650,8 @@ __DATA_LOADER__
     h += '</tr><tr>';
     for (const s of series){
       const cls = s==='SIE' ? 'sie sie-col sub' : 'sub';
-      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">${metricLabel}</th>`;
-      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">Unidades</th>`;
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.9;letter-spacing:.02em;white-space:nowrap;" title="${metricLabel}">${metricLabel}</th>`;
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.9;letter-spacing:.02em;white-space:nowrap;" title="${unitsLabel}">${unitsLabel}</th>`;
     }
     h += '</tr>';
     thead.innerHTML = h;
@@ -730,7 +743,13 @@ __DATA_LOADER__
     }
     // TRANSPOSED + sub-cols: Provincia | SIE (metric | Unidades) | Mercado total (metric | Unidades)
     const series = ['SIE','Mercado total'];
-    const metricLabel = HEAT_METRIC==='ms' ? 'MS%' : (HEAT_METRIC==='dms' ? 'Δ MS% pp' : 'Δ Units %');
+    const pLab = period.label || '';
+    const ppLab = period.prevLabel || '';
+    let metricLabel;
+    if (HEAT_METRIC==='ms')       metricLabel = `MS% · ${pLab}`;
+    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `Δ MS% pp · ${pLab} vs ${ppLab}` : `Δ MS% pp · sin comparador`;
+    else                          metricLabel = ppLab ? `Δ Units % · ${pLab} vs ${ppLab}` : `Δ Units % · sin comparador`;
+    const unitsLabel = `Unidades · ${pLab}`;
     let h = '<tr><th rowspan="2">Provincia</th>';
     for (const s of series){
       const cls = s==='SIE' ? 'sie sie-col' : '';
@@ -739,8 +758,8 @@ __DATA_LOADER__
     h += '</tr><tr>';
     for (const s of series){
       const cls = s==='SIE' ? 'sie sie-col sub' : 'sub';
-      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">${metricLabel}</th>`;
-      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">Unidades</th>`;
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.9;letter-spacing:.02em;white-space:nowrap;" title="${metricLabel}">${metricLabel}</th>`;
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.9;letter-spacing:.02em;white-space:nowrap;" title="${unitsLabel}">${unitsLabel}</th>`;
     }
     h += '</tr>';
     thead.innerHTML = h;
