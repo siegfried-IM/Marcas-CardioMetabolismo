@@ -33,6 +33,8 @@ LINES = [
                                                                                                               REPO / 'OTC/DDD/competidores-data.js'),
     ('dermato',      INPUTS / 'dermato/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 12 de mayo de 2026 (2).xlsx',
                                                                                                               REPO / 'dermatologia/competidores-data.js'),
+    ('cardio',       INPUTS / 'cardio/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 12 de mayo de 2026 (4).xlsx',
+                                                                                                              REPO / 'cardio/DDD/competidores-data.js'),
 ]
 
 MONTH_ORDER = {'Ene':1,'Feb':2,'Mar':3,'Abr':4,'May':5,'Jun':6,
@@ -99,6 +101,10 @@ SIE_PATTERNS_BY_LINE = {
             r'^FLEXINA\b', r'^MAGNUS\b', r'^TETRALGIN\b'],
     'dermato': [r'^ACNECLIN\b', r'^CLOBESOL\b', r'^MICOMAZOL\b',
                 r'^MICROSONA\b', r'^MOMETAX\b', r'^PALDAR\b', r'^ROACCUTAN\b'],
+    'cardio': [r'^DAURAN\b', r'^DILATREND\b', r'^DIOVAN\b', r'^EMPAX\b',
+               r'^ENTRESTO\b', r'^EXFORGE\b', r'^METGLUCON\b', r'^PIXABAN\b',
+               r'^ROXOLAN\b', r'^SILTRAN\b', r'^SINTROM\b', r'^TELPRES\b',
+               r'^TERLOC\b'],
 }
 
 
