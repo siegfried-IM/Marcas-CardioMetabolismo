@@ -659,9 +659,9 @@ function render() {
 
 function init(d) {
   DATA = d;
-  document.getElementById('kpi-asof').textContent = d.as_of_month || '—';
-  document.getElementById('kpi-lines-count').textContent = d.lines.length;
-  document.getElementById('kpi-prod-count').textContent  = d.products.length;
+  const _a = document.getElementById('kpi-asof');     if(_a) _a.textContent = d.as_of_month || '—';
+  const _l = document.getElementById('kpi-lines-count'); if(_l) _l.textContent = d.lines.length;
+  const _p = document.getElementById('kpi-prod-count');  if(_p) _p.textContent = d.products.length;
 
   // Build line filter
   const sel = document.getElementById('prod-line');
