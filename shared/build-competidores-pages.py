@@ -161,6 +161,14 @@ table.hm tbody tr:nth-child(even) td:not(.sie-col){opacity:.96;}
 table.hm tbody th{padding-right:14px;font-size:11px;}
 /* Sticky SIE column shadow on horizontal scroll */
 table.hm thead th.sie-col,table.hm td.sie-col{position:relative;}
+/* Sub-columns: visual separator between competitor groups */
+table.hm td.sub-units{border-right:1px solid #d4d4d4 !important;font-size:9px;}
+table.hm td.sub-metric{font-weight:700;}
+table.hm thead th.sub{padding:3px 6px !important;background:#1f2937;color:#9ca3af;}
+table.hm thead th.sub.sie{background:#7A1518 !important;color:#fff !important;}
+/* Subtle divider between competitor pairs */
+table.hm thead th[colspan="2"]{border-right:2px solid #d4d4d4;}
+table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important;}
 .empty{padding:20px;text-align:center;color:var(--mut);font-size:12px;}
 .note{font-size:10px;color:var(--mut);margin-top:8px;font-style:italic;}
 </style>
@@ -522,15 +530,28 @@ __DATA_LOADER__
     if (!grid || !grid.rows.length){ thead.innerHTML=''; tbody.innerHTML='<tr><td class="empty">Sin datos visibles. Activá competidores en el filtro.</td></tr>'; return; }
     const max = {ms: Math.max(grid.max_ms,1), dms: Math.max(grid.max_abs_dms, 0.1), du: Math.max(grid.max_abs_du, 1)};
     const cleanReg = r => r.startsWith('_') ? r.slice(1) : r;
-    // Header: Región | competidor1 | competidor2 | ...
-    let h = '<tr><th>Región / Provincia</th>';
+    // Header con DOS filas: competidor (colspan=2) y abajo sub-headers MS% | Unidades
+    const metricLabel = HEAT_METRIC==='ms' ? 'MS%' : (HEAT_METRIC==='dms' ? 'Δ MS% pp' : 'Δ Units %');
+    let h = '<tr><th rowspan="2">Región / Provincia</th>';
     for (const row of grid.rows){
       const cls = row.isSie ? 'sie sie-col' : '';
-      h += `<th class="${cls}" title="${row.brand}">${row.isSie?'★ ':''}${row.brand}</th>`;
+      h += `<th class="${cls}" colspan="2" title="${row.brand}" style="border-bottom:1px solid rgba(255,255,255,.15)">${row.isSie?'★ ':''}${row.brand}</th>`;
+    }
+    h += '</tr><tr>';
+    for (const row of grid.rows){
+      const cls = row.isSie ? 'sie sie-col sub' : 'sub';
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">${metricLabel}</th>`;
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">Unidades</th>`;
     }
     h += '</tr>';
     thead.innerHTML = h;
-    // Body: una fila por región, columnas = competidores
+    // Body: una fila por región, dos celdas por competidor (MS% colored + Units plain)
+    function fmtUnits(u){
+      if (u==null) return '—';
+      if (u >= 1e6) return (u/1e6).toFixed(1)+'M';
+      if (u >= 1e3) return (u/1e3).toFixed(1)+'k';
+      return u.toLocaleString('es-AR');
+    }
     let b = '';
     for (const r of grid.cols){
       b += `<tr><th title="${r}">${cleanReg(r)}</th>`;
@@ -543,7 +564,12 @@ __DATA_LOADER__
         if (cell.du!=null) tt.push(`Δ U: ${(cell.du>=0?'+':'')+cell.du.toFixed(1)}%`);
         tt.push(`Units: ${cell.u_act.toLocaleString('es-AR')}`);
         const tdCls = row.isSie ? 'sie-col' : '';
-        b += `<td class="${tdCls}" style="background:${f.bg};color:${f.fg}" title="${tt.join(' · ')}">${f.txt}</td>`;
+        const ttStr = tt.join(' · ');
+        // Sub-col 1: metric (con heat color)
+        b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${ttStr}">${f.txt}</td>`;
+        // Sub-col 2: unidades (neutro)
+        const uStr = fmtUnits(cell.u_act);
+        b += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${ttStr}">${uStr}</td>`;
       }
       b += '</tr>';
     }
@@ -600,22 +626,38 @@ __DATA_LOADER__
       }
       return {txt:'—', bg:'#fff', fg:'#9ca3af'};
     }
-    // Header: Región | SIE | Mercado total
+    // Header con DOS filas: serie (colspan=2) y abajo metric | Unidades
     const series = ['SIE','Mercado total'];
-    let h = '<tr><th>Región / Provincia</th>';
+    const metricLabel = HEAT_METRIC==='ms' ? 'MS%' : (HEAT_METRIC==='dms' ? 'Δ MS% pp' : 'Δ Units %');
+    let h = '<tr><th rowspan="2">Región / Provincia</th>';
     for (const s of series){
       const cls = s==='SIE' ? 'sie sie-col' : '';
-      h += `<th class="${cls}">${s==='SIE'?'★ ':''}${s}</th>`;
+      h += `<th class="${cls}" colspan="2" style="border-bottom:1px solid rgba(255,255,255,.15)">${s==='SIE'?'★ ':''}${s}</th>`;
+    }
+    h += '</tr><tr>';
+    for (const s of series){
+      const cls = s==='SIE' ? 'sie sie-col sub' : 'sub';
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">${metricLabel}</th>`;
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">Unidades</th>`;
     }
     h += '</tr>';
     thead.innerHTML = h;
+    function fmtUnits(u){
+      if (u==null) return '—';
+      if (u >= 1e6) return (u/1e6).toFixed(1)+'M';
+      if (u >= 1e3) return (u/1e3).toFixed(1)+'k';
+      return u.toLocaleString('es-AR');
+    }
     let b = '';
     for (const r of regs){
       b += `<tr><th title="${r}">${cleanReg(r)}</th>`;
       for (const s of series){
         const f = cell(s, r);
         const tdCls = s==='SIE' ? 'sie-col' : '';
-        b += `<td class="${tdCls}" style="background:${f.bg};color:${f.fg}" title="${s} · ${r}">${f.txt}</td>`;
+        const a = aggC[r];
+        const units = s==='SIE' ? a.sie : a.total;
+        b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${s} · ${r}">${f.txt}</td>`;
+        b += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${s} · ${r}">${fmtUnits(units)}</td>`;
       }
       b += '</tr>';
     }
@@ -686,22 +728,38 @@ __DATA_LOADER__
       }
       return {txt:'—', bg:'#fff', fg:'#9ca3af'};
     }
-    // TRANSPOSED: Header: Provincia | SIE | Mercado total
+    // TRANSPOSED + sub-cols: Provincia | SIE (metric | Unidades) | Mercado total (metric | Unidades)
     const series = ['SIE','Mercado total'];
-    let h = '<tr><th>Provincia</th>';
+    const metricLabel = HEAT_METRIC==='ms' ? 'MS%' : (HEAT_METRIC==='dms' ? 'Δ MS% pp' : 'Δ Units %');
+    let h = '<tr><th rowspan="2">Provincia</th>';
     for (const s of series){
       const cls = s==='SIE' ? 'sie sie-col' : '';
-      h += `<th class="${cls}">${s==='SIE'?'★ ':''}${s}</th>`;
+      h += `<th class="${cls}" colspan="2" style="border-bottom:1px solid rgba(255,255,255,.15)">${s==='SIE'?'★ ':''}${s}</th>`;
+    }
+    h += '</tr><tr>';
+    for (const s of series){
+      const cls = s==='SIE' ? 'sie sie-col sub' : 'sub';
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">${metricLabel}</th>`;
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.85;letter-spacing:.04em;">Unidades</th>`;
     }
     h += '</tr>';
     thead.innerHTML = h;
+    function fmtUnits(u){
+      if (u==null) return '—';
+      if (u >= 1e6) return (u/1e6).toFixed(1)+'M';
+      if (u >= 1e3) return (u/1e3).toFixed(1)+'k';
+      return u.toLocaleString('es-AR');
+    }
     let b = '';
     for (const p of provs){
       b += `<tr><th title="${p}">${p}</th>`;
       for (const s of series){
         const f = cell(s, p);
         const tdCls = s==='SIE' ? 'sie-col' : '';
-        b += `<td class="${tdCls}" style="background:${f.bg};color:${f.fg}" title="${s} · ${p}">${f.txt}</td>`;
+        const a = aggC[p];
+        const units = s==='SIE' ? a.sie : a.total;
+        b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${s} · ${p}">${f.txt}</td>`;
+        b += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${s} · ${p}">${fmtUnits(units)}</td>`;
       }
       b += '</tr>';
     }
