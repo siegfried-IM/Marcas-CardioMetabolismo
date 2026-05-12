@@ -210,7 +210,7 @@ body {
 
 .tile-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(7, 1fr);
 }
 .tile {
   padding: 6px 10px;
@@ -443,7 +443,6 @@ table.products tbody tr:hover td:nth-child(3) { background: var(--gray-50); }
             <th data-key="units_curr" data-sort="desc">Units IQVIA</th>
             <th data-key="units_ie">IE U.</th>
             <th data-key="int_curr">Venta Interna</th>
-            <th data-key="int_ie">IE V.I.</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -467,7 +466,6 @@ const TILES = [
   { id:'ms_units',      label:'MS Units',       fmt:'pct', deltaMode:'pp'  },
   { id:'g_units',       label:'IE Units',       fmt:'pct', pulledFrom:'units_sie',   isGrowth:true },
   { id:'venta_interna', label:'Venta Interna',  fmt:'int', deltaMode:'pct' },
-  { id:'g_interna',     label:'IE Vta. Int.',   fmt:'pct', pulledFrom:'venta_interna', isGrowth:true },
 ];
 
 const fmt = {
@@ -623,7 +621,7 @@ function renderProducts() {
   const lineMap = Object.fromEntries(DATA.lines.map(l => [l.key, l]));
   const tbody = document.querySelector('#prod-table tbody');
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Sin productos para los filtros</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">Sin productos para los filtros</td></tr>';
   } else {
     tbody.innerHTML = rows.map(r => {
       const ln = lineMap[r.line] || {};
@@ -643,7 +641,6 @@ function renderProducts() {
           <td class="num">${r.units_curr ? fmt.int(r.units_curr) : '—'}</td>
           <td class="delta ${uIeCls}">${uIeTxt}</td>
           <td class="num">${r.int_curr ? fmt.int(r.int_curr) : '—'}</td>
-          <td class="delta ${intIeCls}">${intIeTxt}</td>
         </tr>`;
     }).join('');
   }
