@@ -202,20 +202,39 @@ body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-ser
   background:#7A1518;vertical-align:middle;margin-right:4px}
 
 
+
+/* Unified nav (consistencia con main dashboards y competidores) */
+.nav-unified{position:sticky;top:0;z-index:200;height:50px;background:#ffffff;border-bottom:2px solid #7A1518;box-shadow:0 1px 8px rgba(0,0,0,.08);display:flex;align-items:center;padding:0 24px;}
+.nav-unified .nav-back{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;color:#7A1518;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(122,21,24,.3);border-radius:6px;padding:6px 12px;margin-right:14px;white-space:nowrap;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
+.nav-unified .nav-back:hover{background:#7A1518;color:#fff;border-color:#7A1518;}
+.nav-unified .nav-logo{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#7A1518;letter-spacing:.18em;margin-right:18px;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:6px;transition:background .15s;}
+.nav-unified .nav-logo:hover{background:rgba(122,21,24,.08);}
+.nav-unified .nav-items{display:flex;overflow-x:auto;flex:1;}
+.nav-unified .nav-item{height:50px;padding:0 14px;display:flex;align-items:center;font-size:11px;font-weight:500;color:#4b5563;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;text-decoration:none;}
+.nav-unified .nav-item:hover{color:#1a1a1a;}
+.nav-unified .nav-item.on{color:#7A1518;border-bottom-color:#7A1518;font-weight:600;}
+.nav-unified .nav-tab-ddd{height:34px;align-self:center;padding:0 12px;background:#b01e1e;color:#fff;border-radius:5px;margin:0 6px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;letter-spacing:.02em;}
+.nav-unified .nav-tab-bonos{height:34px;align-self:center;padding:0 12px;background:#86EFAC;color:#166534;border-radius:5px;margin:0 6px 0 0;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;}
 </style>
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-brand"><span class="dot"></span>SIEGFRIED</div>
-  <div class="nav-tabs">
-    <a class="nav-tab ul" href="../psq_dashboard.html">Resumen</a><a class="nav-tab" href="../psq_dashboard.html#s-bud">Venta Interna</a><a class="nav-tab" href="../psq_dashboard.html#s-perf">Mercado IQVIA</a>
-    <a class="nav-tab" href="../psq_dashboard.html#s-rec">Recetas</a><a class="nav-tab" href="../psq_dashboard.html#s-stock">Stock</a><a class="nav-tab" href="../psq_dashboard.html#s-cover">Cobertura</a>
-    <a class="nav-tab" href="../psq_dashboard.html#s-can">Mostrador vs Convenios</a><a class="nav-tab" href="../psq_dashboard.html#s-conv">Convenios</a><a class="nav-tab" href="../psq_dashboard.html#s-prec">Precios</a>
-    <a class="nav-tab hl" href="./">DDD</a><a class="nav-tab" href="./competidores.html">Competidores</a><a class="nav-tab" href="https://bonos-pap.pages.dev/" target="_blank" rel="noopener" style="background:#86EFAC;color:#166534;border-radius:5px;padding:4px 12px;margin-left:6px;">Bonos PAP ↗</a>
-  </div>
-  <div class="nav-right">
-    <a class="nav-hub" href="../../">← Hub</a>
+<nav class="nav-unified">
+  <a class="nav-back" href="../../" title="Volver al hub">← Hub</a>
+  <a class="nav-logo" href="../../">⬡ SIEGFRIED</a>
+  <div class="nav-items">
+    <a class="nav-item" href="../psq_dashboard.html">Resumen</a>
+    <a class="nav-item" href="../psq_dashboard.html#s-bud">Venta Interna</a>
+    <a class="nav-item" href="../psq_dashboard.html#s-perf">Mercado IQVIA</a>
+    <a class="nav-item" href="../psq_dashboard.html#s-rec">Recetas</a>
+    <a class="nav-item" href="../psq_dashboard.html#s-stock">Stock</a>
+    <a class="nav-item" href="../psq_dashboard.html#s-cover">Cobertura</a>
+    <a class="nav-item" href="../psq_dashboard.html#s-can">Mostrador vs Convenios</a>
+    <a class="nav-item" href="../psq_dashboard.html#s-conv">Convenios</a>
+    <a class="nav-item" href="../psq_dashboard.html#s-prec">Precios</a>
+    <a class="nav-tab-ddd" href="./">DDD</a>
+    <a class="nav-item" href="./competidores.html">Competidores</a>
+    <a class="nav-tab-bonos" href="https://bonos-pap.pages.dev/" target="_blank" rel="noopener">Bonos PAP ↗</a>
   </div>
 </nav>
 

@@ -91,14 +91,18 @@ PAGE_HTML = """<!DOCTYPE html>
 :root{--sie:#7A1518;--ink:#1a1a1a;--mut:#737373;--bg:#fafafa;--card:#fff;--bord:#e5e5e5;}
 *{box-sizing:border-box;}
 body{margin:0;font-family:'Inter','IBM Plex Sans',-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink);font-size:13px;}
-.nav{display:flex;align-items:center;padding:10px 20px;background:#fff;border-bottom:1px solid var(--bord);}
-.nav .brand{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--sie);letter-spacing:.1em;}
-.nav .brand .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--sie);margin-right:6px;}
-.nav .tabs{display:flex;margin-left:24px;gap:4px;flex:1;}
-.nav .tab{color:var(--mut);text-decoration:none;padding:6px 12px;font-size:12px;font-weight:500;border-radius:4px;}
-.nav .tab.on{color:var(--sie);background:#fef2f2;font-weight:700;}
-.nav .tab:hover{color:var(--ink);}
-.nav .right{font-size:11px;color:var(--mut);font-family:'IBM Plex Mono',monospace;}
+/* Unified nav (same as main dashboard) */
+.nav{position:sticky;top:0;z-index:200;height:50px;background:#ffffff;border-bottom:2px solid var(--sie);box-shadow:0 1px 8px rgba(0,0,0,.08);display:flex;align-items:center;padding:0 24px;}
+.nav-back{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;color:var(--sie);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(122,21,24,.3);border-radius:6px;padding:6px 12px;margin-right:14px;white-space:nowrap;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
+.nav-back:hover{background:var(--sie);color:#fff;border-color:var(--sie);}
+.nav-logo{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--sie);letter-spacing:.18em;margin-right:18px;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:6px;transition:background .15s;}
+.nav-logo:hover{background:rgba(122,21,24,.08);}
+.nav-items{display:flex;overflow-x:auto;flex:1;}
+.nav-item{height:50px;padding:0 14px;display:flex;align-items:center;font-size:11px;font-weight:500;color:#4b5563;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;text-decoration:none;}
+.nav-item:hover{color:var(--ink);}
+.nav-item.on{color:var(--sie);border-bottom-color:var(--sie);font-weight:600;}
+.nav-tab-ddd{height:34px;align-self:center;padding:0 12px;background:#b01e1e;color:#fff;border-radius:5px;margin:0 6px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;letter-spacing:.02em;}
+.nav-tab-bonos{height:34px;align-self:center;padding:0 12px;background:#86EFAC;color:#166534;border-radius:5px;margin:0 6px 0 0;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;}
 
 .wrap{padding:20px;max-width:1800px;margin:0 auto;}
 h1{margin:0 0 6px;font-size:22px;font-weight:700;}
@@ -180,14 +184,10 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
 </head>
 <body>
 <nav class="nav">
-  <span class="brand"><span class="dot"></span>SIEGFRIED</span>
-  <div class="tabs">
-    <a class="tab" href="../">Resumen</a>
-    <a class="tab" href="./__MAIN__">DDD</a>
-    <a class="tab on" href="./competidores.html">Competidores</a>
-    <a class="tab" href="../../">Hub</a>
-  </div>
-  <span class="right" id="cutoff"></span>
+  <a class="nav-back" href="__HUB__" title="Volver al hub">← Hub</a>
+  <a class="nav-logo" href="__HUB__">⬡ SIEGFRIED</a>
+  <div class="nav-items">__NAV_ITEMS__</div>
+  <span style="font-size:10px;color:var(--mut);font-family:'IBM Plex Mono',monospace;margin-left:12px;white-space:nowrap;" id="cutoff"></span>
 </nav>
 
 <div class="wrap">
@@ -1057,6 +1057,30 @@ __DATA_LOADER__
 """
 
 
+def build_nav_items(line: str, main_url: str, ddd_url: str) -> str:
+    """Construye los <a class='nav-item'> del nav unificado para competidores.html."""
+    sections = [
+        ('Resumen',             f'{main_url}'),
+        ('Venta Interna',       f'{main_url}#s-bud'),
+        ('Mercado IQVIA',       f'{main_url}#s-perf'),
+        ('Recetas',             f'{main_url}#s-rec'),
+        ('Stock',               f'{main_url}#s-stock'),
+        ('Cobertura',           f'{main_url}#s-cover'),
+        ('Mostrador vs Convenios', f'{main_url}#s-can'),
+        ('Convenios',           f'{main_url}#s-conv'),
+        ('Precios',             f'{main_url}#s-prec'),
+    ]
+    items = [f'<a class="nav-item" href="{href}">{label}</a>' for label, href in sections]
+    # DDD (red pill)
+    items.append(f'<a class="nav-tab-ddd" href="{ddd_url}">DDD</a>')
+    # Competidores (active)
+    items.append('<a class="nav-item on" href="./competidores.html">Competidores</a>')
+    # Bonos PAP (only cardio + SNC)
+    if line in ('cardio', 'SNC'):
+        items.append('<a class="nav-tab-bonos" href="https://bonos-pap.pages.dev/" target="_blank" rel="noopener">Bonos PAP ↗</a>')
+    return '\n    '.join(items)
+
+
 def build_page(line: str, shape: str, main_path: str) -> str:
     main_p = REPO / main_path
     base_dir = main_p.parent
@@ -1071,9 +1095,6 @@ def build_page(line: str, shape: str, main_path: str) -> str:
         data_loader = '<script src="./competidores-data.js"></script>'
         loader_note = f'extracted to {data_file.name}'
     elif line == 'mujer':
-        # Mujer tiene una build dedicada: shared/build-mujer-competidores-data.py
-        # Si existe, usar ese (Shape A full granularity); si no, fallback al
-        # ./data.js (Shape B).
         comp_data = base_dir / 'competidores-data.js'
         if comp_data.is_file():
             data_loader = '<script src="./competidores-data.js"></script>'
@@ -1085,10 +1106,31 @@ def build_page(line: str, shape: str, main_path: str) -> str:
         data_loader = '<script src="../data.js"></script>'
         loader_note = 'reuses ../data.js'
 
+    # Per-line URL paths (relative from competidores.html location)
+    # dermato: competidores.html en `dermatologia/`. Main = `dermato_dashboard.html`.
+    # Otros: competidores.html en `<line>/DDD/`. Main = `../index.html` or `../psq_dashboard.html`.
+    if line == 'dermatologia':
+        main_url = 'dermato_dashboard.html'
+        ddd_url  = 'dermato_ddd.html'
+        hub_url  = '../'
+    else:
+        main_url = f'../{main_filename.replace("psq_ddd.html","psq_dashboard.html").replace("index.html","index.html")}'
+        # Actually for cardio/ATB/OTC/respi/mujer, main = '../index.html'; SNC = '../psq_dashboard.html'
+        if line == 'SNC':
+            main_url = '../psq_dashboard.html'
+        else:
+            main_url = '../index.html'
+        ddd_url  = './'
+        hub_url  = '../../'
+
+    nav_items_html = build_nav_items(line, main_url, ddd_url)
+
     html = (PAGE_HTML
             .replace('__TITLE__', LINE_TITLES.get(line, line))
             .replace('__LINE__', LINE_TITLES.get(line, line).upper())
             .replace('__MAIN__', main_filename)
+            .replace('__HUB__', hub_url)
+            .replace('__NAV_ITEMS__', nav_items_html)
             .replace('__DATA_LOADER__', data_loader))
 
     out_path.write_text(html, encoding='utf-8', newline='')
