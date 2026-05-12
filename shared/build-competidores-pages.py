@@ -146,8 +146,13 @@ h1{margin:0 0 6px;font-size:22px;font-weight:700;}
 .hm-wrap{overflow:auto;border:1px solid var(--bord);border-radius:6px;max-height:560px;background:#fff;}
 table.hm{border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:10px;width:max-content;}
 table.hm th,table.hm td{border:1px solid #f0f0f0;padding:4px 6px;text-align:center;min-width:42px;}
-table.hm thead th{position:sticky;top:0;background:#1f2937;color:#fff;font-weight:700;font-size:9px;letter-spacing:.04em;z-index:2;white-space:nowrap;padding:6px 8px;}
-table.hm thead th:first-child{position:sticky;left:0;z-index:3;}
+table.hm thead th{background:#1f2937;color:#fff;font-weight:700;font-size:9px;letter-spacing:.04em;white-space:nowrap;padding:6px 8px;}
+/* Two-row sticky header: first row pinned at top:0, second row pinned at top:30px */
+table.hm thead tr:first-child th{position:sticky;top:0;z-index:5;box-shadow:0 1px 0 rgba(0,0,0,.1);}
+table.hm thead tr:nth-child(2) th{position:sticky;top:30px;z-index:4;}
+table.hm thead th:first-child{position:sticky;left:0;z-index:6;}
+/* Make sure the rowspan=2 first header column sticks at top AND left */
+table.hm thead tr:first-child th[rowspan="2"]{position:sticky;left:0;top:0;z-index:6;}
 table.hm tbody th{position:sticky;left:0;background:#fafafa;color:var(--ink);font-weight:600;text-align:left;font-size:10px;white-space:nowrap;z-index:1;border-right:1px solid #d4d4d4;max-width:200px;overflow:hidden;text-overflow:ellipsis;padding:5px 10px;}
 table.hm tbody th.sie{color:var(--sie);font-weight:700;}
 table.hm tbody th.sie::before{content:'★ ';}
@@ -566,12 +571,17 @@ __DATA_LOADER__
         const cell = grid.cells[row.brand][r];
         const f = fmtCellMetric(cell, max);
         const tt = [`${row.brand} · ${r}`];
+        tt.push(`Período: ${period.label}`);
         if (cell.ms_act!=null) tt.push(`MS%: ${cell.ms_act.toFixed(2)}%`);
-        if (cell.dms!=null) tt.push(`Δ MS%: ${(cell.dms>=0?'+':'')+cell.dms.toFixed(2)} pp`);
-        if (cell.du!=null) tt.push(`Δ U: ${(cell.du>=0?'+':'')+cell.du.toFixed(1)}%`);
-        tt.push(`Units: ${cell.u_act.toLocaleString('es-AR')}`);
+        if (cell.dms!=null) tt.push(`Δ MS%: ${(cell.dms>=0?'+':'')+cell.dms.toFixed(2)} pp (vs ${period.prevLabel||'—'})`);
+        if (cell.du!=null) tt.push(`Δ U: ${(cell.du>=0?'+':'')+cell.du.toFixed(1)}% (vs ${period.prevLabel||'—'})`);
+        tt.push(`Unidades: ${cell.u_act.toLocaleString('es-AR')}`);
+        if (cell.mkt_act > 0){
+          const perPct = cell.mkt_act / 100;
+          tt.push(`1% MS% = ${Math.round(perPct).toLocaleString('es-AR')} u. (mercado total: ${cell.mkt_act.toLocaleString('es-AR')})`);
+        }
         const tdCls = row.isSie ? 'sie-col' : '';
-        const ttStr = tt.join(' · ');
+        const ttStr = tt.join('\n');
         // Sub-col 1: metric (con heat color)
         b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${ttStr}">${f.txt}</td>`;
         // Sub-col 2: unidades (neutro)
@@ -669,8 +679,15 @@ __DATA_LOADER__
         const tdCls = s==='SIE' ? 'sie-col' : '';
         const a = aggC[r];
         const units = s==='SIE' ? a.sie : a.total;
-        b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${s} · ${r}">${f.txt}</td>`;
-        b += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${s} · ${r}">${fmtUnits(units)}</td>`;
+        const tt = [`${s} · ${r}`, `Período: ${period.label}`,
+                    `Unidades: ${units.toLocaleString('es-AR')}`];
+        if (a.total > 0){
+          const perPct = a.total / 100;
+          tt.push(`1% MS% = ${Math.round(perPct).toLocaleString('es-AR')} u. (mercado total: ${a.total.toLocaleString('es-AR')})`);
+        }
+        const ttStr = tt.join('\n');
+        b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${ttStr}">${f.txt}</td>`;
+        b += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${ttStr}">${fmtUnits(units)}</td>`;
       }
       b += '</tr>';
     }
@@ -777,8 +794,15 @@ __DATA_LOADER__
         const tdCls = s==='SIE' ? 'sie-col' : '';
         const a = aggC[p];
         const units = s==='SIE' ? a.sie : a.total;
-        b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${s} · ${p}">${f.txt}</td>`;
-        b += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${s} · ${p}">${fmtUnits(units)}</td>`;
+        const tt = [`${s} · ${p}`, `Período: ${period.label}`,
+                    `Unidades: ${units.toLocaleString('es-AR')}`];
+        if (a.total > 0){
+          const perPct = a.total / 100;
+          tt.push(`1% MS% = ${Math.round(perPct).toLocaleString('es-AR')} u. (mercado total: ${a.total.toLocaleString('es-AR')})`);
+        }
+        const ttStr = tt.join('\n');
+        b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${ttStr}">${f.txt}</td>`;
+        b += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${ttStr}">${fmtUnits(units)}</td>`;
       }
       b += '</tr>';
     }
