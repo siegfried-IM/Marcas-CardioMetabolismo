@@ -35,6 +35,8 @@ LINES = [
                                                                                                               REPO / 'dermatologia/competidores-data.js'),
     ('cardio',       INPUTS / 'cardio/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 12 de mayo de 2026 (4).xlsx',
                                                                                                               REPO / 'cardio/DDD/competidores-data.js'),
+    ('mujer',        INPUTS / 'linea-mujer/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 13 de mayo de 2026.xlsx',
+                                                                                                              REPO / 'mujer/DDD/competidores-data.js'),
 ]
 
 MONTH_ORDER = {'Ene':1,'Feb':2,'Mar':3,'Abr':4,'May':5,'Jun':6,
@@ -105,6 +107,9 @@ SIE_PATTERNS_BY_LINE = {
                r'^ENTRESTO\b', r'^EXFORGE\b', r'^METGLUCON\b', r'^PIXABAN\b',
                r'^ROXOLAN\b', r'^SILTRAN\b', r'^SINTROM\b', r'^TELPRES\b',
                r'^TERLOC\b'],
+    'mujer': [r'^ISIS\b', r'^SIDERBLUT\b', r'^SIDER\b', r'^TRIP\b',
+              r'^CALCIO BASE\b', r'^CALCIO CITRATO\b', r'^CLIMATIX\b',
+              r'^DELTROX\b', r'^GYNODERM\b', r'^ROXOLAN\b', r'^ALUMPAK\b'],
 }
 
 
