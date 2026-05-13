@@ -37,6 +37,8 @@ LINES = [
                                                                                                               REPO / 'cardio/DDD/competidores-data.js'),
     ('mujer',        INPUTS / 'linea-mujer/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 13 de mayo de 2026.xlsx',
                                                                                                               REPO / 'mujer/DDD/competidores-data.js'),
+    ('SNC',          INPUTS / 'PSQ/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 13 de mayo de 2026 (3).xlsx',
+                                                                                                              REPO / 'SNC/DDD/competidores-data.js'),
 ]
 
 MONTH_ORDER = {'Ene':1,'Feb':2,'Mar':3,'Abr':4,'May':5,'Jun':6,
@@ -110,6 +112,8 @@ SIE_PATTERNS_BY_LINE = {
     'mujer': [r'^ISIS\b', r'^SIDERBLUT\b', r'^SIDER\b', r'^TRIP\b',
               r'^CALCIO BASE\b', r'^CALCIO CITRATO\b', r'^CLIMATIX\b',
               r'^DELTROX\b', r'^GYNODERM\b', r'^ROXOLAN\b', r'^ALUMPAK\b'],
+    'SNC': [r'^VALIUM\b', r'^MADOPAR\b', r'^QTP\b', r'^PGB\b', r'^EMERAL\b',
+            r'^LURAP\b', r'^VALQUIR\b', r'^MELERIL\b', r'^LEVITAL\b', r'^VISDON\b'],
 }
 
 
