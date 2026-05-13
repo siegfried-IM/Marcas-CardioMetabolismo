@@ -66,16 +66,16 @@ h1{margin:0 0 6px;font-size:22px;font-weight:700;}
 .tbl-title{font-size:11px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px;display:flex;align-items:center;justify-content:space-between;}
 .tbl-title .meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mut);font-weight:500;letter-spacing:.02em;text-transform:none;}
 .hm-wrap{overflow:auto;border:1px solid var(--bord);border-radius:6px;max-height:560px;background:#fff;}
-table.hm{border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:10px;width:max-content;}
-table.hm th,table.hm td{border:1px solid #f0f0f0;padding:4px 6px;text-align:center;min-width:42px;}
-table.hm thead th{background:#1f2937;color:#fff;font-weight:700;font-size:9px;letter-spacing:.04em;white-space:nowrap;padding:6px 8px;}
+table.hm{border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:9px;width:max-content;}
+table.hm th,table.hm td{border:1px solid #f0f0f0;padding:2px 4px;text-align:center;min-width:32px;}
+table.hm thead th{background:#1f2937;color:#fff;font-weight:700;font-size:8px;letter-spacing:.02em;white-space:nowrap;padding:3px 5px;}
 /* Two-row sticky header: first row pinned at top:0, second row pinned at top:30px */
 table.hm thead tr:first-child th{position:sticky;top:0;z-index:5;box-shadow:0 1px 0 rgba(0,0,0,.1);}
 table.hm thead tr:nth-child(2) th{position:sticky;top:30px;z-index:4;}
 table.hm thead th:first-child{position:sticky;left:0;z-index:6;}
 /* Make sure the rowspan=2 first header column sticks at top AND left */
 table.hm thead tr:first-child th[rowspan="2"]{position:sticky;left:0;top:0;z-index:6;}
-table.hm tbody th{position:sticky;left:0;background:#fafafa;color:var(--ink);font-weight:600;text-align:left;font-size:10px;white-space:nowrap;z-index:1;border-right:1px solid #d4d4d4;max-width:200px;overflow:hidden;text-overflow:ellipsis;padding:5px 10px;}
+table.hm tbody th{position:sticky;left:0;background:#fafafa;color:var(--ink);font-weight:600;text-align:left;font-size:9px;white-space:nowrap;z-index:1;border-right:1px solid #d4d4d4;max-width:160px;overflow:hidden;text-overflow:ellipsis;padding:3px 8px;}
 table.hm tbody th.sie{color:var(--sie);font-weight:700;}
 table.hm tbody th.sie::before{content:'★ ';}
 table.hm tbody tr:hover th,table.hm tbody tr:hover td{filter:brightness(0.95);}
@@ -421,7 +421,7 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
     const r = Math.round(243+(30-243)*t);
     const g = Math.round(244+(64-244)*t);
     const b = Math.round(246+(175-246)*t);
-    return {bg:`rgb(${r},${g},${b})`, fg: t>0.55?'#fff':'#1f2937'};
+    return {bg:`rgb(${r},${g},${b})`, fg: t>0.3?'#fff':'#000'};
   }
   function colorDiv(v, max){
     if (v==null || max<=0) return {bg:'#fff', fg:'#9ca3af'};
@@ -430,13 +430,13 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
       const r = Math.round(255+(22-255)*t);
       const g = Math.round(255+(163-255)*t);
       const b = Math.round(255+(74-255)*t);
-      return {bg:`rgb(${r},${g},${b})`, fg: t>0.55?'#fff':'#0f5132'};
+      return {bg:`rgb(${r},${g},${b})`, fg: t>0.3?'#fff':'#000'};
     } else {
       const tt = -t;
       const r = Math.round(255+(220-255)*tt);
       const g = Math.round(255+(38-255)*tt);
       const b = Math.round(255+(38-255)*tt);
-      return {bg:`rgb(${r},${g},${b})`, fg: tt>0.55?'#fff':'#7f1d1d'};
+      return {bg:`rgb(${r},${g},${b})`, fg: tt>0.3?'#fff':'#000'};
     }
   }
   function fmtCellMetric(cell, max){
