@@ -70,8 +70,8 @@ table.hm{border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-siz
 table.hm th,table.hm td{border:1px solid #f0f0f0;padding:2px 4px;text-align:center;min-width:32px;}
 table.hm thead th{background:#1f2937;color:#fff;font-weight:700;font-size:8px;letter-spacing:.02em;white-space:nowrap;padding:3px 5px;}
 /* Two-row sticky header: first row pinned at top:0, second row pinned at top:30px */
-table.hm thead tr:first-child th{position:sticky;top:0;z-index:5;box-shadow:0 1px 0 rgba(0,0,0,.1);}
-table.hm thead tr:nth-child(2) th{position:sticky;top:30px;z-index:4;}
+table.hm thead tr:first-child th{position:sticky;top:0;z-index:6;box-shadow:0 1px 0 rgba(0,0,0,.1);background:#1f2937;}
+table.hm thead tr:nth-child(2) th{position:sticky;top:24px;z-index:4;background:#1f2937;}
 table.hm thead th:first-child{position:sticky;left:0;z-index:6;}
 /* Make sure the rowspan=2 first header column sticks at top AND left */
 table.hm thead tr:first-child th[rowspan="2"]{position:sticky;left:0;top:0;z-index:6;}
@@ -471,10 +471,10 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
     const pLab = period.label || '';
     const ppLab = period.prevLabel || '';
     let metricLabel;
-    if (HEAT_METRIC==='ms')       metricLabel = `MS% · ${pLab}`;
-    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `VAR MS% · ${pLab} vs ${ppLab}` : `VAR MS% · sin comparador`;
-    else                          metricLabel = ppLab ? `VAR UNIDADES% · ${pLab} vs ${ppLab}` : `VAR UNIDADES% · sin comparador`;
-    const unitsLabel = `Unidades · ${pLab}`;
+    if (HEAT_METRIC==='ms')       metricLabel = 'MS%';
+    else if (HEAT_METRIC==='dms') metricLabel = 'VAR MS%';
+    else                          metricLabel = 'VAR UNIDADES%';
+    const unitsLabel = 'Unidades';
     let h = '<tr><th rowspan="2">Región / Provincia</th>';
     for (const row of grid.rows){
       const cls = row.isSie ? 'sie sie-col' : '';
@@ -579,10 +579,10 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
     const pLab = period.label || '';
     const ppLab = period.prevLabel || '';
     let metricLabel;
-    if (HEAT_METRIC==='ms')       metricLabel = `MS% · ${pLab}`;
-    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `VAR MS% · ${pLab} vs ${ppLab}` : `VAR MS% · sin comparador`;
-    else                          metricLabel = ppLab ? `VAR UNIDADES% · ${pLab} vs ${ppLab}` : `VAR UNIDADES% · sin comparador`;
-    const unitsLabel = `Unidades · ${pLab}`;
+    if (HEAT_METRIC==='ms')       metricLabel = 'MS%';
+    else if (HEAT_METRIC==='dms') metricLabel = 'VAR MS%';
+    else                          metricLabel = 'VAR UNIDADES%';
+    const unitsLabel = 'Unidades';
     let h = '<tr><th rowspan="2">Región / Provincia</th>';
     for (const s of series){
       const cls = s==='SIE' ? 'sie sie-col' : '';
@@ -694,10 +694,10 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
     const pLab = period.label || '';
     const ppLab = period.prevLabel || '';
     let metricLabel;
-    if (HEAT_METRIC==='ms')       metricLabel = `MS% · ${pLab}`;
-    else if (HEAT_METRIC==='dms') metricLabel = ppLab ? `VAR MS% · ${pLab} vs ${ppLab}` : `VAR MS% · sin comparador`;
-    else                          metricLabel = ppLab ? `VAR UNIDADES% · ${pLab} vs ${ppLab}` : `VAR UNIDADES% · sin comparador`;
-    const unitsLabel = `Unidades · ${pLab}`;
+    if (HEAT_METRIC==='ms')       metricLabel = 'MS%';
+    else if (HEAT_METRIC==='dms') metricLabel = 'VAR MS%';
+    else                          metricLabel = 'VAR UNIDADES%';
+    const unitsLabel = 'Unidades';
     let h = '<tr><th rowspan="2">Provincia</th>';
     for (const s of series){
       const cls = s==='SIE' ? 'sie sie-col' : '';
@@ -858,14 +858,15 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
     } else {
       noteEl.textContent = 'La data DDD de esta línea agrega SIE vs Mercado Total por región/mes. No expone competidores individuales — el granular requiere rebuild de data.js desde el xlsx fuente.';
     }
+    const periodInfo = period.label + (period.prevLabel && HEAT_METRIC!=='ms' ? ' vs ' + period.prevLabel : '');
     if (SHAPE==='A'){
       const provCount = (function(){ const view = buildProvinceView(HEAT_MARKET); return view ? Object.keys(view.total_monthly).length : 0; })();
-      document.getElementById('prov-meta').textContent = `${provCount} provincias`;
+      document.getElementById('prov-meta').textContent = `${provCount} provincias · ${periodInfo}`;
     } else {
       const aggC = aggregateBByProvince(HEAT_MARKET, period.curr);
-      document.getElementById('prov-meta').textContent = `${Object.keys(aggC).filter(p=>aggC[p].total>0).length} provincias`;
+      document.getElementById('prov-meta').textContent = `${Object.keys(aggC).filter(p=>aggC[p].total>0).length} provincias · ${periodInfo}`;
     }
-    document.getElementById('cup-meta').textContent = `${cupRegs.length} zonas CUP`;
+    document.getElementById('cup-meta').textContent = `${cupRegs.length} zonas CUP · ${periodInfo}`;
   }
 
   function renderMktGrid(){
