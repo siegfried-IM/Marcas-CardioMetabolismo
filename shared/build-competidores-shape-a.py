@@ -27,7 +27,7 @@ INPUTS = Path(r'C:\Users\camarinaro\OneDrive - Portalcorp\Documentos\Hub-Marcas-
 # (line, xlsx_path, out_data_js)
 LINES = [
     ('ATB',          INPUTS / 'ATB/2026-04/fuentes-originales/DDD ATB.xlsx',                                  REPO / 'ATB/DDD/competidores-data.js'),
-    ('respiratorio', INPUTS / 'respiratorio/2026-04/ddd/Producto-Molécula-ATC-provincia - 6 de abril de 2026.xlsx',
+    ('respiratorio', INPUTS / 'respiratorio/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 13 de mayo de 2026 (1).xlsx',
                                                                                                               REPO / 'respiratorio/DDD/competidores-data.js'),
     ('OTC',          INPUTS / 'OTC/2026-04/fuentes-originales/Producto-Molécula-ATC-provincia - 12 de mayo de 2026.xlsx',
                                                                                                               REPO / 'OTC/DDD/competidores-data.js'),
