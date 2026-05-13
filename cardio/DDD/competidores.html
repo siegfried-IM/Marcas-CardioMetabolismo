@@ -67,11 +67,11 @@ h1{margin:0 0 6px;font-size:22px;font-weight:700;}
 .tbl-title .meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--mut);font-weight:500;letter-spacing:.02em;text-transform:none;}
 .hm-wrap{overflow:auto;border:1px solid var(--bord);border-radius:6px;max-height:560px;background:#fff;}
 table.hm{border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:9px;width:max-content;}
-table.hm th,table.hm td{border:1px solid #f0f0f0;padding:2px 4px;text-align:center;min-width:32px;}
+table.hm th,table.hm td{border:1px solid #f0f0f0;padding:2px 4px;text-align:center;min-width:32px;background-clip:padding-box;}
 table.hm thead th{background:#1f2937;color:#fff;font-weight:700;font-size:8px;letter-spacing:.02em;white-space:nowrap;padding:3px 5px;}
 /* Two-row sticky header: first row pinned at top:0, second row pinned at top:30px */
-table.hm thead tr:first-child th{position:sticky;top:0;z-index:6;box-shadow:0 1px 0 rgba(0,0,0,.1);background:#1f2937;}
-table.hm thead tr:nth-child(2) th{position:sticky;top:24px;z-index:4;background:#1f2937;}
+table.hm thead tr:first-child th{position:sticky;top:0;z-index:6;box-shadow:0 1px 0 rgba(0,0,0,.1);background:#1f2937;height:22px;line-height:1.1;}
+table.hm thead tr:nth-child(2) th{position:sticky;top:22px;z-index:4;background:#1f2937;height:18px;line-height:1.1;}
 table.hm thead th:first-child{position:sticky;left:0;z-index:6;}
 /* Make sure the rowspan=2 first header column sticks at top AND left */
 table.hm thead tr:first-child th[rowspan="2"]{position:sticky;left:0;top:0;z-index:6;}
