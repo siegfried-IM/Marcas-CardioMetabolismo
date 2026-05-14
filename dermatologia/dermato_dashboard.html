@@ -241,6 +241,19 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
 .kpi-source.iq  { background: rgba(8,145,178,.12);  color: #0891b2; }
 .kpi-source.rec { background: rgba(124,58,237,.12); color: #7c3aed; }
 .kpi-source.vi  { background: rgba(22,163,74,.14);  color: #16a34a; }
+
+.perf-bf{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0 4px;padding:6px 0;border-top:1px dashed #e5e7eb;}
+.perf-bf .lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;}
+.perf-bf .seg{display:inline-flex;background:#fff;border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;}
+.perf-bf .seg button{padding:4px 9px;border:0;background:transparent;cursor:pointer;font-size:10px;font-weight:600;color:#525252;border-right:1px solid #f3f4f6;font-family:inherit;}
+.perf-bf .seg button:last-child{border-right:0;}
+.perf-bf .seg button.on{background:#b01e1e;color:#fff;}
+.perf-bf input.search{padding:4px 8px;border:1px solid #e5e7eb;border-radius:5px;font-size:11px;width:140px;font-family:inherit;}
+.perf-bf .pills{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;width:100%;}
+.perf-bf .pill{padding:2px 7px;border:1px solid #e5e7eb;border-radius:10px;font-size:9px;cursor:pointer;background:#fff;color:#525252;user-select:none;transition:all .12s;}
+.perf-bf .pill.on{background:#b01e1e;color:#fff;border-color:#b01e1e;}
+.perf-bf .pill.sie{border-color:#b01e1e;font-weight:700;}
+
 </style>
 </head>
 <body>
@@ -358,6 +371,17 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
           <button class="seg on" data-v="ms">MS%</button>
           <button class="seg" data-v="units">Unidades</button>
         </div>
+      <div class="perf-bf">
+        <span class="lbl">Comparar con</span>
+        <div class="seg" id="pf-mode">
+          <button data-m="top5">Top 5</button>
+          <button data-m="top10" class="on">Top 10</button>
+          <button data-m="sie">Solo SIE</button>
+          <button data-m="all">Todos</button>
+        </div>
+        <input type="text" class="search" id="pf-search" placeholder="Buscar marca..." />
+        <div class="pills" id="pf-pills"></div>
+      </div>
         <div id="perf-yr" style="display:none;gap:4px;"></div>
       </div>
       <div class="perf-layout">
@@ -937,7 +961,7 @@ function _aggregateByBrand(rawProds){
 
 function renderPerf(){
   const molData=D.mol_perf[pMol]; if(!molData)return;
-  const prods=_aggregateByBrand(molData.products);
+  let prods=_aggregateByBrand(molData.products);
 
   let periodKeys;
   if(pPeriod==='ytd') periodKeys=D.meta?.ytd_keys||[];
@@ -981,7 +1005,48 @@ function renderPerf(){
   renderPerfYr();
   const labels=periodKeys.map(k=>pPeriod==='ytd'||pPeriod==='mat'?k.replace('Jan ',''):k);
 
-  const lastPK=periodKeys[periodKeys.length-1];
+  
+
+  // Apply brand filter
+  if(!window.__sfPF) window.__sfPF = { mode:'top10', selected:new Set(), search:'' };
+  const _pf = window.__sfPF;
+  // Determine "value" per product for ranking: last period units
+  const _rankPK = periodKeys[periodKeys.length-1];
+  const _vfn = function(p){
+    const v = (pMetric==='ms')
+      ? ((pPeriod==='ytd'?p.ms_ytd:pPeriod==='mat'?p.ms_mat:pPeriod==='monthly'?p.ms_monthly:p.ms_quarterly)||{})[_rankPK]
+      : ((pPeriod==='monthly'?p.monthly_vals:pPeriod==='ytd'?p.ytd:pPeriod==='mat'?p.mat:p.quarterly_vals)||{})[_rankPK];
+    return v||0;
+  };
+  // Build pills always from full prods
+  const _allProds = prods.slice().sort((a,b)=>(_vfn(b)||0)-(_vfn(a)||0));
+  // Filter
+  let _filtered = _allProds;
+  if(_pf.mode==='top5') _filtered = _allProds.slice(0,5);
+  else if(_pf.mode==='top10') _filtered = _allProds.slice(0,10);
+  else if(_pf.mode==='sie') _filtered = _allProds.filter(p=>p.is_sie);
+  // Custom selection (additional filter via pills)
+  if(_pf.selected.size > 0){
+    _filtered = _allProds.filter(p=>_pf.selected.has(p.prod));
+  }
+  // Always include SIE
+  const _sieProds = _allProds.filter(p=>p.is_sie);
+  _sieProds.forEach(s=>{ if(!_filtered.find(x=>x.prod===s.prod)) _filtered.push(s); });
+  prods = _filtered;
+
+  // Render pills
+  const _pillEl = document.getElementById('pf-pills');
+  if(_pillEl){
+    const _shown = new Set(_filtered.map(p=>p.prod));
+    const q = (_pf.search||'').toLowerCase();
+    const _filteredPills = q ? _allProds.filter(p=>p.prod.toLowerCase().includes(q)) : _allProds.slice(0,30);
+    _pillEl.innerHTML = _filteredPills.map(p=>{
+      const on = _shown.has(p.prod);
+      const sie = p.is_sie?' sie':'';
+      return `<span class="pill${on?' on':''}${sie}" data-prod="${p.prod.replace(/"/g,'&quot;')}">${p.prod}</span>`;
+    }).join('');
+  }
+const lastPK=periodKeys[periodKeys.length-1];
   const lastLabel=pPeriod==='ytd'||pPeriod==='mat'?lastPK.replace('Jan ',''):(pPeriod==='quarterly'?lastPK:lastPK);
   const prevPK=(()=>{
     if(!lastPK) return null;
@@ -1883,5 +1948,48 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 <script src="../shared/export-pdf.js"></script>
+
+<script>
+
+// Brand filter state
+window.__sfPF = window.__sfPF || { mode:'top10', selected:new Set(), search:'' };
+
+// Wire perf brand filter (one-time setup)
+(function(){
+  if(window.__sfPFWired) return;
+  window.__sfPFWired = true;
+  const ready = function(fn){
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  };
+  ready(function(){
+    const seg = document.getElementById('pf-mode');
+    const search = document.getElementById('pf-search');
+    const pills = document.getElementById('pf-pills');
+    if(seg) seg.addEventListener('click', function(e){
+      const b = e.target.closest('button[data-m]');
+      if(!b) return;
+      seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      window.__sfPF.mode = b.dataset.m;
+      window.__sfPF.selected = new Set();
+      if(typeof renderPerf==='function') renderPerf();
+    });
+    if(search) search.addEventListener('input', function(e){
+      window.__sfPF.search = e.target.value;
+      if(typeof renderPerf==='function') renderPerf();
+    });
+    if(pills) pills.addEventListener('click', function(e){
+      const p = e.target.closest('.pill[data-prod]');
+      if(!p) return;
+      const prod = p.dataset.prod;
+      if(window.__sfPF.selected.has(prod)) window.__sfPF.selected.delete(prod);
+      else window.__sfPF.selected.add(prod);
+      if(typeof renderPerf==='function') renderPerf();
+    });
+  });
+})();
+
+</script>
 </body></html>
 
