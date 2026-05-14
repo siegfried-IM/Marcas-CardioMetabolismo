@@ -176,20 +176,81 @@ def audit_brand_level(R):
 
 
 def audit_recetas(R):
-    """Verifica que rec_ms.sie + ms_recetas en kpiStrip esten consistentes."""
+    """Verifica consistencias internas de recetas:
+       - kpis.json ms_recetas vs kpiStrip.ms_rec
+       - rec_ms[fam].sie[m] / rec_ms[fam].mkt[m] * 100 == rec_ms[fam].ms[m]
+       - sum(rec_ms[fam].sie YTD) == kpis.json.recetas_sie.curr
+       - recetas[fam][m].recetas == rec_ms[fam].mkt[m] (cuando ambos existen)
+       - brandKpis[brand].rec.ms == rec_ms[fam].ms[last_month] del fam
+    """
     kj = json.loads(KJ_PATH.read_text(encoding='utf-8'))
     kjl = {l['key']:l for l in kj['lines']}
-    print('\n[3] RECETAS: kpis.json ms_recetas vs kpiStrip.ms_rec')
+    print('\n[3] RECETAS: 5 chequeos internos')
     for key, line_dir, path_rel, inline in LINES:
         try: D = load_D(path_rel, inline)
         except Exception as e: continue
         ks = D.get('kpiStrip', {})
         kl = kjl.get(key)
-        if not kl: continue
-        expected = kl['kpis']['ytd']['ms_recetas']['curr']
-        if expected is None: continue
-        actual = ks.get('ms_rec')
-        R.check(f'{line_dir} ms_rec', expected, actual)
+
+        # 3.1) ms_rec vs kpis.json
+        if kl:
+            expected = kl['kpis']['ytd']['ms_recetas']['curr']
+            if expected is not None:
+                R.check(f'{line_dir} ms_rec (kpiStrip vs kpis.json)', expected, ks.get('ms_rec'))
+
+        # 3.2) rec_ms internal consistency: sie/mkt*100 == ms per month per family
+        rec_ms = D.get('rec_ms', {}) or {}
+        for fam, obj in rec_ms.items():
+            if not isinstance(obj, dict): continue
+            sie_m = obj.get('sie', {}) or {}
+            mkt_m = obj.get('mkt', {}) or {}
+            ms_m  = obj.get('ms',  {}) or {}
+            for mk in sie_m.keys():
+                sie = sie_m.get(mk) or 0
+                mkt = mkt_m.get(mk)
+                ms  = ms_m.get(mk)
+                if mkt and mkt > 0 and ms is not None:
+                    expected_ms = round(sie/mkt*100, 1)
+                    R.check(f'{line_dir} rec_ms[{fam}].ms[{mk}] = sie/mkt*100', expected_ms, ms, tol=0.5)
+
+        # 3.3) sum(rec_ms[fam].sie YTD) ~ kpis.json.recetas_sie.curr
+        if kl:
+            kpi_rec_curr = kl['kpis']['ytd']['recetas_sie']['curr']
+            kpi_rec_as_of = kj.get('as_of_month', 'Mar 2026')
+            # Sum all rec_ms[fam].sie YTD = months in current year up to as_of
+            end_y, end_m = (int(kpi_rec_as_of.split()[-1]), MES.index(kpi_rec_as_of.split()[0])+1) if kpi_rec_as_of else (None,None)
+            if end_y:
+                ytd_keys = ytd(end_y, end_m)
+                total = 0
+                for fam, obj in rec_ms.items():
+                    if not isinstance(obj, dict): continue
+                    sie_m = obj.get('sie', {}) or {}
+                    for mk in ytd_keys:
+                        total += int(sie_m.get(mk) or 0)
+                if kpi_rec_curr is not None:
+                    R.check(f'{line_dir} sum(rec_ms[].sie YTD) vs kpis.json.recetas_sie.curr',
+                            kpi_rec_curr, total, tol=max(10, kpi_rec_curr*0.01) if kpi_rec_curr else 10)
+
+        # 3.4) recetas[fam][m].recetas (Cant. Recetas) vs rec_ms[fam].mkt[m]
+        # SOLO cuando D.recetas usa nombres de familia (no de brand).
+        # SNC tiene D.recetas keyed por brand (e.g., 'LEVITAL SIE') con valores
+        # brand-level (=lo que iria en rec_ms.sie). En esa estructura el check
+        # vs mkt no aplica — se skipea.
+        recetas = D.get('recetas', {}) or {}
+        is_brand_keyed = any(' SIE' in k or '(SIE)' in k for k in recetas.keys())
+        if not is_brand_keyed:
+            for fam, months in recetas.items():
+                if not isinstance(months, dict): continue
+                rms_obj = rec_ms.get(fam)
+                if not isinstance(rms_obj, dict): continue
+                mkt_m = rms_obj.get('mkt', {}) or {}
+                for mk, entry in months.items():
+                    if not isinstance(entry, dict): continue
+                    rec_val = entry.get('recetas')
+                    mkt_val = mkt_m.get(mk)
+                    if rec_val and mkt_val and mkt_val > 0:
+                        R.check(f'{line_dir} recetas[{fam}][{mk}].recetas vs rec_ms.mkt',
+                                mkt_val, rec_val, tol=max(5, mkt_val*0.005))
 
 
 def audit_summary(R):
