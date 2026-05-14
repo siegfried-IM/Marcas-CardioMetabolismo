@@ -146,21 +146,32 @@ def main():
         rec_fam = recetas_top.setdefault(fam, {})
         rec_fam[TARGET_MONTH] = {'recetas': sie_rec, 'medicos': 0}
 
-        # rec_comp: update existing brands for this fam
+        # rec_comp: update existing brands for this fam (match by primer token)
         fam_comp = rec_comp.setdefault(fam, {})
         comp_brands = droga_competitors(rows, market, droga)
+
+        def first_word(s):
+            # Strip SIE / paren suffix and take the first token
+            cleaned = re.sub(r'\s*\([^)]+\)\s*$', '', s).strip()
+            cleaned = re.sub(r'\s+SIE\s*$', '', cleaned, flags=re.I).strip()
+            return cleaned.split()[0].upper() if cleaned else ''
+
+        comp_updated = 0
         for brand_name, rec in comp_brands:
-            # Try to find matching existing key
-            bn_clean = re.sub(r'\s+SIE\s*$', '', brand_name).strip().upper()
+            bn_first = first_word(brand_name)
+            if not bn_first: continue
+            # Find existing rec_comp key whose first word matches
             matched = None
             for ek in fam_comp.keys():
-                ek_clean = re.sub(r'\s*\([^)]+\)\s*', '', ek).strip().upper()
-                if bn_clean == ek_clean or bn_clean.startswith(ek_clean) or ek_clean.startswith(bn_clean):
+                if first_word(ek) == bn_first:
                     matched = ek; break
             if matched:
                 b_obj = fam_comp[matched]
                 if isinstance(b_obj, dict):
                     b_obj.setdefault('monthly', {})[TARGET_MONTH] = rec
+                    comp_updated += 1
+        if comp_updated > 0:
+            print(f'    rec_comp: {comp_updated} brands updated')
 
     HTML.write_text(prefix + json.dumps(D, ensure_ascii=False) + suffix,
                     encoding='utf-8', newline='')

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T12:32:17",
+  "generated_at": "2026-05-14T12:43:50",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -1790,6 +1790,69 @@
       }
     },
     {
+      "name": "ISIS FREE S/ESTROG (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "SIN ESTROGENO",
+      "periods": {
+        "mensual": {
+          "rec_curr": 5657,
+          "rec_prev": 5156,
+          "rec_ie": 95.4,
+          "units_curr": 58606,
+          "units_prev": 43269,
+          "units_ie": 99.0,
+          "int_curr": 54397,
+          "int_prev": 40319,
+          "int_ie": 134.9
+        },
+        "ytd": {
+          "rec_curr": 17366,
+          "rec_prev": 16060,
+          "rec_ie": 95.9,
+          "units_curr": 167046,
+          "units_prev": 137940,
+          "units_ie": 95.5,
+          "int_curr": 165536,
+          "int_prev": 146378,
+          "int_ie": 113.1
+        },
+        "trimestre": {
+          "rec_curr": 17366,
+          "rec_prev": 16060,
+          "rec_ie": 95.9,
+          "units_curr": 167046,
+          "units_prev": 137940,
+          "units_ie": 95.5,
+          "int_curr": 165536,
+          "int_prev": 146378,
+          "int_ie": 113.1
+        },
+        "semestre": {
+          "rec_curr": 33449,
+          "rec_prev": 31987,
+          "rec_ie": 94.7,
+          "units_curr": 324268,
+          "units_prev": 265082,
+          "units_ie": 97.7,
+          "int_curr": 305447,
+          "int_prev": 281059,
+          "int_ie": 108.7
+        },
+        "mat": {
+          "rec_curr": 64259,
+          "rec_prev": 62697,
+          "rec_ie": 93.3,
+          "units_curr": 640759,
+          "units_prev": 515139,
+          "units_ie": 97.4,
+          "int_curr": 598692,
+          "int_prev": 538976,
+          "int_ie": 111.1
+        }
+      }
+    },
+    {
       "name": "DILATREND (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -1849,69 +1912,6 @@
           "int_curr": 661704,
           "int_prev": 768044,
           "int_ie": 86.2
-        }
-      }
-    },
-    {
-      "name": "ISIS FREE S/ESTROG (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "SIN ESTROGENO",
-      "periods": {
-        "mensual": {
-          "rec_curr": 0,
-          "rec_prev": 5156,
-          "rec_ie": 0.0,
-          "units_curr": 58606,
-          "units_prev": 43269,
-          "units_ie": 99.0,
-          "int_curr": 54397,
-          "int_prev": 40319,
-          "int_ie": 134.9
-        },
-        "ytd": {
-          "rec_curr": 11709,
-          "rec_prev": 16060,
-          "rec_ie": 64.6,
-          "units_curr": 167046,
-          "units_prev": 137940,
-          "units_ie": 95.5,
-          "int_curr": 165536,
-          "int_prev": 146378,
-          "int_ie": 113.1
-        },
-        "trimestre": {
-          "rec_curr": 11709,
-          "rec_prev": 16060,
-          "rec_ie": 64.6,
-          "units_curr": 167046,
-          "units_prev": 137940,
-          "units_ie": 95.5,
-          "int_curr": 165536,
-          "int_prev": 146378,
-          "int_ie": 113.1
-        },
-        "semestre": {
-          "rec_curr": 27792,
-          "rec_prev": 31987,
-          "rec_ie": 78.7,
-          "units_curr": 324268,
-          "units_prev": 265082,
-          "units_ie": 97.7,
-          "int_curr": 305447,
-          "int_prev": 281059,
-          "int_ie": 108.7
-        },
-        "mat": {
-          "rec_curr": 58602,
-          "rec_prev": 62697,
-          "rec_ie": 85.1,
-          "units_curr": 640759,
-          "units_prev": 515139,
-          "units_ie": 97.4,
-          "int_curr": 598692,
-          "int_prev": 538976,
-          "int_ie": 111.1
         }
       }
     },
@@ -2420,69 +2420,6 @@
       }
     },
     {
-      "name": "CALCIO BASE (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "BASE",
-      "periods": {
-        "mensual": {
-          "rec_curr": 3766,
-          "rec_prev": 3931,
-          "rec_ie": 97.9,
-          "units_curr": 24104,
-          "units_prev": 21968,
-          "units_ie": 100.9,
-          "int_curr": 24224,
-          "int_prev": 21038,
-          "int_ie": 115.1
-        },
-        "ytd": {
-          "rec_curr": 11029,
-          "rec_prev": 11879,
-          "rec_ie": 97.5,
-          "units_curr": 69036,
-          "units_prev": 65973,
-          "units_ie": 98.7,
-          "int_curr": 70954,
-          "int_prev": 69138,
-          "int_ie": 102.6
-        },
-        "trimestre": {
-          "rec_curr": 11029,
-          "rec_prev": 11879,
-          "rec_ie": 97.5,
-          "units_curr": 69036,
-          "units_prev": 65973,
-          "units_ie": 98.7,
-          "int_curr": 70954,
-          "int_prev": 69138,
-          "int_ie": 102.6
-        },
-        "semestre": {
-          "rec_curr": 22281,
-          "rec_prev": 24546,
-          "rec_ie": 96.3,
-          "units_curr": 144128,
-          "units_prev": 137010,
-          "units_ie": 101.8,
-          "int_curr": 139101,
-          "int_prev": 139377,
-          "int_ie": 99.8
-        },
-        "mat": {
-          "rec_curr": 45029,
-          "rec_prev": 52731,
-          "rec_ie": 93.8,
-          "units_curr": 295392,
-          "units_prev": 295122,
-          "units_ie": 101.1,
-          "int_curr": 289481,
-          "int_prev": 299199,
-          "int_ie": 96.8
-        }
-      }
-    },
-    {
       "name": "TRIP D3 (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -2542,6 +2479,69 @@
           "int_curr": 501270,
           "int_prev": 404102,
           "int_ie": 124.0
+        }
+      }
+    },
+    {
+      "name": "CALCIO BASE (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "BASE",
+      "periods": {
+        "mensual": {
+          "rec_curr": 129,
+          "rec_prev": 3931,
+          "rec_ie": 3.4,
+          "units_curr": 24104,
+          "units_prev": 21968,
+          "units_ie": 100.9,
+          "int_curr": 24224,
+          "int_prev": 21038,
+          "int_ie": 115.1
+        },
+        "ytd": {
+          "rec_curr": 7392,
+          "rec_prev": 11879,
+          "rec_ie": 65.4,
+          "units_curr": 69036,
+          "units_prev": 65973,
+          "units_ie": 98.7,
+          "int_curr": 70954,
+          "int_prev": 69138,
+          "int_ie": 102.6
+        },
+        "trimestre": {
+          "rec_curr": 7392,
+          "rec_prev": 11879,
+          "rec_ie": 65.4,
+          "units_curr": 69036,
+          "units_prev": 65973,
+          "units_ie": 98.7,
+          "int_curr": 70954,
+          "int_prev": 69138,
+          "int_ie": 102.6
+        },
+        "semestre": {
+          "rec_curr": 18644,
+          "rec_prev": 24546,
+          "rec_ie": 80.6,
+          "units_curr": 144128,
+          "units_prev": 137010,
+          "units_ie": 101.8,
+          "int_curr": 139101,
+          "int_prev": 139377,
+          "int_ie": 99.8
+        },
+        "mat": {
+          "rec_curr": 41392,
+          "rec_prev": 52731,
+          "rec_ie": 86.2,
+          "units_curr": 295392,
+          "units_prev": 295122,
+          "units_ie": 101.1,
+          "int_curr": 289481,
+          "int_prev": 299199,
+          "int_ie": 96.8
         }
       }
     },
