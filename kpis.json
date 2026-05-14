@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-12T11:56:33",
+  "generated_at": "2026-05-14T09:20:01",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -28,18 +28,18 @@
       "venta_through": "Apr 2026",
       "has_recetas": true,
       "sparkline_units_sie": [
-        343849,
-        344842,
-        331465,
-        372700,
-        335419,
-        333461,
-        354296,
-        309310,
-        354989,
-        336830,
-        286307,
-        339989
+        344296,
+        347057,
+        334648,
+        374869,
+        339156,
+        336975,
+        358471,
+        312427,
+        356371,
+        337531,
+        289760,
+        344713
       ],
       "sparkline_months": [
         "Apr 2025",
@@ -72,18 +72,18 @@
             "ie": 109.8
           },
           "units_sie": {
-            "curr": 339989,
-            "prev": 329296,
-            "ie": 103.2
+            "curr": 344713,
+            "prev": 336145,
+            "ie": 102.5
           },
           "ms_units": {
-            "curr": 7.25,
-            "prev": 7.61
+            "curr": 5.93,
+            "prev": 6.28
           },
           "mercado_units": {
-            "curr": 4688295,
-            "prev": 4328860,
-            "ie": 108.3
+            "curr": 5816548,
+            "prev": 5350658,
+            "ie": 108.7
           },
           "venta_interna": {
             "curr": 354130,
@@ -107,18 +107,18 @@
             "ie": 105.9
           },
           "units_sie": {
-            "curr": 963126,
-            "prev": 958785,
-            "ie": 100.5
+            "curr": 972004,
+            "prev": 977402,
+            "ie": 99.4
           },
           "ms_units": {
-            "curr": 7.23,
-            "prev": 7.73
+            "curr": 5.92,
+            "prev": 6.35
           },
           "mercado_units": {
-            "curr": 13313242,
-            "prev": 12401921,
-            "ie": 107.3
+            "curr": 16415852,
+            "prev": 15382691,
+            "ie": 106.7
           },
           "venta_interna": {
             "curr": 1019473,
@@ -142,18 +142,18 @@
             "ie": 105.9
           },
           "units_sie": {
-            "curr": 963126,
-            "prev": 958785,
-            "ie": 100.5
+            "curr": 972004,
+            "prev": 977402,
+            "ie": 99.4
           },
           "ms_units": {
-            "curr": 7.23,
-            "prev": 7.73
+            "curr": 5.92,
+            "prev": 6.35
           },
           "mercado_units": {
-            "curr": 13313242,
-            "prev": 12401921,
-            "ie": 107.3
+            "curr": 16415852,
+            "prev": 15382691,
+            "ie": 106.7
           },
           "venta_interna": {
             "curr": 1019473,
@@ -177,18 +177,18 @@
             "ie": 102.5
           },
           "units_sie": {
-            "curr": 1981721,
-            "prev": 2002667,
-            "ie": 99.0
+            "curr": 1999273,
+            "prev": 2043286,
+            "ie": 97.8
           },
           "ms_units": {
-            "curr": 7.34,
-            "prev": 7.77
+            "curr": 6.0,
+            "prev": 6.38
           },
           "mercado_units": {
-            "curr": 27010112,
-            "prev": 25769511,
-            "ie": 104.8
+            "curr": 33317451,
+            "prev": 32025579,
+            "ie": 104.0
           },
           "venta_interna": {
             "curr": 1901150,
@@ -212,18 +212,18 @@
             "ie": 102.1
           },
           "units_sie": {
-            "curr": 4043457,
-            "prev": 4227043,
-            "ie": 95.7
+            "curr": 4076274,
+            "prev": 4298941,
+            "ie": 94.8
           },
           "ms_units": {
-            "curr": 7.51,
-            "prev": 8.04
+            "curr": 6.16,
+            "prev": 6.59
           },
           "mercado_units": {
-            "curr": 53807458,
-            "prev": 52579819,
-            "ie": 102.3
+            "curr": 66193213,
+            "prev": 65222308,
+            "ie": 101.5
           },
           "venta_interna": {
             "curr": 3887240,
@@ -245,18 +245,18 @@
       "venta_through": "Apr 2026",
       "has_recetas": true,
       "sparkline_units_sie": [
-        245071,
-        244144,
-        234573,
-        256448,
-        213488,
-        224553,
-        231894,
-        213815,
-        232871,
-        239593,
-        202130,
-        233730
+        275510,
+        275154,
+        261614,
+        284105,
+        236868,
+        249553,
+        258635,
+        235848,
+        259047,
+        265312,
+        227010,
+        259738
       ],
       "sparkline_months": [
         "Apr 2025",
@@ -289,18 +289,18 @@
             "ie": 72.2
           },
           "units_sie": {
-            "curr": 233730,
-            "prev": 222558,
-            "ie": 105.0
+            "curr": 259738,
+            "prev": 255268,
+            "ie": 101.8
           },
           "ms_units": {
-            "curr": 30.96,
-            "prev": 30.55
+            "curr": 32.39,
+            "prev": 31.25
           },
           "mercado_units": {
-            "curr": 754897,
-            "prev": 728494,
-            "ie": 103.6
+            "curr": 801874,
+            "prev": 816787,
+            "ie": 98.2
           },
           "venta_interna": {
             "curr": 230841,
@@ -324,18 +324,18 @@
             "ie": 70.1
           },
           "units_sie": {
-            "curr": 675453,
-            "prev": 652388,
-            "ie": 103.5
+            "curr": 752060,
+            "prev": 749208,
+            "ie": 100.4
           },
           "ms_units": {
-            "curr": 32.22,
-            "prev": 31.89
+            "curr": 32.75,
+            "prev": 31.95
           },
           "mercado_units": {
-            "curr": 2096434,
-            "prev": 2045651,
-            "ie": 102.5
+            "curr": 2296613,
+            "prev": 2344771,
+            "ie": 97.9
           },
           "venta_interna": {
             "curr": 700368,
@@ -359,18 +359,18 @@
             "ie": 70.1
           },
           "units_sie": {
-            "curr": 675453,
-            "prev": 652388,
-            "ie": 103.5
+            "curr": 752060,
+            "prev": 749208,
+            "ie": 100.4
           },
           "ms_units": {
-            "curr": 32.22,
-            "prev": 31.89
+            "curr": 32.75,
+            "prev": 31.95
           },
           "mercado_units": {
-            "curr": 2096434,
-            "prev": 2045651,
-            "ie": 102.5
+            "curr": 2296613,
+            "prev": 2344771,
+            "ie": 97.9
           },
           "venta_interna": {
             "curr": 700368,
@@ -394,18 +394,18 @@
             "ie": 78.7
           },
           "units_sie": {
-            "curr": 1354033,
-            "prev": 1290680,
-            "ie": 104.9
+            "curr": 1505590,
+            "prev": 1480557,
+            "ie": 101.7
           },
           "ms_units": {
-            "curr": 32.43,
-            "prev": 31.63
+            "curr": 32.7,
+            "prev": 31.77
           },
           "mercado_units": {
-            "curr": 4175170,
-            "prev": 4079939,
-            "ie": 102.3
+            "curr": 4604902,
+            "prev": 4660716,
+            "ie": 98.8
           },
           "venta_interna": {
             "curr": 1340893,
@@ -429,18 +429,18 @@
             "ie": 81.4
           },
           "units_sie": {
-            "curr": 2772310,
-            "prev": 2679241,
-            "ie": 103.5
+            "curr": 3088394,
+            "prev": 3057346,
+            "ie": 101.0
           },
           "ms_units": {
-            "curr": 31.87,
-            "prev": 30.98
+            "curr": 32.55,
+            "prev": 31.74
           },
           "mercado_units": {
-            "curr": 8698192,
-            "prev": 8649566,
-            "ie": 100.6
+            "curr": 9488969,
+            "prev": 9633934,
+            "ie": 98.5
           },
           "venta_interna": {
             "curr": 2743488,
@@ -462,18 +462,18 @@
       "venta_through": "Apr 2026",
       "has_recetas": true,
       "sparkline_units_sie": [
-        272568,
-        277647,
-        253981,
-        301216,
-        249237,
-        275464,
-        285197,
-        250285,
-        277297,
-        287789,
-        234364,
-        284261
+        272549,
+        277634,
+        253961,
+        301136,
+        249208,
+        275443,
+        285163,
+        250219,
+        277255,
+        287755,
+        234341,
+        284233
       ],
       "sparkline_months": [
         "Apr 2025",
@@ -506,18 +506,18 @@
             "ie": 108.0
           },
           "units_sie": {
-            "curr": 284261,
-            "prev": 242104,
+            "curr": 284233,
+            "prev": 242084,
             "ie": 117.4
           },
           "ms_units": {
-            "curr": 13.26,
-            "prev": 12.37
+            "curr": 13.18,
+            "prev": 12.29
           },
           "mercado_units": {
-            "curr": 2144067,
-            "prev": 1956465,
-            "ie": 109.6
+            "curr": 2156355,
+            "prev": 1969105,
+            "ie": 109.5
           },
           "venta_interna": {
             "curr": 306569,
@@ -541,18 +541,18 @@
             "ie": 99.3
           },
           "units_sie": {
-            "curr": 806414,
-            "prev": 731213,
+            "curr": 806329,
+            "prev": 731167,
             "ie": 110.3
           },
           "ms_units": {
-            "curr": 13.26,
-            "prev": 12.67
+            "curr": 13.18,
+            "prev": 12.59
           },
           "mercado_units": {
-            "curr": 6083062,
-            "prev": 5770664,
-            "ie": 105.4
+            "curr": 6117738,
+            "prev": 5808563,
+            "ie": 105.3
           },
           "venta_interna": {
             "curr": 880746,
@@ -576,18 +576,18 @@
             "ie": 99.3
           },
           "units_sie": {
-            "curr": 806414,
-            "prev": 731213,
+            "curr": 806329,
+            "prev": 731167,
             "ie": 110.3
           },
           "ms_units": {
-            "curr": 13.26,
-            "prev": 12.67
+            "curr": 13.18,
+            "prev": 12.59
           },
           "mercado_units": {
-            "curr": 6083062,
-            "prev": 5770664,
-            "ie": 105.4
+            "curr": 6117738,
+            "prev": 5808563,
+            "ie": 105.3
           },
           "venta_interna": {
             "curr": 880746,
@@ -611,18 +611,18 @@
             "ie": 94.2
           },
           "units_sie": {
-            "curr": 1619193,
-            "prev": 1479161,
+            "curr": 1618966,
+            "prev": 1479071,
             "ie": 109.5
           },
           "ms_units": {
-            "curr": 12.99,
-            "prev": 12.33
+            "curr": 12.92,
+            "prev": 12.25
           },
           "mercado_units": {
-            "curr": 12461956,
-            "prev": 11999425,
-            "ie": 103.9
+            "curr": 12531843,
+            "prev": 12077576,
+            "ie": 103.8
           },
           "venta_interna": {
             "curr": 1704837,
@@ -646,18 +646,18 @@
             "ie": 89.5
           },
           "units_sie": {
-            "curr": 3249306,
-            "prev": 3000128,
+            "curr": 3248897,
+            "prev": 2999946,
             "ie": 108.3
           },
           "ms_units": {
-            "curr": 12.84,
-            "prev": 12.65
+            "curr": 12.77,
+            "prev": 12.55
           },
           "mercado_units": {
-            "curr": 25300525,
-            "prev": 23719348,
-            "ie": 106.7
+            "curr": 25443898,
+            "prev": 23895207,
+            "ie": 106.5
           },
           "venta_interna": {
             "curr": 3441660,
@@ -896,18 +896,18 @@
       "venta_through": "Apr 2026",
       "has_recetas": true,
       "sparkline_units_sie": [
-        625208,
-        661904,
-        871902,
-        856100,
-        591932,
-        630864,
-        546670,
-        423647,
-        373150,
-        304964,
-        232691,
-        400053
+        643109,
+        668784,
+        884779,
+        868896,
+        597537,
+        654816,
+        567248,
+        433859,
+        380761,
+        309469,
+        237156,
+        411590
       ],
       "sparkline_months": [
         "Apr 2025",
@@ -940,18 +940,18 @@
             "ie": 92.8
           },
           "units_sie": {
-            "curr": 400053,
-            "prev": 447857,
-            "ie": 89.3
+            "curr": 411590,
+            "prev": 474598,
+            "ie": 86.7
           },
           "ms_units": {
-            "curr": 32.91,
-            "prev": 35.28
+            "curr": 5.48,
+            "prev": 5.74
           },
           "mercado_units": {
-            "curr": 1215542,
-            "prev": 1269561,
-            "ie": 95.7
+            "curr": 7516324,
+            "prev": 8263667,
+            "ie": 91.0
           },
           "venta_interna": {
             "curr": 356548,
@@ -975,18 +975,18 @@
             "ie": 92.0
           },
           "units_sie": {
-            "curr": 937708,
-            "prev": 1029265,
-            "ie": 91.1
+            "curr": 958215,
+            "prev": 1080397,
+            "ie": 88.7
           },
           "ms_units": {
-            "curr": 32.54,
-            "prev": 35.16
+            "curr": 5.9,
+            "prev": 6.23
           },
           "mercado_units": {
-            "curr": 2881902,
-            "prev": 2927575,
-            "ie": 98.4
+            "curr": 16242695,
+            "prev": 17353245,
+            "ie": 93.6
           },
           "venta_interna": {
             "curr": 780872,
@@ -1010,18 +1010,18 @@
             "ie": 92.0
           },
           "units_sie": {
-            "curr": 937708,
-            "prev": 1029265,
-            "ie": 91.1
+            "curr": 958215,
+            "prev": 1080397,
+            "ie": 88.7
           },
           "ms_units": {
-            "curr": 32.54,
-            "prev": 35.16
+            "curr": 5.9,
+            "prev": 6.23
           },
           "mercado_units": {
-            "curr": 2881902,
-            "prev": 2927575,
-            "ie": 98.4
+            "curr": 16242695,
+            "prev": 17353245,
+            "ie": 93.6
           },
           "venta_interna": {
             "curr": 780872,
@@ -1045,18 +1045,18 @@
             "ie": null
           },
           "units_sie": {
-            "curr": 2281175,
-            "prev": 2280184,
-            "ie": 100.0
+            "curr": 2340083,
+            "prev": 2405602,
+            "ie": 97.3
           },
           "ms_units": {
-            "curr": 34.54,
-            "prev": 35.76
+            "curr": 7.0,
+            "prev": 6.87
           },
           "mercado_units": {
-            "curr": 6603561,
-            "prev": 6375516,
-            "ie": 103.6
+            "curr": 33446133,
+            "prev": 35030500,
+            "ie": 95.5
           },
           "venta_interna": {
             "curr": 1853322,
@@ -1080,18 +1080,18 @@
             "ie": null
           },
           "units_sie": {
-            "curr": 6519085,
-            "prev": 6437825,
-            "ie": 101.3
+            "curr": 6658004,
+            "prev": 6755064,
+            "ie": 98.6
           },
           "ms_units": {
-            "curr": 39.07,
-            "prev": 39.56
+            "curr": 7.45,
+            "prev": 7.13
           },
           "mercado_units": {
-            "curr": 16683789,
-            "prev": 16275279,
-            "ie": 102.5
+            "curr": 89428335,
+            "prev": 94680001,
+            "ie": 94.5
           },
           "venta_interna": {
             "curr": 5752693,
@@ -1113,18 +1113,18 @@
       "venta_through": "Apr 2026",
       "has_recetas": true,
       "sparkline_units_sie": [
-        135345,
-        138130,
-        128816,
-        144002,
-        135984,
-        134716,
-        128768,
-        120911,
-        153029,
-        148199,
-        124115,
-        139427
+        227860,
+        230839,
+        219744,
+        236398,
+        225315,
+        225738,
+        224607,
+        202923,
+        252343,
+        244741,
+        200178,
+        224830
       ],
       "sparkline_months": [
         "Apr 2025",
@@ -1157,18 +1157,18 @@
             "ie": 102.2
           },
           "units_sie": {
-            "curr": 139427,
-            "prev": 138034,
-            "ie": 101.0
+            "curr": 224830,
+            "prev": 228984,
+            "ie": 98.2
           },
           "ms_units": {
-            "curr": 5.89,
-            "prev": 7.3
+            "curr": 6.5,
+            "prev": 8.11
           },
           "mercado_units": {
-            "curr": 2368207,
-            "prev": 1890651,
-            "ie": 125.3
+            "curr": 3460535,
+            "prev": 2822733,
+            "ie": 122.6
           },
           "venta_interna": {
             "curr": 117709,
@@ -1192,18 +1192,18 @@
             "ie": 99.4
           },
           "units_sie": {
-            "curr": 411741,
-            "prev": 404422,
-            "ie": 101.8
+            "curr": 669749,
+            "prev": 675276,
+            "ie": 99.2
           },
           "ms_units": {
-            "curr": 6.35,
-            "prev": 7.7
+            "curr": 7.24,
+            "prev": 8.5
           },
           "mercado_units": {
-            "curr": 6482118,
-            "prev": 5250003,
-            "ie": 123.5
+            "curr": 9254905,
+            "prev": 7941342,
+            "ie": 116.5
           },
           "venta_interna": {
             "curr": 425450,
@@ -1227,18 +1227,18 @@
             "ie": 99.4
           },
           "units_sie": {
-            "curr": 411741,
-            "prev": 404422,
-            "ie": 101.8
+            "curr": 669749,
+            "prev": 675276,
+            "ie": 99.2
           },
           "ms_units": {
-            "curr": 6.35,
-            "prev": 7.7
+            "curr": 7.24,
+            "prev": 8.5
           },
           "mercado_units": {
-            "curr": 6482118,
-            "prev": 5250003,
-            "ie": 123.5
+            "curr": 9254905,
+            "prev": 7941342,
+            "ie": 116.5
           },
           "venta_interna": {
             "curr": 425450,
@@ -1262,18 +1262,18 @@
             "ie": 97.8
           },
           "units_sie": {
-            "curr": 814449,
-            "prev": 833260,
-            "ie": 97.7
+            "curr": 1349622,
+            "prev": 1373086,
+            "ie": 98.3
           },
           "ms_units": {
-            "curr": 6.56,
-            "prev": 7.57
+            "curr": 7.51,
+            "prev": 8.3
           },
           "mercado_units": {
-            "curr": 12421083,
-            "prev": 11013068,
-            "ie": 112.8
+            "curr": 17977722,
+            "prev": 16537115,
+            "ie": 108.7
           },
           "venta_interna": {
             "curr": 692976,
@@ -1297,18 +1297,18 @@
             "ie": 97.6
           },
           "units_sie": {
-            "curr": 1631442,
-            "prev": 1639583,
-            "ie": 99.5
+            "curr": 2715516,
+            "prev": 2720276,
+            "ie": 99.8
           },
           "ms_units": {
-            "curr": 6.78,
-            "prev": 8.03
+            "curr": 7.72,
+            "prev": 8.66
           },
           "mercado_units": {
-            "curr": 24074256,
-            "prev": 20419455,
-            "ie": 117.9
+            "curr": 35190487,
+            "prev": 31427745,
+            "ie": 112.0
           },
           "venta_interna": {
             "curr": 982790,
@@ -1547,55 +1547,55 @@
           "rec_curr": 18670,
           "rec_prev": 25579,
           "rec_ie": 98.1,
-          "units_curr": 185559,
-          "units_prev": 234733,
-          "units_ie": 93.0,
-          "int_curr": 156289,
-          "int_prev": 194926,
+          "units_curr": 160122,
+          "units_prev": 212221,
+          "units_ie": 85.8,
+          "int_curr": 155382,
+          "int_prev": 193795,
           "int_ie": 80.2
         },
         "ytd": {
           "rec_curr": 49238,
           "rec_prev": 63863,
           "rec_ie": 100.3,
-          "units_curr": 405173,
-          "units_prev": 511609,
-          "units_ie": 95.5,
-          "int_curr": 310166,
-          "int_prev": 458556,
+          "units_curr": 353266,
+          "units_prev": 466162,
+          "units_ie": 84.0,
+          "int_curr": 308416,
+          "int_prev": 455968,
           "int_ie": 67.6
         },
         "trimestre": {
           "rec_curr": 49238,
           "rec_prev": 63863,
           "rec_ie": 100.3,
-          "units_curr": 405173,
-          "units_prev": 511609,
-          "units_ie": 95.5,
-          "int_curr": 310166,
-          "int_prev": 458556,
+          "units_curr": 353266,
+          "units_prev": 466162,
+          "units_ie": 84.0,
+          "int_curr": 308416,
+          "int_prev": 455968,
           "int_ie": 67.6
         },
         "semestre": {
           "rec_curr": 126033,
           "rec_prev": 63863,
           "rec_ie": 99.6,
-          "units_curr": 1062748,
-          "units_prev": 1111244,
-          "units_ie": 99.4,
-          "int_curr": 841398,
-          "int_prev": 898436,
+          "units_curr": 920725,
+          "units_prev": 1007241,
+          "units_ie": 99.6,
+          "int_curr": 836787,
+          "int_prev": 893512,
           "int_ie": 93.7
         },
         "mat": {
           "rec_curr": 356202,
           "rec_prev": 63863,
           "rec_ie": 98.8,
-          "units_curr": 3484034,
-          "units_prev": 3441140,
-          "units_ie": 101.2,
-          "int_curr": 3152509,
-          "int_prev": 3289003,
+          "units_curr": 2995858,
+          "units_prev": 3073394,
+          "units_ie": 104.9,
+          "int_curr": 3134137,
+          "int_prev": 3269837,
           "int_ie": 95.8
         }
       }
@@ -1664,63 +1664,126 @@
       }
     },
     {
+      "name": "HEXALER CORT (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "HEXALER CORT",
+      "periods": {
+        "mensual": {
+          "rec_curr": 8667,
+          "rec_prev": 10210,
+          "rec_ie": 96.9,
+          "units_curr": 91764,
+          "units_prev": 112766,
+          "units_ie": 93.2,
+          "int_curr": 44187,
+          "int_prev": 51237,
+          "int_ie": 86.2
+        },
+        "ytd": {
+          "rec_curr": 22556,
+          "rec_prev": 25529,
+          "rec_ie": 99.0,
+          "units_curr": 204328,
+          "units_prev": 240578,
+          "units_ie": 91.0,
+          "int_curr": 90203,
+          "int_prev": 108481,
+          "int_ie": 83.2
+        },
+        "trimestre": {
+          "rec_curr": 22556,
+          "rec_prev": 25529,
+          "rec_ie": 99.0,
+          "units_curr": 204328,
+          "units_prev": 240578,
+          "units_ie": 91.0,
+          "int_curr": 90203,
+          "int_prev": 108481,
+          "int_ie": 83.2
+        },
+        "semestre": {
+          "rec_curr": 54761,
+          "rec_prev": 25529,
+          "rec_ie": 103.0,
+          "units_curr": 510342,
+          "units_prev": 556590,
+          "units_ie": 94.0,
+          "int_curr": 231055,
+          "int_prev": 246065,
+          "int_ie": 93.9
+        },
+        "mat": {
+          "rec_curr": 134293,
+          "rec_prev": 25529,
+          "rec_ie": 104.5,
+          "units_curr": 1429930,
+          "units_prev": 1529610,
+          "units_ie": 96.0,
+          "int_curr": 716536,
+          "int_prev": 755159,
+          "int_ie": 94.9
+        }
+      }
+    },
+    {
       "name": "MAGNUS (SIE)",
       "line": "otx",
       "lineName": "OTC",
       "family": "MAGNUS",
       "periods": {
         "mensual": {
-          "rec_curr": 981,
-          "rec_prev": 1133,
+          "rec_curr": 980,
+          "rec_prev": 1131,
           "rec_ie": 78.1,
-          "units_curr": 69271,
-          "units_prev": 70345,
-          "units_ie": 99.1,
-          "int_curr": 54456,
+          "units_curr": 64613,
+          "units_prev": 66607,
+          "units_ie": 97.4,
+          "int_curr": 54404,
           "int_prev": 0,
           "int_ie": null
         },
         "ytd": {
-          "rec_curr": 2917,
-          "rec_prev": 3543,
+          "rec_curr": 2914,
+          "rec_prev": 3539,
           "rec_ie": 78.2,
-          "units_curr": 202202,
-          "units_prev": 202409,
-          "units_ie": 102.9,
-          "int_curr": 205227,
+          "units_curr": 188101,
+          "units_prev": 191921,
+          "units_ie": 101.6,
+          "int_curr": 205016,
           "int_prev": 0,
           "int_ie": null
         },
         "trimestre": {
-          "rec_curr": 2917,
-          "rec_prev": 3543,
+          "rec_curr": 2914,
+          "rec_prev": 3539,
           "rec_ie": 78.2,
-          "units_curr": 202202,
-          "units_prev": 202409,
-          "units_ie": 102.9,
-          "int_curr": 205227,
+          "units_curr": 188101,
+          "units_prev": 191921,
+          "units_ie": 101.6,
+          "int_curr": 205016,
           "int_prev": 0,
           "int_ie": null
         },
         "semestre": {
-          "rec_curr": 5946,
-          "rec_prev": 7227,
+          "rec_curr": 5940,
+          "rec_prev": 7219,
           "rec_ie": 79.0,
-          "units_curr": 386978,
-          "units_prev": 415579,
-          "units_ie": 98.4,
-          "int_curr": 295635,
+          "units_curr": 360023,
+          "units_prev": 393505,
+          "units_ie": 97.2,
+          "int_curr": 295320,
           "int_prev": 0,
           "int_ie": null
         },
         "mat": {
-          "rec_curr": 12409,
-          "rec_prev": 14837,
+          "rec_curr": 12397,
+          "rec_prev": 14822,
           "rec_ie": 79.8,
-          "units_curr": 781773,
-          "units_prev": 811721,
-          "units_ie": 97.5,
-          "int_curr": 294915,
+          "units_curr": 733294,
+          "units_prev": 773567,
+          "units_ie": 96.7,
+          "int_curr": 294632,
           "int_prev": 0,
           "int_ie": null
         }
@@ -1736,9 +1799,9 @@
           "rec_curr": 8947,
           "rec_prev": 10262,
           "rec_ie": 93.2,
-          "units_curr": 56591,
-          "units_prev": 63506,
-          "units_ie": 90.3,
+          "units_curr": 53392,
+          "units_prev": 60688,
+          "units_ie": 94.7,
           "int_curr": 54233,
           "int_prev": 64710,
           "int_ie": 83.8
@@ -1747,9 +1810,9 @@
           "rec_curr": 25913,
           "rec_prev": 31772,
           "rec_ie": 91.7,
-          "units_curr": 163392,
-          "units_prev": 180220,
-          "units_ie": 92.1,
+          "units_curr": 153507,
+          "units_prev": 172080,
+          "units_ie": 96.4,
           "int_curr": 166567,
           "int_prev": 183440,
           "int_ie": 90.8
@@ -1758,9 +1821,9 @@
           "rec_curr": 25913,
           "rec_prev": 31772,
           "rec_ie": 91.7,
-          "units_curr": 163392,
-          "units_prev": 180220,
-          "units_ie": 92.1,
+          "units_curr": 153507,
+          "units_prev": 172080,
+          "units_ie": 96.4,
           "int_curr": 166567,
           "int_prev": 183440,
           "int_ie": 90.8
@@ -1769,9 +1832,9 @@
           "rec_curr": 52247,
           "rec_prev": 66827,
           "rec_ie": 92.4,
-          "units_curr": 335930,
-          "units_prev": 371394,
-          "units_ie": 94.9,
+          "units_curr": 315384,
+          "units_prev": 354795,
+          "units_ie": 99.1,
           "int_curr": 319202,
           "int_prev": 356768,
           "int_ie": 89.5
@@ -1780,9 +1843,9 @@
           "rec_curr": 110855,
           "rec_prev": 137673,
           "rec_ie": 94.9,
-          "units_curr": 700516,
-          "units_prev": 803401,
-          "units_ie": 93.7,
+          "units_curr": 658264,
+          "units_prev": 767841,
+          "units_ie": 98.6,
           "int_curr": 661704,
           "int_prev": 768044,
           "int_ie": 86.2
@@ -1853,69 +1916,6 @@
       }
     },
     {
-      "name": "DIOVAN (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "DIOVAN",
-      "periods": {
-        "mensual": {
-          "rec_curr": 11696,
-          "rec_prev": 12961,
-          "rec_ie": 81.1,
-          "units_curr": 43667,
-          "units_prev": 43276,
-          "units_ie": 87.4,
-          "int_curr": 44658,
-          "int_prev": 41558,
-          "int_ie": 107.5
-        },
-        "ytd": {
-          "rec_curr": 34632,
-          "rec_prev": 39464,
-          "rec_ie": 81.6,
-          "units_curr": 123387,
-          "units_prev": 126883,
-          "units_ie": 86.0,
-          "int_curr": 125263,
-          "int_prev": 127271,
-          "int_ie": 98.4
-        },
-        "trimestre": {
-          "rec_curr": 34632,
-          "rec_prev": 39464,
-          "rec_ie": 81.6,
-          "units_curr": 123387,
-          "units_prev": 126883,
-          "units_ie": 86.0,
-          "int_curr": 125263,
-          "int_prev": 127271,
-          "int_ie": 98.4
-        },
-        "semestre": {
-          "rec_curr": 70390,
-          "rec_prev": 82993,
-          "rec_ie": 81.6,
-          "units_curr": 256518,
-          "units_prev": 271281,
-          "units_ie": 84.9,
-          "int_curr": 246008,
-          "int_prev": 267075,
-          "int_ie": 92.1
-        },
-        "mat": {
-          "rec_curr": 144950,
-          "rec_prev": 172961,
-          "rec_ie": 80.7,
-          "units_curr": 530408,
-          "units_prev": 571081,
-          "units_ie": 84.7,
-          "int_curr": 510927,
-          "int_prev": 562564,
-          "int_ie": 90.8
-        }
-      }
-    },
-    {
       "name": "VALIUM (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
@@ -1979,65 +1979,128 @@
       }
     },
     {
-      "name": "HEXALER CORT (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER CORT",
+      "name": "DIOVAN (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DIOVAN",
       "periods": {
         "mensual": {
-          "rec_curr": 8667,
-          "rec_prev": 10210,
-          "rec_ie": 96.9,
-          "units_curr": 49125,
-          "units_prev": 58329,
-          "units_ie": 91.8,
-          "int_curr": 44187,
-          "int_prev": 51237,
-          "int_ie": 86.2
+          "rec_curr": 11696,
+          "rec_prev": 12961,
+          "rec_ie": 81.1,
+          "units_curr": 40755,
+          "units_prev": 41959,
+          "units_ie": 85.5,
+          "int_curr": 44660,
+          "int_prev": 41560,
+          "int_ie": 107.5
         },
         "ytd": {
-          "rec_curr": 22556,
-          "rec_prev": 25529,
-          "rec_ie": 99.0,
-          "units_curr": 109682,
-          "units_prev": 124299,
-          "units_ie": 89.7,
-          "int_curr": 90203,
-          "int_prev": 108481,
-          "int_ie": 83.2
+          "rec_curr": 34634,
+          "rec_prev": 39466,
+          "rec_ie": 81.6,
+          "units_curr": 114767,
+          "units_prev": 123619,
+          "units_ie": 83.7,
+          "int_curr": 125270,
+          "int_prev": 127277,
+          "int_ie": 98.4
         },
         "trimestre": {
-          "rec_curr": 22556,
-          "rec_prev": 25529,
-          "rec_ie": 99.0,
-          "units_curr": 109682,
-          "units_prev": 124299,
-          "units_ie": 89.7,
-          "int_curr": 90203,
-          "int_prev": 108481,
-          "int_ie": 83.2
+          "rec_curr": 34634,
+          "rec_prev": 39466,
+          "rec_ie": 81.6,
+          "units_curr": 114767,
+          "units_prev": 123619,
+          "units_ie": 83.7,
+          "int_curr": 125270,
+          "int_prev": 127277,
+          "int_ie": 98.4
         },
         "semestre": {
-          "rec_curr": 54761,
-          "rec_prev": 25529,
-          "rec_ie": 103.0,
-          "units_curr": 274773,
-          "units_prev": 287457,
-          "units_ie": 91.7,
-          "int_curr": 231055,
-          "int_prev": 246065,
-          "int_ie": 93.9
+          "rec_curr": 70395,
+          "rec_prev": 82998,
+          "rec_ie": 81.6,
+          "units_curr": 238536,
+          "units_prev": 263892,
+          "units_ie": 83.0,
+          "int_curr": 246025,
+          "int_prev": 267093,
+          "int_ie": 92.1
         },
         "mat": {
-          "rec_curr": 134293,
-          "rec_prev": 25529,
-          "rec_ie": 104.5,
-          "units_curr": 766238,
-          "units_prev": 792421,
-          "units_ie": 93.7,
-          "int_curr": 716536,
-          "int_prev": 755159,
-          "int_ie": 94.9
+          "rec_curr": 144944,
+          "rec_prev": 172955,
+          "rec_ie": 80.7,
+          "units_curr": 494339,
+          "units_prev": 555180,
+          "units_ie": 83.3,
+          "int_curr": 510908,
+          "int_prev": 562544,
+          "int_ie": 90.8
+        }
+      }
+    },
+    {
+      "name": "BACTRIM (SIE)",
+      "line": "antibio",
+      "lineName": "Antibióticos",
+      "family": "BACTRIM",
+      "periods": {
+        "mensual": {
+          "rec_curr": 1739,
+          "rec_prev": 1926,
+          "rec_ie": 428.5,
+          "units_curr": 43020,
+          "units_prev": 48236,
+          "units_ie": 85.4,
+          "int_curr": 18970,
+          "int_prev": 18885,
+          "int_ie": 100.5
+        },
+        "ytd": {
+          "rec_curr": 5011,
+          "rec_prev": 5919,
+          "rec_ie": 429.9,
+          "units_curr": 128788,
+          "units_prev": 142642,
+          "units_ie": 89.5,
+          "int_curr": 61667,
+          "int_prev": 65340,
+          "int_ie": 94.4
+        },
+        "trimestre": {
+          "rec_curr": 5011,
+          "rec_prev": 5919,
+          "rec_ie": 429.9,
+          "units_curr": 128788,
+          "units_prev": 142642,
+          "units_ie": 89.5,
+          "int_curr": 61667,
+          "int_prev": 65340,
+          "int_ie": 94.4
+        },
+        "semestre": {
+          "rec_curr": 10063,
+          "rec_prev": 12698,
+          "rec_ie": 145.5,
+          "units_curr": 257494,
+          "units_prev": 278892,
+          "units_ie": 90.9,
+          "int_curr": 111724,
+          "int_prev": 122088,
+          "int_ie": 91.5
+        },
+        "mat": {
+          "rec_curr": 20719,
+          "rec_prev": 27316,
+          "rec_ie": 110.3,
+          "units_curr": 520216,
+          "units_prev": 554530,
+          "units_ie": 91.2,
+          "int_curr": 238957,
+          "int_prev": 235371,
+          "int_ie": 101.5
         }
       }
     },
@@ -2051,9 +2114,9 @@
           "rec_curr": 9647,
           "rec_prev": 9334,
           "rec_ie": 108.2,
-          "units_curr": 41266,
-          "units_prev": 34823,
-          "units_ie": 105.3,
+          "units_curr": 38426,
+          "units_prev": 33964,
+          "units_ie": 113.6,
           "int_curr": 52674,
           "int_prev": 41125,
           "int_ie": 128.1
@@ -2062,9 +2125,9 @@
           "rec_curr": 25850,
           "rec_prev": 25635,
           "rec_ie": 107.7,
-          "units_curr": 99620,
-          "units_prev": 85480,
-          "units_ie": 106.6,
+          "units_curr": 92428,
+          "units_prev": 83281,
+          "units_ie": 107.9,
           "int_curr": 116023,
           "int_prev": 105809,
           "int_ie": 109.7
@@ -2073,9 +2136,9 @@
           "rec_curr": 25850,
           "rec_prev": 25635,
           "rec_ie": 107.7,
-          "units_curr": 99620,
-          "units_prev": 85480,
-          "units_ie": 106.6,
+          "units_curr": 92428,
+          "units_prev": 83281,
+          "units_ie": 107.9,
           "int_curr": 116023,
           "int_prev": 105809,
           "int_ie": 109.7
@@ -2084,9 +2147,9 @@
           "rec_curr": 59330,
           "rec_prev": 25635,
           "rec_ie": 110.7,
-          "units_curr": 225790,
-          "units_prev": 189570,
-          "units_ie": 107.4,
+          "units_curr": 209366,
+          "units_prev": 184703,
+          "units_ie": 109.2,
           "int_curr": 250778,
           "int_prev": 217052,
           "int_ie": 115.5
@@ -2095,9 +2158,9 @@
           "rec_curr": 131326,
           "rec_prev": 25635,
           "rec_ie": 108.4,
-          "units_curr": 538804,
-          "units_prev": 456103,
-          "units_ie": 108.8,
+          "units_curr": 501366,
+          "units_prev": 444776,
+          "units_ie": 111.9,
           "int_curr": 635364,
           "int_prev": 547033,
           "int_ie": 116.1
@@ -2114,9 +2177,9 @@
           "rec_curr": 4783,
           "rec_prev": 5667,
           "rec_ie": 85.1,
-          "units_curr": 29268,
-          "units_prev": 27124,
-          "units_ie": 100.3,
+          "units_curr": 27519,
+          "units_prev": 25984,
+          "units_ie": 99.8,
           "int_curr": 29528,
           "int_prev": 28035,
           "int_ie": 105.3
@@ -2125,9 +2188,9 @@
           "rec_curr": 14053,
           "rec_prev": 17468,
           "rec_ie": 84.4,
-          "units_curr": 82749,
-          "units_prev": 82030,
-          "units_ie": 94.5,
+          "units_curr": 77602,
+          "units_prev": 77962,
+          "units_ie": 95.8,
           "int_curr": 99923,
           "int_prev": 86934,
           "int_ie": 114.9
@@ -2136,9 +2199,9 @@
           "rec_curr": 14053,
           "rec_prev": 17468,
           "rec_ie": 84.4,
-          "units_curr": 82749,
-          "units_prev": 82030,
-          "units_ie": 94.5,
+          "units_curr": 77602,
+          "units_prev": 77962,
+          "units_ie": 95.8,
           "int_curr": 99923,
           "int_prev": 86934,
           "int_ie": 114.9
@@ -2147,9 +2210,9 @@
           "rec_curr": 29115,
           "rec_prev": 37314,
           "rec_ie": 85.0,
-          "units_curr": 165853,
-          "units_prev": 174501,
-          "units_ie": 92.2,
+          "units_curr": 155618,
+          "units_prev": 166105,
+          "units_ie": 93.2,
           "int_curr": 161858,
           "int_prev": 163275,
           "int_ie": 99.1
@@ -2158,8 +2221,8 @@
           "rec_curr": 61638,
           "rec_prev": 79804,
           "rec_ie": 84.0,
-          "units_curr": 345401,
-          "units_prev": 425204,
+          "units_curr": 324557,
+          "units_prev": 404531,
           "units_ie": 82.9,
           "int_curr": 352438,
           "int_prev": 173145,
@@ -2609,69 +2672,6 @@
       }
     },
     {
-      "name": "ROXOLAN (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "ROXOLAN",
-      "periods": {
-        "mensual": {
-          "rec_curr": 3842,
-          "rec_prev": 3023,
-          "rec_ie": 107.8,
-          "units_curr": 18050,
-          "units_prev": 15730,
-          "units_ie": 99.9,
-          "int_curr": 16786,
-          "int_prev": 14295,
-          "int_ie": 117.4
-        },
-        "ytd": {
-          "rec_curr": 10901,
-          "rec_prev": 9268,
-          "rec_ie": 105.2,
-          "units_curr": 50593,
-          "units_prev": 45021,
-          "units_ie": 98.7,
-          "int_curr": 50504,
-          "int_prev": 38891,
-          "int_ie": 129.9
-        },
-        "trimestre": {
-          "rec_curr": 10901,
-          "rec_prev": 9268,
-          "rec_ie": 105.2,
-          "units_curr": 50593,
-          "units_prev": 45021,
-          "units_ie": 98.7,
-          "int_curr": 50504,
-          "int_prev": 38891,
-          "int_ie": 129.9
-        },
-        "semestre": {
-          "rec_curr": 22335,
-          "rec_prev": 19858,
-          "rec_ie": 104.6,
-          "units_curr": 102717,
-          "units_prev": 97425,
-          "units_ie": 98.1,
-          "int_curr": 94464,
-          "int_prev": 84048,
-          "int_ie": 112.4
-        },
-        "mat": {
-          "rec_curr": 44124,
-          "rec_prev": 40177,
-          "rec_ie": 105.0,
-          "units_curr": 205626,
-          "units_prev": 204883,
-          "units_ie": 98.4,
-          "int_curr": 195964,
-          "int_prev": 181858,
-          "int_ie": 107.8
-        }
-      }
-    },
-    {
       "name": "ENTRESTO (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -2683,7 +2683,7 @@
           "rec_ie": 95.1,
           "units_curr": 19389,
           "units_prev": 17260,
-          "units_ie": 100.8,
+          "units_ie": 100.6,
           "int_curr": 21323,
           "int_prev": 14669,
           "int_ie": 145.4
@@ -2694,7 +2694,7 @@
           "rec_ie": 89.6,
           "units_curr": 52426,
           "units_prev": 52504,
-          "units_ie": 93.6,
+          "units_ie": 95.3,
           "int_curr": 57476,
           "int_prev": 53396,
           "int_ie": 107.6
@@ -2705,7 +2705,7 @@
           "rec_ie": 89.6,
           "units_curr": 52426,
           "units_prev": 52504,
-          "units_ie": 93.6,
+          "units_ie": 95.3,
           "int_curr": 57476,
           "int_prev": 53396,
           "int_ie": 107.6
@@ -2716,7 +2716,7 @@
           "rec_ie": 92.8,
           "units_curr": 106525,
           "units_prev": 103081,
-          "units_ie": 97.0,
+          "units_ie": 98.0,
           "int_curr": 101707,
           "int_prev": 100027,
           "int_ie": 101.7
@@ -2727,7 +2727,7 @@
           "rec_ie": 95.5,
           "units_curr": 216069,
           "units_prev": 195609,
-          "units_ie": 99.2,
+          "units_ie": 99.7,
           "int_curr": 208707,
           "int_prev": 187617,
           "int_ie": 111.2
@@ -2735,65 +2735,65 @@
       }
     },
     {
-      "name": "DECADRON (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DECADRON INY",
+      "name": "ROXOLAN (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "ROXOLAN",
       "periods": {
         "mensual": {
-          "rec_curr": 874,
-          "rec_prev": 1021,
-          "rec_ie": 95.7,
-          "units_curr": 18991,
-          "units_prev": 19593,
-          "units_ie": 102.8,
-          "int_curr": 15638,
-          "int_prev": 0,
-          "int_ie": null
+          "rec_curr": 3288,
+          "rec_prev": 2587,
+          "rec_ie": 107.8,
+          "units_curr": 17042,
+          "units_prev": 14816,
+          "units_ie": 97.0,
+          "int_curr": 14365,
+          "int_prev": 12234,
+          "int_ie": 117.4
         },
         "ytd": {
-          "rec_curr": 2619,
-          "rec_prev": 3109,
-          "rec_ie": 94.7,
-          "units_curr": 55877,
-          "units_prev": 54263,
-          "units_ie": 100.3,
-          "int_curr": 53910,
-          "int_prev": 0,
-          "int_ie": null
+          "rec_curr": 9342,
+          "rec_prev": 7943,
+          "rec_ie": 105.2,
+          "units_curr": 47595,
+          "units_prev": 42226,
+          "units_ie": 96.3,
+          "int_curr": 43283,
+          "int_prev": 33330,
+          "int_ie": 129.9
         },
         "trimestre": {
-          "rec_curr": 2619,
-          "rec_prev": 3109,
-          "rec_ie": 94.7,
-          "units_curr": 55877,
-          "units_prev": 54263,
-          "units_ie": 100.3,
-          "int_curr": 53910,
-          "int_prev": 0,
-          "int_ie": null
+          "rec_curr": 9342,
+          "rec_prev": 7943,
+          "rec_ie": 105.2,
+          "units_curr": 47595,
+          "units_prev": 42226,
+          "units_ie": 96.3,
+          "int_curr": 43283,
+          "int_prev": 33330,
+          "int_ie": 129.9
         },
         "semestre": {
-          "rec_curr": 5602,
-          "rec_prev": 3109,
-          "rec_ie": 92.4,
-          "units_curr": 111897,
-          "units_prev": 116360,
-          "units_ie": 97.8,
-          "int_curr": 72807,
-          "int_prev": 0,
-          "int_ie": null
+          "rec_curr": 19195,
+          "rec_prev": 17066,
+          "rec_ie": 104.6,
+          "units_curr": 96607,
+          "units_prev": 91605,
+          "units_ie": 96.0,
+          "int_curr": 81184,
+          "int_prev": 72233,
+          "int_ie": 112.4
         },
         "mat": {
-          "rec_curr": 12243,
-          "rec_prev": 3109,
-          "rec_ie": 88.0,
-          "units_curr": 236782,
-          "units_prev": 246077,
-          "units_ie": 100.3,
-          "int_curr": 73312,
-          "int_prev": 0,
-          "int_ie": null
+          "rec_curr": 38420,
+          "rec_prev": 34984,
+          "rec_ie": 105.0,
+          "units_curr": 193052,
+          "units_prev": 194979,
+          "units_ie": 95.0,
+          "int_curr": 170635,
+          "int_prev": 158352,
+          "int_ie": 107.8
         }
       }
     },
@@ -2924,65 +2924,65 @@
       }
     },
     {
-      "name": "ALIDIAL (SIE)",
+      "name": "AIREAL PLUS (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "ANTIHISTA SIST",
       "periods": {
         "mensual": {
-          "rec_curr": 3916,
-          "rec_prev": 3355,
-          "rec_ie": 116.9,
-          "units_curr": 16672,
-          "units_prev": 12751,
-          "units_ie": 123.5,
-          "int_curr": 15626,
-          "int_prev": 10839,
-          "int_ie": 144.2
+          "rec_curr": 2378,
+          "rec_prev": 1530,
+          "rec_ie": 119.1,
+          "units_curr": 19336,
+          "units_prev": 11312,
+          "units_ie": 131.5,
+          "int_curr": 9450,
+          "int_prev": 5330,
+          "int_ie": 177.3
         },
         "ytd": {
-          "rec_curr": 11499,
-          "rec_prev": 9632,
-          "rec_ie": 123.1,
-          "units_curr": 43748,
-          "units_prev": 34686,
-          "units_ie": 117.1,
-          "int_curr": 41623,
-          "int_prev": 30621,
-          "int_ie": 135.9
+          "rec_curr": 6458,
+          "rec_prev": 4045,
+          "rec_ie": 120.2,
+          "units_curr": 47762,
+          "units_prev": 28426,
+          "units_ie": 130.8,
+          "int_curr": 23439,
+          "int_prev": 14733,
+          "int_ie": 159.1
         },
         "trimestre": {
-          "rec_curr": 11499,
-          "rec_prev": 9632,
-          "rec_ie": 123.1,
-          "units_curr": 43748,
-          "units_prev": 34686,
-          "units_ie": 117.1,
-          "int_curr": 41623,
-          "int_prev": 30621,
-          "int_ie": 135.9
+          "rec_curr": 6458,
+          "rec_prev": 4045,
+          "rec_ie": 120.2,
+          "units_curr": 47762,
+          "units_prev": 28426,
+          "units_ie": 130.8,
+          "int_curr": 23439,
+          "int_prev": 14733,
+          "int_ie": 159.1
         },
         "semestre": {
-          "rec_curr": 24750,
-          "rec_prev": 9632,
-          "rec_ie": 122.4,
-          "units_curr": 98032,
-          "units_prev": 75518,
-          "units_ie": 115.0,
-          "int_curr": 94054,
-          "int_prev": 66711,
-          "int_ie": 141.0
+          "rec_curr": 14201,
+          "rec_prev": 4045,
+          "rec_ie": 119.9,
+          "units_curr": 106832,
+          "units_prev": 65150,
+          "units_ie": 125.5,
+          "int_curr": 53653,
+          "int_prev": 32937,
+          "int_ie": 162.9
         },
         "mat": {
-          "rec_curr": 47674,
-          "rec_prev": 9632,
-          "rec_ie": 117.0,
-          "units_curr": 198603,
-          "units_prev": 153463,
-          "units_ie": 117.4,
-          "int_curr": 196347,
-          "int_prev": 141718,
-          "int_ie": 138.5
+          "rec_curr": 27016,
+          "rec_prev": 4045,
+          "rec_ie": 113.7,
+          "units_curr": 217260,
+          "units_prev": 140332,
+          "units_ie": 118.6,
+          "int_curr": 112742,
+          "int_prev": 74147,
+          "int_ie": 152.1
         }
       }
     },
@@ -3046,6 +3046,69 @@
           "int_curr": 179701,
           "int_prev": 169078,
           "int_ie": 106.3
+        }
+      }
+    },
+    {
+      "name": "ALIDIAL (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ANTIHISTA SIST",
+      "periods": {
+        "mensual": {
+          "rec_curr": 3916,
+          "rec_prev": 3355,
+          "rec_ie": 116.9,
+          "units_curr": 15507,
+          "units_prev": 11872,
+          "units_ie": 125.5,
+          "int_curr": 15613,
+          "int_prev": 10830,
+          "int_ie": 144.2
+        },
+        "ytd": {
+          "rec_curr": 11499,
+          "rec_prev": 9632,
+          "rec_ie": 123.1,
+          "units_curr": 40487,
+          "units_prev": 32161,
+          "units_ie": 119.2,
+          "int_curr": 41580,
+          "int_prev": 30589,
+          "int_ie": 135.9
+        },
+        "trimestre": {
+          "rec_curr": 11499,
+          "rec_prev": 9632,
+          "rec_ie": 123.1,
+          "units_curr": 40487,
+          "units_prev": 32161,
+          "units_ie": 119.2,
+          "int_curr": 41580,
+          "int_prev": 30589,
+          "int_ie": 135.9
+        },
+        "semestre": {
+          "rec_curr": 24750,
+          "rec_prev": 9632,
+          "rec_ie": 122.4,
+          "units_curr": 90678,
+          "units_prev": 70094,
+          "units_ie": 118.4,
+          "int_curr": 93968,
+          "int_prev": 66650,
+          "int_ie": 141.0
+        },
+        "mat": {
+          "rec_curr": 47674,
+          "rec_prev": 9632,
+          "rec_ie": 117.0,
+          "units_curr": 184390,
+          "units_prev": 142664,
+          "units_ie": 121.4,
+          "int_curr": 196274,
+          "int_prev": 141666,
+          "int_ie": 138.5
         }
       }
     },
@@ -3302,132 +3365,6 @@
       }
     },
     {
-      "name": "BACTRIM (SIE)",
-      "line": "antibio",
-      "lineName": "Antibióticos",
-      "family": "BACTRIM",
-      "periods": {
-        "mensual": {
-          "rec_curr": 1090,
-          "rec_prev": 1207,
-          "rec_ie": 428.6,
-          "units_curr": 11361,
-          "units_prev": 12233,
-          "units_ie": 84.6,
-          "int_curr": 11888,
-          "int_prev": 11835,
-          "int_ie": 100.4
-        },
-        "ytd": {
-          "rec_curr": 3192,
-          "rec_prev": 3770,
-          "rec_ie": 430.0,
-          "units_curr": 34771,
-          "units_prev": 35980,
-          "units_ie": 90.9,
-          "int_curr": 39278,
-          "int_prev": 41617,
-          "int_ie": 94.4
-        },
-        "trimestre": {
-          "rec_curr": 3192,
-          "rec_prev": 3770,
-          "rec_ie": 430.0,
-          "units_curr": 34771,
-          "units_prev": 35980,
-          "units_ie": 90.9,
-          "int_curr": 39278,
-          "int_prev": 41617,
-          "int_ie": 94.4
-        },
-        "semestre": {
-          "rec_curr": 6457,
-          "rec_prev": 8148,
-          "rec_ie": 145.5,
-          "units_curr": 70166,
-          "units_prev": 69645,
-          "units_ie": 94.1,
-          "int_curr": 71690,
-          "int_prev": 78340,
-          "int_ie": 91.5
-        },
-        "mat": {
-          "rec_curr": 13184,
-          "rec_prev": 17382,
-          "rec_ie": 110.3,
-          "units_curr": 140058,
-          "units_prev": 138052,
-          "units_ie": 93.9,
-          "int_curr": 152053,
-          "int_prev": 149772,
-          "int_ie": 101.5
-        }
-      }
-    },
-    {
-      "name": "BACTRIM JARABE (SIE)",
-      "line": "antibio",
-      "lineName": "Antibióticos",
-      "family": "BACTRIM",
-      "periods": {
-        "mensual": {
-          "rec_curr": 1122,
-          "rec_prev": 1243,
-          "rec_ie": 428.4,
-          "units_curr": 11697,
-          "units_prev": 12628,
-          "units_ie": 84.4,
-          "int_curr": 12240,
-          "int_prev": 12185,
-          "int_ie": 100.5
-        },
-        "ytd": {
-          "rec_curr": 3158,
-          "rec_prev": 3730,
-          "rec_ie": 429.9,
-          "units_curr": 34403,
-          "units_prev": 37328,
-          "units_ie": 86.7,
-          "int_curr": 38862,
-          "int_prev": 41177,
-          "int_ie": 94.4
-        },
-        "trimestre": {
-          "rec_curr": 3158,
-          "rec_prev": 3730,
-          "rec_ie": 429.9,
-          "units_curr": 34403,
-          "units_prev": 37328,
-          "units_ie": 86.7,
-          "int_curr": 38862,
-          "int_prev": 41177,
-          "int_ie": 94.4
-        },
-        "semestre": {
-          "rec_curr": 6267,
-          "rec_prev": 7908,
-          "rec_ie": 145.5,
-          "units_curr": 68105,
-          "units_prev": 73903,
-          "units_ie": 86.0,
-          "int_curr": 69584,
-          "int_prev": 76039,
-          "int_ie": 91.5
-        },
-        "mat": {
-          "rec_curr": 13062,
-          "rec_prev": 17220,
-          "rec_ie": 110.3,
-          "units_curr": 138757,
-          "units_prev": 147492,
-          "units_ie": 87.1,
-          "int_curr": 150641,
-          "int_prev": 148380,
-          "int_ie": 101.5
-        }
-      }
-    },
-    {
       "name": "FLEXINA 600 (SIE)",
       "line": "otx",
       "lineName": "OTC",
@@ -3439,7 +3376,7 @@
           "rec_ie": 100.5,
           "units_curr": 10792,
           "units_prev": 10052,
-          "units_ie": 103.2,
+          "units_ie": 102.0,
           "int_curr": 8606,
           "int_prev": 0,
           "int_ie": null
@@ -3450,7 +3387,7 @@
           "rec_ie": 103.8,
           "units_curr": 32222,
           "units_prev": 27402,
-          "units_ie": 104.7,
+          "units_ie": 104.5,
           "int_curr": 32811,
           "int_prev": 0,
           "int_ie": null
@@ -3461,7 +3398,7 @@
           "rec_ie": 103.8,
           "units_curr": 32222,
           "units_prev": 27402,
-          "units_ie": 104.7,
+          "units_ie": 104.5,
           "int_curr": 32811,
           "int_prev": 0,
           "int_ie": null
@@ -3472,7 +3409,7 @@
           "rec_ie": 102.4,
           "units_curr": 62711,
           "units_prev": 61462,
-          "units_ie": 107.7,
+          "units_ie": 106.5,
           "int_curr": 53820,
           "int_prev": 0,
           "int_ie": null
@@ -3483,10 +3420,73 @@
           "rec_ie": 102.9,
           "units_curr": 127486,
           "units_prev": 125962,
-          "units_ie": 101.9,
+          "units_ie": 101.6,
           "int_curr": 53820,
           "int_prev": 0,
           "int_ie": null
+        }
+      }
+    },
+    {
+      "name": "BACTRIM JARABE (SIE)",
+      "line": "antibio",
+      "lineName": "Antibióticos",
+      "family": "BACTRIM",
+      "periods": {
+        "mensual": {
+          "rec_curr": 473,
+          "rec_prev": 524,
+          "rec_ie": 428.4,
+          "units_curr": 11697,
+          "units_prev": 12628,
+          "units_ie": 88.7,
+          "int_curr": 5158,
+          "int_prev": 5135,
+          "int_ie": 100.4
+        },
+        "ytd": {
+          "rec_curr": 1339,
+          "rec_prev": 1581,
+          "rec_ie": 430.1,
+          "units_curr": 34403,
+          "units_prev": 37328,
+          "units_ie": 91.4,
+          "int_curr": 16473,
+          "int_prev": 17454,
+          "int_ie": 94.4
+        },
+        "trimestre": {
+          "rec_curr": 1339,
+          "rec_prev": 1581,
+          "rec_ie": 430.1,
+          "units_curr": 34403,
+          "units_prev": 37328,
+          "units_ie": 91.4,
+          "int_curr": 16473,
+          "int_prev": 17454,
+          "int_ie": 94.4
+        },
+        "semestre": {
+          "rec_curr": 2661,
+          "rec_prev": 3358,
+          "rec_ie": 145.5,
+          "units_curr": 68105,
+          "units_prev": 73903,
+          "units_ie": 90.7,
+          "int_curr": 29550,
+          "int_prev": 32291,
+          "int_ie": 91.5
+        },
+        "mat": {
+          "rec_curr": 5527,
+          "rec_prev": 7286,
+          "rec_ie": 110.3,
+          "units_curr": 138757,
+          "units_prev": 147492,
+          "units_ie": 91.4,
+          "int_curr": 63737,
+          "int_prev": 62781,
+          "int_ie": 101.5
         }
       }
     },
@@ -3550,69 +3550,6 @@
           "int_curr": 112118,
           "int_prev": 100827,
           "int_ie": 111.2
-        }
-      }
-    },
-    {
-      "name": "AIREAL PLUS (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ANTIHISTA SIST",
-      "periods": {
-        "mensual": {
-          "rec_curr": 2378,
-          "rec_prev": 1530,
-          "rec_ie": 119.1,
-          "units_curr": 10325,
-          "units_prev": 6012,
-          "units_ie": 130.1,
-          "int_curr": 9450,
-          "int_prev": 5330,
-          "int_ie": 177.3
-        },
-        "ytd": {
-          "rec_curr": 6458,
-          "rec_prev": 4045,
-          "rec_ie": 120.2,
-          "units_curr": 25558,
-          "units_prev": 15185,
-          "units_ie": 129.6,
-          "int_curr": 23439,
-          "int_prev": 14733,
-          "int_ie": 159.1
-        },
-        "trimestre": {
-          "rec_curr": 6458,
-          "rec_prev": 4045,
-          "rec_ie": 120.2,
-          "units_curr": 25558,
-          "units_prev": 15185,
-          "units_ie": 129.6,
-          "int_curr": 23439,
-          "int_prev": 14733,
-          "int_ie": 159.1
-        },
-        "semestre": {
-          "rec_curr": 14201,
-          "rec_prev": 4045,
-          "rec_ie": 119.9,
-          "units_curr": 57218,
-          "units_prev": 34785,
-          "units_ie": 123.9,
-          "int_curr": 53653,
-          "int_prev": 32937,
-          "int_ie": 162.9
-        },
-        "mat": {
-          "rec_curr": 27016,
-          "rec_prev": 4045,
-          "rec_ie": 113.7,
-          "units_curr": 115955,
-          "units_prev": 74766,
-          "units_ie": 118.5,
-          "int_curr": 112742,
-          "int_prev": 74147,
-          "int_ie": 152.1
         }
       }
     },
@@ -3689,9 +3626,9 @@
           "rec_curr": 2303,
           "rec_prev": 2004,
           "rec_ie": 123.0,
-          "units_curr": 8591,
-          "units_prev": 7291,
-          "units_ie": 130.2,
+          "units_curr": 8051,
+          "units_prev": 6827,
+          "units_ie": 132.9,
           "int_curr": 8841,
           "int_prev": 6476,
           "int_ie": 136.5
@@ -3700,9 +3637,9 @@
           "rec_curr": 5924,
           "rec_prev": 5403,
           "rec_ie": 120.9,
-          "units_curr": 21074,
-          "units_prev": 18176,
-          "units_ie": 126.2,
+          "units_curr": 19680,
+          "units_prev": 16974,
+          "units_ie": 129.7,
           "int_curr": 18938,
           "int_prev": 15235,
           "int_ie": 124.3
@@ -3711,9 +3648,9 @@
           "rec_curr": 5924,
           "rec_prev": 5403,
           "rec_ie": 120.9,
-          "units_curr": 21074,
-          "units_prev": 18176,
-          "units_ie": 126.2,
+          "units_curr": 19680,
+          "units_prev": 16974,
+          "units_ie": 129.7,
           "int_curr": 18938,
           "int_prev": 15235,
           "int_ie": 124.3
@@ -3722,9 +3659,9 @@
           "rec_curr": 13016,
           "rec_prev": 5403,
           "rec_ie": 119.0,
-          "units_curr": 47721,
-          "units_prev": 41340,
-          "units_ie": 123.9,
+          "units_curr": 44509,
+          "units_prev": 38614,
+          "units_ie": 126.6,
           "int_curr": 42208,
           "int_prev": 35882,
           "int_ie": 117.6
@@ -3733,9 +3670,9 @@
           "rec_curr": 28403,
           "rec_prev": 5403,
           "rec_ie": 114.8,
-          "units_curr": 111419,
-          "units_prev": 98402,
-          "units_ie": 121.2,
+          "units_curr": 104145,
+          "units_prev": 92100,
+          "units_ie": 123.7,
           "int_curr": 106129,
           "int_prev": 92005,
           "int_ie": 115.4
@@ -3806,6 +3743,69 @@
       }
     },
     {
+      "name": "ROXOLAN PLUS (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "ROXOLAN",
+      "periods": {
+        "mensual": {
+          "rec_curr": 1335,
+          "rec_prev": 1050,
+          "rec_ie": 107.8,
+          "units_curr": 6918,
+          "units_prev": 3444,
+          "units_ie": 169.4,
+          "int_curr": 5832,
+          "int_prev": 4966,
+          "int_ie": 117.4
+        },
+        "ytd": {
+          "rec_curr": 3743,
+          "rec_prev": 3182,
+          "rec_ie": 105.2,
+          "units_curr": 19068,
+          "units_prev": 9578,
+          "units_ie": 170.0,
+          "int_curr": 17340,
+          "int_prev": 13353,
+          "int_ie": 129.9
+        },
+        "trimestre": {
+          "rec_curr": 3743,
+          "rec_prev": 3182,
+          "rec_ie": 105.2,
+          "units_curr": 19068,
+          "units_prev": 9578,
+          "units_ie": 170.0,
+          "int_curr": 17340,
+          "int_prev": 13353,
+          "int_ie": 129.9
+        },
+        "semestre": {
+          "rec_curr": 7500,
+          "rec_prev": 6668,
+          "rec_ie": 104.6,
+          "units_curr": 37746,
+          "units_prev": 19544,
+          "units_ie": 175.8,
+          "int_curr": 31720,
+          "int_prev": 28222,
+          "int_ie": 112.4
+        },
+        "mat": {
+          "rec_curr": 13270,
+          "rec_prev": 12083,
+          "rec_ie": 105.0,
+          "units_curr": 66676,
+          "units_prev": 33350,
+          "units_ie": 191.8,
+          "int_curr": 58933,
+          "int_prev": 54691,
+          "int_ie": 107.8
+        }
+      }
+    },
+    {
       "name": "PGB (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
@@ -3865,69 +3865,6 @@
           "int_curr": 83437,
           "int_prev": 85217,
           "int_ie": 97.9
-        }
-      }
-    },
-    {
-      "name": "HEXALER (SIE)",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "ANTIHISTA SIST",
-      "periods": {
-        "mensual": {
-          "rec_curr": 1077,
-          "rec_prev": 1481,
-          "rec_ie": 73.2,
-          "units_curr": 7330,
-          "units_prev": 8924,
-          "units_ie": 94.2,
-          "int_curr": 6757,
-          "int_prev": 8283,
-          "int_ie": 81.6
-        },
-        "ytd": {
-          "rec_curr": 2969,
-          "rec_prev": 3804,
-          "rec_ie": 80.6,
-          "units_curr": 17993,
-          "units_prev": 21240,
-          "units_ie": 91.5,
-          "int_curr": 15801,
-          "int_prev": 17434,
-          "int_ie": 90.6
-        },
-        "trimestre": {
-          "rec_curr": 2969,
-          "rec_prev": 3804,
-          "rec_ie": 80.6,
-          "units_curr": 17993,
-          "units_prev": 21240,
-          "units_ie": 91.5,
-          "int_curr": 15801,
-          "int_prev": 17434,
-          "int_ie": 90.6
-        },
-        "semestre": {
-          "rec_curr": 6802,
-          "rec_prev": 3804,
-          "rec_ie": 85.2,
-          "units_curr": 44185,
-          "units_prev": 52106,
-          "units_ie": 87.9,
-          "int_curr": 38274,
-          "int_prev": 45048,
-          "int_ie": 85.0
-        },
-        "mat": {
-          "rec_curr": 15740,
-          "rec_prev": 3804,
-          "rec_ie": 95.6,
-          "units_curr": 115624,
-          "units_prev": 135317,
-          "units_ie": 94.2,
-          "int_curr": 112649,
-          "int_prev": 126190,
-          "int_ie": 89.3
         }
       }
     },
@@ -3995,65 +3932,254 @@
       }
     },
     {
+      "name": "HEXALER (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "ANTIHISTA SIST",
+      "periods": {
+        "mensual": {
+          "rec_curr": 1077,
+          "rec_prev": 1481,
+          "rec_ie": 73.2,
+          "units_curr": 6831,
+          "units_prev": 8313,
+          "units_ie": 84.2,
+          "int_curr": 6757,
+          "int_prev": 8283,
+          "int_ie": 81.6
+        },
+        "ytd": {
+          "rec_curr": 2969,
+          "rec_prev": 3804,
+          "rec_ie": 80.6,
+          "units_curr": 16709,
+          "units_prev": 19752,
+          "units_ie": 87.9,
+          "int_curr": 15801,
+          "int_prev": 17434,
+          "int_ie": 90.6
+        },
+        "trimestre": {
+          "rec_curr": 2969,
+          "rec_prev": 3804,
+          "rec_ie": 80.6,
+          "units_curr": 16709,
+          "units_prev": 19752,
+          "units_ie": 87.9,
+          "int_curr": 15801,
+          "int_prev": 17434,
+          "int_ie": 90.6
+        },
+        "semestre": {
+          "rec_curr": 6802,
+          "rec_prev": 3804,
+          "rec_ie": 85.2,
+          "units_curr": 41009,
+          "units_prev": 48490,
+          "units_ie": 89.4,
+          "int_curr": 38274,
+          "int_prev": 45048,
+          "int_ie": 85.0
+        },
+        "mat": {
+          "rec_curr": 15740,
+          "rec_prev": 3804,
+          "rec_ie": 95.6,
+          "units_curr": 108071,
+          "units_prev": 126071,
+          "units_ie": 94.1,
+          "int_curr": 112649,
+          "int_prev": 126190,
+          "int_ie": 89.3
+        }
+      }
+    },
+    {
+      "name": "ARTRO RED (SIE)",
+      "line": "otx",
+      "lineName": "OTC",
+      "family": "ARTRO RED",
+      "periods": {
+        "mensual": {
+          "rec_curr": 399,
+          "rec_prev": 672,
+          "rec_ie": 58.9,
+          "units_curr": 6434,
+          "units_prev": 9790,
+          "units_ie": 51.8,
+          "int_curr": 2994,
+          "int_prev": 0,
+          "int_ie": null
+        },
+        "ytd": {
+          "rec_curr": 1215,
+          "rec_prev": 1998,
+          "rec_ie": 62.6,
+          "units_curr": 18088,
+          "units_prev": 26060,
+          "units_ie": 51.3,
+          "int_curr": 8262,
+          "int_prev": 0,
+          "int_ie": null
+        },
+        "trimestre": {
+          "rec_curr": 1215,
+          "rec_prev": 1998,
+          "rec_ie": 62.6,
+          "units_curr": 18088,
+          "units_prev": 26060,
+          "units_ie": 51.3,
+          "int_curr": 8262,
+          "int_prev": 0,
+          "int_ie": null
+        },
+        "semestre": {
+          "rec_curr": 2982,
+          "rec_prev": 4084,
+          "rec_ie": 76.4,
+          "units_curr": 38992,
+          "units_prev": 55380,
+          "units_ie": 58.0,
+          "int_curr": 11796,
+          "int_prev": 0,
+          "int_ie": null
+        },
+        "mat": {
+          "rec_curr": 6936,
+          "rec_prev": 8548,
+          "rec_ie": 84.4,
+          "units_curr": 96118,
+          "units_prev": 114302,
+          "units_ie": 66.0,
+          "int_curr": 11796,
+          "int_prev": 0,
+          "int_ie": null
+        }
+      }
+    },
+    {
       "name": "ACEMUK VL (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
       "family": "ACEMUK",
       "periods": {
         "mensual": {
-          "rec_curr": 686,
-          "rec_prev": 940,
-          "rec_ie": 98.1,
+          "rec_curr": 790,
+          "rec_prev": 1083,
+          "rec_ie": 98.0,
           "units_curr": 7077,
           "units_prev": 8809,
-          "units_ie": 94.5,
-          "int_curr": 5961,
-          "int_prev": 7434,
+          "units_ie": 91.4,
+          "int_curr": 6868,
+          "int_prev": 8565,
           "int_ie": 80.2
         },
         "ytd": {
-          "rec_curr": 1902,
-          "rec_prev": 2467,
+          "rec_curr": 2169,
+          "rec_prev": 2813,
           "rec_ie": 100.3,
           "units_curr": 16280,
           "units_prev": 23160,
-          "units_ie": 84.7,
-          "int_curr": 12463,
-          "int_prev": 18425,
+          "units_ie": 77.9,
+          "int_curr": 14213,
+          "int_prev": 21013,
           "int_ie": 67.6
         },
         "trimestre": {
-          "rec_curr": 1902,
-          "rec_prev": 2467,
+          "rec_curr": 2169,
+          "rec_prev": 2813,
           "rec_ie": 100.3,
           "units_curr": 16280,
           "units_prev": 23160,
-          "units_ie": 84.7,
-          "int_curr": 12463,
-          "int_prev": 18425,
+          "units_ie": 77.9,
+          "int_curr": 14213,
+          "int_prev": 21013,
           "int_ie": 67.6
         },
         "semestre": {
-          "rec_curr": 4503,
-          "rec_prev": 2282,
+          "rec_curr": 5169,
+          "rec_prev": 2619,
           "rec_ie": 99.6,
           "units_curr": 39376,
           "units_prev": 60306,
-          "units_ie": 67.8,
-          "int_curr": 31175,
-          "int_prev": 33288,
+          "units_ie": 71.1,
+          "int_curr": 35786,
+          "int_prev": 38212,
           "int_ie": 93.7
         },
         "mat": {
-          "rec_curr": 12813,
-          "rec_prev": 2297,
+          "rec_curr": 14814,
+          "rec_prev": 2656,
           "rec_ie": 98.8,
           "units_curr": 130003,
           "units_prev": 238478,
-          "units_ie": 54.5,
-          "int_curr": 117632,
-          "int_prev": 122726,
-          "int_ie": 95.8
+          "units_ie": 58.6,
+          "int_curr": 136004,
+          "int_prev": 141892,
+          "int_ie": 95.9
+        }
+      }
+    },
+    {
+      "name": "DECADRON (SIE)",
+      "line": "resp",
+      "lineName": "Respiratoria",
+      "family": "DECADRON INY",
+      "periods": {
+        "mensual": {
+          "rec_curr": 874,
+          "rec_prev": 1021,
+          "rec_ie": 95.7,
+          "units_curr": 5119,
+          "units_prev": 5191,
+          "units_ie": 97.5,
+          "int_curr": 10730,
+          "int_prev": 0,
+          "int_ie": null
+        },
+        "ytd": {
+          "rec_curr": 2619,
+          "rec_prev": 3109,
+          "rec_ie": 94.7,
+          "units_curr": 15320,
+          "units_prev": 15158,
+          "units_ie": 102.3,
+          "int_curr": 36834,
+          "int_prev": 0,
+          "int_ie": null
+        },
+        "trimestre": {
+          "rec_curr": 2619,
+          "rec_prev": 3109,
+          "rec_ie": 94.7,
+          "units_curr": 15320,
+          "units_prev": 15158,
+          "units_ie": 102.3,
+          "int_curr": 36834,
+          "int_prev": 0,
+          "int_ie": null
+        },
+        "semestre": {
+          "rec_curr": 5602,
+          "rec_prev": 3109,
+          "rec_ie": 92.4,
+          "units_curr": 31592,
+          "units_prev": 30941,
+          "units_ie": 103.0,
+          "int_curr": 50279,
+          "int_prev": 0,
+          "int_ie": null
+        },
+        "mat": {
+          "rec_curr": 12243,
+          "rec_prev": 3109,
+          "rec_ie": 88.0,
+          "units_curr": 66598,
+          "units_prev": 61190,
+          "units_ie": 115.1,
+          "int_curr": 51059,
+          "int_prev": 0,
+          "int_ie": null
         }
       }
     },
@@ -4064,58 +4190,58 @@
       "family": "ACERPES",
       "periods": {
         "mensual": {
-          "rec_curr": 257,
-          "rec_prev": 240,
-          "rec_ie": 99.5,
+          "rec_curr": 264,
+          "rec_prev": 247,
+          "rec_ie": 99.3,
           "units_curr": 4995,
           "units_prev": 4652,
-          "units_ie": 88.2,
-          "int_curr": 4294,
-          "int_prev": 3551,
+          "units_ie": 90.0,
+          "int_curr": 4409,
+          "int_prev": 3646,
           "int_ie": 120.9
         },
         "ytd": {
-          "rec_curr": 807,
-          "rec_prev": 715,
-          "rec_ie": 105.0,
+          "rec_curr": 829,
+          "rec_prev": 735,
+          "rec_ie": 104.9,
           "units_curr": 16490,
           "units_prev": 15316,
-          "units_ie": 90.4,
-          "int_curr": 16945,
-          "int_prev": 14265,
+          "units_ie": 94.9,
+          "int_curr": 17407,
+          "int_prev": 14654,
           "int_ie": 118.8
         },
         "trimestre": {
-          "rec_curr": 807,
-          "rec_prev": 715,
-          "rec_ie": 105.0,
+          "rec_curr": 829,
+          "rec_prev": 735,
+          "rec_ie": 104.9,
           "units_curr": 16490,
           "units_prev": 15316,
-          "units_ie": 90.4,
-          "int_curr": 16945,
-          "int_prev": 14265,
+          "units_ie": 94.9,
+          "int_curr": 17407,
+          "int_prev": 14654,
           "int_ie": 118.8
         },
         "semestre": {
-          "rec_curr": 1611,
-          "rec_prev": 1356,
+          "rec_curr": 1657,
+          "rec_prev": 1395,
           "rec_ie": 113.2,
           "units_curr": 32421,
           "units_prev": 29741,
-          "units_ie": 94.1,
-          "int_curr": 30898,
-          "int_prev": 25539,
+          "units_ie": 97.1,
+          "int_curr": 31775,
+          "int_prev": 26264,
           "int_ie": 121.0
         },
         "mat": {
-          "rec_curr": 3255,
-          "rec_prev": 2690,
+          "rec_curr": 3343,
+          "rec_prev": 2763,
           "rec_ie": 118.5,
           "units_curr": 66448,
           "units_prev": 65250,
           "units_ie": 89.6,
-          "int_curr": 61905,
-          "int_prev": 52586,
+          "int_curr": 63586,
+          "int_prev": 54013,
           "int_ie": 117.7
         }
       }
@@ -4195,8 +4321,8 @@
           "rec_ie": 95.7,
           "units_curr": 3676,
           "units_prev": 3890,
-          "units_ie": 100.3,
-          "int_curr": 3027,
+          "units_ie": 93.4,
+          "int_curr": 7705,
           "int_prev": 0,
           "int_ie": null
         },
@@ -4206,8 +4332,8 @@
           "rec_ie": 94.7,
           "units_curr": 11297,
           "units_prev": 11696,
-          "units_ie": 94.1,
-          "int_curr": 10899,
+          "units_ie": 97.7,
+          "int_curr": 27161,
           "int_prev": 0,
           "int_ie": null
         },
@@ -4217,8 +4343,8 @@
           "rec_ie": 94.7,
           "units_curr": 11297,
           "units_prev": 11696,
-          "units_ie": 94.1,
-          "int_curr": 10899,
+          "units_ie": 97.7,
+          "int_curr": 27161,
           "int_prev": 0,
           "int_ie": null
         },
@@ -4228,8 +4354,8 @@
           "rec_ie": 92.4,
           "units_curr": 22745,
           "units_prev": 24556,
-          "units_ie": 94.2,
-          "int_curr": 14799,
+          "units_ie": 93.4,
+          "int_curr": 36199,
           "int_prev": 0,
           "int_ie": null
         },
@@ -4239,8 +4365,8 @@
           "rec_ie": 88.0,
           "units_curr": 46325,
           "units_prev": 54167,
-          "units_ie": 89.2,
-          "int_curr": 14343,
+          "units_ie": 90.4,
+          "int_curr": 35516,
           "int_prev": 0,
           "int_ie": null
         }
@@ -4256,9 +4382,9 @@
           "rec_curr": 714,
           "rec_prev": 870,
           "rec_ie": 80.9,
-          "units_curr": 4090,
-          "units_prev": 5315,
-          "units_ie": 80.8,
+          "units_curr": 3809,
+          "units_prev": 4976,
+          "units_ie": 76.7,
           "int_curr": 3756,
           "int_prev": 0,
           "int_ie": null
@@ -4267,9 +4393,9 @@
           "rec_curr": 2186,
           "rec_prev": 2628,
           "rec_ie": 85.0,
-          "units_curr": 10695,
-          "units_prev": 15474,
-          "units_ie": 74.5,
+          "units_curr": 9931,
+          "units_prev": 14455,
+          "units_ie": 71.5,
           "int_curr": 12156,
           "int_prev": 0,
           "int_ie": null
@@ -4278,9 +4404,9 @@
           "rec_curr": 2186,
           "rec_prev": 2628,
           "rec_ie": 85.0,
-          "units_curr": 10695,
-          "units_prev": 15474,
-          "units_ie": 74.5,
+          "units_curr": 9931,
+          "units_prev": 14455,
+          "units_ie": 71.5,
           "int_curr": 12156,
           "int_prev": 0,
           "int_ie": null
@@ -4289,9 +4415,9 @@
           "rec_curr": 4983,
           "rec_prev": 5145,
           "rec_ie": 102.6,
-          "units_curr": 25796,
-          "units_prev": 31515,
-          "units_ie": 89.6,
+          "units_curr": 24000,
+          "units_prev": 29492,
+          "units_ie": 85.9,
           "int_curr": 13069,
           "int_prev": 0,
           "int_ie": null
@@ -4300,75 +4426,12 @@
           "rec_curr": 10237,
           "rec_prev": 9555,
           "rec_ie": 116.9,
-          "units_curr": 56662,
-          "units_prev": 63028,
-          "units_ie": 98.4,
+          "units_curr": 53584,
+          "units_prev": 59074,
+          "units_ie": 96.2,
           "int_curr": 13069,
           "int_prev": 0,
           "int_ie": null
-        }
-      }
-    },
-    {
-      "name": "ROXOLAN PLUS (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "ROXOLAN",
-      "periods": {
-        "mensual": {
-          "rec_curr": 781,
-          "rec_prev": 614,
-          "rec_ie": 107.8,
-          "units_curr": 3668,
-          "units_prev": 1826,
-          "units_ie": 174.9,
-          "int_curr": 3411,
-          "int_prev": 2905,
-          "int_ie": 117.4
-        },
-        "ytd": {
-          "rec_curr": 2184,
-          "rec_prev": 1857,
-          "rec_ie": 105.2,
-          "units_curr": 10137,
-          "units_prev": 5080,
-          "units_ie": 175.3,
-          "int_curr": 10119,
-          "int_prev": 7792,
-          "int_ie": 129.9
-        },
-        "trimestre": {
-          "rec_curr": 2184,
-          "rec_prev": 1857,
-          "rec_ie": 105.2,
-          "units_curr": 10137,
-          "units_prev": 5080,
-          "units_ie": 175.3,
-          "int_curr": 10119,
-          "int_prev": 7792,
-          "int_ie": 129.9
-        },
-        "semestre": {
-          "rec_curr": 4360,
-          "rec_prev": 3876,
-          "rec_ie": 104.6,
-          "units_curr": 20051,
-          "units_prev": 10340,
-          "units_ie": 180.3,
-          "int_curr": 18440,
-          "int_prev": 16407,
-          "int_ie": 112.4
-        },
-        "mat": {
-          "rec_curr": 7566,
-          "rec_prev": 6890,
-          "rec_ie": 105.0,
-          "units_curr": 35261,
-          "units_prev": 17608,
-          "units_ie": 196.4,
-          "int_curr": 33604,
-          "int_prev": 31185,
-          "int_ie": 107.8
         }
       }
     },
@@ -4379,120 +4442,57 @@
       "family": "MAGNUS",
       "periods": {
         "mensual": {
-          "rec_curr": 60,
-          "rec_prev": 69,
-          "rec_ie": 78.4,
-          "units_curr": 4250,
-          "units_prev": 4102,
-          "units_ie": 104.3,
-          "int_curr": 3341,
+          "rec_curr": 61,
+          "rec_prev": 71,
+          "rec_ie": 77.5,
+          "units_curr": 4030,
+          "units_prev": 3902,
+          "units_ie": 103.7,
+          "int_curr": 3393,
           "int_prev": 0,
           "int_ie": null
         },
         "ytd": {
-          "rec_curr": 172,
-          "rec_prev": 209,
-          "rec_ie": 78.1,
-          "units_curr": 11933,
-          "units_prev": 12478,
-          "units_ie": 98.5,
-          "int_curr": 12112,
+          "rec_curr": 175,
+          "rec_prev": 213,
+          "rec_ie": 78.0,
+          "units_curr": 11306,
+          "units_prev": 11893,
+          "units_ie": 98.6,
+          "int_curr": 12323,
           "int_prev": 0,
           "int_ie": null
         },
         "trimestre": {
-          "rec_curr": 172,
-          "rec_prev": 209,
-          "rec_ie": 78.1,
-          "units_curr": 11933,
-          "units_prev": 12478,
-          "units_ie": 98.5,
-          "int_curr": 12112,
+          "rec_curr": 175,
+          "rec_prev": 213,
+          "rec_ie": 78.0,
+          "units_curr": 11306,
+          "units_prev": 11893,
+          "units_ie": 98.6,
+          "int_curr": 12323,
           "int_prev": 0,
           "int_ie": null
         },
         "semestre": {
-          "rec_curr": 354,
-          "rec_prev": 430,
-          "rec_ie": 79.1,
-          "units_curr": 23032,
-          "units_prev": 25260,
-          "units_ie": 96.4,
-          "int_curr": 17595,
+          "rec_curr": 360,
+          "rec_prev": 438,
+          "rec_ie": 78.9,
+          "units_curr": 21834,
+          "units_prev": 24032,
+          "units_ie": 96.6,
+          "int_curr": 17910,
           "int_prev": 0,
           "int_ie": null
         },
         "mat": {
-          "rec_curr": 771,
-          "rec_prev": 921,
-          "rec_ie": 79.9,
-          "units_curr": 48550,
-          "units_prev": 50617,
-          "units_ie": 97.1,
-          "int_curr": 18315,
-          "int_prev": 0,
-          "int_ie": null
-        }
-      }
-    },
-    {
-      "name": "ARTRO RED (SIE)",
-      "line": "otx",
-      "lineName": "OTC",
-      "family": "ARTRO RED",
-      "periods": {
-        "mensual": {
-          "rec_curr": 399,
-          "rec_prev": 672,
-          "rec_ie": 58.9,
-          "units_curr": 3398,
-          "units_prev": 5116,
-          "units_ie": 51.0,
-          "int_curr": 2994,
-          "int_prev": 0,
-          "int_ie": null
-        },
-        "ytd": {
-          "rec_curr": 1215,
-          "rec_prev": 1998,
-          "rec_ie": 62.6,
-          "units_curr": 9577,
-          "units_prev": 13660,
-          "units_ie": 49.6,
-          "int_curr": 8262,
-          "int_prev": 0,
-          "int_ie": null
-        },
-        "trimestre": {
-          "rec_curr": 1215,
-          "rec_prev": 1998,
-          "rec_ie": 62.6,
-          "units_curr": 9577,
-          "units_prev": 13660,
-          "units_ie": 49.6,
-          "int_curr": 8262,
-          "int_prev": 0,
-          "int_ie": null
-        },
-        "semestre": {
-          "rec_curr": 2982,
-          "rec_prev": 4084,
-          "rec_ie": 76.4,
-          "units_curr": 20641,
-          "units_prev": 29078,
-          "units_ie": 57.1,
-          "int_curr": 11796,
-          "int_prev": 0,
-          "int_ie": null
-        },
-        "mat": {
-          "rec_curr": 6936,
-          "rec_prev": 8548,
-          "rec_ie": 84.4,
-          "units_curr": 50071,
-          "units_prev": 59697,
-          "units_ie": 62.8,
-          "int_curr": 11796,
+          "rec_curr": 783,
+          "rec_prev": 936,
+          "rec_ie": 79.8,
+          "units_curr": 46288,
+          "units_prev": 48124,
+          "units_ie": 98.1,
+          "int_curr": 18598,
           "int_prev": 0,
           "int_ie": null
         }
@@ -4571,9 +4571,9 @@
           "rec_curr": 617,
           "rec_prev": 334,
           "rec_ie": 161.7,
-          "units_curr": 2847,
-          "units_prev": 1614,
-          "units_ie": 164.6,
+          "units_curr": 2663,
+          "units_prev": 1510,
+          "units_ie": 163.1,
           "int_curr": 2956,
           "int_prev": 1513,
           "int_ie": 195.4
@@ -4582,9 +4582,9 @@
           "rec_curr": 1735,
           "rec_prev": 901,
           "rec_ie": 173.6,
-          "units_curr": 8192,
-          "units_prev": 4346,
-          "units_ie": 172.1,
+          "units_curr": 7639,
+          "units_prev": 4084,
+          "units_ie": 168.8,
           "int_curr": 8160,
           "int_prev": 4454,
           "int_ie": 183.2
@@ -4593,9 +4593,9 @@
           "rec_curr": 1735,
           "rec_prev": 901,
           "rec_ie": 173.6,
-          "units_curr": 8192,
-          "units_prev": 4346,
-          "units_ie": 172.1,
+          "units_curr": 7639,
+          "units_prev": 4084,
+          "units_ie": 168.8,
           "int_curr": 8160,
           "int_prev": 4454,
           "int_ie": 183.2
@@ -4604,9 +4604,9 @@
           "rec_curr": 3368,
           "rec_prev": 1626,
           "rec_ie": 191.6,
-          "units_curr": 16660,
-          "units_prev": 8011,
-          "units_ie": 195.4,
+          "units_curr": 15526,
+          "units_prev": 7531,
+          "units_ie": 190.1,
           "int_curr": 15957,
           "int_prev": 7933,
           "int_ie": 201.1
@@ -4615,9 +4615,9 @@
           "rec_curr": 5954,
           "rec_prev": 2419,
           "rec_ie": 221.2,
-          "units_curr": 29640,
-          "units_prev": 12677,
-          "units_ie": 223.4,
+          "units_curr": 27719,
+          "units_prev": 11934,
+          "units_ie": 218.1,
           "int_curr": 28797,
           "int_prev": 12602,
           "int_ie": 228.5
@@ -4634,9 +4634,9 @@
           "rec_curr": 787,
           "rec_prev": 6,
           "rec_ie": 7723.3,
-          "units_curr": 2293,
-          "units_prev": 513,
-          "units_ie": 395.1,
+          "units_curr": 2166,
+          "units_prev": 479,
+          "units_ie": 410.0,
           "int_curr": 2000,
           "int_prev": 2016,
           "int_ie": 99.2
@@ -4645,9 +4645,9 @@
           "rec_curr": 2260,
           "rec_prev": 6,
           "rec_ie": 7523.6,
-          "units_curr": 6617,
-          "units_prev": 513,
-          "units_ie": 1009.5,
+          "units_curr": 6194,
+          "units_prev": 479,
+          "units_ie": 1036.9,
           "int_curr": 6472,
           "int_prev": 2016,
           "int_ie": 321.0
@@ -4656,9 +4656,9 @@
           "rec_curr": 2260,
           "rec_prev": 6,
           "rec_ie": 7523.6,
-          "units_curr": 6617,
-          "units_prev": 513,
-          "units_ie": 1009.5,
+          "units_curr": 6194,
+          "units_prev": 479,
+          "units_ie": 1036.9,
           "int_curr": 6472,
           "int_prev": 2016,
           "int_ie": 321.0
@@ -4667,9 +4667,9 @@
           "rec_curr": 4077,
           "rec_prev": 6,
           "rec_ie": 7110.5,
-          "units_curr": 12489,
-          "units_prev": 513,
-          "units_ie": 1975.3,
+          "units_curr": 11690,
+          "units_prev": 479,
+          "units_ie": 2062.8,
           "int_curr": 11672,
           "int_prev": 2016,
           "int_ie": 579.0
@@ -4678,9 +4678,9 @@
           "rec_curr": 5624,
           "rec_prev": 6,
           "rec_ie": 5357.6,
-          "units_curr": 19525,
-          "units_prev": 513,
-          "units_ie": 3198.2,
+          "units_curr": 18308,
+          "units_prev": 479,
+          "units_ie": 3316.6,
           "int_curr": 19232,
           "int_prev": 2016,
           "int_ie": 954.0
@@ -4694,58 +4694,58 @@
       "family": "ACERPES",
       "periods": {
         "mensual": {
-          "rec_curr": 137,
-          "rec_prev": 128,
-          "rec_ie": 99.4,
-          "units_curr": 2662,
-          "units_prev": 2732,
-          "units_ie": 80.1,
-          "int_curr": 2288,
-          "int_prev": 1892,
+          "rec_curr": 130,
+          "rec_prev": 121,
+          "rec_ie": 99.8,
+          "units_curr": 2461,
+          "units_prev": 2530,
+          "units_ie": 81.5,
+          "int_curr": 2173,
+          "int_prev": 1797,
           "int_ie": 120.9
         },
         "ytd": {
-          "rec_curr": 409,
-          "rec_prev": 362,
-          "rec_ie": 105.1,
-          "units_curr": 8348,
-          "units_prev": 8312,
-          "units_ie": 84.3,
-          "int_curr": 8578,
-          "int_prev": 7222,
+          "rec_curr": 387,
+          "rec_prev": 342,
+          "rec_ie": 105.3,
+          "units_curr": 7689,
+          "units_prev": 7688,
+          "units_ie": 88.2,
+          "int_curr": 8116,
+          "int_prev": 6833,
           "int_ie": 118.8
         },
         "trimestre": {
-          "rec_curr": 409,
-          "rec_prev": 362,
-          "rec_ie": 105.1,
-          "units_curr": 8348,
-          "units_prev": 8312,
-          "units_ie": 84.3,
-          "int_curr": 8578,
-          "int_prev": 7222,
+          "rec_curr": 387,
+          "rec_prev": 342,
+          "rec_ie": 105.3,
+          "units_curr": 7689,
+          "units_prev": 7688,
+          "units_ie": 88.2,
+          "int_curr": 8116,
+          "int_prev": 6833,
           "int_ie": 118.8
         },
         "semestre": {
-          "rec_curr": 863,
-          "rec_prev": 727,
-          "rec_ie": 113.1,
-          "units_curr": 17373,
-          "units_prev": 15830,
-          "units_ie": 94.8,
-          "int_curr": 16557,
-          "int_prev": 13686,
+          "rec_curr": 817,
+          "rec_prev": 688,
+          "rec_ie": 113.2,
+          "units_curr": 15999,
+          "units_prev": 14653,
+          "units_ie": 97.2,
+          "int_curr": 15680,
+          "int_prev": 12961,
           "int_ie": 121.0
         },
         "mat": {
-          "rec_curr": 1713,
-          "rec_prev": 1416,
+          "rec_curr": 1625,
+          "rec_prev": 1343,
           "rec_ie": 118.5,
-          "units_curr": 34966,
-          "units_prev": 29978,
-          "units_ie": 102.6,
-          "int_curr": 32576,
-          "int_prev": 27671,
+          "units_curr": 32286,
+          "units_prev": 27768,
+          "units_ie": 102.3,
+          "int_curr": 30895,
+          "int_prev": 26244,
           "int_ie": 117.7
         }
       }
@@ -5075,9 +5075,9 @@
           "rec_curr": 376,
           "rec_prev": 123,
           "rec_ie": 228.3,
-          "units_curr": 1389,
-          "units_prev": 510,
-          "units_ie": 246.7,
+          "units_curr": 1312,
+          "units_prev": 476,
+          "units_ie": 235.6,
           "int_curr": 2119,
           "int_prev": 520,
           "int_ie": 407.5
@@ -5086,9 +5086,9 @@
           "rec_curr": 1068,
           "rec_prev": 295,
           "rec_ie": 289.6,
-          "units_curr": 3705,
-          "units_prev": 1305,
-          "units_ie": 251.0,
+          "units_curr": 3476,
+          "units_prev": 1228,
+          "units_ie": 239.5,
           "int_curr": 5446,
           "int_prev": 1319,
           "int_ie": 412.9
@@ -5097,9 +5097,9 @@
           "rec_curr": 1068,
           "rec_prev": 295,
           "rec_ie": 289.6,
-          "units_curr": 3705,
-          "units_prev": 1305,
-          "units_ie": 251.0,
+          "units_curr": 3476,
+          "units_prev": 1228,
+          "units_ie": 239.5,
           "int_curr": 5446,
           "int_prev": 1319,
           "int_ie": 412.9
@@ -5108,9 +5108,9 @@
           "rec_curr": 2041,
           "rec_prev": 493,
           "rec_ie": 321.5,
-          "units_curr": 7109,
-          "units_prev": 2327,
-          "units_ie": 269.4,
+          "units_curr": 6654,
+          "units_prev": 2192,
+          "units_ie": 255.5,
           "int_curr": 9082,
           "int_prev": 2199,
           "int_ie": 413.0
@@ -5119,9 +5119,9 @@
           "rec_curr": 3406,
           "rec_prev": 577,
           "rec_ie": 359.7,
-          "units_curr": 12955,
-          "units_prev": 2852,
-          "units_ie": 379.9,
+          "units_curr": 12048,
+          "units_prev": 2693,
+          "units_ie": 357.4,
           "int_curr": 14875,
           "int_prev": 3566,
           "int_ie": 417.1
@@ -5381,69 +5381,6 @@
       }
     },
     {
-      "name": "DIOVAN IC (SIE)",
-      "line": "cardio",
-      "lineName": "CardioMetabólica",
-      "family": "DIOVAN",
-      "periods": {
-        "mensual": {
-          "rec_curr": 266,
-          "rec_prev": 295,
-          "rec_ie": 81.0,
-          "units_curr": 995,
-          "units_prev": 845,
-          "units_ie": 102.0,
-          "int_curr": 1018,
-          "int_prev": 947,
-          "int_ie": 107.5
-        },
-        "ytd": {
-          "rec_curr": 815,
-          "rec_prev": 928,
-          "rec_ie": 81.7,
-          "units_curr": 2902,
-          "units_prev": 2553,
-          "units_ie": 100.6,
-          "int_curr": 2946,
-          "int_prev": 2993,
-          "int_ie": 98.4
-        },
-        "trimestre": {
-          "rec_curr": 815,
-          "rec_prev": 928,
-          "rec_ie": 81.7,
-          "units_curr": 2902,
-          "units_prev": 2553,
-          "units_ie": 100.6,
-          "int_curr": 2946,
-          "int_prev": 2993,
-          "int_ie": 98.4
-        },
-        "semestre": {
-          "rec_curr": 1596,
-          "rec_prev": 1881,
-          "rec_ie": 81.7,
-          "units_curr": 5815,
-          "units_prev": 5199,
-          "units_ie": 100.4,
-          "int_curr": 5577,
-          "int_prev": 6054,
-          "int_ie": 92.1
-        },
-        "mat": {
-          "rec_curr": 3077,
-          "rec_prev": 3672,
-          "rec_ie": 80.7,
-          "units_curr": 11260,
-          "units_prev": 10815,
-          "units_ie": 94.9,
-          "int_curr": 10846,
-          "int_prev": 11943,
-          "int_ie": 90.8
-        }
-      }
-    },
-    {
       "name": "LURAP (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
@@ -5507,6 +5444,69 @@
       }
     },
     {
+      "name": "DIOVAN IC (SIE)",
+      "line": "cardio",
+      "lineName": "CardioMetabólica",
+      "family": "DIOVAN",
+      "periods": {
+        "mensual": {
+          "rec_curr": 266,
+          "rec_prev": 295,
+          "rec_ie": 81.0,
+          "units_curr": 927,
+          "units_prev": 789,
+          "units_ie": 103.5,
+          "int_curr": 1016,
+          "int_prev": 945,
+          "int_ie": 107.5
+        },
+        "ytd": {
+          "rec_curr": 813,
+          "rec_prev": 926,
+          "rec_ie": 81.7,
+          "units_curr": 2693,
+          "units_prev": 2393,
+          "units_ie": 101.5,
+          "int_curr": 2939,
+          "int_prev": 2987,
+          "int_ie": 98.4
+        },
+        "trimestre": {
+          "rec_curr": 813,
+          "rec_prev": 926,
+          "rec_ie": 81.7,
+          "units_curr": 2693,
+          "units_prev": 2393,
+          "units_ie": 101.5,
+          "int_curr": 2939,
+          "int_prev": 2987,
+          "int_ie": 98.4
+        },
+        "semestre": {
+          "rec_curr": 1591,
+          "rec_prev": 1876,
+          "rec_ie": 81.6,
+          "units_curr": 5391,
+          "units_prev": 4853,
+          "units_ie": 102.0,
+          "int_curr": 5560,
+          "int_prev": 6036,
+          "int_ie": 92.1
+        },
+        "mat": {
+          "rec_curr": 3083,
+          "rec_prev": 3678,
+          "rec_ie": 80.7,
+          "units_curr": 10513,
+          "units_prev": 10098,
+          "units_ie": 97.4,
+          "int_curr": 10865,
+          "int_prev": 11963,
+          "int_ie": 90.8
+        }
+      }
+    },
+    {
       "name": "ALIDIAL L (SIE)",
       "line": "resp",
       "lineName": "Respiratoria",
@@ -5516,56 +5516,56 @@
           "rec_curr": 151,
           "rec_prev": 96,
           "rec_ie": 157.6,
-          "units_curr": 1062,
+          "units_curr": 1001,
           "units_prev": 0,
           "units_ie": null,
-          "int_curr": 995,
-          "int_prev": 690,
+          "int_curr": 1008,
+          "int_prev": 699,
           "int_ie": 144.2
         },
         "ytd": {
           "rec_curr": 351,
           "rec_prev": 276,
           "rec_ie": 131.2,
-          "units_curr": 2425,
+          "units_curr": 2288,
           "units_prev": 0,
           "units_ie": null,
-          "int_curr": 2307,
-          "int_prev": 1697,
+          "int_curr": 2350,
+          "int_prev": 1729,
           "int_ie": 135.9
         },
         "trimestre": {
           "rec_curr": 351,
           "rec_prev": 276,
           "rec_ie": 131.2,
-          "units_curr": 2425,
+          "units_curr": 2288,
           "units_prev": 0,
           "units_ie": null,
-          "int_curr": 2307,
-          "int_prev": 1697,
+          "int_curr": 2350,
+          "int_prev": 1729,
           "int_ie": 135.9
         },
         "semestre": {
           "rec_curr": 527,
           "rec_prev": 276,
           "rec_ie": 90.9,
-          "units_curr": 4850,
+          "units_curr": 4573,
           "units_prev": 0,
           "units_ie": null,
-          "int_curr": 4653,
-          "int_prev": 3300,
+          "int_curr": 4739,
+          "int_prev": 3361,
           "int_ie": 141.0
         },
         "mat": {
           "rec_curr": 1261,
           "rec_prev": 276,
           "rec_ie": 108.0,
-          "units_curr": 4850,
+          "units_curr": 4573,
           "units_prev": 0,
           "units_ie": null,
-          "int_curr": 4795,
-          "int_prev": 3461,
-          "int_ie": 138.5
+          "int_curr": 4868,
+          "int_prev": 3513,
+          "int_ie": 138.6
         }
       }
     },
@@ -5705,9 +5705,9 @@
           "rec_curr": 0,
           "rec_prev": 47,
           "rec_ie": null,
-          "units_curr": 468,
-          "units_prev": 402,
-          "units_ie": 115.5,
+          "units_curr": 440,
+          "units_prev": 382,
+          "units_ie": 114.9,
           "int_curr": 223,
           "int_prev": 335,
           "int_ie": 66.6
@@ -5716,9 +5716,9 @@
           "rec_curr": 250,
           "rec_prev": 132,
           "rec_ie": 317.9,
-          "units_curr": 1257,
-          "units_prev": 953,
-          "units_ie": 132.4,
+          "units_curr": 1172,
+          "units_prev": 907,
+          "units_ie": 131.2,
           "int_curr": 663,
           "int_prev": 949,
           "int_ie": 69.9
@@ -5727,9 +5727,9 @@
           "rec_curr": 250,
           "rec_prev": 132,
           "rec_ie": 317.9,
-          "units_curr": 1257,
-          "units_prev": 953,
-          "units_ie": 132.4,
+          "units_curr": 1172,
+          "units_prev": 907,
+          "units_ie": 131.2,
           "int_curr": 663,
           "int_prev": 949,
           "int_ie": 69.9
@@ -5738,9 +5738,9 @@
           "rec_curr": 515,
           "rec_prev": 257,
           "rec_ie": 277.7,
-          "units_curr": 3182,
-          "units_prev": 1919,
-          "units_ie": 172.8,
+          "units_curr": 2955,
+          "units_prev": 1829,
+          "units_ie": 169.9,
           "int_curr": 2578,
           "int_prev": 2025,
           "int_ie": 127.3
@@ -5749,9 +5749,9 @@
           "rec_curr": 871,
           "rec_prev": 505,
           "rec_ie": 213.2,
-          "units_curr": 6459,
-          "units_prev": 3963,
-          "units_ie": 177.1,
+          "units_curr": 6050,
+          "units_prev": 3781,
+          "units_ie": 176.8,
           "int_curr": 6245,
           "int_prev": 3502,
           "int_ie": 178.3
@@ -5770,8 +5770,8 @@
           "rec_ie": 162.6,
           "units_curr": 181,
           "units_prev": 187,
-          "units_ie": 102.7,
-          "int_curr": 149,
+          "units_ie": 95.7,
+          "int_curr": 379,
           "int_prev": 0,
           "int_ie": null
         },
@@ -5781,8 +5781,8 @@
           "rec_ie": 141.8,
           "units_curr": 566,
           "units_prev": 506,
-          "units_ie": 109.0,
-          "int_curr": 546,
+          "units_ie": 113.2,
+          "int_curr": 1361,
           "int_prev": 0,
           "int_ie": null
         },
@@ -5792,8 +5792,8 @@
           "rec_ie": 141.8,
           "units_curr": 566,
           "units_prev": 506,
-          "units_ie": 109.0,
-          "int_curr": 546,
+          "units_ie": 113.2,
+          "int_curr": 1361,
           "int_prev": 0,
           "int_ie": null
         },
@@ -5803,8 +5803,8 @@
           "rec_ie": 121.9,
           "units_curr": 1199,
           "units_prev": 1088,
-          "units_ie": 112.1,
-          "int_curr": 780,
+          "units_ie": 111.1,
+          "int_curr": 1908,
           "int_prev": 0,
           "int_ie": null
         },
@@ -5814,8 +5814,8 @@
           "rec_ie": 106.2,
           "units_curr": 2361,
           "units_prev": 2283,
-          "units_ie": 107.8,
-          "int_curr": 731,
+          "units_ie": 109.3,
+          "int_curr": 1810,
           "int_prev": 0,
           "int_ie": null
         }
