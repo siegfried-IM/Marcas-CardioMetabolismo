@@ -1093,9 +1093,66 @@ function setPY(y){
   renderPerfYr();renderPerf();
 }
 
+// Extract brand name from product presentation
+function _extractBrand(prod){
+  if(!prod) return prod;
+  const STOP = new Set(['TABL','TABLET','TABLETA','TABLETAS','CAP','CAPS','CAPSULA','CAPSULAS',
+    'COMP','COMPR','COMPS','COMPRIMIDO','COMPRIMIDOS','AMP','AMPOLLA','AMPOLLAS','JBE','JARABE',
+    'INY','INYECTABLE','SUSP','SUSPENSION','POL','POLVO','SOB','SOBRE','SOBRES','GTAS','GOTAS',
+    'SOL','SOLUC','SOLUCION','CR','CREMA','UNG','UNGUENTO','GEL','EMUL','LOC','LOCION',
+    'PARCHE','OVUL','OVULO','OVULOS','IMPL','IMPLANTE','ANILLO','ANILLOS','S/ESTROG','SE',
+    'EFER','EFERV','RECUB','RECUBIE','REC','GRAG','GRAGEAS','MAST','MASTIC','LIQ','LIQUIDO',
+    'AERO','AEROSOL','INHAL','INHALACION','SPRAY','COLIRIO','GINEC','VAGINAL','PESARIO',
+    'OFT','BOLS','BOLSA','PVO','PLV','MG','ML','G','MCG','UI','PCT','CHEW']);
+  const toks = String(prod).trim().split(/\s+/);
+  const out = [];
+  for(const t of toks){
+    const u = t.toUpperCase().replace(/[.,;:()/\\-]/g,'');
+    if(STOP.has(u)) break;
+    if(/^[\d]/.test(u)) break;
+    out.push(t);
+  }
+  return out.length ? out.join(' ') : toks[0];
+}
+function _aggregateByBrand(rawProds){
+  const groups = new Map();
+  rawProds.forEach(p=>{
+    const brand = _extractBrand(p.prod);
+    let agg = groups.get(brand);
+    if(!agg){
+      agg = {prod:brand, is_sie:false, monthly_vals:{}, ytd:{}, mat:{}, quarterly_vals:{},
+             ms_monthly:{}, ms_ytd:{}, ms_mat:{}, ms_quarterly:{}, _isAgg:true};
+      groups.set(brand, agg);
+    }
+    if(p.is_sie) agg.is_sie = true;
+    ['monthly_vals','ytd','mat','quarterly_vals'].forEach(f=>{
+      Object.entries(p[f]||{}).forEach(([k,v])=>{
+        if(v!=null) agg[f][k] = (agg[f][k]||0) + (+v||0);
+      });
+    });
+  });
+  const brands = [...groups.values()];
+  ['monthly_vals','ytd','mat','quarterly_vals'].forEach((f,idx)=>{
+    const msField = ['ms_monthly','ms_ytd','ms_mat','ms_quarterly'][idx];
+    const allKeys = new Set();
+    brands.forEach(b=>Object.keys(b[f]).forEach(k=>allKeys.add(k)));
+    allKeys.forEach(k=>{
+      let totalMkt = 0;
+      brands.forEach(b=>{ totalMkt += (+b[f][k]||0); });
+      if(totalMkt>0){
+        brands.forEach(b=>{
+          const v = +b[f][k]||0;
+          b[msField][k] = (v/totalMkt)*100;
+        });
+      }
+    });
+  });
+  return brands;
+}
+
 function renderPerf(){
   const molData=D.mol_perf[pMol]; if(!molData)return;
-  const prods=molData.products;
+  const prods=_aggregateByBrand(molData.products);
 
   let periodKeys;
   if(pPeriod==='ytd') periodKeys=['Mar 2022','Mar 2023','Mar 2024','Mar 2025','Mar 2026'];
