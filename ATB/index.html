@@ -423,6 +423,18 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
       <!-- Competitor recetas (only shown in MS% mode) -->
       <div id="rec-comp-panel" style="display:none;margin-top:14px;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;">
         <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Top competidores por recetas · misma familia</p>
+        
+        <div class="perf-bf" id="rec-bf">
+          <span class="lbl">Comparar con</span>
+          <div class="seg" id="rcf-mode">
+            <button data-m="top5">Top 5</button>
+            <button data-m="top10" class="on">Top 10</button>
+            <button data-m="sie">Solo SIE</button>
+            <button data-m="all">Todos</button>
+          </div>
+          <input type="text" class="search" id="rcf-search" placeholder="Buscar marca..." />
+          <div class="pills" id="rcf-pills"></div>
+        </div>
         <div id="rec-comp-table"></div>
       </div>
     </div>
@@ -1512,8 +1524,38 @@ function renderRecComp(prod, months){
     return data.quarterly?.[key]||0;
   }
 
-  const sorted=Object.entries(compData).sort((a,b)=>getV(b[1],lastMes)-getV(a[1],lastMes));
-  const maxVal=getV(sorted[0]?.[1]||{},lastMes)||1;
+  let sorted=Object.entries(compData).sort((a,b)=>getV(b[1],lastMes)-getV(a[1],lastMes));
+ 
+
+  // Apply brand filter to sorted list
+  if(!window.__sfRecPF) window.__sfRecPF = { mode:'top10', selected:new Set(), search:'' };
+  const _pf = window.__sfRecPF;
+  const _allSorted = sorted.slice();
+  let _filteredSorted = _allSorted;
+  if(_pf.mode==='top5') _filteredSorted = _allSorted.slice(0,5);
+  else if(_pf.mode==='top10') _filteredSorted = _allSorted.slice(0,10);
+  else if(_pf.mode==='sie') _filteredSorted = _allSorted.filter(([p,d])=>p.includes(' SIE'));
+  if(_pf.selected.size > 0){
+    _filteredSorted = _allSorted.filter(([p,d])=>_pf.selected.has(p));
+  }
+  // Always include SIE
+  _allSorted.filter(([p,d])=>p.includes(' SIE')).forEach(s=>{
+    if(!_filteredSorted.find(x=>x[0]===s[0])) _filteredSorted.push(s);
+  });
+  // Render pills (from full sorted list)
+  const _pillEl = document.getElementById('rcf-pills');
+  if(_pillEl){
+    const _shown = new Set(_filteredSorted.map(([p])=>p));
+    const q = (_pf.search||'').toLowerCase();
+    const _pillList = q ? _allSorted.filter(([p])=>p.toLowerCase().includes(q)) : _allSorted.slice(0,30);
+    _pillEl.innerHTML = _pillList.map(([p])=>{
+      const on = _shown.has(p);
+      const sie = p.includes(' SIE')?' sie':'';
+      return `<span class="pill${on?' on':''}${sie}" data-prod="${p.replace(/"/g,'&quot;')}">${p}</span>`;
+    }).join('');
+  }
+  sorted = _filteredSorted;
+ const maxVal=getV(sorted[0]?.[1]||{},lastMes)||1;
   const colors=['#b01e1e','#1d4ed8','#059669','#d97706','#7c3aed','#c2410c','#0369a1','#16a34a'];
   const currentYear=lastMes?parseInt(lastMes.split(' ')[1],10):2025;
   const prevYear=currentYear-1;
@@ -2152,6 +2194,46 @@ window.__sfPF = window.__sfPF || { mode:'top10', selected:new Set(), search:'' }
       if(window.__sfPF.selected.has(prod)) window.__sfPF.selected.delete(prod);
       else window.__sfPF.selected.add(prod);
       if(typeof renderPerf==='function') renderPerf();
+    });
+  });
+})();
+
+</script>
+<script>
+
+// Wire rec brand filter
+(function(){
+  if(window.__sfRecPFWired) return;
+  window.__sfRecPFWired = true;
+  window.__sfRecPF = window.__sfRecPF || { mode:'top10', selected:new Set(), search:'' };
+  const ready = function(fn){
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  };
+  ready(function(){
+    const seg = document.getElementById('rcf-mode');
+    const search = document.getElementById('rcf-search');
+    const pills = document.getElementById('rcf-pills');
+    if(seg) seg.addEventListener('click', function(e){
+      const b = e.target.closest('button[data-m]');
+      if(!b) return;
+      seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      window.__sfRecPF.mode = b.dataset.m;
+      window.__sfRecPF.selected = new Set();
+      if(typeof renderRec==='function') renderRec();
+    });
+    if(search) search.addEventListener('input', function(e){
+      window.__sfRecPF.search = e.target.value;
+      if(typeof renderRec==='function') renderRec();
+    });
+    if(pills) pills.addEventListener('click', function(e){
+      const p = e.target.closest('.pill[data-prod]');
+      if(!p) return;
+      const prod = p.dataset.prod;
+      if(window.__sfRecPF.selected.has(prod)) window.__sfRecPF.selected.delete(prod);
+      else window.__sfRecPF.selected.add(prod);
+      if(typeof renderRec==='function') renderRec();
     });
   });
 })();
