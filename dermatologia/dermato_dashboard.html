@@ -406,6 +406,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
           <div class="seg-ctrl" id="rec-view-ctrl">
             <button class="seg on" data-v="rec">Recetas</button>
             <button class="seg" data-v="ms">MS%</button>
+            <button class="seg" data-v="med">Médicos</button>
           </div>
         </div>
       </div>
@@ -1182,8 +1183,6 @@ function setRY(y){rYear=y;renderRecYr();renderRec();}
 const REC_COMP_COLORS = ['#2563eb','#16a34a','#d97706','#7c3aed','#0891b2','#dc2626'];  // distintos para chart de recetas
 
 function renderRec(){
-  if(typeof rView!=='undefined' && rView==='med') rView='rec';
-  
   const data=D.recetas[rProd]||{};
   const MESES_ALL=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const Q_MAP={Jan:'Q1',Feb:'Q1',Mar:'Q1',Apr:'Q2',May:'Q2',Jun:'Q2',Jul:'Q3',Aug:'Q3',Sep:'Q3',Oct:'Q4',Nov:'Q4',Dec:'Q4'};
@@ -1316,6 +1315,7 @@ function renderRec(){
   const lastData=lastMes?(data[lastMes]||{}):{};
   const prevData=prevYearMes?(data[prevYearMes]||{}):{};
   const recDelta=lastData.recetas&&prevData.recetas?Math.round((lastData.recetas/prevData.recetas-1)*100):null;
+  const medDelta=lastData.medicos&&prevData.medicos?Math.round((lastData.medicos/prevData.medicos-1)*100):null;
   const msObj=D.rec_ms?.[rProd]||{};const msD=msObj.ms||{};
   const msLast=lastMes?msD[lastMes]:null;const msPrev=prevYearMes?msD[prevYearMes]:null;
   const msDelta=msLast!=null&&msPrev!=null&&msPrev!==0?((msLast/msPrev-1)*100).toFixed(1):null;
@@ -1325,31 +1325,80 @@ function renderRec(){
     const [mon,year]=label.split(' ');
     return `${monthEs[mon]||mon} ${year}`;
   };
-  // SF_COMPARATIVO_TABLE
+  const detailRows=[
+    prevYearMes?['Recetas '+fmtRecLabel(prevYearMes),prevData.recetas,null]:null,
+    ['Recetas '+fmtRecLabel(lastMes),lastData.recetas,recDelta],
+    prevYearMes?['Médicos '+fmtRecLabel(prevYearMes),prevData.medicos,null]:null,
+    ['Médicos '+fmtRecLabel(lastMes),lastData.medicos,medDelta],
+    prevYearMes?['MS% '+fmtRecLabel(prevYearMes),msPrev!=null?msPrev.toFixed(2)+'%':null,null]:null,
+    ['MS% '+fmtRecLabel(lastMes),msLast!=null?msLast.toFixed(2)+'%':null,msDelta!=null?parseFloat(msDelta):null],
+  ].filter(Boolean);
   document.getElementById('rec-detail').innerHTML=`
-    <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Comparativo</p>
-    <table style="width:100%;border-collapse:collapse;font-size:11px;font-family:'IBM Plex Mono',monospace;">
-      <thead><tr style="border-bottom:1px solid rgba(0,0,0,.1);">
-        <th style="text-align:left;padding:4px 6px;font-weight:700;color:#6b7280;font-size:9px;letter-spacing:.08em;text-transform:uppercase;">Métrica</th>
-        <th style="text-align:right;padding:4px 6px;font-weight:700;color:#6b7280;font-size:9px;letter-spacing:.08em;text-transform:uppercase;">${fmtRecLabel(prevYearMes)||'—'}</th>
-        <th style="text-align:right;padding:4px 6px;font-weight:700;color:#6b7280;font-size:9px;letter-spacing:.08em;text-transform:uppercase;">${fmtRecLabel(lastMes)||'—'}</th>
-        <th style="text-align:right;padding:4px 6px;font-weight:700;color:#6b7280;font-size:9px;letter-spacing:.08em;text-transform:uppercase;">Δ</th>
-      </tr></thead>
-      <tbody>
-        <tr style="border-bottom:1px solid rgba(0,0,0,.04);">
-          <td style="padding:6px;color:#4b5563;">Recetas</td>
-          <td style="padding:6px;text-align:right;font-weight:600;color:#111827;">${prevData.recetas!=null?prevData.recetas.toLocaleString('es-AR'):'—'}</td>
-          <td style="padding:6px;text-align:right;font-weight:700;color:#111827;">${lastData.recetas!=null?lastData.recetas.toLocaleString('es-AR'):'—'}</td>
-          <td style="padding:6px;text-align:right;font-weight:600;color:${recDelta==null?'#9ca3af':recDelta>=0?'#16a34a':'#dc2626'}">${recDelta!=null?(recDelta>=0?'+':'')+recDelta+'%':'—'}</td>
-        </tr>
-        <tr>
-          <td style="padding:6px;color:#4b5563;">MS%</td>
-          <td style="padding:6px;text-align:right;font-weight:600;color:#111827;">${msPrev!=null?msPrev.toFixed(2)+'%':'—'}</td>
-          <td style="padding:6px;text-align:right;font-weight:700;color:#111827;">${msLast!=null?msLast.toFixed(2)+'%':'—'}</td>
-          <td style="padding:6px;text-align:right;font-weight:600;color:${msDelta==null?'#9ca3af':parseFloat(msDelta)>=0?'#16a34a':'#dc2626'}">${msDelta!=null?(parseFloat(msDelta)>=0?'+':'')+msDelta+'%':'—'}</td>
-        </tr>
-      </tbody>
-    </table>`;
+    <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;">Comparativo</p>
+    ${detailRows.map(([l,v,delta])=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.05);font-size:11px;">
+      <span style="color:#4b5563">${l}</span>
+      <span style="display:flex;align-items:center;gap:7px;">
+        ${delta!=null?`<span style="font-size:9px;color:${delta>=0?'#16a34a':'#dc2626'}">${delta>=0?'+':''}${delta}%</span>`:''}
+        <span style="font-family:'IBM Plex Mono',monospace;font-weight:700;color:#111827;">${v!=null?v:'—'}</span>
+      </span></div>`).join('')}`;
+}
+
+function round2(v){return Math.round(v*100)/100;}
+
+
+function renderRecComp(prod, months){
+  const compData=D.rec_comp?.[prod]||{};
+  const el=document.getElementById('rec-comp-table');
+  if(!Object.keys(compData).length){el.innerHTML='<p style="color:#4b5563;font-size:11px;">Sin datos de competidores.</p>';return;}
+  const lastMes=months[months.length-1];
+  const prevMes=(()=>{
+    if(!lastMes) return null;
+    const parts=lastMes.split(' ');
+    if(parts.length!==2) return months[months.length-2]||null;
+    return `${parts[0]} ${parseInt(parts[1],10)-1}`;
+  })();
+  let cIdx=0;
+  const isQ=lastMes&&lastMes.startsWith('Q');
+
+  function getV(data, key){
+    if(!key) return 0;
+    if(!isQ) return data.monthly?.[key]||0;
+    const[q,y]=key.split(' ');
+    const Q_M={'Q1':['Jan','Feb','Mar'],'Q2':['Apr','May','Jun'],'Q3':['Jul','Aug','Sep'],'Q4':['Oct','Nov','Dec']};
+    const vals=Q_M[q].map(m=>data.monthly?.[m+' '+y]).filter(v=>v);
+    return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):0;
+  }
+
+  let sorted=Object.entries(compData).sort((a,b)=>getV(b[1],lastMes)-getV(a[1],lastMes));
+ 
+
+  // Apply brand filter to sorted list
+  if(!window.__sfRecPF) window.__sfRecPF = { mode:'top10', selected:new Set(), search:'' };
+  const _pf = window.__sfRecPF;
+  const _allSorted = sorted.slice();
+  let _filteredSorted = _allSorted;
+  if(_pf.mode==='top5') _filteredSorted = _allSorted.slice(0,5);
+  else if(_pf.mode==='top10') _filteredSorted = _allSorted.slice(0,10);
+  else if(_pf.mode==='sie') _filteredSorted = _allSorted.filter(([p,d])=>p.includes(' SIE'));
+  if(_pf.selected.size > 0){
+    _filteredSorted = _allSorted.filter(([p,d])=>_pf.selected.has(p));
+  }
+  // Always include SIE
+  _allSorted.filter(([p,d])=>p.includes(' SIE')).forEach(s=>{
+    if(!_filteredSorted.find(x=>x[0]===s[0])) _filteredSorted.push(s);
+  });
+  // Render pills (from full sorted list)
+  const _pillEl = document.getElementById('rcf-pills');
+  if(_pillEl){
+    const _shown = new Set(_filteredSorted.map(([p])=>p));
+    const q = (_pf.search||'').toLowerCase();
+    const _pillList = q ? _allSorted.filter(([p])=>p.toLowerCase().includes(q)) : _allSorted.slice(0,30);
+    _pillEl.innerHTML = _pillList.map(([p])=>{
+      const on = _shown.has(p);
+      const sie = p.includes(' SIE')?' sie':'';
+      return `<span class="pill${on?' on':''}${sie}" data-prod="${p.replace(/"/g,'&quot;')}">${p}</span>`;
+    }).join('');
+  }
   sorted = _filteredSorted;
  const maxVal=getV(sorted[0]?.[1]||{},lastMes)||1;
   const colors=['#b01e1e','#1d4ed8','#059669','#d97706','#7c3aed','#c2410c','#0369a1','#16a34a'];
