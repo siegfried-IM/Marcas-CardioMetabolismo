@@ -1621,7 +1621,9 @@ function renderRecComp(prod, months, viewMode){
   // Orden: SIE primero, luego por valor del último mes desc
   let sorted=Object.entries(compData).sort((a,b)=>{
     const aSie=a[1].is_sie?1:0, bSie=b[1].is_sie?1:0;
- 
+    if(aSie!==bSie) return bSie-aSie;
+    return getV(b[1],lastMes)-getV(a[1],lastMes);
+  });
 
   // Apply brand filter to sorted list
   if(!window.__sfRecPF) window.__sfRecPF = { mode:'top10', selected:new Set(), search:'' };
@@ -1651,9 +1653,6 @@ function renderRecComp(prod, months, viewMode){
     }).join('');
   }
   sorted = _filteredSorted;
-   if(aSie!==bSie) return bSie-aSie;
-    return getV(b[1],lastMes)-getV(a[1],lastMes);
-  });
   const maxVal=Math.max(...sorted.map(([,d])=>getV(d,lastMes)))||1;
   const colors=['#b01e1e','#1d4ed8','#059669','#d97706','#7c3aed','#c2410c','#0369a1','#16a34a'];
 
