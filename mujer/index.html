@@ -407,7 +407,6 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
           <div class="seg-ctrl" id="rec-view-ctrl">
             <button class="seg on" data-v="rec">Recetas</button>
             <button class="seg" data-v="ms">MS%</button>
-            <button class="seg" data-v="med">Médicos</button>
           </div>
         </div>
       </div>
@@ -1389,6 +1388,8 @@ function setRY(y){
 const REC_COMP_COLORS = ['#2563eb','#16a34a','#d97706','#7c3aed','#0891b2','#dc2626'];  // distintos para chart de recetas
 
 function renderRec(){
+  if(typeof rView!=='undefined' && rView==='med') rView='rec';
+  
   const data=D.recetas[rProd]||{};
   const MESES_ALL=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const Q_MAP={Jan:'Q1',Feb:'Q1',Mar:'Q1',Apr:'Q2',May:'Q2',Jun:'Q2',Jul:'Q3',Aug:'Q3',Sep:'Q3',Oct:'Q4',Nov:'Q4',Dec:'Q4'};
@@ -1581,7 +1582,6 @@ function renderRec(){
       <thead><tr>${thL('Métrica')}${th('Ene 24')}${th('Ene 25')}${th('Dic 25')}${th('Δ 24→25')}</tr></thead>
       <tbody>
         <tr style="border-bottom:1px solid #f3f4f6;">${tdL('Recetas')}${tdN(j24.recetas)}${tdN(j25.recetas)}${tdN(d25.recetas)}${tdD(_yoyRec,false)}</tr>
-        <tr style="border-bottom:1px solid #f3f4f6;">${tdL('Médicos')}${tdN(j24.medicos)}${tdN(j25.medicos)}${tdN(d25.medicos)}${tdD(_yoyMed,false)}</tr>
         <tr>${tdL('MS%')}${tdN(msFirst?msFirst.toFixed(2)+'%':null)}${tdN(msD['Jan 2025']?msD['Jan 2025'].toFixed(2)+'%':null)}${tdN(msLast?msLast.toFixed(2)+'%':null)}${tdD(_yoyMS,true)}</tr>
       </tbody>
     </table>
