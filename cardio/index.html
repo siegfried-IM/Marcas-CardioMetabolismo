@@ -416,6 +416,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
             <button class="seg on" data-v="rec">Recetas</button>
             <button class="seg" data-v="ms">MS%</button>
             <button class="seg" data-v="quarterly">Trimestral</button>
+            <button class="seg" data-v="med">Médicos</button>
           </div>
         </div>
       </div>
@@ -1333,37 +1334,12 @@ function setRY(y){
 const REC_COMP_COLORS = ['#2563eb','#16a34a','#d97706','#7c3aed','#0891b2','#dc2626'];  // distintos para chart de recetas
 
 function renderRec(){
-  if(rView==='med') rView='rec';
-  
   if(activeBrand && !REC_PRODS.includes(activeBrand)){
     if(rChart){rChart.destroy();rChart=null;}
     clearCanvas('recChart');
     document.getElementById('rec-comp-panel').style.display='block';
     document.getElementById('rec-comp-table').innerHTML='<p style="color:#4b5563;font-size:11px;">Sin base CloseUp disponible para esta marca.</p>';
-    document.getElementById('rec-detail').innerHTML=`
-    <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Comparativo</p>
-    <table style="width:100%;border-collapse:collapse;font-size:11px;font-family:'IBM Plex Mono',monospace;">
-      <thead><tr style="border-bottom:1px solid rgba(0,0,0,.1);">
-        <th style="text-align:left;padding:4px 6px;font-weight:700;color:#6b7280;font-size:9px;letter-spacing:.08em;text-transform:uppercase;">Métrica</th>
-        <th style="text-align:right;padding:4px 6px;font-weight:700;color:#6b7280;font-size:9px;letter-spacing:.08em;text-transform:uppercase;">${fmtRecLabel(prevYearMes)||'—'}</th>
-        <th style="text-align:right;padding:4px 6px;font-weight:700;color:#6b7280;font-size:9px;letter-spacing:.08em;text-transform:uppercase;">${fmtRecLabel(lastMes)||'—'}</th>
-        <th style="text-align:right;padding:4px 6px;font-weight:700;color:#6b7280;font-size:9px;letter-spacing:.08em;text-transform:uppercase;">Δ</th>
-      </tr></thead>
-      <tbody>
-        <tr style="border-bottom:1px solid rgba(0,0,0,.04);">
-          <td style="padding:6px;color:#4b5563;">Recetas</td>
-          <td style="padding:6px;text-align:right;font-weight:600;color:#111827;">${prevData.recetas!=null?prevData.recetas.toLocaleString('es-AR'):'—'}</td>
-          <td style="padding:6px;text-align:right;font-weight:700;color:#111827;">${lastData.recetas!=null?lastData.recetas.toLocaleString('es-AR'):'—'}</td>
-          <td style="padding:6px;text-align:right;font-weight:600;color:${recDelta==null?'#9ca3af':recDelta>=0?'#16a34a':'#dc2626'}">${recDelta!=null?(recDelta>=0?'+':'')+recDelta+'%':'—'}</td>
-        </tr>
-        <tr>
-          <td style="padding:6px;color:#4b5563;">MS%</td>
-          <td style="padding:6px;text-align:right;font-weight:600;color:#111827;">${msPrev!=null?msPrev.toFixed(2)+'%':'—'}</td>
-          <td style="padding:6px;text-align:right;font-weight:700;color:#111827;">${msLast!=null?msLast.toFixed(2)+'%':'—'}</td>
-          <td style="padding:6px;text-align:right;font-weight:600;color:${msDelta==null?'#9ca3af':parseFloat(msDelta)>=0?'#16a34a':'#dc2626'}">${msDelta!=null?(parseFloat(msDelta)>=0?'+':'')+msDelta+'%':'—'}</td>
-        </tr>
-      </tbody>
-    </table>`;
+    document.getElementById('rec-detail').innerHTML=`<p style="color:#4b5563;font-size:11px;line-height:1.6;">${activeBrand} no tiene fuente de recetas para el período actual. El resto del tablero sigue sincronizado con IQVIA/PM.</p>`;
     const container=document.getElementById('rec-yr');
     if(container){container.innerHTML='';container.style.display='none';}
     return;
@@ -1503,7 +1479,7 @@ function renderRec(){
   const lastData=lastMes?(data[lastMes]||{}):{};
   const prevData=prevYearMes?(data[prevYearMes]||{}):{};
   const recDelta=lastData.recetas&&prevData.recetas?Math.round((lastData.recetas/prevData.recetas-1)*100):null;
-  // Medicos removed (data inconsistente desde CloseUp)
+  const medDelta=lastData.medicos&&prevData.medicos?Math.round((lastData.medicos/prevData.medicos-1)*100):null;
   const msObj=D.rec_ms?.[rProd]||{};const msD=msObj.ms||{};
   const msLast=lastMes?msD[lastMes]:null;const msPrev=prevYearMes?msD[prevYearMes]:null;
   const msDelta=msLast!=null&&msPrev!=null&&msPrev!==0?((msLast/msPrev-1)*100).toFixed(1):null;
