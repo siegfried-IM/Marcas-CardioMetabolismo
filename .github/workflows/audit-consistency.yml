@@ -1,0 +1,29 @@
+name: Audit Consistencia
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Cada 2 horas
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run audit
+        run: |
+          python shared/audit-full.py
+      - name: Notify on fail
+        if: failure()
+        run: |
+          echo "::error::Audit detecto inconsistencias. Revisar el log."
+          exit 1
