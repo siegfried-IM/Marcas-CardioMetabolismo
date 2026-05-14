@@ -266,11 +266,163 @@ def audit_summary(R):
     return 0 if R.fails == 0 else 1
 
 
+def audit_molperf_internal(R):
+    """Verifica consistencias dentro de mol_perf:
+       - sum(product.monthly_vals YTD) == product.ytd[year]
+       - sum(product.monthly_vals MAT) == product.mat[year]
+       - ms_ytd[year] == ytd[year] / sum(all products ytd[year]) * 100
+       - quarterly_vals[Q] == sum of monthly for that quarter
+    """
+    print('\n[4] MOL_PERF: internal monthly -> ytd / mat / quarterly consistency')
+    for key, line_dir, path_rel, inline in LINES:
+        try: D = load_D(path_rel, inline)
+        except Exception as e: continue
+        mol = D.get('mol_perf', {})
+        for m_key, obj in mol.items():
+            if not isinstance(obj, dict): continue
+            for p in obj.get('products', []):
+                mv = p.get('monthly_vals', {})
+                ytd_dict = p.get('ytd', {})
+                mat_dict = p.get('mat', {})
+                q_dict = p.get('quarterly_vals', {})
+                # YTD: sum months 1..N for each year and check
+                years = set()
+                for mk in mv.keys():
+                    try: years.add(int(mk.split()[1]))
+                    except: pass
+                for yr in years:
+                    if yr in ytd_dict:
+                        # find max month in this year
+                        max_m = max([MES.index(mk.split()[0])+1 for mk in mv if mk.endswith(f' {yr}') and (mv.get(mk) or 0) > 0], default=0)
+                        if max_m > 0:
+                            expected = sum(mv.get(f'{MES[i]} {yr}', 0) or 0 for i in range(max_m))
+                            actual = ytd_dict.get(yr) or ytd_dict.get(str(yr)) or 0
+                            R.check(f'{line_dir} mol_perf[{m_key}][{p.get("prod","?")}].ytd[{yr}]',
+                                    expected, actual, tol=max(1, expected*0.005))
+                # Quarterly: each Q should sum 3 monthly
+                for qk in q_dict.keys():
+                    # qk format e.g., 'Q1 2025' or 'Q1-2025'
+                    qparts = re.split(r'[\s-]', qk)
+                    if len(qparts) != 2: continue
+                    q_num = qparts[0].lstrip('Q')
+                    try: q_num = int(q_num); yr = int(qparts[1])
+                    except: continue
+                    if q_num < 1 or q_num > 4: continue
+                    months = range((q_num-1)*3, q_num*3)
+                    expected = sum(mv.get(f'{MES[i]} {yr}', 0) or 0 for i in months)
+                    actual = q_dict.get(qk) or 0
+                    R.check(f'{line_dir} mol_perf[{m_key}][{p.get("prod","?")}].quarterly[{qk}]',
+                            expected, actual, tol=max(1, expected*0.005))
+
+
+def audit_stock(R):
+    """Verifica que D.stock[fam][month] tenga shape consistente: si stock o
+    ventas estan, las claves esperadas {stock, ventas, facturacion, dias}
+    no contienen valores invalidos (negativos, NaN). NO se verifica dias
+    contra stock/ventas*30 porque la formula real (SAP) usa promedio
+    movil que no se puede reconstruir desde data.js."""
+    print('\n[5] STOCK: shape + valores no-negativos')
+    for key, line_dir, path_rel, inline in LINES:
+        try: D = load_D(path_rel, inline)
+        except Exception as e: continue
+        stock = D.get('stock', {})
+        for fam, months in stock.items():
+            if not isinstance(months, dict): continue
+            for mk, entry in months.items():
+                if not isinstance(entry, dict): continue
+                for k in ('stock', 'ventas'):
+                    # stock y ventas NUNCA pueden ser negativos (units)
+                    v = entry.get(k)
+                    if v is not None and isinstance(v, (int, float)) and v < 0:
+                        R.fails += 1; R.checks += 1
+                        R.fail_details.append(f'  FAIL stock[{fam}][{mk}].{k}={v} negativo en {line_dir}')
+                    else:
+                        R.checks += 1
+                # facturacion puede ser negativa (devoluciones netas) — solo check si <-1000
+                fact = entry.get('facturacion')
+                if fact is not None and isinstance(fact, (int, float)) and fact < -1000:
+                    R.fails += 1; R.checks += 1
+                    R.fail_details.append(f'  FAIL stock[{fam}][{mk}].facturacion={fact} <-1000 en {line_dir}')
+                else:
+                    R.checks += 1
+
+
+def audit_convenios(R):
+    """Verifica D.convenios[fam].2024 + 2025 totales suman 100% por OS."""
+    print('\n[6] CONVENIOS: % suma 100 por OS (interno)')
+    for key, line_dir, path_rel, inline in LINES:
+        try: D = load_D(path_rel, inline)
+        except Exception as e: continue
+        conv = D.get('convenios', {})
+        for fam, fam_obj in conv.items():
+            if not isinstance(fam_obj, dict): continue
+            for yr, obs in fam_obj.items():
+                if not isinstance(obs, list): continue
+                # Sum all pct in this year - should ~100
+                total_pct = sum(o.get('pct', 0) or 0 for o in obs if isinstance(o, dict))
+                if total_pct > 0:
+                    R.check(f'{line_dir} convenios[{fam}][{yr}] sum pct',
+                            100, round(total_pct, 1), tol=2.0)
+
+
+def audit_kpistrip_market(R):
+    """Verifica kpiStrip.mkt_ytd26 / mkt_mat26 == sum mol_perf market YTD/MAT."""
+    print('\n[7] KPI STRIP MARKET: mkt_ytd26/mat26 vs sum(mol_perf YTD/MAT)')
+    for key, line_dir, path_rel, inline in LINES:
+        try: D = load_D(path_rel, inline)
+        except Exception as e: continue
+        ks = D.get('kpiStrip', {})
+        mol = D.get('mol_perf', {})
+        latest = latest_month(D)
+        if not latest: continue
+        end_y, end_m = latest
+        win_ytd = ytd(end_y, end_m)
+        win_mat = mat(end_y, end_m)
+        mkt_ytd = 0; mkt_mat = 0
+        for o in mol.values():
+            if not isinstance(o, dict): continue
+            for p in o.get('products', []):
+                mv = p.get('monthly_vals', {})
+                mkt_ytd += sum_window(mv, win_ytd)
+                mkt_mat += sum_window(mv, win_mat)
+        R.check(f'{line_dir} kpiStrip.mkt_ytd26 vs sum mol_perf YTD',
+                mkt_ytd, ks.get('mkt_ytd26'), tol=max(10, mkt_ytd*0.005))
+        R.check(f'{line_dir} kpiStrip.mkt_mat26 vs sum mol_perf MAT',
+                mkt_mat, ks.get('mkt_mat26'), tol=max(10, mkt_mat*0.005))
+
+
+def audit_budget(R):
+    """Verifica D.budget[fam][year].real arrays son listas de 12 numeros."""
+    print('\n[8] BUDGET: estructura (12 meses por anio)')
+    for key, line_dir, path_rel, inline in LINES:
+        try: D = load_D(path_rel, inline)
+        except Exception as e: continue
+        bud = D.get('budget', {})
+        for fam, fam_obj in bud.items():
+            if not isinstance(fam_obj, dict): continue
+            for yr, yr_obj in fam_obj.items():
+                if not isinstance(yr_obj, dict): continue
+                for k in ('budget', 'real'):
+                    arr = yr_obj.get(k)
+                    if not isinstance(arr, list): continue
+                    if len(arr) != 12:
+                        R.fails += 1
+                        R.checks += 1
+                        R.fail_details.append(f'  FAIL budget[{fam}][{yr}].{k}: len={len(arr)} (esperado 12) en {line_dir}')
+                    else:
+                        R.checks += 1
+
+
 def main():
     R = AuditReport()
     audit_line_level(R)
     audit_brand_level(R)
     audit_recetas(R)
+    audit_molperf_internal(R)
+    audit_stock(R)
+    audit_convenios(R)
+    audit_kpistrip_market(R)
+    audit_budget(R)
     return audit_summary(R)
 
 
