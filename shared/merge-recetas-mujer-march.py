@@ -111,6 +111,7 @@ def main():
 
     rec_ms = D.setdefault('rec_ms', {})
     rec_comp = D.setdefault('rec_comp', {})
+    recetas_top = D.setdefault('recetas', {})
 
     for fam, sie_kw in FAM_SIE_BRAND.items():
         loc = find_droga_for_brand(rows, sie_kw)
@@ -122,24 +123,28 @@ def main():
 
         rms = rec_ms.setdefault(fam, {})
         rms.setdefault('sie', {})[TARGET_MONTH] = sie_rec
+        # Limpiar mkt[Mar 2026] si existía de runs previos
+        if 'mkt' in rms and TARGET_MONTH in rms['mkt']:
+            del rms['mkt'][TARGET_MONTH]
         # Approximación de mkt: mantener la relación Feb 2026 (sie/ms*100).
         # Si no hay Feb ms, usar droga_total como mejor estimación.
         feb_sie = rms.get('sie', {}).get('Feb 2026')
         feb_ms = rms.get('ms', {}).get('Feb 2026')
+        # ms: usar el MS% de Feb 2026 como referencia (asume MS% estable mes-a-mes).
+        # NO setear rec_ms.mkt[Mar 2026] (igual que Feb 2026 que tenía None) para
+        # mantener la consistencia con la estructura existente.
         if feb_sie and feb_ms:
-            # Escalar mkt manteniendo el MS% similar al de Feb
-            mkt_est = round(sie_rec / (feb_ms/100)) if feb_ms > 0 else 0
-            rms.setdefault('mkt', {})[TARGET_MONTH] = mkt_est
-            ms_pct = round(sie_rec/mkt_est*100, 1) if mkt_est > 0 else 0
-            rms.setdefault('ms', {})[TARGET_MONTH] = ms_pct
-            print(f'  {fam}: market={market!r} droga={droga!r}')
-            print(f'    sie={sie_rec}, mkt(est)={mkt_est}, ms={ms_pct}% (approx Feb {feb_ms}%)')
+            rms.setdefault('ms', {})[TARGET_MONTH] = feb_ms
+            print(f'  {fam}: sie={sie_rec}, ms={feb_ms}% (carry from Feb)')
         else:
             mkt_total = droga_total(rows, market, droga)
-            rms.setdefault('mkt', {})[TARGET_MONTH] = mkt_total
             ms_pct = round(sie_rec/mkt_total*100, 1) if mkt_total > 0 else 0
             rms.setdefault('ms', {})[TARGET_MONTH] = ms_pct
-            print(f'  {fam}: sie={sie_rec}, mkt={mkt_total}, ms={ms_pct}%')
+            print(f'  {fam}: sie={sie_rec}, ms={ms_pct}% (computed from droga)')
+
+        # Update D.recetas[fam][Mar 2026] (este es el que usa el CHART de Recetas)
+        rec_fam = recetas_top.setdefault(fam, {})
+        rec_fam[TARGET_MONTH] = {'recetas': sie_rec, 'medicos': 0}
 
         # rec_comp: update existing brands for this fam
         fam_comp = rec_comp.setdefault(fam, {})

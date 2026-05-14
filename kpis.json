@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T10:29:19",
+  "generated_at": "2026-05-14T12:32:17",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -501,7 +501,7 @@
             "prev": 11.1
           },
           "mercado_recetas": {
-            "curr": 246001,
+            "curr": 246022,
             "prev": 235684,
             "ie": 104.4
           },
@@ -536,7 +536,7 @@
             "prev": 11.23
           },
           "mercado_recetas": {
-            "curr": 718116,
+            "curr": 718138,
             "prev": 722406,
             "ie": 99.4
           },
@@ -571,7 +571,7 @@
             "prev": 11.23
           },
           "mercado_recetas": {
-            "curr": 718116,
+            "curr": 718138,
             "prev": 722406,
             "ie": 99.4
           },
@@ -606,7 +606,7 @@
             "prev": 13.99
           },
           "mercado_recetas": {
-            "curr": 1455551,
+            "curr": 1455572,
             "prev": 1072625,
             "ie": 94.7
           },
@@ -641,7 +641,7 @@
             "prev": 16.27
           },
           "mercado_recetas": {
-            "curr": 2940173,
+            "curr": 2940195,
             "prev": 1800440,
             "ie": 90.1
           },
