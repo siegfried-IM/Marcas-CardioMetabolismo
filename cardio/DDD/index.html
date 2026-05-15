@@ -176,6 +176,30 @@ body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-ser
 .nav-tab-ddd{height:34px;align-self:center;padding:0 12px;background:#b01e1e;color:#fff;border-radius:5px;margin:0 6px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;letter-spacing:.02em;}
 .nav-unified .nav-tab-bonos{height:34px;align-self:center;padding:0 12px;background:#86EFAC;color:#166534;border-radius:5px;margin:0 6px 0 0;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;}
 </style>
+<style id="nav-compact-overrides">
+/* Override compacto para que el navbar entre en una sola fila */
+.nav, .nav-unified { padding:0 16px !important; }
+.nav-items, .nav-unified .nav-items {
+  display:flex !important; flex:1 1 auto !important; min-width:0 !important;
+  overflow-x:auto !important; scrollbar-width:none !important;
+}
+.nav-items::-webkit-scrollbar, .nav-unified .nav-items::-webkit-scrollbar { display:none !important; }
+.nav .nav-item, .nav-unified .nav-item {
+  height:48px !important; padding:0 9px !important; font-size:10.5px !important;
+}
+.nav-back, .nav-unified .nav-back { padding:5px 10px !important; margin-right:10px !important; font-size:10px !important; }
+.nav-logo, .nav-unified .nav-logo { margin-right:12px !important; padding:4px 6px !important; }
+.nav-actions {
+  display:flex !important; align-items:center !important; gap:5px !important;
+  margin-left:auto !important; flex-shrink:0 !important; padding-left:8px !important;
+}
+.nav-actions .nav-tab-ddd, .nav-actions .nav-tab-comp, .nav-actions .nav-tab-bonos,
+.nav .nav-tab-ddd, .nav .nav-tab-comp, .nav .nav-tab-bonos,
+.nav-unified .nav-tab-ddd, .nav-unified .nav-tab-comp, .nav-unified .nav-tab-bonos {
+  height:28px !important; padding:0 10px !important; font-size:10.5px !important;
+  margin:0 !important; align-self:center !important;
+}
+</style>
 </head>
 <body>
 
@@ -192,6 +216,8 @@ body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-ser
     <a class="nav-item" href="../index.html#s-can">Mostrador vs Convenios</a>
     <a class="nav-item" href="../index.html#s-conv">Convenios</a>
     <a class="nav-item" href="../index.html#s-prec">Precios</a>
+  </div>
+  <div class="nav-actions">
     <a class="nav-tab-ddd" href="./">DDD</a>
     <a class="nav-tab-comp" href="./competidores.html">Competidores</a>
     <a class="nav-tab-bonos" href="https://bonos-pap.pages.dev/" target="_blank" rel="noopener">Bonos PAP ↗</a>

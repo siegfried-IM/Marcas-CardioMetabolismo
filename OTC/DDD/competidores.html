@@ -99,12 +99,37 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
 .empty{padding:20px;text-align:center;color:var(--mut);font-size:12px;}
 .note{font-size:10px;color:var(--mut);margin-top:8px;font-style:italic;}
 </style>
+<style id="nav-compact-overrides">
+/* Override compacto para que el navbar entre en una sola fila */
+.nav, .nav-unified { padding:0 16px !important; }
+.nav-items, .nav-unified .nav-items {
+  display:flex !important; flex:1 1 auto !important; min-width:0 !important;
+  overflow-x:auto !important; scrollbar-width:none !important;
+}
+.nav-items::-webkit-scrollbar, .nav-unified .nav-items::-webkit-scrollbar { display:none !important; }
+.nav .nav-item, .nav-unified .nav-item {
+  height:48px !important; padding:0 9px !important; font-size:10.5px !important;
+}
+.nav-back, .nav-unified .nav-back { padding:5px 10px !important; margin-right:10px !important; font-size:10px !important; }
+.nav-logo, .nav-unified .nav-logo { margin-right:12px !important; padding:4px 6px !important; }
+.nav-actions {
+  display:flex !important; align-items:center !important; gap:5px !important;
+  margin-left:auto !important; flex-shrink:0 !important; padding-left:8px !important;
+}
+.nav-actions .nav-tab-ddd, .nav-actions .nav-tab-comp, .nav-actions .nav-tab-bonos,
+.nav .nav-tab-ddd, .nav .nav-tab-comp, .nav .nav-tab-bonos,
+.nav-unified .nav-tab-ddd, .nav-unified .nav-tab-comp, .nav-unified .nav-tab-bonos {
+  height:28px !important; padding:0 10px !important; font-size:10.5px !important;
+  margin:0 !important; align-self:center !important;
+}
+</style>
 </head>
 <body>
 <nav class="nav">
   <a class="nav-back" href="../../" title="Volver al hub">← Hub</a>
   <a class="nav-logo" href="../../"><img src="../../assets/siegfried-rojo.png" alt="Siegfried" style="height:24px;width:auto;display:block"/></a>
-  <div class="nav-items"><a class="nav-item" href="../index.html">Resumen</a>
+  <div class="nav-items">
+    <a class="nav-item" href="../index.html">Resumen</a>
     <a class="nav-item" href="../index.html#s-bud">Venta Interna</a>
     <a class="nav-item" href="../index.html#s-perf">Mercado IQVIA</a>
     <a class="nav-item" href="../index.html#s-rec">Recetas</a>
@@ -113,9 +138,11 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
     <a class="nav-item" href="../index.html#s-can">Mostrador vs Convenios</a>
     <a class="nav-item" href="../index.html#s-conv">Convenios</a>
     <a class="nav-item" href="../index.html#s-prec">Precios</a>
+  </div>
+  <div class="nav-actions">
     <a class="nav-tab-ddd" href="./">DDD</a>
-    <a class="nav-tab-comp" href="./competidores.html" style="box-shadow:0 0 0 2px #b01e1e inset;">Competidores</a></div>
-  
+    <a class="nav-tab-comp" href="./competidores.html" style="box-shadow:0 0 0 2px #b01e1e inset;">Competidores</a>
+  </div>
 </nav>
 <div style="max-width:1400px;margin:8px auto 0;padding:0 24px;font-size:9px;color:#6b7280;font-family:'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;" id="cutoff-wrap"><span id="cutoff"></span></div>
 
