@@ -135,7 +135,9 @@ def patch_line(ddd_path, comp_path):
             D.setdefault('markets', {})[mk_name] = new_mkt
             markets_added += 1
 
-    file_p.write_text(prefix + 'const D = ' + json.dumps(D, ensure_ascii=False) + suffix,
+    # Bug-fix: prefix ya termina con "const D = " porque ob apunta a '{', no
+    # antes de la asignacion. Por eso NO agregamos otro "const D = ".
+    file_p.write_text(prefix + json.dumps(D, ensure_ascii=False) + suffix,
                       encoding='utf-8', newline='')
     return f'OK [months={months_count}, markets_updated={markets_updated}, added={markets_added}]'
 

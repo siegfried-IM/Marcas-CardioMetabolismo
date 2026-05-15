@@ -48,7 +48,12 @@ OVERRIDES_CSS = """<style id="nav-compact-overrides">
   height:48px !important; padding:0 9px !important; font-size:10.5px !important;
 }
 .nav-back, .nav-unified .nav-back { padding:5px 10px !important; margin-right:10px !important; font-size:10px !important; }
-.nav-logo, .nav-unified .nav-logo { margin-right:12px !important; padding:4px 6px !important; }
+.nav-logo, .nav-unified .nav-logo {
+  width:auto !important; height:auto !important; background:transparent !important;
+  border-radius:6px !important; overflow:visible !important;
+  margin-right:12px !important; padding:4px 6px !important;
+  display:inline-flex !important; align-items:center !important;
+}
 .nav-actions {
   display:flex !important; align-items:center !important; gap:5px !important;
   margin-left:auto !important; flex-shrink:0 !important; padding-left:8px !important;
@@ -113,9 +118,13 @@ def restructure_nav(t, nav_class):
 
 
 def inject_overrides(t):
-    """Inject <style id="nav-compact-overrides"> before </head>."""
-    if 'id="nav-compact-overrides"' in t:
-        return t, 'already-injected'
+    """Inject (or replace) <style id="nav-compact-overrides"> before </head>."""
+    # Idempotent replace: if block already exists, swap with current OVERRIDES_CSS
+    existing = re.search(r'<style id="nav-compact-overrides">.*?</style>', t, re.DOTALL)
+    if existing:
+        if existing.group(0).strip() == OVERRIDES_CSS.strip():
+            return t, 'already-injected'
+        return t[:existing.start()] + OVERRIDES_CSS + t[existing.end():], 'updated'
     if '</head>' not in t:
         return t, 'no-head'
     return t.replace('</head>', f'{OVERRIDES_CSS}\n</head>', 1), 'injected'
