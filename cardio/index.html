@@ -852,7 +852,11 @@ let bChart=null, bProd=(D.defaults?.brand||Object.keys(D.budget)[0]), bYear='202
 const BUD_PRODS = Object.keys(D.budget);
 
 function renderBudPills(){
-  document.getElementById('bud-pills').innerHTML = BUD_PRODS.map(p=>`
+  const totalPill = `<button class="pill ${'__TOTAL__'===bProd?'on':''}" onclick="setBP('__TOTAL__')"
+      style="${'__TOTAL__'===bProd?'color:#111827;border-color:#111827;font-weight:700;':'font-weight:700;'}">
+      <span class="dot" style="background:#111827"></span>TOTAL LÍNEA
+    </button>`;
+  document.getElementById('bud-pills').innerHTML = totalPill + BUD_PRODS.map(p=>`
     <button class="pill ${p===bProd?'on':''}" onclick="setBP('${p}')"
       style="${p===bProd?`color:${COLORS[p]||'#38bdf8'};border-color:${COLORS[p]||'#38bdf8'}`:''}">
       <span class="dot" style="background:${COLORS[p]||'#555'}"></span>${p}
@@ -866,9 +870,35 @@ function setBP(p){bProd=p;renderBudPills();renderBudget();if(!_filterLock&&PROD_
 function setBY(y){bYear=y;renderBudYr();renderBudget();}
 
 function renderBudget(){
-  const src = D.budget[bProd]?.[bYear]||{};
-  const budget = src.budget||[];
-  let real   = src.real||[];
+  // TOTAL LINEA: aggregate across all families
+  let src, budget, real;
+  if(bProd==='__TOTAL__'){
+    budget = new Array(12).fill(0);
+    real = new Array(12).fill(null);
+    let hasReal = new Array(12).fill(false);
+    Object.keys(D.budget||{}).forEach(fam=>{
+      const fy = (D.budget[fam]||{})[bYear];
+      if(!fy) return;
+      const fb = fy.budget||[];
+      const fr = fy.real||[];
+      for(let i=0;i<12;i++){
+        budget[i] += (+fb[i]||0);
+        const v = fr[i];
+        if(v!=null){
+          if(real[i]==null) real[i] = 0;
+          real[i] += (+v||0);
+          hasReal[i] = true;
+        }
+      }
+    });
+    // Cleanup: if no fam had real for that month, keep null
+    for(let i=0;i<12;i++){ if(!hasReal[i]) real[i] = null; }
+    src = { budget, real };
+  } else {
+    src = D.budget[bProd]?.[bYear]||{};
+    budget = src.budget||[];
+    real   = src.real||[];
+  }
   // 2026: if real is all-null, derive from IQVIA mol_perf
   if(bYear==='2026' && !real.some(v=>v!=null)){
     const iqvArr = getIQVIAReal2026(bProd);
