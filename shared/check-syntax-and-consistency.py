@@ -19,11 +19,17 @@ Se ejecuta automaticamente desde audit-full.py. Tambien se puede correr standalo
 Salida: lista de issues encontrados, exit code 1 si hay alguno.
 """
 from __future__ import annotations
-import re, json, sys
+import re, json, sys, importlib.util
 from pathlib import Path
 import glob
 
 REPO = Path(__file__).resolve().parent.parent
+
+# Load excluded products list
+_excl_spec = importlib.util.spec_from_file_location('excluded', REPO / 'shared' / 'excluded-products.py')
+_excl_mod = importlib.util.module_from_spec(_excl_spec)
+_excl_spec.loader.exec_module(_excl_mod)
+EXCLUDED_UPPER = _excl_mod.EXCLUDED_UPPER
 
 
 def collect_html_files():
@@ -75,6 +81,21 @@ def check_js_syntax(t, label):
             except Exception as e:
                 issues.append(f'{label}: {var_name} parse error: {str(e)[:120]}')
 
+    return issues
+
+
+def check_excluded_products(t, label):
+    """Detect occurrences of products in EXCLUDED_PRODUCTS list."""
+    issues = []
+    # Quick text-based scan (faster than JSON parse for each file)
+    for excl in EXCLUDED_UPPER:
+        if excl in t.upper():
+            # Confirm it's a real key, not just a substring (look for "<excl>" or '<excl>')
+            if re.search(rf'["\']({re.escape(excl)})["\']', t, re.IGNORECASE):
+                issues.append(
+                    f'{label}: EXCLUDED PRODUCT detected: {excl!r}. '
+                    f'Run `py shared/apply-product-exclusions.py` to remove.'
+                )
     return issues
 
 
@@ -168,6 +189,7 @@ def main():
         all_issues += check_js_syntax(t, rel)
         all_issues += check_ddd_hardcoded(t, rel)
         all_issues += check_sku_level_sie(t, rel)
+        all_issues += check_excluded_products(t, rel)
 
     js_files = collect_data_js()
     for f in js_files:
@@ -175,6 +197,13 @@ def main():
         rel = str(Path(f).relative_to(REPO))
         all_issues += check_js_syntax(t, rel)
         all_issues += check_sku_level_sie(t, rel)
+        all_issues += check_excluded_products(t, rel)
+
+    # Also check kpis.json
+    kpis_file = REPO / 'kpis.json'
+    if kpis_file.exists():
+        t = kpis_file.read_text(encoding='utf-8', errors='replace')
+        all_issues += check_excluded_products(t, 'kpis.json')
 
     if not all_issues:
         print(f'[CHECK] OK: {len(html_files)} HTML + {len(js_files)} JS files validados, sin issues.')

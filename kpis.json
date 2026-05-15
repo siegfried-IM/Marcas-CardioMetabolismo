@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T19:57:43",
+  "generated_at": "2026-05-15T20:12:11",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -5696,69 +5696,6 @@
       }
     },
     {
-      "name": "VIXIDONE SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER CORT",
-      "periods": {
-        "mensual": {
-          "rec_curr": 14,
-          "rec_prev": 17,
-          "rec_ie": 82.4,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 44187,
-          "int_prev": 51237,
-          "int_ie": 86.2
-        },
-        "ytd": {
-          "rec_curr": 33,
-          "rec_prev": 54,
-          "rec_ie": 61.1,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 90203,
-          "int_prev": 108481,
-          "int_ie": 83.2
-        },
-        "trimestre": {
-          "rec_curr": 33,
-          "rec_prev": 54,
-          "rec_ie": 61.1,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 90203,
-          "int_prev": 108481,
-          "int_ie": 83.2
-        },
-        "semestre": {
-          "rec_curr": 67,
-          "rec_prev": 54,
-          "rec_ie": 124.1,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 231055,
-          "int_prev": 246065,
-          "int_ie": 93.9
-        },
-        "mat": {
-          "rec_curr": 156,
-          "rec_prev": 54,
-          "rec_ie": 288.9,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 716536,
-          "int_prev": 755159,
-          "int_ie": 94.9
-        }
-      }
-    },
-    {
       "name": "CALCITOL D3 (SIE)",
       "line": "mujer",
       "lineName": "Línea Mujer",
@@ -5881,69 +5818,6 @@
           "int_curr": 6245,
           "int_prev": 3502,
           "int_ie": 178.3
-        }
-      }
-    },
-    {
-      "name": "VIXIDONE LB SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "HEXALER CORT",
-      "periods": {
-        "mensual": {
-          "rec_curr": 0,
-          "rec_prev": 0,
-          "rec_ie": null,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 44187,
-          "int_prev": 51237,
-          "int_ie": 86.2
-        },
-        "ytd": {
-          "rec_curr": 0,
-          "rec_prev": 1,
-          "rec_ie": 0.0,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 90203,
-          "int_prev": 108481,
-          "int_ie": 83.2
-        },
-        "trimestre": {
-          "rec_curr": 0,
-          "rec_prev": 1,
-          "rec_ie": 0.0,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 90203,
-          "int_prev": 108481,
-          "int_ie": 83.2
-        },
-        "semestre": {
-          "rec_curr": 0,
-          "rec_prev": 1,
-          "rec_ie": 0.0,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 231055,
-          "int_prev": 246065,
-          "int_ie": 93.9
-        },
-        "mat": {
-          "rec_curr": 2,
-          "rec_prev": 1,
-          "rec_ie": 200.0,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 716536,
-          "int_prev": 755159,
-          "int_ie": 94.9
         }
       }
     }
