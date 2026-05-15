@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T12:43:50",
+  "generated_at": "2026-05-15T19:57:43",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -2798,6 +2798,69 @@
       }
     },
     {
+      "name": "ISIS (SIE)",
+      "line": "mujer",
+      "lineName": "Línea Mujer",
+      "family": "ALTA DOSIS",
+      "periods": {
+        "mensual": {
+          "rec_curr": 1851,
+          "rec_prev": 1900,
+          "rec_ie": 102.8,
+          "units_curr": 17799,
+          "units_prev": 16118,
+          "units_ie": 113.4,
+          "int_curr": 15982,
+          "int_prev": 13860,
+          "int_ie": 115.3
+        },
+        "ytd": {
+          "rec_curr": 5975,
+          "rec_prev": 6120,
+          "rec_ie": 109.6,
+          "units_curr": 52485,
+          "units_prev": 47711,
+          "units_ie": 113.3,
+          "int_curr": 49390,
+          "int_prev": 45472,
+          "int_ie": 108.6
+        },
+        "trimestre": {
+          "rec_curr": 5975,
+          "rec_prev": 6120,
+          "rec_ie": 109.6,
+          "units_curr": 52485,
+          "units_prev": 47711,
+          "units_ie": 113.3,
+          "int_curr": 49390,
+          "int_prev": 45472,
+          "int_ie": 108.6
+        },
+        "semestre": {
+          "rec_curr": 11682,
+          "rec_prev": 12845,
+          "rec_ie": 108.6,
+          "units_curr": 103182,
+          "units_prev": 95448,
+          "units_ie": 111.8,
+          "int_curr": 95517,
+          "int_prev": 89198,
+          "int_ie": 107.1
+        },
+        "mat": {
+          "rec_curr": 23199,
+          "rec_prev": 26448,
+          "rec_ie": 111.0,
+          "units_curr": 208794,
+          "units_prev": 196957,
+          "units_ie": 109.5,
+          "int_curr": 193754,
+          "int_prev": 182300,
+          "int_ie": 106.3
+        }
+      }
+    },
+    {
       "name": "ROXOLAN (SIE)",
       "line": "cardio",
       "lineName": "CardioMetabólica",
@@ -2920,69 +2983,6 @@
           "int_curr": 210133,
           "int_prev": 198865,
           "int_ie": 105.7
-        }
-      }
-    },
-    {
-      "name": "ISIS TABL RECUBIE 3.00MG x 28 /.03",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "ALTA DOSIS",
-      "periods": {
-        "mensual": {
-          "rec_curr": 1896,
-          "rec_prev": 1770,
-          "rec_ie": 113.1,
-          "units_curr": 16578,
-          "units_prev": 14733,
-          "units_ie": 115.6,
-          "int_curr": 14886,
-          "int_prev": 12909,
-          "int_ie": 115.3
-        },
-        "ytd": {
-          "rec_curr": 5718,
-          "rec_prev": 5681,
-          "rec_ie": 113.0,
-          "units_curr": 48723,
-          "units_prev": 43830,
-          "units_ie": 114.5,
-          "int_curr": 45850,
-          "int_prev": 42213,
-          "int_ie": 108.6
-        },
-        "trimestre": {
-          "rec_curr": 5718,
-          "rec_prev": 5681,
-          "rec_ie": 113.0,
-          "units_curr": 48723,
-          "units_prev": 43830,
-          "units_ie": 114.5,
-          "int_curr": 45850,
-          "int_prev": 42213,
-          "int_ie": 108.6
-        },
-        "semestre": {
-          "rec_curr": 11003,
-          "rec_prev": 11910,
-          "rec_ie": 110.3,
-          "units_curr": 95669,
-          "units_prev": 87190,
-          "units_ie": 113.5,
-          "int_curr": 88562,
-          "int_prev": 82703,
-          "int_ie": 107.1
-        },
-        "mat": {
-          "rec_curr": 21688,
-          "rec_prev": 24530,
-          "rec_ie": 111.8,
-          "units_curr": 193650,
-          "units_prev": 179777,
-          "units_ie": 111.3,
-          "int_curr": 179701,
-          "int_prev": 169078,
-          "int_ie": 106.3
         }
       }
     },
@@ -4940,69 +4940,6 @@
       }
     },
     {
-      "name": "ISIS (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "ALTA DOSIS",
-      "periods": {
-        "mensual": {
-          "rec_curr": 1851,
-          "rec_prev": 1900,
-          "rec_ie": 97.4,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 15982,
-          "int_prev": 13860,
-          "int_ie": 115.3
-        },
-        "ytd": {
-          "rec_curr": 5975,
-          "rec_prev": 6120,
-          "rec_ie": 97.6,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 49390,
-          "int_prev": 45472,
-          "int_ie": 108.6
-        },
-        "trimestre": {
-          "rec_curr": 5975,
-          "rec_prev": 6120,
-          "rec_ie": 97.6,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 49390,
-          "int_prev": 45472,
-          "int_ie": 108.6
-        },
-        "semestre": {
-          "rec_curr": 11682,
-          "rec_prev": 12845,
-          "rec_ie": 90.9,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 95517,
-          "int_prev": 89198,
-          "int_ie": 107.1
-        },
-        "mat": {
-          "rec_curr": 23199,
-          "rec_prev": 26448,
-          "rec_ie": 87.7,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 193754,
-          "int_prev": 182300,
-          "int_ie": 106.3
-        }
-      }
-    },
-    {
       "name": "VISDON (SIE)",
       "line": "snc",
       "lineName": "S.N.C.",
@@ -5566,132 +5503,6 @@
           "int_curr": 4868,
           "int_prev": 3513,
           "int_ie": 138.6
-        }
-      }
-    },
-    {
-      "name": "ISIS TABL RECUBIE 3.00MG x 84 /.03",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "ALTA DOSIS",
-      "periods": {
-        "mensual": {
-          "rec_curr": 86,
-          "rec_prev": 80,
-          "rec_ie": 113.5,
-          "units_curr": 754,
-          "units_prev": 686,
-          "units_ie": 112.9,
-          "int_curr": 677,
-          "int_prev": 587,
-          "int_ie": 115.3
-        },
-        "ytd": {
-          "rec_curr": 263,
-          "rec_prev": 261,
-          "rec_ie": 113.1,
-          "units_curr": 2238,
-          "units_prev": 2061,
-          "units_ie": 111.8,
-          "int_curr": 2106,
-          "int_prev": 1939,
-          "int_ie": 108.6
-        },
-        "trimestre": {
-          "rec_curr": 263,
-          "rec_prev": 261,
-          "rec_ie": 113.1,
-          "units_curr": 2238,
-          "units_prev": 2061,
-          "units_ie": 111.8,
-          "int_curr": 2106,
-          "int_prev": 1939,
-          "int_ie": 108.6
-        },
-        "semestre": {
-          "rec_curr": 524,
-          "rec_prev": 568,
-          "rec_ie": 110.1,
-          "units_curr": 4559,
-          "units_prev": 4113,
-          "units_ie": 114.6,
-          "int_curr": 4220,
-          "int_prev": 3941,
-          "int_ie": 107.1
-        },
-        "mat": {
-          "rec_curr": 978,
-          "rec_prev": 1106,
-          "rec_ie": 111.9,
-          "units_curr": 8735,
-          "units_prev": 8488,
-          "units_ie": 106.3,
-          "int_curr": 8106,
-          "int_prev": 7627,
-          "int_ie": 106.3
-        }
-      }
-    },
-    {
-      "name": "ISIS TABL RECUBIE 3.00MG x 56 /.03",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "ALTA DOSIS",
-      "periods": {
-        "mensual": {
-          "rec_curr": 53,
-          "rec_prev": 50,
-          "rec_ie": 111.9,
-          "units_curr": 467,
-          "units_prev": 699,
-          "units_ie": 68.6,
-          "int_curr": 419,
-          "int_prev": 364,
-          "int_ie": 115.1
-        },
-        "ytd": {
-          "rec_curr": 179,
-          "rec_prev": 178,
-          "rec_ie": 112.9,
-          "units_curr": 1524,
-          "units_prev": 1820,
-          "units_ie": 86.2,
-          "int_curr": 1434,
-          "int_prev": 1320,
-          "int_ie": 108.6
-        },
-        "trimestre": {
-          "rec_curr": 179,
-          "rec_prev": 178,
-          "rec_ie": 112.9,
-          "units_curr": 1524,
-          "units_prev": 1820,
-          "units_ie": 86.2,
-          "int_curr": 1434,
-          "int_prev": 1320,
-          "int_ie": 108.6
-        },
-        "semestre": {
-          "rec_curr": 340,
-          "rec_prev": 368,
-          "rec_ie": 110.3,
-          "units_curr": 2954,
-          "units_prev": 4145,
-          "units_ie": 73.7,
-          "int_curr": 2735,
-          "int_prev": 2554,
-          "int_ie": 107.1
-        },
-        "mat": {
-          "rec_curr": 718,
-          "rec_prev": 812,
-          "rec_ie": 111.9,
-          "units_curr": 6409,
-          "units_prev": 8692,
-          "units_ie": 76.2,
-          "int_curr": 5947,
-          "int_prev": 5596,
-          "int_ie": 106.3
         }
       }
     },

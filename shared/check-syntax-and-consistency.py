@@ -78,6 +78,46 @@ def check_js_syntax(t, label):
     return issues
 
 
+def check_sku_level_sie(t, label):
+    """Detect SKU-level SIE products in mol_perf (should be brand-level)."""
+    issues = []
+    # Look for inline const D or window.OTC_DASHBOARD or window.MUJER_DATA
+    for var_pat in [r'(?:^|\n|\s|;)const D\s*=\s*\{',
+                    r'window\.OTC_DASHBOARD\s*=\s*\{',
+                    r'window\.OTC_DATA\s*=\s*\{']:
+        m = re.search(var_pat, t)
+        if m:
+            ob = t.index('{', m.start())
+            try:
+                D, _ = json.JSONDecoder().raw_decode(t[ob:])
+            except Exception:
+                continue
+            mol = D.get('mol_perf', {})
+            if not isinstance(mol, dict):
+                continue
+            # Patterns indicating SKU-level packaging info
+            sku_indicators = ['TABL ', 'CAPS ', 'COMP ', 'AMP ', 'JBE ',
+                              'CREM ', 'GOTAS ', 'GEL ', 'SUSP ', 'GRAN ',
+                              'SUPP ', 'SPRAY ', 'A.IM', 'POMA ', 'POLV ',
+                              'OVUL ', 'ENJUAGUE ', 'TAB ', 'INH ']
+            for fam, obj in mol.items():
+                if not isinstance(obj, dict):
+                    continue
+                for p in obj.get('products', []):
+                    if not isinstance(p, dict) or not p.get('is_sie'):
+                        continue
+                    nm = (p.get('prod') or '').upper()
+                    has_sku = any(ind in nm for ind in sku_indicators)
+                    has_digit = any(c.isdigit() for c in nm)
+                    if has_sku and has_digit:
+                        issues.append(
+                            f'{label}: SKU-LEVEL SIE in mol_perf[{fam!r}]: {p.get("prod")!r} '
+                            f'(should be brand-level, e.g. "ISIS (SIE)")'
+                        )
+            break
+    return issues
+
+
 def check_ddd_hardcoded(t, label):
     """Detect hardcoded month/quarter indices in DDD JS code."""
     issues = []
@@ -127,12 +167,14 @@ def main():
         rel = str(Path(f).relative_to(REPO))
         all_issues += check_js_syntax(t, rel)
         all_issues += check_ddd_hardcoded(t, rel)
+        all_issues += check_sku_level_sie(t, rel)
 
     js_files = collect_data_js()
     for f in js_files:
         t = Path(f).read_text(encoding='utf-8-sig', errors='replace')
         rel = str(Path(f).relative_to(REPO))
         all_issues += check_js_syntax(t, rel)
+        all_issues += check_sku_level_sie(t, rel)
 
     if not all_issues:
         print(f'[CHECK] OK: {len(html_files)} HTML + {len(js_files)} JS files validados, sin issues.')
