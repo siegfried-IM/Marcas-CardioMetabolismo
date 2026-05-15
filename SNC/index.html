@@ -1558,12 +1558,24 @@ function renderRec(){
   });
 
   const keys2=sortM(Object.keys(data));
-  const j24=data['Jan 2024']||{},j25=data['Jan 2025']||{},d25=data['Dec 2025']||{};
-  const r2425=j24.recetas&&j25.recetas?Math.round((j25.recetas/j24.recetas-1)*100):null;
-  const m2425=j24.medicos&&j25.medicos?Math.round((j25.medicos/j24.medicos-1)*100):null;
+  const lastMes=keys2[keys2.length-1]||null;
+  const prevYearMes=lastMes?(()=>{const[m,y]=lastMes.split(' ');return `${m} ${parseInt(y,10)-1}`;})():null;
+  const prev2YearMes=lastMes?(()=>{const[m,y]=lastMes.split(' ');return `${m} ${parseInt(y,10)-2}`;})():null;
+  const lastData=lastMes?(data[lastMes]||{}):{};
+  const prevData=prevYearMes?(data[prevYearMes]||{}):{};
+  const prev2Data=prev2YearMes?(data[prev2YearMes]||{}):{};
   const msObj=D.rec_ms?.[rProd]||{};const msD=msObj.ms||{};
-  const msLast=msD['Dec 2025'];const msFirst=msD['Jan 2024'];
-  const msDelta=msLast&&msFirst?((msLast/msFirst-1)*100).toFixed(1):null;
+  const msLast=lastMes?msD[lastMes]:null;
+  const msPrev=prevYearMes?msD[prevYearMes]:null;
+  const msPrev2=prev2YearMes?msD[prev2YearMes]:null;
+  const recDelta=(lastData.recetas&&prevData.recetas)?Math.round((lastData.recetas/prevData.recetas-1)*100):null;
+  const msDelta=(msLast!=null&&msPrev!=null)?+(msLast-msPrev).toFixed(2):null;
+  const _monthEs={Jan:'Ene',Feb:'Feb',Mar:'Mar',Apr:'Abr',May:'May',Jun:'Jun',Jul:'Jul',Aug:'Ago',Sep:'Sep',Oct:'Oct',Nov:'Nov',Dec:'Dic'};
+  const _fmtMo=lbl=>{if(!lbl)return '—';const[mon,year]=lbl.split(' ');return `${_monthEs[mon]||mon} ${year.slice(-2)}`;};
+  const prev2Lbl=_fmtMo(prev2YearMes);
+  const prevLbl=_fmtMo(prevYearMes);
+  const lastLbl=_fmtMo(lastMes);
+  const deltaLbl=(prevYearMes&&lastMes)?`Δ ${prevYearMes.split(' ')[1].slice(-2)}→${lastMes.split(' ')[1].slice(-2)}`:'Δ YoY';
   // Totales por anio (SIE y Mercado) a partir de D.recetas y D.rec_comp
   const _compData=D.rec_comp?.[rProd]||{};
   function _sieYearTot(y){
@@ -1578,23 +1590,12 @@ function renderRec(){
     });
     return s||null;
   }
-  function _mktMonth(k){
-    let s=0;Object.values(_compData).forEach(p=>{s+=(p.monthly?.[k]||0);});
-    return s||null;
-  }
   const sieT24=_sieYearTot('2024'), sieT25=_sieYearTot('2025');
   const mktT24=_mktYearTot('2024'), mktT25=_mktYearTot('2025');
   const sieDY=sieT24&&sieT25?Math.round((sieT25/sieT24-1)*100):null;
   const mktDY=mktT24&&mktT25?Math.round((mktT25/mktT24-1)*100):null;
-  const mkt_j25=_mktMonth('Jan 2025'), mkt_d25=_mktMonth('Dec 2025');
-  // Comparativo true side-by-side (no sabana)
   const _fmtN = v => v==null ? '—' : (typeof v==='number' ? v.toLocaleString('es-AR') : v);
-  const _fmtP = v => v==null ? '—' : (typeof v==='number' ? (v>=0?'+':'')+v+'%' : v);
   const _pctCls = v => v==null?'#9ca3af':v>=0?'#16a34a':'#dc2626';
-  const _yoyRec = (j24.recetas&&d25.recetas) ? Math.round((d25.recetas/j24.recetas-1)*100) : null;
-  const _yoyMed = (j25.medicos&&d25.medicos) ? Math.round((d25.medicos/j25.medicos-1)*100) : null;
-  const _yoyMS  = (msFirst&&msLast) ? +(msLast-msFirst).toFixed(2) : null;
-  // Render tables
   const th = (txt) => `<th style="text-align:right;padding:6px 8px;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid #e5e7eb;">${txt}</th>`;
   const thL = (txt) => `<th style="text-align:left;padding:6px 8px;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid #e5e7eb;">${txt}</th>`;
   const tdN = (v) => `<td style="padding:6px 8px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#111827;">${_fmtN(v)}</td>`;
@@ -1607,10 +1608,10 @@ function renderRec(){
   document.getElementById('rec-detail').innerHTML = `
     <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">SIE · Evolución mensual</p>
     <table style="width:100%;border-collapse:collapse;margin-bottom:14px;">
-      <thead><tr>${thL('Métrica')}${th('Ene 24')}${th('Ene 25')}${th('Dic 25')}${th('Δ 24→25')}</tr></thead>
+      <thead><tr>${thL('Métrica')}${th(prev2Lbl)}${th(prevLbl)}${th(lastLbl)}${th(deltaLbl)}</tr></thead>
       <tbody>
-        <tr style="border-bottom:1px solid #f3f4f6;">${tdL('Recetas')}${tdN(j24.recetas)}${tdN(j25.recetas)}${tdN(d25.recetas)}${tdD(_yoyRec,false)}</tr>
-        <tr>${tdL('MS%')}${tdN(msFirst?msFirst.toFixed(2)+'%':null)}${tdN(msD['Jan 2025']?msD['Jan 2025'].toFixed(2)+'%':null)}${tdN(msLast?msLast.toFixed(2)+'%':null)}${tdD(_yoyMS,true)}</tr>
+        <tr style="border-bottom:1px solid #f3f4f6;">${tdL('Recetas')}${tdN(prev2Data.recetas)}${tdN(prevData.recetas)}${tdN(lastData.recetas)}${tdD(recDelta,false)}</tr>
+        <tr>${tdL('MS%')}${tdN(msPrev2!=null?msPrev2.toFixed(2)+'%':null)}${tdN(msPrev!=null?msPrev.toFixed(2)+'%':null)}${tdN(msLast!=null?msLast.toFixed(2)+'%':null)}${tdD(msDelta,true)}</tr>
       </tbody>
     </table>
     <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">SIE vs Mercado · Total Anual</p>
