@@ -57,10 +57,7 @@ NEW_CSS = """.nav-logo{font-family:'IBM Plex Mono',monospace;font-size:11px;font
   letter-spacing:.04em;text-decoration:none;display:inline-flex;align-items:center;
   height:28px;padding:0 10px;border-radius:5px;white-space:nowrap;transition:filter .15s;}
 .nav-actions .nav-tab:hover{filter:brightness(1.08);}
-.nav-ext{font-size:10px;color:#4b5563;text-decoration:none;
-  padding:5px 10px;border:1px solid var(--border);border-radius:5px;
-  white-space:nowrap;transition:all .2s;flex-shrink:0;font-family:'IBM Plex Mono',monospace;font-weight:700;letter-spacing:.04em;}
-.nav-ext:hover{color:#b01e1e;border-color:rgba(176,30,30,.5);}
+.nav-ext{display:none !important;}
 .data-status-badge{margin-left:0 !important;}"""
 
 
