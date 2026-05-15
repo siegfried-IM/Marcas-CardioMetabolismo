@@ -19,11 +19,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Syntax & antipattern check
+        run: |
+          python shared/check-syntax-and-consistency.py
       - name: Run audit
         run: |
           python shared/audit-full.py
       - name: Notify on fail
         if: failure()
         run: |
-          echo "::error::Audit detecto inconsistencias. Revisar el log."
+          echo "::error::Check detecto problemas. Revisar el log."
           exit 1
