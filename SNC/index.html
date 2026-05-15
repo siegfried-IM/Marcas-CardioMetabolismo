@@ -1564,23 +1564,64 @@ function renderRec(){
   const msObj=D.rec_ms?.[rProd]||{};const msD=msObj.ms||{};
   const msLast=msD['Dec 2025'];const msFirst=msD['Jan 2024'];
   const msDelta=msLast&&msFirst?((msLast/msFirst-1)*100).toFixed(1):null;
-  document.getElementById('rec-detail').innerHTML=`
-    <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;">Comparativo</p>
-    ${[
-      ['Recetas Ene 2024',j24.recetas,null],
-      ['Recetas Ene 2025',j25.recetas,r2425],
-      ['Recetas Dic 2025',d25.recetas,null],
-      ['Médicos Ene 2025',j25.medicos,m2425],
-      ['Médicos Dic 2025',d25.medicos,null],
-      ['MS% Dic 2025',msLast?msLast.toFixed(2)+'%':null,msDelta?parseFloat(msDelta):null],
-    ].map(([l,v,delta])=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.05);font-size:11px;">
-      <span style="color:#4b5563">${l}</span>
-      <span style="display:flex;align-items:center;gap:7px;">
-        ${delta!=null?`<span style="font-size:9px;color:${delta>=0?'#16a34a':'#dc2626'}">${delta>=0?'+':''}${delta}%</span>`:''}
-        <span style="font-family:'IBM Plex Mono',monospace;font-weight:700;color:#111827;">${v!=null?v:'—'}</span>
-      </span></div>`).join('')}`;
+  // Totales por anio (SIE y Mercado) a partir de D.recetas y D.rec_comp
+  const _compData=D.rec_comp?.[rProd]||{};
+  function _sieYearTot(y){
+    let s=0;
+    Object.entries(data).forEach(([k,v])=>{if(k.endsWith(' '+y))s+=(v.recetas||0);});
+    return s||null;
+  }
+  function _mktYearTot(y){
+    let s=0;
+    Object.values(_compData).forEach(p=>{
+      Object.entries(p.monthly||{}).forEach(([k,v])=>{if(k.endsWith(' '+y))s+=(v||0);});
+    });
+    return s||null;
+  }
+  function _mktMonth(k){
+    let s=0;Object.values(_compData).forEach(p=>{s+=(p.monthly?.[k]||0);});
+    return s||null;
+  }
+  const sieT24=_sieYearTot('2024'), sieT25=_sieYearTot('2025');
+  const mktT24=_mktYearTot('2024'), mktT25=_mktYearTot('2025');
+  const sieDY=sieT24&&sieT25?Math.round((sieT25/sieT24-1)*100):null;
+  const mktDY=mktT24&&mktT25?Math.round((mktT25/mktT24-1)*100):null;
+  const mkt_j25=_mktMonth('Jan 2025'), mkt_d25=_mktMonth('Dec 2025');
+  // Comparativo true side-by-side (no sabana)
+  const _fmtN = v => v==null ? '—' : (typeof v==='number' ? v.toLocaleString('es-AR') : v);
+  const _fmtP = v => v==null ? '—' : (typeof v==='number' ? (v>=0?'+':'')+v+'%' : v);
+  const _pctCls = v => v==null?'#9ca3af':v>=0?'#16a34a':'#dc2626';
+  const _yoyRec = (j24.recetas&&d25.recetas) ? Math.round((d25.recetas/j24.recetas-1)*100) : null;
+  const _yoyMed = (j25.medicos&&d25.medicos) ? Math.round((d25.medicos/j25.medicos-1)*100) : null;
+  const _yoyMS  = (msFirst&&msLast) ? +(msLast-msFirst).toFixed(2) : null;
+  // Render tables
+  const th = (txt) => `<th style="text-align:right;padding:6px 8px;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid #e5e7eb;">${txt}</th>`;
+  const thL = (txt) => `<th style="text-align:left;padding:6px 8px;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid #e5e7eb;">${txt}</th>`;
+  const tdN = (v) => `<td style="padding:6px 8px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#111827;">${_fmtN(v)}</td>`;
+  const tdL = (v) => `<td style="padding:6px 8px;text-align:left;font-size:11px;color:#4b5563;">${v}</td>`;
+  const tdD = (v, isPP) => {
+    if(v==null) return `<td style="padding:6px 8px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9ca3af;">—</td>`;
+    const txt = isPP ? (v>=0?'+':'')+v.toFixed(2)+' pp' : (v>=0?'+':'')+v+'%';
+    return `<td style="padding:6px 8px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;color:${_pctCls(v)};">${txt}</td>`;
+  };
+  document.getElementById('rec-detail').innerHTML = `
+    <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">SIE · Evolución mensual</p>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:14px;">
+      <thead><tr>${thL('Métrica')}${th('Ene 24')}${th('Ene 25')}${th('Dic 25')}${th('Δ 24→25')}</tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #f3f4f6;">${tdL('Recetas')}${tdN(j24.recetas)}${tdN(j25.recetas)}${tdN(d25.recetas)}${tdD(_yoyRec,false)}</tr>
+        <tr>${tdL('MS%')}${tdN(msFirst?msFirst.toFixed(2)+'%':null)}${tdN(msD['Jan 2025']?msD['Jan 2025'].toFixed(2)+'%':null)}${tdN(msLast?msLast.toFixed(2)+'%':null)}${tdD(_yoyMS,true)}</tr>
+      </tbody>
+    </table>
+    <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">SIE vs Mercado · Total Anual</p>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead><tr>${thL('')}${th('2024')}${th('2025')}${th('Δ YoY')}</tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #f3f4f6;">${tdL('SIE')}${tdN(sieT24)}${tdN(sieT25)}${tdD(sieDY,false)}</tr>
+        <tr>${tdL('Mercado')}${tdN(mktT24)}${tdN(mktT25)}${tdD(mktDY,false)}</tr>
+      </tbody>
+    </table>`;
 }
-
 function round2(v){return Math.round(v*100)/100;}
 
 
