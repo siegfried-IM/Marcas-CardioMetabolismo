@@ -1,0 +1,67 @@
+/* shared/design-tokens.css
+ * Tokens canonicos de diseño para Marcas-CardioMetabolismo.
+ * Inyectado ANTES que microinteractions.css en cada pagina.
+ *
+ * Estos tokens se usan via var(--token) en CSS de cada pagina y como
+ * referencia de canonicidad para nuevos componentes.
+ *
+ * Mantener identidad corporativa Siegfried (rojo + serio).
+ */
+
+:root {
+  /* ─── Paleta canonica ───────────────────────────────────── */
+  --sie-red: #b01e1e;
+  --sie-red-dark: #7a1518;
+  --sie-red-darker: #4a0d0d;
+  --sie-red-light: rgba(176, 30, 30, 0.08);
+  --sie-red-lighter: rgba(176, 30, 30, 0.04);
+
+  /* ─── Acentos semanticos ────────────────────────────────── */
+  --sie-green: #16a34a;
+  --sie-red-neg: #dc2626;       /* para deltas negativos */
+  --sie-yellow: #b45309;
+  --sie-blue: #2563eb;
+  --sie-purple: #7c3aed;
+  --sie-orange: #ea580c;
+  --sie-pink: #db2777;
+
+  /* ─── Grises (texto + fondo) ────────────────────────────── */
+  --sie-ink: #111827;            /* texto principal */
+  --sie-text: #374151;           /* texto secundario */
+  --sie-muted: #6b7280;          /* labels, captions */
+  --sie-dim: #9ca3af;            /* placeholder, disabled */
+  --sie-border: rgba(0, 0, 0, 0.08);
+  --sie-border-strong: rgba(0, 0, 0, 0.13);
+
+  /* ─── Fondos ────────────────────────────────────────────── */
+  --sie-bg: #f4f5f7;             /* body */
+  --sie-bg-card: #ffffff;        /* cards */
+  --sie-bg-soft: #f0f1f3;        /* zonas internas */
+  --sie-bg-strong: #e8e9eb;      /* dividers */
+
+  /* ─── Tipografia ────────────────────────────────────────── */
+  --sie-font-sans: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --sie-font-mono: 'IBM Plex Mono', 'Menlo', 'Monaco', monospace;
+
+  /* ─── Spacing (4px scale) ───────────────────────────────── */
+  --sie-s1: 4px;
+  --sie-s2: 8px;
+  --sie-s3: 12px;
+  --sie-s4: 16px;
+  --sie-s5: 20px;
+  --sie-s6: 24px;
+  --sie-s7: 32px;
+  --sie-s8: 48px;
+
+  /* ─── Border radius ─────────────────────────────────────── */
+  --sie-radius-xs: 4px;
+  --sie-radius-sm: 6px;
+  --sie-radius: 8px;
+  --sie-radius-lg: 12px;
+  --sie-radius-xl: 16px;
+
+  /* ─── Layout ────────────────────────────────────────────── */
+  --sie-max-content: 1400px;
+  --sie-sidebar-w: 280px;
+  --sie-nav-h: 50px;
+}

@@ -1,0 +1,217 @@
+/* shared/responsive.css
+ * Mobile-first responsive improvements para las 21 paginas.
+ * Inyectado junto con design-tokens.css y microinteractions.css.
+ *
+ * Estrategia: usar !important sobriamente para overridear los CSS
+ * inline/embebidos de cada pagina sin tener que tocarlos uno por uno.
+ */
+
+/* ─────────────────────────────────────────────────────────
+ *  Navbar overflow hint — gradient mask en bordes cuando scrollea
+ * ─────────────────────────────────────────────────────────*/
+.nav-items {
+  position: relative;
+  mask-image: linear-gradient(90deg,
+    transparent 0%,
+    #000 16px,
+    #000 calc(100% - 16px),
+    transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg,
+    transparent 0%,
+    #000 16px,
+    #000 calc(100% - 16px),
+    transparent 100%);
+}
+
+/* ─────────────────────────────────────────────────────────
+ *  Tablet (<= 1100px): filter sidebar a static
+ * ─────────────────────────────────────────────────────────*/
+@media (max-width: 1100px) {
+  .wrap {
+    padding-right: 24px !important;
+    padding-left: 24px !important;
+    max-width: 100% !important;
+  }
+  #global-filter-bar {
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    max-height: none !important;
+    margin-bottom: 20px !important;
+    margin-top: 0 !important;
+  }
+  #global-filter-bar .pill-group {
+    max-height: 140px;
+    overflow-y: auto;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+ *  Tablet (<= 920px): grids 1-col + KPI 3-col
+ * ─────────────────────────────────────────────────────────*/
+@media (max-width: 920px) {
+  .g2, .g2-wide {
+    grid-template-columns: 1fr !important;
+  }
+  .kpi-row {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+  }
+  .pg-title {
+    font-size: 24px !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+ *  Mobile (<= 640px)
+ * ─────────────────────────────────────────────────────────*/
+@media (max-width: 640px) {
+  .wrap {
+    padding: 20px 14px 60px 14px !important;
+  }
+  .pg-title {
+    font-size: 20px !important;
+    letter-spacing: -.015em !important;
+  }
+  .pg-sub {
+    font-size: 11px !important;
+    line-height: 1.5;
+  }
+
+  /* KPI grid: 2 cols con mas altura por card */
+  .kpi-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  .kpi {
+    padding: 12px !important;
+  }
+  .kpi-lbl {
+    font-size: 8.5px !important;
+  }
+  .kpi-num {
+    font-size: 18px !important;
+  }
+  .kpi-sub {
+    font-size: 9px !important;
+  }
+
+  /* Sections */
+  .sec {
+    margin-bottom: 36px !important;
+  }
+  .sec-title {
+    font-size: 16px !important;
+  }
+  .sec-sub {
+    font-size: 11px !important;
+  }
+  .card {
+    padding: 14px !important;
+    border-radius: 10px !important;
+  }
+  .card-sm {
+    padding: 12px !important;
+  }
+
+  /* Charts mas chicos */
+  .chart-h280, .chart-h260 {
+    height: 220px !important;
+  }
+  .cw {
+    min-height: 220px;
+  }
+
+  /* Pills y controls — mas separacion para touch */
+  .pill {
+    padding: 7px 12px !important;
+    font-size: 11px !important;
+  }
+  .seg {
+    padding: 7px 10px !important;
+    font-size: 10.5px !important;
+  }
+  .yr-btn, .kt-btn {
+    padding: 6px 10px !important;
+    min-height: 32px;
+  }
+
+  /* Tablas con scroll horizontal */
+  table {
+    font-size: 11px !important;
+  }
+  table th, table td {
+    padding: 6px 8px !important;
+  }
+  .heat-wrap, .hm-wrap, [class*='table-wrap'] {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Filter sidebar full-width */
+  #global-filter-bar {
+    padding: 12px !important;
+    margin-bottom: 16px !important;
+  }
+  #global-filter-bar .pill-group {
+    max-height: 100px !important;
+  }
+
+  /* Nav mas compacto */
+  .nav {
+    padding: 0 12px !important;
+  }
+  .nav-item {
+    padding: 0 7px !important;
+    font-size: 10px !important;
+  }
+  .nav-back {
+    padding: 4px 8px !important;
+    margin-right: 6px !important;
+    font-size: 9.5px !important;
+  }
+  .nav-logo {
+    margin-right: 8px !important;
+  }
+  .nav-actions {
+    gap: 4px !important;
+  }
+  .nav-actions .nav-tab {
+    padding: 0 8px !important;
+    height: 26px !important;
+    font-size: 10px !important;
+  }
+
+  /* Data-status badge oculto en mobile (espacio) */
+  .data-status-badge {
+    display: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+ *  Sticky table headers (consistente en todas las tablas)
+ * ─────────────────────────────────────────────────────────*/
+@media (min-width: 641px) {
+  .hm-wrap table.hm thead th,
+  .heat-wrap table thead th,
+  .card table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+ *  Touch targets minimos (Apple HIG 44pt, WCAG AAA 44px)
+ * ─────────────────────────────────────────────────────────*/
+@media (pointer: coarse) {
+  button, .pill, .seg, .yr-btn, .kt-btn, .nav-item, .nav-tab,
+  .mkt-pill, a.nav-back, a.nav-ext {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+  /* Forzar mas separacion entre items clickeables */
+  .pill-group { gap: 8px !important; }
+}
