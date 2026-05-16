@@ -15,6 +15,11 @@ from __future__ import annotations
 EXCLUDED_PRODUCTS = [
     'VIXIDONE SIE',
     'VIXIDONE LB SIE',
+    'DECADRON AL SIE',
+    'CALCITOL D3 (SIE)',
+    'CALCITOL D3 SIE',
+    'BONVIVA (SIE)',
+    'BONVIVA SIE',
 ]
 
 EXCLUDED_UPPER = set(p.upper() for p in EXCLUDED_PRODUCTS)

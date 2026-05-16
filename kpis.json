@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T20:12:11",
+  "generated_at": "2026-05-15T21:26:26",
   "as_of_month": "Mar 2026",
   "periods": [
     "mensual",
@@ -462,13 +462,13 @@
       "venta_through": "Apr 2026",
       "has_recetas": true,
       "sparkline_units_sie": [
-        272568,
-        277647,
-        253981,
-        301216,
-        249237,
+        272458,
+        277587,
+        253924,
+        301187,
+        249227,
         275464,
-        285197,
+        285196,
         250285,
         277297,
         287789,
@@ -507,8 +507,8 @@
           },
           "units_sie": {
             "curr": 284261,
-            "prev": 242104,
-            "ie": 117.4
+            "prev": 241950,
+            "ie": 117.5
           },
           "ms_units": {
             "curr": 13.26,
@@ -516,7 +516,7 @@
           },
           "mercado_units": {
             "curr": 2144067,
-            "prev": 1956465,
+            "prev": 1956311,
             "ie": 109.6
           },
           "venta_interna": {
@@ -542,16 +542,16 @@
           },
           "units_sie": {
             "curr": 806414,
-            "prev": 731213,
-            "ie": 110.3
+            "prev": 730737,
+            "ie": 110.4
           },
           "ms_units": {
             "curr": 13.26,
-            "prev": 12.67
+            "prev": 12.66
           },
           "mercado_units": {
             "curr": 6083062,
-            "prev": 5770664,
+            "prev": 5770188,
             "ie": 105.4
           },
           "venta_interna": {
@@ -577,16 +577,16 @@
           },
           "units_sie": {
             "curr": 806414,
-            "prev": 731213,
-            "ie": 110.3
+            "prev": 730737,
+            "ie": 110.4
           },
           "ms_units": {
             "curr": 13.26,
-            "prev": 12.67
+            "prev": 12.66
           },
           "mercado_units": {
             "curr": 6083062,
-            "prev": 5770664,
+            "prev": 5770188,
             "ie": 105.4
           },
           "venta_interna": {
@@ -611,17 +611,17 @@
             "ie": 94.7
           },
           "units_sie": {
-            "curr": 1619193,
-            "prev": 1479161,
+            "curr": 1619192,
+            "prev": 1478068,
             "ie": 109.5
           },
           "ms_units": {
             "curr": 12.99,
-            "prev": 12.33
+            "prev": 12.32
           },
           "mercado_units": {
-            "curr": 12461956,
-            "prev": 11999425,
+            "curr": 12461955,
+            "prev": 11998332,
             "ie": 103.9
           },
           "venta_interna": {
@@ -646,17 +646,17 @@
             "ie": 90.1
           },
           "units_sie": {
-            "curr": 3249306,
-            "prev": 3000128,
-            "ie": 108.3
+            "curr": 3249039,
+            "prev": 2997266,
+            "ie": 108.4
           },
           "ms_units": {
             "curr": 12.84,
-            "prev": 12.65
+            "prev": 12.64
           },
           "mercado_units": {
-            "curr": 25300525,
-            "prev": 23719348,
+            "curr": 25300258,
+            "prev": 23716486,
             "ie": 106.7
           },
           "venta_interna": {
@@ -2431,7 +2431,7 @@
           "rec_ie": 99.7,
           "units_curr": 21916,
           "units_prev": 16851,
-          "units_ie": 112.6,
+          "units_ie": 112.5,
           "int_curr": 41406,
           "int_prev": 28077,
           "int_ie": 147.5
@@ -2464,9 +2464,9 @@
           "rec_ie": 113.9,
           "units_curr": 132074,
           "units_prev": 104302,
-          "units_ie": 117.7,
-          "int_curr": 239928,
-          "int_prev": 199329,
+          "units_ie": 117.6,
+          "int_curr": 239930,
+          "int_prev": 199331,
           "int_ie": 120.4
         },
         "mat": {
@@ -2476,8 +2476,8 @@
           "units_curr": 276665,
           "units_prev": 217854,
           "units_ie": 120.7,
-          "int_curr": 501270,
-          "int_prev": 404102,
+          "int_curr": 501754,
+          "int_prev": 404492,
           "int_ie": 124.0
         }
       }
@@ -5629,195 +5629,6 @@
           "int_curr": 1810,
           "int_prev": 0,
           "int_ie": null
-        }
-      }
-    },
-    {
-      "name": "DECADRON AL SIE",
-      "line": "resp",
-      "lineName": "Respiratoria",
-      "family": "DECADRON INY",
-      "periods": {
-        "mensual": {
-          "rec_curr": 169,
-          "rec_prev": 194,
-          "rec_ie": 87.1,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": null,
-          "int_prev": null,
-          "int_ie": null
-        },
-        "ytd": {
-          "rec_curr": 471,
-          "rec_prev": 525,
-          "rec_ie": 89.7,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": null,
-          "int_prev": null,
-          "int_ie": null
-        },
-        "trimestre": {
-          "rec_curr": 471,
-          "rec_prev": 525,
-          "rec_ie": 89.7,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": null,
-          "int_prev": null,
-          "int_ie": null
-        },
-        "semestre": {
-          "rec_curr": 968,
-          "rec_prev": 525,
-          "rec_ie": 184.4,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": null,
-          "int_prev": null,
-          "int_ie": null
-        },
-        "mat": {
-          "rec_curr": 2100,
-          "rec_prev": 525,
-          "rec_ie": 400.0,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": null,
-          "int_prev": null,
-          "int_ie": null
-        }
-      }
-    },
-    {
-      "name": "CALCITOL D3 (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "D3",
-      "periods": {
-        "mensual": {
-          "rec_curr": 8,
-          "rec_prev": 42,
-          "rec_ie": 17.2,
-          "units_curr": 0,
-          "units_prev": 154,
-          "units_ie": 0.0,
-          "int_curr": 0,
-          "int_prev": 0,
-          "int_ie": null
-        },
-        "ytd": {
-          "rec_curr": 20,
-          "rec_prev": 135,
-          "rec_ie": 14.1,
-          "units_curr": 0,
-          "units_prev": 476,
-          "units_ie": 0.0,
-          "int_curr": 0,
-          "int_prev": 0,
-          "int_ie": null
-        },
-        "trimestre": {
-          "rec_curr": 20,
-          "rec_prev": 135,
-          "rec_ie": 14.1,
-          "units_curr": 0,
-          "units_prev": 476,
-          "units_ie": 0.0,
-          "int_curr": 0,
-          "int_prev": 0,
-          "int_ie": null
-        },
-        "semestre": {
-          "rec_curr": 52,
-          "rec_prev": 135,
-          "rec_ie": 17.8,
-          "units_curr": 1,
-          "units_prev": 1093,
-          "units_ie": 0.1,
-          "int_curr": 2,
-          "int_prev": 2,
-          "int_ie": 100.0
-        },
-        "mat": {
-          "rec_curr": 228,
-          "rec_prev": 135,
-          "rec_ie": 38.4,
-          "units_curr": 267,
-          "units_prev": 2862,
-          "units_ie": 8.9,
-          "int_curr": 484,
-          "int_prev": 390,
-          "int_ie": 124.1
-        }
-      }
-    },
-    {
-      "name": "BONVIVA (SIE)",
-      "line": "mujer",
-      "lineName": "Línea Mujer",
-      "family": "DELTROX",
-      "periods": {
-        "mensual": {
-          "rec_curr": 0,
-          "rec_prev": 2,
-          "rec_ie": 0.0,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 223,
-          "int_prev": 335,
-          "int_ie": 66.6
-        },
-        "ytd": {
-          "rec_curr": 0,
-          "rec_prev": 4,
-          "rec_ie": 0.0,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 663,
-          "int_prev": 949,
-          "int_ie": 69.9
-        },
-        "trimestre": {
-          "rec_curr": 0,
-          "rec_prev": 4,
-          "rec_ie": 0.0,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 663,
-          "int_prev": 949,
-          "int_ie": 69.9
-        },
-        "semestre": {
-          "rec_curr": 7,
-          "rec_prev": 12,
-          "rec_ie": 58.3,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 2578,
-          "int_prev": 2025,
-          "int_ie": 127.3
-        },
-        "mat": {
-          "rec_curr": 16,
-          "rec_prev": 28,
-          "rec_ie": 57.1,
-          "units_curr": 0,
-          "units_prev": 0,
-          "units_ie": null,
-          "int_curr": 6245,
-          "int_prev": 3502,
-          "int_ie": 178.3
         }
       }
     }

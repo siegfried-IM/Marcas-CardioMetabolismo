@@ -101,33 +101,88 @@ def scrub_inline_const_D(path):
     n = scrub_mol_perf(D, str(path.relative_to(REPO)))
     n += scrub_rec_comp(D, str(path.relative_to(REPO)))
     n += scrub_ddd_markets(D, str(path.relative_to(REPO)))
+    n += scrub_precios(D, str(path.relative_to(REPO)))
     if n > 0:
         path.write_text(prefix + json.dumps(D, ensure_ascii=False) + suffix,
                         encoding='utf-8', newline='')
     return n
 
 
+def scrub_precios(D, log_prefix):
+    """Remove products from D.precios / D.prec_iqvia (nested structures)."""
+    removed = 0
+
+    # D.precios: dict by family, then nested list of {prod, ...}
+    # Also handles list-style: D.precios = [{prod, ...}, ...]
+    for key in ['precios', 'prec_iqvia']:
+        node = D.get(key)
+        if node is None:
+            continue
+        removed += _scrub_recursive(node, key, log_prefix)
+    return removed
+
+
+def _scrub_recursive(obj, label, log_prefix):
+    """Recursively remove excluded items from any nested structure:
+       - dict keys matching excluded -> deleted
+       - list items with 'prod' field matching excluded -> filtered out
+    """
+    removed = 0
+    if isinstance(obj, dict):
+        keys_to_drop = [k for k in obj if is_excluded(k)]
+        for k in keys_to_drop:
+            del obj[k]
+            removed += 1
+            print(f'    {log_prefix} {label} dict-key removed: {k!r}')
+        # Recurse into remaining values
+        for k, v in list(obj.items()):
+            removed += _scrub_recursive(v, f'{label}.{k}', log_prefix)
+    elif isinstance(obj, list):
+        # Filter out dicts whose 'prod' is excluded
+        to_drop = [i for i, it in enumerate(obj)
+                   if isinstance(it, dict) and is_excluded(it.get('prod'))]
+        for i in reversed(to_drop):
+            print(f'    {log_prefix} {label}[{i}] removed: {obj[i].get("prod")!r}')
+            obj.pop(i)
+            removed += 1
+        # Recurse remaining
+        for it in obj:
+            removed += _scrub_recursive(it, label, log_prefix)
+    return removed
+
+
 def scrub_data_js(path):
-    """Scrub window.OTC_DATA / window.OTC_DASHBOARD / window.MUJER_DATA / window.SFG_COMP_DATA."""
+    """Scrub all known data variables (may have multiple per file)."""
     t = path.read_text(encoding='utf-8-sig', errors='replace')
     total = 0
-    for var_name in ['window.OTC_DASHBOARD', 'window.OTC_DATA', 'window.MUJER_DATA', 'window.SFG_COMP_DATA']:
-        m = re.search(rf'{re.escape(var_name)}\s*=\s*\{{', t)
-        if not m:
-            continue
-        ob = m.end() - 1
-        try:
-            D, end = json.JSONDecoder().raw_decode(t[ob:])
-        except Exception:
-            continue
-        prefix = t[:ob]
-        suffix = t[ob + end:]
-        n = scrub_mol_perf(D, str(path.relative_to(REPO)))
-        n += scrub_rec_comp(D, str(path.relative_to(REPO)))
-        n += scrub_ddd_markets(D, str(path.relative_to(REPO)))
-        if n > 0:
-            t = prefix + json.dumps(D, ensure_ascii=False) + suffix
-            total += n
+    for var_name in ['window.OTC_DASHBOARD', 'window.OTC_DATA',
+                     'window.MUJER_DATA', 'window.MUJER_DASHBOARD',
+                     'window.SFG_COMP_DATA']:
+        # Allow multiple occurrences
+        offset = 0
+        while True:
+            m = re.search(rf'{re.escape(var_name)}\s*=\s*\{{', t[offset:])
+            if not m:
+                break
+            ob = offset + m.end() - 1
+            try:
+                D, end = json.JSONDecoder().raw_decode(t[ob:])
+            except Exception:
+                offset = ob + 1
+                continue
+            prefix = t[:ob]
+            suffix = t[ob + end:]
+            n = scrub_mol_perf(D, str(path.relative_to(REPO)))
+            n += scrub_rec_comp(D, str(path.relative_to(REPO)))
+            n += scrub_ddd_markets(D, str(path.relative_to(REPO)))
+            n += scrub_precios(D, str(path.relative_to(REPO)))
+            if n > 0:
+                t = prefix + json.dumps(D, ensure_ascii=False) + suffix
+                total += n
+                # Recompute offset since text changed
+                offset = ob + len(json.dumps(D, ensure_ascii=False))
+            else:
+                offset = ob + end
     if total > 0:
         path.write_text(t, encoding='utf-8', newline='')
     return total
