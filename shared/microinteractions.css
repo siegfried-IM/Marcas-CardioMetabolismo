@@ -1,0 +1,202 @@
+/* shared/microinteractions.css
+ * Capa de microinteracciones aplicable a las 21 paginas (hub + 7 dashboards +
+ * 7 DDD + 7 competidores + kpis.html). CSS additive, no rompe layout.
+ *
+ * Inyectado via <link rel="stylesheet" href="<relativo>/shared/microinteractions.css">
+ * antes del cierre de </head>.
+ *
+ * Mantener identidad Siegfried (rojo corporativo).
+ */
+
+:root {
+  --sie-red: #b01e1e;
+  --sie-red-dark: #7a1518;
+  --sie-elev-1: 0 1px 2px rgba(0,0,0,.06);
+  --sie-elev-2: 0 4px 12px rgba(176,30,30,.12);
+  --sie-elev-3: 0 8px 24px rgba(176,30,30,.16);
+  --sie-ease: cubic-bezier(.16,1,.3,1);
+  --sie-ease-quick: cubic-bezier(.4,0,.2,1);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  KPI cards — hover elevation
+ * ─────────────────────────────────────────────────────────────*/
+.kpi {
+  transition: transform 200ms var(--sie-ease),
+              box-shadow 200ms var(--sie-ease),
+              border-color 150ms var(--sie-ease-quick) !important;
+}
+.kpi:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sie-elev-2);
+  border-color: rgba(176,30,30,.22);
+}
+
+/* Hub card hover (cards en index.html) */
+a.line-card, .line-card, .lc {
+  transition: transform 220ms var(--sie-ease),
+              box-shadow 220ms var(--sie-ease) !important;
+}
+a.line-card:hover, .line-card:hover, .lc:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sie-elev-3);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Pills (filter), segments, year buttons — transitions + scale
+ * ─────────────────────────────────────────────────────────────*/
+.pill, .seg, .yr-btn, .kt-btn, .seg-ctrl .seg, .mkt-pill {
+  transition: background-color 160ms var(--sie-ease-quick),
+              color 160ms var(--sie-ease-quick),
+              border-color 160ms var(--sie-ease-quick),
+              transform 100ms var(--sie-ease-quick),
+              box-shadow 160ms var(--sie-ease-quick) !important;
+}
+.pill:active, .seg:active, .yr-btn:active, .kt-btn:active,
+.seg-ctrl .seg:active, .mkt-pill:active {
+  transform: scale(.96);
+}
+.pill:hover:not(.on), .seg:hover:not(.on), .yr-btn:hover:not(.on),
+.kt-btn:hover:not(.on), .mkt-pill:hover:not(.on) {
+  background-color: rgba(176,30,30,.06);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Nav items — underline slide animation
+ * ─────────────────────────────────────────────────────────────*/
+.nav-item {
+  position: relative;
+}
+.nav-item::after {
+  content: '';
+  position: absolute;
+  left: 9px; right: 9px; bottom: 0;
+  height: 2px;
+  background: var(--sie-red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 220ms var(--sie-ease);
+  pointer-events: none;
+}
+.nav-item:hover::after { transform: scaleX(.6); }
+.nav-item.on::after { transform: scaleX(1); }
+/* Hide the original border-bottom approach to avoid double underlines */
+.nav-item.on { border-bottom-color: transparent !important; }
+
+/* Nav-tab pills (Precios/DDD/Competidores/Bonos) — subtle hover */
+.nav-actions .nav-tab,
+.nav-tab-ddd, .nav-tab-comp, .nav-tab-bonos {
+  transition: filter 160ms var(--sie-ease-quick),
+              transform 100ms var(--sie-ease-quick) !important;
+}
+.nav-actions .nav-tab:hover,
+.nav-tab-ddd:hover, .nav-tab-comp:hover, .nav-tab-bonos:hover {
+  filter: brightness(1.1);
+}
+.nav-actions .nav-tab:active,
+.nav-tab-ddd:active, .nav-tab-comp:active, .nav-tab-bonos:active {
+  transform: scale(.97);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Focus visible — keyboard navigation
+ * ─────────────────────────────────────────────────────────────*/
+*:focus-visible {
+  outline: 2px solid var(--sie-red) !important;
+  outline-offset: 2px !important;
+  border-radius: 4px;
+}
+button:focus-visible, a:focus-visible {
+  outline-offset: 3px !important;
+}
+/* Inputs and selects can use box-shadow ring instead */
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(176,30,30,.20) !important;
+  border-color: var(--sie-red) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Cards / sections — subtle entrance
+ * ─────────────────────────────────────────────────────────────*/
+.sec, .card, .cd {
+  animation: sie-fade-in 320ms var(--sie-ease) both;
+}
+@keyframes sie-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* Stagger por seccion (selectores top-level dentro de .wrap) */
+.wrap > .sec:nth-child(1) { animation-delay: 0ms; }
+.wrap > .sec:nth-child(2) { animation-delay: 40ms; }
+.wrap > .sec:nth-child(3) { animation-delay: 80ms; }
+.wrap > .sec:nth-child(4) { animation-delay: 120ms; }
+.wrap > .sec:nth-child(5) { animation-delay: 160ms; }
+.wrap > .sec:nth-child(6) { animation-delay: 200ms; }
+.wrap > .sec:nth-child(n+7) { animation-delay: 240ms; }
+
+/* Respeto reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Table rows — hover hint
+ * ─────────────────────────────────────────────────────────────*/
+table.rt2 tbody tr,
+table.ct2 tbody tr,
+table.hm tbody tr {
+  transition: background-color 120ms var(--sie-ease-quick);
+}
+table.rt2 tbody tr:hover,
+table.ct2 tbody tr:hover {
+  background-color: rgba(176,30,30,.04) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Chart container — fade-in when loaded
+ * ─────────────────────────────────────────────────────────────*/
+.chart-h280, .chart-h260, .cw {
+  transition: opacity 280ms var(--sie-ease);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ *  Toast container (usado por shared/ux-shared.js si lo agregamos)
+ * ─────────────────────────────────────────────────────────────*/
+#sie-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.sie-toast {
+  background: #111827;
+  color: #fff;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 10px 14px;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  border-left: 3px solid var(--sie-red);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: sie-toast-in 220ms var(--sie-ease) forwards;
+}
+.sie-toast.out {
+  animation: sie-toast-out 180ms var(--sie-ease-quick) forwards;
+}
+@keyframes sie-toast-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes sie-toast-out {
+  to { opacity: 0; transform: translateY(8px); }
+}
