@@ -47,6 +47,7 @@ TARGETS = [
 SHARED_CSS = [
     'shared/design-tokens.css',
     'shared/microinteractions.css',
+    'shared/responsive.css',
 ]
 SHARED_JS = [
     'shared/ux-shared.js',
