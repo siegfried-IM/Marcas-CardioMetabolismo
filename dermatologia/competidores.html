@@ -98,6 +98,17 @@ table.hm thead th[colspan="2"]{border-right:2px solid #d4d4d4;}
 table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important;}
 .empty{padding:20px;text-align:center;color:var(--mut);font-size:12px;}
 .note{font-size:10px;color:var(--mut);margin-top:8px;font-style:italic;}
+/* Total País row + click-to-filter province feedback */
+table.hm tbody tr.row-total-pais th,
+table.hm tbody tr.row-total-pais td{position:sticky;border-top:2px solid #b01e1e;border-bottom:1px solid #1f2937;}
+table.hm tbody tr.row-total-pais th{background:#1f2937 !important;color:#fff !important;font-weight:700;letter-spacing:.04em;}
+table.hm tbody tr[data-prov]{cursor:pointer;transition:background .15s;}
+table.hm tbody tr[data-prov]:hover th{background:rgba(176,30,30,.08) !important;}
+table.hm tbody tr.row-active th{background:#fef2f2 !important;color:#b01e1e !important;border-left:3px solid #b01e1e !important;font-weight:700;}
+table.hm tbody tr.row-active td{box-shadow:inset 0 0 0 9999px rgba(176,30,30,.04);}
+table.hm td.sub-ie{font-family:'IBM Plex Mono',monospace;font-size:9px;text-align:center;}
+table.hm thead tr:first-child th[colspan="3"]{border-right:2px solid #d4d4d4;}
+table.hm td.sub-ie:not(:last-child){border-right:2px solid #d4d4d4 !important;}
 </style>
 <style id="nav-compact-overrides">
 /* Override compacto para que el navbar entre en una sola fila */
@@ -198,7 +209,7 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
     <div class="tbl-title"><span>Por Provincia <span id="prov-period" style="font-weight:400;color:#6b7280;font-family:IBM Plex Mono,monospace;font-size:9px;letter-spacing:.04em;text-transform:none;margin-left:6px;"></span></span><span class="meta" id="prov-meta"></span></div>
     <div class="hm-wrap"><table class="hm" id="hm-prov"><thead></thead><tbody></tbody></table></div>
 
-    <div class="tbl-title" style="margin-top:18px;"><span>Por Región CUP (zonas IQVIA detalladas) <span id="cup-period" style="font-weight:400;color:#6b7280;font-family:IBM Plex Mono,monospace;font-size:9px;letter-spacing:.04em;text-transform:none;margin-left:6px;"></span></span><span class="meta" id="cup-meta"></span></div>
+    <div class="tbl-title" style="margin-top:18px;"><span>Por Región <span id="cup-period" style="font-weight:400;color:#6b7280;font-family:IBM Plex Mono,monospace;font-size:9px;letter-spacing:.04em;text-transform:none;margin-left:6px;"></span> <button id="btn-clear-prov-filter" type="button" style="display:none;margin-left:10px;padding:4px 10px;font-size:10px;font-weight:600;color:#b01e1e;background:#fff;border:1px solid #b01e1e;border-radius:5px;cursor:pointer;font-family:IBM Plex Sans,sans-serif;">✕ Limpiar filtro</button></span><span class="meta" id="cup-meta"></span></div>
     <div class="hm-wrap"><table class="hm" id="hm-cup"><thead></thead><tbody></tbody></table></div>
 
     <p class="note" id="note"></p>
@@ -253,6 +264,7 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
   let HEAT_PRESET = 'top10';
   let HEAT_SEARCH = '';
   let HEAT_MARKET = null;
+  let PROV_FILTER = null;  // provincia activa para filtrar la tabla Region (click)
   const VIS_BY_MKT = {};  // market -> Set<brand> when in custom mode
 
   // === CUP zone → Provincia mapping ===================================
@@ -408,13 +420,51 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
           if (ms_a!==null && ms_p!==null) dms = ms_a-ms_p;
           if (u_p>0) du = (u_a-u_p)/u_p*100;
         }
-        cells[b][r] = {u_act:u_a, u_prev:u_p, mkt_act:mkt_a, mkt_prev:mkt_p, ms_act:ms_a, ms_prev:ms_p, dms, du};
+        // IE vs mercado (base 100): (brand_growth / market_growth) × 100
+        let ie = null;
+        if (u_p > 0 && mkt_a > 0 && mkt_p > 0) {
+          const bg = u_a / u_p;
+          const mg = mkt_a / mkt_p;
+          if (mg > 0) ie = (bg / mg) * 100;
+          if (ie !== null && ie > 999) ie = 999;
+        }
+        cells[b][r] = {u_act:u_a, u_prev:u_p, mkt_act:mkt_a, mkt_prev:mkt_p, ms_act:ms_a, ms_prev:ms_p, dms, du, ie};
         if (ms_a!==null && ms_a>max_ms) max_ms = ms_a;
         if (dms!==null && Math.abs(dms)>max_abs_dms) max_abs_dms = Math.abs(dms);
         if (du!==null && Math.abs(du)>max_abs_du) max_abs_du = Math.abs(du);
       }
     }
     return {rows, cols, cells, max_ms, max_abs_dms, max_abs_du};
+  }
+
+  // Compute country (Total País) aggregates from a grid
+  function computeCountryRow(grid){
+    const countryCells = {};
+    for (const row of grid.rows){
+      const b = row.brand;
+      let u_a_c=0, u_p_c=0, mkt_a_c=0, mkt_p_c=0;
+      let havePrev = false;
+      for (const r of grid.cols){
+        const c = grid.cells[b][r];
+        u_a_c += Number(c.u_act||0);
+        mkt_a_c += Number(c.mkt_act||0);
+        if (c.u_prev !== null && c.u_prev !== undefined){ u_p_c += Number(c.u_prev||0); havePrev = true; }
+        if (c.mkt_prev !== null && c.mkt_prev !== undefined) mkt_p_c += Number(c.mkt_prev||0);
+      }
+      const ms_a_c = mkt_a_c>0 ? u_a_c/mkt_a_c*100 : null;
+      const ms_p_c = (havePrev && mkt_p_c>0) ? u_p_c/mkt_p_c*100 : null;
+      const dms_c = (ms_a_c!==null && ms_p_c!==null) ? ms_a_c-ms_p_c : null;
+      const du_c = (havePrev && u_p_c>0) ? (u_a_c-u_p_c)/u_p_c*100 : null;
+      let ie_c = null;
+      if (havePrev && u_p_c>0 && mkt_a_c>0 && mkt_p_c>0){
+        const bg = u_a_c/u_p_c, mg = mkt_a_c/mkt_p_c;
+        if (mg>0) ie_c = (bg/mg)*100;
+        if (ie_c !== null && ie_c > 999) ie_c = 999;
+      }
+      countryCells[b] = {u_act:u_a_c, u_prev:havePrev?u_p_c:null, mkt_act:mkt_a_c, mkt_prev:havePrev?mkt_p_c:null,
+                        ms_act:ms_a_c, ms_prev:ms_p_c, dms:dms_c, du:du_c, ie:ie_c};
+    }
+    return countryCells;
   }
 
   // === Shape-B helpers ===
@@ -475,6 +525,25 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
       return {bg:`rgb(${r},${g},${b})`, fg: tt>0.3?'#fff':'#000'};
     }
   }
+  // Color para IE: anchored at 100 (base), ±50 saturates
+  function colorIE(v){
+    if (v==null) return {bg:'#fff', fg:'#9ca3af'};
+    const diff = v - 100;
+    const t = Math.max(-1, Math.min(1, diff/50));
+    if (t>=0){
+      const r = Math.round(255+(22-255)*t);
+      const g = Math.round(255+(163-255)*t);
+      const b = Math.round(255+(74-255)*t);
+      return {bg:`rgb(${r},${g},${b})`, fg: t>0.3?'#fff':'#000'};
+    } else {
+      const tt = -t;
+      const r = Math.round(255+(220-255)*tt);
+      const g = Math.round(255+(38-255)*tt);
+      const b = Math.round(255+(38-255)*tt);
+      return {bg:`rgb(${r},${g},${b})`, fg: tt>0.3?'#fff':'#000'};
+    }
+  }
+  function fmtIE(v){ return v==null ? '—' : Math.round(v).toString(); }
   function fmtCellMetric(cell, max){
     if (HEAT_METRIC==='ms'){
       if (cell.ms_act==null) return {txt:'—', bg:'#fff', fg:'#9ca3af'};
@@ -495,7 +564,10 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
   }
 
   // === Render Shape A table (TRANSPOSED: regions=rows, competitors=cols) ===
-  function renderTableA(tableId, regions, market, period, visibleSet){
+  // opts.totalRow=true agrega fila "Total País" al inicio.
+  // opts.clickable=true hace las filas clickeables para filtrar la tabla CUP.
+  function renderTableA(tableId, regions, market, period, visibleSet, opts){
+    opts = opts || {};
     const tbl = document.getElementById(tableId);
     const thead = tbl.querySelector('thead'); const tbody = tbl.querySelector('tbody');
     if (!regions.length){ thead.innerHTML=''; tbody.innerHTML='<tr><td class="empty">Sin regiones.</td></tr>'; return; }
@@ -503,8 +575,7 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
     if (!grid || !grid.rows.length){ thead.innerHTML=''; tbody.innerHTML='<tr><td class="empty">Sin datos visibles. Activá competidores en el filtro.</td></tr>'; return; }
     const max = {ms: Math.max(grid.max_ms,1), dms: Math.max(grid.max_abs_dms, 0.1), du: Math.max(grid.max_abs_du, 1)};
     const cleanReg = r => r.startsWith('_') ? r.slice(1) : r;
-    // Header con DOS filas: competidor (colspan=2) y abajo sub-headers metric | Unidades
-    // Las sub-headers incluyen el periodo activo y, si es Δ, el comparador
+    // Header con DOS filas: competidor (colspan=3) y abajo sub-headers metric | Unidades | IE
     const pLab = period.label || '';
     const ppLab = period.prevLabel || '';
     let metricLabel;
@@ -512,51 +583,78 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
     else if (HEAT_METRIC==='dms') metricLabel = 'VAR MS%';
     else                          metricLabel = 'VAR UNIDADES%';
     const unitsLabel = 'Unidades';
+    const ieLabel = 'IE';
     let h = '<tr><th rowspan="2">Región / Provincia</th>';
     for (const row of grid.rows){
       const cls = row.isSie ? 'sie sie-col' : '';
-      h += `<th class="${cls}" colspan="2" title="${row.brand}" style="border-bottom:1px solid rgba(255,255,255,.15)">${row.isSie?'★ ':''}${row.brand}</th>`;
+      h += `<th class="${cls}" colspan="3" title="${row.brand}" style="border-bottom:1px solid rgba(255,255,255,.15)">${row.isSie?'★ ':''}${row.brand}</th>`;
     }
     h += '</tr><tr>';
     for (const row of grid.rows){
       const cls = row.isSie ? 'sie sie-col sub' : 'sub';
       h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.9;letter-spacing:.02em;white-space:nowrap;" title="${metricLabel}">${metricLabel}</th>`;
       h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.9;letter-spacing:.02em;white-space:nowrap;" title="${unitsLabel}">${unitsLabel}</th>`;
+      h += `<th class="${cls}" style="font-size:8px;font-weight:600;opacity:.9;letter-spacing:.02em;white-space:nowrap;" title="IE vs mercado (base 100)">${ieLabel}</th>`;
     }
     h += '</tr>';
     thead.innerHTML = h;
-    // Body: una fila por región, dos celdas por competidor (MS% colored + Units plain)
     function fmtUnits(u){
       if (u==null) return '—';
       if (u >= 1e6) return (u/1e6).toFixed(1)+'M';
       if (u >= 1e3) return (u/1e3).toFixed(1)+'k';
       return u.toLocaleString('es-AR');
     }
-    let b = '';
-    for (const r of grid.cols){
-      b += `<tr><th title="${r}">${cleanReg(r)}</th>`;
-      for (const row of grid.rows){
-        const cell = grid.cells[row.brand][r];
+    // Helper: render una fila (label + N celdas)
+    function renderRow(label, labelTitle, cellsByBrand, opts2){
+      opts2 = opts2 || {};
+      const dataAttr = opts2.dataProv ? ` data-prov="${String(opts2.dataProv).replace(/"/g,'&quot;')}"` : '';
+      const trStyle = opts2.isTotal
+        ? ' style="background:#1f2937;color:#fff;font-weight:700;"'
+        : (opts2.clickable ? ' style="cursor:pointer;"' : '');
+      const trCls = opts2.isTotal ? ' class="row-total-pais"' : (opts2.isActive ? ' class="row-active"' : '');
+      let row = `<tr${trCls}${trStyle}${dataAttr}>`;
+      const thStyle = opts2.isTotal
+        ? ' style="background:#1f2937!important;color:#fff!important;letter-spacing:.04em;text-transform:uppercase;font-size:10px;"'
+        : '';
+      row += `<th title="${labelTitle||label}"${thStyle}>${label}</th>`;
+      for (const r of grid.rows){
+        const cell = cellsByBrand[r.brand]; if (!cell){ row += '<td>—</td><td>—</td><td>—</td>'; continue; }
         const f = fmtCellMetric(cell, max);
-        const tt = [`${row.brand} · ${r}`];
-        tt.push(`Período: ${period.label}`);
+        const tt = [`${r.brand} · ${label}`, `Período: ${period.label}`];
         if (cell.ms_act!=null) tt.push(`MS%: ${cell.ms_act.toFixed(2)}%`);
-        if (cell.dms!=null) tt.push(`Δ MS%: ${(cell.dms>=0?'+':'')+cell.dms.toFixed(2)} pp (vs ${period.prevLabel||'—'})`);
-        if (cell.du!=null) tt.push(`Δ U: ${(cell.du>=0?'+':'')+cell.du.toFixed(1)}% (vs ${period.prevLabel||'—'})`);
-        tt.push(`Unidades: ${cell.u_act.toLocaleString('es-AR')}`);
+        if (cell.dms!=null) tt.push(`Δ MS%: ${(cell.dms>=0?'+':'')+cell.dms.toFixed(2)} pp`);
+        if (cell.du!=null) tt.push(`Δ U: ${(cell.du>=0?'+':'')+cell.du.toFixed(1)}%`);
+        if (cell.ie!=null) tt.push(`IE: ${Math.round(cell.ie)} (base 100 vs mercado)`);
+        tt.push(`Unidades: ${(cell.u_act||0).toLocaleString('es-AR')}`);
         if (cell.mkt_act > 0){
           const perPct = cell.mkt_act / 100;
-          tt.push(`1% MS% = ${Math.round(perPct).toLocaleString('es-AR')} u. (mercado total: ${cell.mkt_act.toLocaleString('es-AR')})`);
+          tt.push(`1% MS% = ${Math.round(perPct).toLocaleString('es-AR')} u.`);
         }
-        const tdCls = row.isSie ? 'sie-col' : '';
+        const tdCls = r.isSie ? 'sie-col' : '';
         const ttStr = tt.join('\n');
-        // Sub-col 1: metric (con heat color)
-        b += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${ttStr}">${f.txt}</td>`;
-        // Sub-col 2: unidades (neutro)
-        const uStr = fmtUnits(cell.u_act);
-        b += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${ttStr}">${uStr}</td>`;
+        // Sub-col 1: metric (heat color)
+        row += `<td class="${tdCls} sub-metric" style="background:${f.bg};color:${f.fg}" title="${ttStr}">${f.txt}</td>`;
+        // Sub-col 2: unidades
+        row += `<td class="${tdCls} sub-units" style="color:#525252;background:#fafafa;font-weight:500;" title="${ttStr}">${fmtUnits(cell.u_act)}</td>`;
+        // Sub-col 3: IE
+        const ieCol = colorIE(cell.ie);
+        row += `<td class="${tdCls} sub-ie" style="background:${ieCol.bg};color:${ieCol.fg};font-weight:600;" title="${ttStr}">${fmtIE(cell.ie)}</td>`;
       }
-      b += '</tr>';
+      row += '</tr>';
+      return row;
+    }
+    let b = '';
+    // Total País row (solo si opts.totalRow)
+    if (opts.totalRow){
+      const countryCells = computeCountryRow(grid);
+      b += renderRow('TOTAL PAÍS', 'Suma agregada de todas las provincias', countryCells, {isTotal:true});
+    }
+    // Filas por región/provincia
+    for (const r of grid.cols){
+      const isActive = opts.activeProv && cleanReg(r) === opts.activeProv;
+      const cellsByBrand = {};
+      for (const row of grid.rows){ cellsByBrand[row.brand] = grid.cells[row.brand][r]; }
+      b += renderRow(cleanReg(r), r, cellsByBrand, {clickable: !!opts.clickable, dataProv: opts.clickable ? cleanReg(r) : null, isActive});
     }
     tbody.innerHTML = b;
   }
@@ -864,14 +962,21 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
       const allRanked = rankedBrandsA(HEAT_MARKET, allRegs, period);
       const visibleSet = getVisibleSet(HEAT_MARKET, allRanked);
       renderPills(HEAT_MARKET, allRanked, visibleSet);
-      // Province table: aggregated view
+      // Province table: aggregated view + Total País + clickable rows
       withProvinceView(HEAT_MARKET, () => {
         const provView = MKTS[PROV_MKT_KEY];
         const provNames = Object.keys(provView.total_monthly);
-        renderTableA('hm-prov', provNames, PROV_MKT_KEY, period, visibleSet);
+        renderTableA('hm-prov', provNames, PROV_MKT_KEY, period, visibleSet,
+                     {totalRow:true, clickable:true, activeProv: PROV_FILTER});
       });
-      // CUP/Region table: raw zones
-      renderTableA('hm-cup', cupRegs, HEAT_MARKET, period, visibleSet);
+      // CUP/Region table: raw zones, filtered by selected province if any
+      const cupRegsFiltered = PROV_FILTER
+        ? cupRegs.filter(r => regionToProvince(r) === PROV_FILTER)
+        : cupRegs;
+      renderTableA('hm-cup', cupRegsFiltered, HEAT_MARKET, period, visibleSet);
+      // Mostrar/ocultar boton de limpiar filtro
+      const clrBtn = document.getElementById('btn-clear-prov-filter');
+      if (clrBtn) clrBtn.style.display = PROV_FILTER ? 'inline-block' : 'none';
     } else {
       document.getElementById('comp-pills').innerHTML = '<span class="empty">Data DDD de esta línea no expone competidores individuales — mostrando SIE vs Mercado Total.</span>';
       document.getElementById('comp-meta').textContent = '';
@@ -903,7 +1008,15 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
       const aggC = aggregateBByProvince(HEAT_MARKET, period.curr);
       document.getElementById('prov-meta').textContent = `${Object.keys(aggC).filter(p=>aggC[p].total>0).length} provincias`; document.getElementById('prov-period').textContent = periodInfo;
     }
-    document.getElementById('cup-meta').textContent = `${cupRegs.length} zonas CUP`; document.getElementById('cup-period').textContent = periodInfo;
+    if (PROV_FILTER){
+      const filteredCount = (SHAPE==='A')
+        ? cupRegs.filter(r => regionToProvince(r) === PROV_FILTER).length
+        : (function(){ const aggC = aggregateB(HEAT_MARKET, period.curr); return Object.keys(aggC).filter(r => regionToProvince(r) === PROV_FILTER && aggC[r].total>0).length; })();
+      document.getElementById('cup-meta').textContent = `${filteredCount} zonas · filtrado: ${PROV_FILTER}`;
+    } else {
+      document.getElementById('cup-meta').textContent = `${cupRegs.length} zonas`;
+    }
+    document.getElementById('cup-period').textContent = periodInfo;
   }
 
   function renderMktGrid(){
@@ -916,8 +1029,26 @@ table.hm td.sub-units:not(:last-child){border-right:2px solid #d4d4d4 !important
   // === Wire up controls (event delegation for pills) ===
   document.addEventListener('click', (e)=>{
     const t = e.target;
+    // Click en boton de limpiar filtro de provincia
+    if (t && t.id === 'btn-clear-prov-filter'){
+      PROV_FILTER = null;
+      render();
+      return;
+    }
+    // Click en fila de la tabla Provincia (no en TOTAL PAÍS)
+    const provRow = t && t.closest && t.closest('#hm-prov tbody tr[data-prov]');
+    if (provRow){
+      const newProv = provRow.dataset.prov;
+      PROV_FILTER = (PROV_FILTER === newProv) ? null : newProv;
+      render();
+      // Scroll suave a la tabla CUP
+      const cupTitle = document.getElementById('cup-period');
+      if (cupTitle && PROV_FILTER) cupTitle.closest('.tbl-title').scrollIntoView({behavior:'smooth', block:'start'});
+      return;
+    }
     if (t.matches && t.matches('.mkt-pill')){
       HEAT_MARKET = t.dataset.mkt;
+      PROV_FILTER = null;  // limpiar filtro al cambiar mercado
       document.querySelectorAll('.mkt-pill').forEach(b=>b.classList.toggle('on', b===t));
       render();
     } else if (t.closest && t.closest('#ctl-period')){
