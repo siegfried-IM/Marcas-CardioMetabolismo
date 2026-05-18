@@ -1098,26 +1098,121 @@ table.hm td.sub-ie:not(:last-child){border-right:2px solid #d4d4d4 !important;}
   });
 
   // === Export to Excel =================================================
-  function tableToAoA(tableId){
+  // Parsea texto de celda a {value, fmt} con tipo correcto para Excel.
+  function parseValueForExcel(txt){
+    if (txt == null) return {value:null, fmt:null};
+    const s = String(txt).trim();
+    if (!s || s === '—' || s === '-') return {value:null, fmt:null};
+    // Porcentaje (ej. "65.7%", "+2.5%")
+    let m = s.match(/^([+\-]?\d+(?:[.,]\d+)?)%$/);
+    if (m) return {value: parseFloat(m[1].replace(',', '.'))/100, fmt:'0.0%'};
+    // Sufijo k/M (ej. "346.5k", "1.2M")
+    m = s.match(/^([+\-]?\d+(?:[.,]\d+)?)([kKmM])$/);
+    if (m){
+      const n = parseFloat(m[1].replace(',', '.'));
+      const mult = m[2].toLowerCase() === 'k' ? 1000 : 1000000;
+      return {value: Math.round(n*mult), fmt:'#,##0'};
+    }
+    // pp (ej. "+2.5 pp", "-1.2 pp")
+    m = s.match(/^([+\-]?\d+(?:[.,]\d+)?)\s*pp$/i);
+    if (m) return {value: parseFloat(m[1].replace(',', '.')), fmt:'+0.00" pp";-0.00" pp"'};
+    // Delta numerico con signo (ej. "+2.5", "-1.2")
+    m = s.match(/^([+\-]\d+(?:[.,]\d+)?)$/);
+    if (m) return {value: parseFloat(m[1].replace(',', '.')), fmt:'+0.0;-0.0'};
+    // Entero o decimal pelado (ej. "103", "1234", "0.5")
+    m = s.match(/^(\d+(?:[.,]\d+)?)$/);
+    if (m){
+      const v = parseFloat(m[1].replace(',', '.'));
+      const fmt = (m[1].indexOf('.') >= 0 || m[1].indexOf(',') >= 0) ? '#,##0.0' : '#,##0';
+      return {value: v, fmt};
+    }
+    // Numero con miles "1.234" o "1,234"
+    m = s.match(/^(\d{1,3}(?:[.,]\d{3})+)$/);
+    if (m){
+      const cleaned = m[1].replace(/[.,]/g, '');
+      return {value: parseInt(cleaned, 10), fmt:'#,##0'};
+    }
+    return {value: s, fmt:null};
+  }
+
+  // Extrae tabla a estructura {aoa, merges, formats, headerRows}.
+  function tableToStructured(tableId){
     const tbl = document.getElementById(tableId);
-    if (!tbl) return [];
-    const rows = [];
+    if (!tbl) return null;
+    const aoa = [];
+    const merges = [];
+    const formats = {};  // address -> z-format
+
+    // Helper: skip-table para rowspan tracking
+    // gridRow[r] = {0: occupied, 1: free, ...} no — usemos un set de (r,c) ocupados
+    const occupied = new Set();
+    const isOccupied = (r,c) => occupied.has(r+'|'+c);
+    const occupy = (r,c,rs,cs) => {
+      for (let i=0;i<rs;i++) for (let j=0;j<cs;j++) occupied.add((r+i)+'|'+(c+j));
+    };
+
+    let rowIdx = 0;
+    let headerRows = 0;
     tbl.querySelectorAll('thead tr').forEach(tr => {
+      let colIdx = 0;
       const r = [];
       tr.querySelectorAll('th').forEach(th => {
+        // Avanzar colIdx si la celda actual esta ocupada por rowspan previo
+        while (isOccupied(rowIdx, colIdx)){ r.push(null); colIdx++; }
         const cs = parseInt(th.getAttribute('colspan')||'1', 10);
+        const rs = parseInt(th.getAttribute('rowspan')||'1', 10);
         const txt = (th.textContent || '').trim();
         r.push(txt);
-        for (let i=1;i<cs;i++) r.push('');
+        for (let i=1;i<cs;i++) r.push(null);
+        if (cs > 1 || rs > 1){
+          merges.push({s:{r:rowIdx, c:colIdx}, e:{r:rowIdx+rs-1, c:colIdx+cs-1}});
+        }
+        occupy(rowIdx, colIdx, rs, cs);
+        colIdx += cs;
       });
-      rows.push(r);
+      aoa.push(r);
+      rowIdx++;
+      headerRows++;
     });
     tbl.querySelectorAll('tbody tr').forEach(tr => {
+      let colIdx = 0;
       const r = [];
-      tr.querySelectorAll('th, td').forEach(c => r.push((c.textContent||'').trim()));
-      rows.push(r);
+      tr.querySelectorAll('th, td').forEach(c => {
+        const txt = (c.textContent || '').trim();
+        if (c.tagName === 'TH'){
+          // Etiqueta de fila (provincia/region/TOTAL PAÍS) — siempre string
+          r.push(txt);
+        } else {
+          const parsed = parseValueForExcel(txt);
+          r.push(parsed.value !== null ? parsed.value : txt);
+          if (parsed.fmt){
+            const addr = XLSX.utils.encode_cell({r:rowIdx, c:colIdx});
+            formats[addr] = parsed.fmt;
+          }
+        }
+        colIdx++;
+      });
+      aoa.push(r);
+      rowIdx++;
     });
-    return rows;
+    return {aoa, merges, formats, headerRows};
+  }
+
+  function buildSheet(struct){
+    const ws = XLSX.utils.aoa_to_sheet(struct.aoa);
+    if (struct.merges.length) ws['!merges'] = struct.merges;
+    // Aplicar formats por celda
+    for (const addr in struct.formats){
+      if (ws[addr]) ws[addr].z = struct.formats[addr];
+    }
+    // Anchos de columna: primera 28 (region), resto 12
+    const ncols = (struct.aoa[struct.headerRows] || struct.aoa[0] || []).length;
+    const cols = [{wch:28}];
+    for (let i=1;i<ncols;i++) cols.push({wch:12});
+    ws['!cols'] = cols;
+    // Freeze header rows + primera columna
+    ws['!freeze'] = {ySplit: struct.headerRows, xSplit: 1};
+    return ws;
   }
 
   function exportExcel(){
@@ -1128,17 +1223,14 @@ table.hm td.sub-ie:not(:last-child){border-right:2px solid #d4d4d4 !important;}
     const periodLabel = (document.getElementById('period-label').textContent || '').replace(/[\/?*\[\]:]/g, '-').slice(0, 60);
     const metricNice = HEAT_METRIC==='ms' ? 'MS%' : (HEAT_METRIC==='dms' ? 'VAR_MS%' : 'VAR_UNIDADES%');
     const wb = XLSX.utils.book_new();
-    const provAoA = tableToAoA('hm-prov');
-    const cupAoA  = tableToAoA('hm-cup');
-    if (provAoA.length){
-      const ws = XLSX.utils.aoa_to_sheet(provAoA);
-      XLSX.utils.book_append_sheet(wb, ws, 'Por Provincia');
+    const provStruct = tableToStructured('hm-prov');
+    const cupStruct  = tableToStructured('hm-cup');
+    if (provStruct && provStruct.aoa.length){
+      XLSX.utils.book_append_sheet(wb, buildSheet(provStruct), 'Por Provincia');
     }
-    if (cupAoA.length){
-      const ws = XLSX.utils.aoa_to_sheet(cupAoA);
-      XLSX.utils.book_append_sheet(wb, ws, 'Por Region CUP');
+    if (cupStruct && cupStruct.aoa.length){
+      XLSX.utils.book_append_sheet(wb, buildSheet(cupStruct), 'Por Región');
     }
-    // Filename: Competidores_<linea>_<mercado>_<metrica>_<periodo>.xlsx
     const safe = s => String(s||'').replace(/[\/?*\[\]:]/g, '-').replace(/\s+/g, '_').slice(0, 50);
     const fname = `Competidores_${safe(market)}_${safe(metricNice)}_${safe(periodLabel)}.xlsx`;
     XLSX.writeFile(wb, fname);
