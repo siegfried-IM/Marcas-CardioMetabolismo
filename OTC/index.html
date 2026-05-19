@@ -857,6 +857,14 @@ function renderBudPills(){
   if(el) el.innerHTML = '';
 }
 function setBP(p){ /* deprecated: tabla muestra todos los productos */ renderBudget(); }
+function renderBudYr(){
+  var el = document.getElementById('bud-yr');
+  if(!el) return;
+  el.innerHTML = ['2025','2026'].map(function(y){
+    return '<button class="yr-btn '+(y===bYear?'on':'')+'" onclick="setBY(\''+y+'\')">'+y+'</button>';
+  }).join('');
+}
+function setBY(y){ bYear=y; renderBudYr(); renderBudget(); }
 function renderBudget(){
   var BUD_PRODS_LOCAL = Object.keys(D.budget||{});
   var MESES_L = (typeof MESES!=='undefined' && MESES.length===12) ? MESES : ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
