@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-04-30T10:42:05",
+  "generatedAt": "2026-05-19T13:06:21",
   "lines": [
     {
       "hasData": true,
-      "generatedAt": "2026-04-29 14:29",
+      "generatedAt": "2026-05-19 11:58",
       "budgetCut": "Mar-2026",
       "rxCut": null,
       "stockCut": "Mar-2026",
@@ -20,7 +20,7 @@
     },
     {
       "hasData": true,
-      "generatedAt": "2026-04-29 14:12",
+      "generatedAt": "2026-05-19 12:17",
       "budgetCut": "Mar-2026",
       "rxCut": null,
       "stockCut": "Abr-2026",
@@ -37,7 +37,7 @@
     },
     {
       "hasData": true,
-      "generatedAt": "2026-04-29 16:54",
+      "generatedAt": "2026-05-19 12:22",
       "budgetCut": "Mar-2026",
       "rxCut": "Feb-2026",
       "stockCut": "Feb-2026",
@@ -71,7 +71,7 @@
     },
     {
       "hasData": true,
-      "generatedAt": "2026-04-29 15:00",
+      "generatedAt": "2026-05-19 12:52",
       "budgetCut": "Abr-2026",
       "rxCut": "Feb-2026",
       "stockCut": "Abr-2026",
