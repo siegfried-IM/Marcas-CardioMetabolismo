@@ -64,8 +64,39 @@ def fam_of(prod, alias):
     return None
 
 
+MES_ES = {'Jan': 'Ene', 'Feb': 'Feb', 'Mar': 'Mar', 'Apr': 'Abr', 'May': 'May',
+          'Jun': 'Jun', 'Jul': 'Jul', 'Aug': 'Ago', 'Sep': 'Sep', 'Oct': 'Oct',
+          'Nov': 'Nov', 'Dec': 'Dic'}
+ORD = list(MES_ES)
+
+
 def load_year(y):
-    return json.loads((SP / f'os_{y}.json').read_text(encoding='utf-8'))['rows']
+    """filas + los meses que la extraccion VERIFICO aplicados (no los pedidos)."""
+    d = json.loads((SP / f'os_{y}.json').read_text(encoding='utf-8'))
+    return d['rows'], list(d.get('mesesAplicados') or d.get('months') or [])
+
+
+def periodo(meses):
+    """('Ene-Jun', '1er semestre') a partir de los meses aplicados. El rotulo se
+    DERIVA del dato: si cambia la ventana, los titulos del tablero cambian solos."""
+    i = sorted(ORD.index(m) for m in meses if m in ORD)
+    if not i:
+        return '', ''
+    if i != list(range(i[0], i[-1] + 1)):          # ventana no contigua
+        return ', '.join(MES_ES[ORD[x]] for x in i), '%d meses' % len(i)
+    rango = MES_ES[ORD[i[0]]] if len(i) == 1 else MES_ES[ORD[i[0]]] + '–' + MES_ES[ORD[i[-1]]]
+    n = len(i)
+    if n == 12:
+        tipo = 'año cerrado'
+    elif n == 6:
+        tipo = '1er semestre' if i[0] == 0 else ('2do semestre' if i[0] == 6 else '6 meses')
+    elif n == 3 and i[0] % 3 == 0:
+        tipo = 'Q%d' % (i[0] // 3 + 1)
+    elif n == 1:
+        tipo = 'mes'
+    else:
+        tipo = '%d meses' % n
+    return rango, tipo
 
 
 def agg(rows, alias):
@@ -91,7 +122,15 @@ def blk(text, anchor):
     return D, ob, end
 
 
-r26, r25 = load_year(2026), load_year(2025)
+r26, m26 = load_year(2026)
+r25, m25 = load_year(2025)
+if sorted(m26) != sorted(m25):
+    sys.exit('ABORTA: ventanas distintas -> 2026=%s vs 2025=%s (no es apples vs apples)' % (m26, m25))
+PER, TIPO = periodo(m26)
+if not PER:
+    sys.exit('ABORTA: los extractos no declaran mesesAplicados; no se puede rotular el periodo')
+print('periodo comparado: %s (%s)  2026 vs 2025' % (PER, TIPO))
+
 check = '--check' in sys.argv
 tot_upd = tot_keep = 0
 
@@ -141,6 +180,9 @@ for line in LINES:
           f'{"(" + ", ".join(kept[:3]) + ")" if kept else ""}   2026={s26:,}  2025={s25:,}')
     if not check:
         D['convenios'] = new
+        D.setdefault('meta', {}).update({
+            'conv_current_year': '2026', 'conv_prev_year': '2025',
+            'conv_period': PER, 'conv_period_kind': TIPO})
         out = text[:ob] + json.dumps(D, ensure_ascii=False, separators=(',', ':')) + text[ob + end:]
         p.write_text(out, encoding='utf-8', newline='')
 

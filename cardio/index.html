@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="./data.js?v=e758a71b3c"></script>
+<script src="./data.js?v=a7eddc0d70"></script>
 <script src="./runtime-overrides.js"></script>
 <script src="../shared/budget-overrides.js?v=b5e5b9f03d"></script>
 <script src="../shared/export-common.js?v=f21e6390a2"></script>
@@ -273,7 +273,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
 <link rel="stylesheet" href="../shared/microinteractions.css?v=867d4b1553">
 <link rel="stylesheet" href="../shared/responsive.css?v=357fd002bf">
 <script src="../shared/ux-shared.js?v=75c8f37c8a" defer></script>
-<script src="../shared/guide.js?v=g1" defer></script>
+<script src="../shared/guide.js?v=d8e5a5c5ff" defer></script>
   <link rel="stylesheet" href="../shared/multi-period-table.css?v=b256dd064d">
 </head>
 <body>
@@ -502,7 +502,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
   <!-- ══ 05 CONVENIOS ════════════════════════════════════════════════ -->
   <div class="sec" id="s-conv">
     <div class="sec-hd"><span class="sec-num">Convenios</span><h2 class="sec-title">Convenios por OS</h2></div>
-    <p class="sec-sub" id="conv-copy">Top obras sociales por familia · Año cerrado vs año cerrado</p>
+    <p class="sec-sub" id="conv-copy">Top obras sociales por familia</p>
     <div class="card">
       <div class="pill-group" id="conv-pills" style="margin-bottom:20px;"></div>
       <div id="conv-table"></div>
@@ -566,6 +566,23 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
 <script src="../shared/render/sections.js?v=74533e8f01"></script>
 <script>
 const D = window.OTC_DASHBOARD || window.OTC_DATA;
+
+// ── Rótulo del período de Convenios por OS ──────────────────────────────────
+// Sale de data.js?v=a7eddc0d70: shared/build-convenios-os.py lo DERIVA de los meses que la
+// extracción de Qlik verificó aplicados (mesesAplicados), y exige la misma
+// ventana en los dos años. No hardcodear años ni "año cerrado" acá: si cambia
+// la ventana, cambia el dato y los títulos la siguen solos.
+const CONV_PER = (function(){
+  const m = D.meta || {};
+  const prev = m.conv_prev_year || '2025', curr = m.conv_current_year || '2026';
+  const per = m.conv_period || '', kind = m.conv_period_kind || '';
+  const et = function(y){ return per ? per + ' ' + y : String(y); };   // 'Ene-Jun 2026'
+  return { prev: prev, curr: curr, per: per, kind: kind,
+    etPrev: et(prev), etCurr: et(curr),
+    sub: 'Top obras sociales por familia · Acumulado ' + (per || 'del año') +
+         (kind ? ' (' + kind + ')' : '') + ' · ' + curr + ' vs ' + prev };
+})();
+
 window.OTC_DASHBOARD = D;
 window.applyBudget2026Overrides?.({ line: 'cardio', data: D });
 const META = D.meta || {};
@@ -684,8 +701,6 @@ function getIQVIAReal2026(budProd){
 function applyMetaLabels(){
   const ytd = META.kpi_ytd_label || 'YTD';
   const mat = META.kpi_mat_label || 'MAT';
-  const prevYear = META.conv_prev_year || '2024';
-  const currYear = META.conv_current_year || '2025';
   const budgetCut = META.budget_label || 'último corte';
   const pricePrev = META.price_prev_label || 'corte previo';
   const priceCurr = META.price_curr_label || 'corte actual';
@@ -701,7 +716,7 @@ function applyMetaLabels(){
   if(ytdBtn) ytdBtn.textContent = ytd;
   if(matBtn) matBtn.textContent = mat;
   if(budCopy) budCopy.textContent = `Unidades mensuales: venta interna Siegfried vs estimado de ventas planificado · 2025 cierre · 2026 disponible a ${budgetCut}`;
-  if(convCopy) convCopy.textContent = `Top obras sociales por familia · ${currYear} año cerrado vs ${prevYear} año cerrado`;
+  if(convCopy) convCopy.textContent = CONV_PER.sub;
   if(priceCopy) priceCopy.textContent = `${pricePrev} vs ${priceCurr} · Misma familia y presentación · SIE destacado`;
   if(footer) footer.textContent = footerDate;
 }
@@ -1863,16 +1878,15 @@ function renderConvPills(){
 }
 function setCvP(p){cvProd=p;renderConvPills();renderConv();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
 function renderConv(){
+  const _cc=document.getElementById('conv-copy'); if(_cc) _cc.textContent=CONV_PER.sub;
   const list=(D.convenios[cvProd]||[]).slice(0,10);
   const total=list.reduce((s,x)=>s+(x.unid||0),0);
-  const prevYear=D.meta?.conv_prev_year||'2025';
-  const currYear=D.meta?.conv_current_year||'2026';
   if(!list.length){
     document.getElementById('conv-table').innerHTML='<p style="color:#4b5563;font-size:12px;padding:20px">Sin datos disponibles</p>';
     return;
   }
   document.getElementById('conv-table').innerHTML=`<table class="ost">
-    <thead><tr><th>#</th><th>Obra Social / Prepaga</th><th>Unidades ${prevYear}</th><th>Unidades ${currYear}</th><th>% del total</th><th>Δ vs ${prevYear}</th></tr></thead>
+    <thead><tr><th>#</th><th>Obra Social / Prepaga</th><th>Unidades ${CONV_PER.etPrev}</th><th>Unidades ${CONV_PER.etCurr}</th><th title="Participacion dentro de las 10 obras sociales mostradas, no sobre el total de la familia">% del top 10</th><th>Δ vs ${CONV_PER.etPrev}</th></tr></thead>
     <tbody>${list.map((x,i)=>{const pctTot=total>0?Math.round(x.unid/total*100):0;const barW=Math.round(x.unid/(list[0]?.unid||1)*100);const d=x.delta;const dStr=d==null?'<span style="font-size:9px;color:#9ca3af;">nuevo</span>':d>=0?`<span style="color:#16a34a;font-weight:700;font-family:'IBM Plex Mono',monospace;">+${d}%</span>`:`<span style="color:#dc2626;font-weight:700;font-family:'IBM Plex Mono',monospace;">${d}%</span>`;return`<tr><td style="color:#4b5563;font-size:10px;">${i+1}</td><td>${x.os}<span class="mini-bar" style="width:${Math.round(barW*.75)}px"></span></td><td style="font-family:'IBM Plex Mono',monospace;color:#6b7280;">${x.unid24!=null?fmt(x.unid24):'—'}</td><td style="font-family:'IBM Plex Mono',monospace;">${fmt(x.unid)}</td><td style="font-family:'IBM Plex Mono',monospace;">${pctTot}%</td><td>${dStr}</td></tr>`;}).join('')}</tbody></table>`;
 }
 

@@ -43,7 +43,7 @@ PAGES = [
 SHARED_ASSETS = [
     'render/sections.js',
     'multi-period-table.js', 'multi-period-table.css',
-    'budget-overrides.js', 'ux-shared.js', 'data-status.js',
+    'budget-overrides.js', 'ux-shared.js', 'data-status.js', 'guide.js',
     'export-pdf.js', 'export-common.js', 'export-dashboard.js', 'export-ddd.js',
     'resize-cols.js', 'sortable-heatmap.js', 'mercado-ateneo-toggle.js',
     'design-tokens.css', 'microinteractions.css', 'responsive.css',
@@ -60,10 +60,13 @@ def process(text: str, page_path: Path) -> str:
     dj = page_dir / 'data.js'
     if dj.is_file():
         v = fhash(dj)
-        # match ./data.js  o  data.js  con o sin ?v= previo. El lookbehind evita
-        # falsos matches dentro de '../data.js' (regla 1b) y 'competidores-data.js'.
-        text = re.sub(r'(?<![\w.\-])(\.?/?data\.js)(\?v=[0-9A-Za-z]+)?',
-                      lambda m: m.group(1) + '?v=' + v, text)
+        # Solo dentro de src=/href=: si no, el regex tambien pisa la PROSA que
+        # menciona 'data.js' (paso en dermatologia/competidores.html, que quedo
+        # con 'rebuild de data.js?v=29b780bc6a desde el xlsx' en pantalla).
+        # El ancla al quote ya descarta '../data.js' (regla 1b) y
+        # 'competidores-data.js', asi que no hace falta el lookbehind.
+        text = re.sub(r"((?:src|href)=[\"'])(\.?/?data\.js)(?:\?v=[0-9A-Za-z]+)?",
+                      lambda m: m.group(1) + m.group(2) + '?v=' + v, text)
     # 1b) refs relativas de las paginas DDD/Competidores: cada una se bustea con
     #     el hash de SU archivo real (../data.js = data.js de la linea, etc.)
     for ref, target in [('../data.js', page_dir.parent / 'data.js'),
@@ -72,15 +75,15 @@ def process(text: str, page_path: Path) -> str:
                         ('./competidores-data.js', page_dir / 'competidores-data.js')]:
         if ref in text and target.is_file():
             vv = fhash(target)
-            text = re.sub(re.escape(ref) + r'(\?v=[0-9A-Za-z]+)?',
-                          lambda m, r=ref, h=vv: r + '?v=' + h, text)
+            text = re.sub(r"((?:src|href)=[\"'])" + re.escape(ref) + r"(?:\?v=[0-9A-Za-z]+)?",
+                          lambda m, r=ref, h=vv: m.group(1) + r + '?v=' + h, text)
     # 2) assets compartidos
     for a in SHARED_ASSETS:
         ap = REPO / 'shared' / a
         if not ap.is_file():
             continue
         v = fhash(ap)
-        text = re.sub(r'(shared/' + re.escape(a) + r')(\?v=[0-9A-Za-z]+)?',
+        text = re.sub(r"((?:src|href)=[\"'][^\"']*shared/" + re.escape(a) + r")(?:\?v=[0-9A-Za-z]+)?",
                       lambda m, vv=v: m.group(1) + '?v=' + vv, text)
     return text
 

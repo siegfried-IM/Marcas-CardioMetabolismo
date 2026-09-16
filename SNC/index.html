@@ -6,7 +6,7 @@
 <title>Línea S.N.C. · Siegfried</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="./data.js?v=352ae35a4c"></script>
+<script src="./data.js?v=fa0f045f1b"></script>
 <script src="../shared/budget-overrides.js?v=b5e5b9f03d"></script>
 <style>
 :root{
@@ -267,7 +267,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
 <link rel="stylesheet" href="../shared/microinteractions.css?v=867d4b1553">
 <link rel="stylesheet" href="../shared/responsive.css?v=357fd002bf">
 <script src="../shared/ux-shared.js?v=75c8f37c8a" defer></script>
-<script src="../shared/guide.js?v=g1" defer></script>
+<script src="../shared/guide.js?v=d8e5a5c5ff" defer></script>
   <link rel="stylesheet" href="../shared/multi-period-table.css?v=b256dd064d">
 </head>
 <body>
@@ -491,7 +491,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
   <!-- ══ 05 CONVENIOS ════════════════════════════════════════════════ -->
   <div class="sec" id="s-conv">
     <div class="sec-hd"><span class="sec-num">Convenios</span><h2 class="sec-title">Convenios por OS</h2></div>
-    <p class="sec-sub">Top obras sociales por familia · 2025 año cerrado vs 2024 año cerrado</p>
+    <p class="sec-sub" id="conv-copy">Top obras sociales por familia</p>
     <div class="card">
       <div class="pill-group" id="conv-pills" style="margin-bottom:20px;"></div>
       <div id="conv-table"></div>
@@ -555,6 +555,23 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
 <script src="../shared/render/sections.js?v=74533e8f01"></script>
 <script>
 const D = window.OTC_DASHBOARD || window.OTC_DATA;
+
+// ── Rótulo del período de Convenios por OS ──────────────────────────────────
+// Sale de data.js?v=fa0f045f1b: shared/build-convenios-os.py lo DERIVA de los meses que la
+// extracción de Qlik verificó aplicados (mesesAplicados), y exige la misma
+// ventana en los dos años. No hardcodear años ni "año cerrado" acá: si cambia
+// la ventana, cambia el dato y los títulos la siguen solos.
+const CONV_PER = (function(){
+  const m = D.meta || {};
+  const prev = m.conv_prev_year || '2025', curr = m.conv_current_year || '2026';
+  const per = m.conv_period || '', kind = m.conv_period_kind || '';
+  const et = function(y){ return per ? per + ' ' + y : String(y); };   // 'Ene-Jun 2026'
+  return { prev: prev, curr: curr, per: per, kind: kind,
+    etPrev: et(prev), etCurr: et(curr),
+    sub: 'Top obras sociales por familia · Acumulado ' + (per || 'del año') +
+         (kind ? ' (' + kind + ')' : '') + ' · ' + curr + ' vs ' + prev };
+})();
+
 { const _fd = document.getElementById('footer-date'); if (_fd && D.meta && D.meta.footer_date) _fd.textContent = D.meta.footer_date; }
 
 window.applyBudget2026Overrides?.({ line: 'snc', data: D });
@@ -1825,10 +1842,11 @@ function renderConvPills(){
 }
 function setCvP(p){cvProd=p;renderConvPills();renderConv();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
 function renderConv(){
+  const _cc=document.getElementById('conv-copy'); if(_cc) _cc.textContent=CONV_PER.sub;
   const list=(D.convenios[cvProd]||[]).slice(0,10);
   const total=list.reduce((s,x)=>s+(x.unid||0),0);
   document.getElementById('conv-table').innerHTML=`<table class="ost">
-    <thead><tr><th>#</th><th>Obra Social / Prepaga</th><th>Unidades 2024 cerrado</th><th>Unidades 2025 cerrado</th><th>% del total 2025</th><th>Δ 2025 vs 2024</th></tr></thead>
+    <thead><tr><th>#</th><th>Obra Social / Prepaga</th><th>Unidades ${CONV_PER.etPrev}</th><th>Unidades ${CONV_PER.etCurr}</th><th title="Participacion dentro de las 10 obras sociales mostradas, no sobre el total de la familia">% del top 10</th><th>Δ vs ${CONV_PER.etPrev}</th></tr></thead>
     <tbody>${list.map((x,i)=>{
       const pctTot=total>0?Math.round(x.unid/total*100):0;
       const barW=Math.round(x.unid/(list[0]?.unid||1)*100);

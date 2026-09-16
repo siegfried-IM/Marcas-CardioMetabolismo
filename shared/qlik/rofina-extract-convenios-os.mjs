@@ -72,6 +72,9 @@ for (let top = 0; top < H; top += 2500) {
   for (const r of p[0].qMatrix) rows.push([r[0].qText, r[1].qText, r[2].qNum]);
 }
 console.log(`  ${YEAR}: ${rows.length} filas (OS x Producto)`);
-if (OUT) writeFileSync(OUT, JSON.stringify({ year: YEAR, months: MONTHS, rows }), "utf8");
+const aplicados = (real["MesSeleccion"] || "").split(",").map((x) => x.trim()).filter(Boolean);
+console.log(`  meses aplicados: ${aplicados.join(",") || "(todos)"}`);
+if (OUT) writeFileSync(OUT, JSON.stringify(
+  { year: YEAR, mesesPedidos: MONTHS, mesesAplicados: aplicados, rows }), "utf8");
 await session.close();
 process.exit(0);

@@ -1,7 +1,8 @@
 /* shared/guide.js — Guía de uso compartida para los tableros de marcas.
    Inyecta un botón "❓ Guía" en .nav-actions y un drawer lateral que explica
-   dónde encontrar cada dato + glosario de métricas. Data-agnóstico: solo usa
-   la nav común (#s-kpi, #s-bud, ...). No toca el render de cada línea. */
+   dónde encontrar cada dato + glosario de métricas. Usa la nav común
+   (#s-kpi, #s-bud, ...) y, solo para rotular el período de Convenios,
+   meta.conv_* de data.js. No toca el render de cada línea. */
 (function () {
   'use strict';
 
@@ -16,6 +17,14 @@
     ['Detalle por región / competidores', 'DDD · Competidores'],
   ];
 
+  // Convenios compara una VENTANA, no el año cerrado: el período sale de
+  // data.js (meta.conv_period), que build-convenios-os.py deriva de los meses
+  // que la extracción de Qlik verificó aplicados. Hoy es Ene–Jun vs Ene–Jun.
+  var _cm = ((window.OTC_DASHBOARD || window.OTC_DATA || {}).meta) || {};
+  var CONV_DESC = 'Convenios por obra social: acumulado ' +
+    (_cm.conv_period || 'del año') + ' de ' + (_cm.conv_current_year || '2026') +
+    ' contra el mismo período de ' + (_cm.conv_prev_year || '2025') + '.';
+
   // Secciones (match por href #id de la nav)
   var SECTIONS = [
     ['#s-kpi', 'Resumen', 'KPIs principales de la línea: IE, MS%, unidades IQVIA, crecimiento, estimado de venta y recetas. Toggle YTD / MAT.'],
@@ -25,7 +34,7 @@
     ['#s-stock', 'Stock', 'Días de stock y venta por producto.'],
     ['#s-cover', 'Cobertura', 'Estado de cobertura (quiebre / bajo / alerta / OK), por marca o presentación.'],
     ['#s-can', 'Mostrador vs Convenios', 'Mix de venta por mostrador vs convenios y descuentos.'],
-    ['#s-conv', 'Convenios', 'Convenios por obra social, comparado año contra año.'],
+    ['#s-conv', 'Convenios', CONV_DESC],
     ['#s-pcomp', 'Precios mercado', 'Comparativa de precios vs la competencia por presentación.'],
   ];
 
