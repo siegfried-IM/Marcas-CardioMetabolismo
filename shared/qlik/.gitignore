@@ -17,3 +17,6 @@ ventas_qlik*.json
 .rofina-session
 *session*
 *.cookies
+# extractos intermedios del grano por Obra Social (rofina)
+os_*.json
+stock_rofina.json
