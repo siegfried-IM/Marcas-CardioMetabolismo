@@ -6,7 +6,7 @@
 <title>Línea Mujer · Siegfried</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="./data.js?v=b57b98ae8a"></script>
+<script src="./data.js?v=84b5577cb9"></script>
 <style>
 :root{
   --bg:#f4f5f7;--bg2:#ffffff;--bg3:#f0f1f3;--bg4:#e8e9eb;
@@ -588,6 +588,7 @@ const CONV_PER = (function(){
   const et = function(y){ return per ? per + ' ' + y : String(y); };   // 'Ene-Jun 2026'
   return { prev: prev, curr: curr, per: per, kind: kind,
     etPrev: et(prev), etCurr: et(curr),
+    metric: m.conv_metric || '', metricTip: m.conv_metric_tip || '',
     sub: 'Top obras sociales por familia · Acumulado ' + (per || 'del año') +
          (kind ? ' (' + kind + ')' : '') + ' · ' + curr + ' vs ' + prev };
 })();
@@ -1991,7 +1992,7 @@ function renderConv(){
   const nOS=all.length;
   const covTop=total>0?Math.round(list.reduce((s,x)=>s+(x.unid||0),0)/total*1000)/10:0;
   document.getElementById('conv-table').innerHTML=`<table class="ost">
-    <thead><tr><th>#</th><th>Obra Social / Prepaga</th><th>Unidades ${CONV_PER.etPrev}</th><th>Unidades ${CONV_PER.etCurr}</th><th title="Participación sobre el total de la familia en el período (todas las obras sociales, no solo las 10 mostradas)">% del total</th><th>Δ vs ${CONV_PER.etPrev}</th></tr></thead>
+    <thead><tr><th>#</th><th>Obra Social / Prepaga</th><th title="${CONV_PER.metricTip}">Unidades ${CONV_PER.etPrev}</th><th title="${CONV_PER.metricTip}">Unidades ${CONV_PER.etCurr}</th><th title="Participación sobre el total de la familia en el período (todas las obras sociales, no solo las 10 mostradas)">% del total</th><th>Δ vs ${CONV_PER.etPrev}</th></tr></thead>
     <tbody>${list.map((x,i)=>{
       const _p=total>0?x.unid/total*100:0;const pctTot=_p>=10?Math.round(_p):Math.round(_p*10)/10;
       const barW=Math.round(x.unid/(list[0]?.unid||1)*100);
@@ -2008,7 +2009,7 @@ function renderConv(){
         <td style="font-family:'IBM Plex Mono',monospace;">${pctTot}%</td>
         <td>${dStr}</td>
       </tr>`;
-    }).join('')}</tbody></table><p style="font-size:10px;color:#6b7280;margin-top:8px;">Las 10 mostradas cubren ${covTop}% del total de la familia · ${nOS} obras sociales con movimiento en ${CONV_PER.etCurr}</p>`;
+    }).join('')}</tbody></table><p style="font-size:10px;color:#6b7280;margin-top:8px;">Las 10 mostradas cubren ${covTop}% del total de la familia · ${nOS} obras sociales con movimiento en ${CONV_PER.etCurr}${CONV_PER.metric ? " · Unidades = " + CONV_PER.metric : ""}</p>`;
 }
 
 // ── PRECIOS CON COMPETIDORES ────────────────────────────────────────

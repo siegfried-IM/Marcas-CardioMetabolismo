@@ -122,6 +122,16 @@ def blk(text, anchor):
     return D, ob, end
 
 
+# La medida extraida es sum(Consumo_Unidades_Inf): el consumo BRUTO, la misma que
+# usa el "% convenio UNI" del tablero de Rofina. NO son unidades netas de notas de
+# debito. Medido contra el resto del tablero en las 82 familias comparables de las 7
+# lineas, corre ~21% arriba del neto (mediana 1,21; p25 1,17 / p75 1,23; sigma 0,079).
+# Se rotula en la pagina para que nadie lo lea como unidades vendidas.
+METRICA = 'consumo bruto por convenio (antes de notas de débito)'
+METRICA_TIP = ('Medida del tablero de Rofina (Consumo_Unidades_Inf), la misma que usa '
+               'el % convenio UNI. Es BRUTA: medida en 09/2026 corre ~21% arriba de '
+               'las unidades netas de notas de débito.')
+
 r26, m26 = load_year(2026)
 r25, m25 = load_year(2025)
 if sorted(m26) != sorted(m25):
@@ -182,7 +192,8 @@ for line in LINES:
         D['convenios'] = new
         D.setdefault('meta', {}).update({
             'conv_current_year': '2026', 'conv_prev_year': '2025',
-            'conv_period': PER, 'conv_period_kind': TIPO})
+            'conv_period': PER, 'conv_period_kind': TIPO,
+            'conv_metric': METRICA, 'conv_metric_tip': METRICA_TIP})
         out = text[:ob] + json.dumps(D, ensure_ascii=False, separators=(',', ':')) + text[ob + end:]
         p.write_text(out, encoding='utf-8', newline='')
 

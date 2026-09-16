@@ -322,7 +322,11 @@ def cap_post_cutoff(budget, cutoff):
             real = yobj.get('real')
             if not isinstance(real, list): continue
             for i in range(len(real)):
-                if ((y > cy) or (y == cy and i > cm)) and real[i] not in (None, 0):
+                # OJO: el 0 TAMBIEN hay que limpiarlo. Estaba excluido aca y por eso
+                # mujer y SNC arrastraban 0 en Sep-Dic (su dato legacy usaba 0, no
+                # null): la tabla los leia como "vendimos cero" y pintaba 0% de
+                # cumplimiento en rojo para meses que todavia no pasaron.
+                if ((y > cy) or (y == cy and i > cm)) and real[i] is not None:
                     real[i] = None; n += 1
     return n
 
