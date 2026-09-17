@@ -988,7 +988,6 @@ function loadUrls() {
 
 function applyUrls() {
   const urls = loadUrls();
-  let live = 0;
   document.querySelectorAll('.card[data-line]').forEach(card => {
     const url = urls[card.dataset.line];
     if (url && url.trim()) {
@@ -1037,10 +1036,8 @@ function applyUrls() {
         const brands = card.querySelector('.card-brands');
         if (brands) brands.classList.remove('placeholder');
       }
-      live++;
     }
   });
-  const lc = document.getElementById('live-count'); if(lc) lc.textContent = live || 1;
 }
 
 // Date
