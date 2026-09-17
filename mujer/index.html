@@ -1989,7 +1989,11 @@ function renderConv(){
   const all=(D.convenios[cvProd]||[]);
   const list=all.slice(0,10);
   const total=all.reduce((s,x)=>s+(x.unid||0),0);
-  const nOS=all.length;
+  const nOS=all.filter(x=>(x.unid||0)>0).length;
+  const total25=all.reduce((s,x)=>s+(x.unid24||0),0);
+  const _cmp=total25>=Math.max(5,total*0.01);
+  const _dT=_cmp?Math.round((total/total25-1)*1000)/10:null;
+  const _dTs=_dT==null?`<span style="font-size:9px;color:#9ca3af;font-weight:400;" title="Base de ${fmt(total25)} u. en ${CONV_PER.etPrev}: demasiado chica para calcular una variación">nuevo</span>`:(_dT>=0?`<span style="color:#16a34a;font-weight:700;">+${_dT}%</span>`:`<span style="color:#dc2626;font-weight:700;">${_dT}%</span>`);
   const covTop=total>0?Math.round(list.reduce((s,x)=>s+(x.unid||0),0)/total*1000)/10:0;
   document.getElementById('conv-table').innerHTML=`<table class="ost">
     <thead><tr><th>#</th><th>Obra Social / Prepaga</th><th title="${CONV_PER.metricTip}">Unidades ${CONV_PER.etPrev}</th><th title="${CONV_PER.metricTip}">Unidades ${CONV_PER.etCurr}</th><th title="Participación sobre el total de la familia en el período (todas las obras sociales, no solo las 10 mostradas)">% del total</th><th>Δ vs ${CONV_PER.etPrev}</th></tr></thead>
@@ -2009,7 +2013,7 @@ function renderConv(){
         <td style="font-family:'IBM Plex Mono',monospace;">${pctTot}%</td>
         <td>${dStr}</td>
       </tr>`;
-    }).join('')}</tbody></table><p style="font-size:10px;color:#6b7280;margin-top:8px;">Las 10 mostradas cubren ${covTop}% del total de la familia · ${nOS} obras sociales con movimiento en ${CONV_PER.etCurr}${CONV_PER.metric ? " · Unidades = " + CONV_PER.metric : ""}</p>`;
+    }).join('')}</tbody><tfoot><tr style="border-top:2px solid rgba(0,0,0,.18);font-weight:700;"><td></td><td>TOTAL FAMILIA<span style="font-weight:400;color:#6b7280;font-size:9px;"> · ${nOS} obras sociales</span></td><td style="font-family:'IBM Plex Mono',monospace;color:#6b7280;">${fmt(total25)}</td><td style="font-family:'IBM Plex Mono',monospace;">${fmt(total)}</td><td style="font-family:'IBM Plex Mono',monospace;">100%</td><td>${_dTs}</td></tr></tfoot></table><p style="font-size:10px;color:#6b7280;margin-top:8px;">Las 10 mostradas cubren ${covTop}% del total de la familia${CONV_PER.metric ? " · Unidades = " + CONV_PER.metric : ""}</p>`;
 }
 
 // ── PRECIOS CON COMPETIDORES ────────────────────────────────────────
