@@ -707,14 +707,10 @@ function setGlobalFilter(brand){
   // Recetas
   if(m.rec && D.recetas[m.rec]){ rProd=m.rec; renderRecPills(); renderRec(); }
 
-  // Canales — filter to show only this familia
-  renderCanales(m.canal);
 
   // Convenios
   if(m.conv && D.convenios[m.conv]){ cvProd=m.conv; renderConvPills(); renderConv(); }
 
-  // Precios
-  if(m.prec && D.precios[m.prec]){ prProd=m.prec; prDose=null; renderPrecPills(); renderPrecDoses(); renderPrec(); }
   // Stock
   if(m.canal && D.stock[m.canal]){ stProd=m.canal; renderStockPills(); renderStockYr(); renderStock(); }
   renderBrandKpis();
@@ -729,11 +725,9 @@ function clearGlobalFilter(){
   bar.style.borderColor = 'rgba(56,189,248,.15)';
   bar.style.background = 'rgba(56,189,248,.05)';
   document.getElementById('clear-filter-btn').style.display = 'none';
-  renderCanales(null);
   renderKpis();
   renderBrandKpis();
 }
-// canales handled by renderCanales()
 
 // ── KPI STRIP ─────────────────────────────────────────────────────────
 let kpiPeriod = 'ytd';
@@ -1810,41 +1804,6 @@ function round2(v){return Math.round(v*100)/100;}
 
 
 // ── CANALES ───────────────────────────────────────────────────────────
-function renderCanales(filterFam){
-  if(!document.getElementById('can-chart'))return;
-  if(!document.getElementById('can-chart'))return;
-  const allEntries=Object.entries(D.canales)
-    .filter(([,v])=>v.unid>500 && v.conv>=0 && v.conv<=100)
-    .sort(([,a],[,b])=>b.unid-a.unid);
-  
-  // If brand filter active, show only matching familia + gray context
-  let entries = allEntries;
-  if(filterFam){
-    entries = allEntries.filter(([fam])=>fam===filterFam);
-    if(!entries.length) entries = allEntries.slice(0,1); // fallback
-  }
-
-  if(!entries.length){document.getElementById('can-chart').innerHTML='<p style="color:#4b5563;font-size:12px;padding:20px">Sin datos disponibles</p>';return;}
-  document.getElementById('can-chart').innerHTML=entries.map(([fam,v])=>{
-    const c=Math.max(0,Math.min(v.conv,100));
-    const m=Math.max(0,Math.min(v.most,100));
-    const cs=c>5?c.toFixed(0)+'%':'';
-    const ms=m>5?m.toFixed(0)+'%':'';
-    const dtoStr=v.dto_total!=null?` | Dto total ${v.dto_total.toFixed(1)}% (conv ${(v.dto_conv||0).toFixed(1)}% / most ${(v.dto_most||0).toFixed(1)}%)`:'';
-    return`<div class="can-row" title="${fam}: Conv ${c.toFixed(1)}% | Most ${m.toFixed(1)}% | ${Math.round(v.unid/1000)}k u.${dtoStr}">
-      <span class="can-lbl" style="display:flex;flex-direction:column;gap:1px;">${fam}${v.dto_total!=null?`<span style="font-size:8px;color:#6b7280;">dto ${v.dto_total.toFixed(1)}%</span>`:''}</span>
-      <div class="can-bar">
-        <div class="can-conv" style="width:${c}%">${cs}</div>
-        <div class="can-most" style="width:${m}%">${ms}</div>
-      </div>
-      <span class="can-vol">${(v.unid/1000).toFixed(0)}k</span>
-    </div>`;
-  }).join('');
-  if(filterFam && allEntries.length > entries.length){
-    document.getElementById('can-chart').innerHTML += `<p style="font-size:10px;color:#4b5563;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.05);">Mostrando solo ${filterFam}. <span style="cursor:pointer;color:#e02525;" onclick="clearGlobalFilter()">Ver todas (${allEntries.length})</span></p>`;
-  }
-}
-renderCanales(null);
 
 
 // ── MOSTRADOR vs CONVENIOS (trimestral) ──────────────────────────────
@@ -1912,113 +1871,6 @@ function renderConv(){
       </tr>`;
     }).join('')}</tbody><tfoot><tr style="border-top:2px solid rgba(0,0,0,.18);font-weight:700;"><td></td><td>TOTAL FAMILIA<span style="font-weight:400;color:#6b7280;font-size:9px;"> · ${nOS} obras sociales</span></td><td style="font-family:'IBM Plex Mono',monospace;color:#6b7280;">${fmt(total25)}</td><td style="font-family:'IBM Plex Mono',monospace;">${fmt(total)}</td><td style="font-family:'IBM Plex Mono',monospace;">100%</td><td>${_dTs}</td></tr></tfoot></table><p style="font-size:10px;color:#6b7280;margin-top:8px;">Las 10 mostradas cubren ${covTop}% del total de la familia${CONV_PER.metric ? " · Unidades = " + CONV_PER.metric : ""}</p>`;
 }
-
-// ── PRECIOS CON COMPETIDORES ────────────────────────────────────────
-let prProd='SIN ESTROGENO', prDose=null;
-const PREC_PRODS=orderedProdKeys(D.precios);
-
-function renderPrecPills(){
-  if(!document.getElementById('prec-pills'))return;
-  document.getElementById('prec-pills').innerHTML=PREC_PRODS.map(p=>`
-    <button class="pill ${p===prProd?'on':''}" onclick="setPrP('${p}')"
-      style="${p===prProd?`color:${COLORS[p]||'#38bdf8'};border-color:${COLORS[p]||'#38bdf8'}`:''}">
-      <span class="dot" style="background:${COLORS[p]||'#555'}"></span>${FL(p)}
-    </button>`).join('');
-}
-
-function setPrP(p){prProd=p;prDose=null;renderPrecPills();renderPrecDoses();renderPrec();if(!_filterLock&&PROD_MAP[p])setGlobalFilter(p);}
-
-function renderPrecDoses(){
-  if(!document.getElementById('prec-pills'))return;
-  const groups=D.precios[prProd]||{};
-  const doses=Object.keys(groups);
-  if(!prDose||!groups[prDose]) prDose=doses[0]||null;
-  const brandColor = COLORS[prProd]||'#b01e1e';
-  document.getElementById('prec-dose-pills').innerHTML=doses.map(d=>{
-    const hasSie = groups[d].some(e=>e.is_sie);
-    const isOn = d===prDose;
-    const sty = isOn
-      ? `background:${brandColor};color:#fff;border-color:${brandColor};font-weight:600;`
-      : hasSie
-        ? `border-color:${brandColor};color:${brandColor};font-weight:500;`
-        : `border-color:#d1d5db;color:#9ca3af;`;
-    return `<button class="prec-dose-pill" onclick="setPrD('${d}')" style="${sty}">${hasSie?'★ ':''}${d}</button>`;
-  }).join('');
-}
-function setPrD(d){prDose=d;renderPrecDoses();renderPrec();}
-
-function renderPrec(){
-  if(!document.getElementById('prec-pills'))return;
-  const groups=D.precios[prProd]||{};
-  if(!prDose||!groups[prDose]){document.getElementById('prec-content').innerHTML='';return;}
-  const entries=groups[prDose];
-  const sieEntry=entries.find(e=>e.is_sie);
-  const siePvp=sieEntry?.pvp_feb26||0;
-
-  // IQVIA units lookup for this product
-  const iqviaMap = D.prec_iqvia?.[prProd] || {};
-  // Sort entries: SIE first, then by IQVIA units desc
-  const sortedEntries = [...entries].sort((a,b)=>{
-    if(a.is_sie) return -1; if(b.is_sie) return 1;
-    const ua = iqviaMap[a.prod.toUpperCase()] || 0;
-    const ub = iqviaMap[b.prod.toUpperCase()] || 0;
-    return ub - ua;
-  });
-  // Find leader (highest IQVIA units, ALL products including SIE)
-  const leaderEntry = [...sortedEntries].sort((a,b)=>(iqviaMap[b.prod.toUpperCase()]||0)-(iqviaMap[a.prod.toUpperCase()]||0))[0];
-  const leaderUnits = leaderEntry ? (iqviaMap[leaderEntry.prod.toUpperCase()]||0) : 0;
-  const leaderPvp   = leaderEntry?.pvp_feb26 || 0;
-  const sieUnits = iqviaMap[(sieEntry?.prod||'').toUpperCase()] || 0;
-
-  document.getElementById('prec-content').innerHTML=`
-    <div class="prec-group">
-      <span class="prec-group-title">${prDose}</span>
-      ${leaderEntry?`<div style="font-size:10px;color:#4b5563;margin-bottom:8px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-        <span>🏆 Líder: <strong>${leaderEntry.prod}</strong> (${leaderEntry.lab}) · ${fmt(leaderUnits)} u. MAT · PVP $${leaderPvp.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
-        ${sieUnits&&leaderUnits?`<span>Siegfried: ${fmt(sieUnits)} u. <span style="font-weight:700;color:${sieUnits>=leaderUnits?'#16a34a':'#dc2626'}">(${sieUnits>=leaderUnits?'+':''}${Math.round((sieUnits/leaderUnits-1)*100)}% vs líder)</span></span>`:''}
-      </div>`:''}
-      <table class="pct-table">
-        <thead><tr>
-          <th>Laboratorio</th><th>Producto</th><th>PVP al 31/03/2026</th><th>PVP al 04/05/2026</th><th>Var.</th><th>vs SIE</th><th title="PVP al 04/05/2026 vs el líder por volumen IQVIA MAT">vs Líder 🏆</th><th title="Unidades MAT IQVIA">IQVIA MAT u.</th><th>Rk</th>
-        </tr></thead>
-        <tbody>${sortedEntries.map((e,i)=>{
-          const vp=e.var!=null?Math.round(e.var*100):null;
-          const vsSie=(!e.is_sie&&siePvp&&e.pvp_feb26)?((e.pvp_feb26/siePvp-1)*100):null;
-          const vsSieStr=vsSie==null?'—':vsSie>=0
-            ?`<span class="pricier-tag">+${vsSie.toFixed(1)}%</span>`
-            :`<span class="cheaper-tag">${vsSie.toFixed(1)}%</span>`;
-          // vs Líder
-          let vsLiderStr='—';
-          if(leaderPvp && e.pvp_feb26){
-            if(e===leaderEntry){
-              vsLiderStr=`<span style="font-size:9px;font-weight:700;color:#b01e1e;">🏆 Líder</span>`;
-            } else {
-              const vsL=(e.pvp_feb26/leaderPvp-1)*100;
-              vsLiderStr=vsL>=0
-                ?`<span class="pricier-tag">+${vsL.toFixed(1)}%</span>`
-                :`<span class="cheaper-tag">${vsL.toFixed(1)}%</span>`;
-            }
-          }
-          const iqvU = iqviaMap[e.prod.toUpperCase()] || null;
-          const allUnits = sortedEntries.map(x=>iqviaMap[x.prod.toUpperCase()]||0).sort((a,b)=>b-a);
-          const rank = iqvU ? allUnits.indexOf(iqvU)+1 : null;
-          const rankStr = rank==null?'—':`<span style="font-size:9px;font-weight:700;color:${rank===1?'#b01e1e':rank<=3?'#d97706':'#4b5563'};">#${rank}</span>`;
-          return`<tr class="${e.is_sie?'sie-pr':''}">
-            <td style="font-weight:${e.is_sie?600:400}">${e.lab}${e.is_sie?'<span class="sie-tag">★ SIE</span>':''}</td>
-            <td>${e.prod}</td>
-            <td class="mono">$${e.pvp_dic25?.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})||'—'}</td>
-            <td class="mono">$${e.pvp_feb26?.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})||'—'}</td>
-            <td><span class="var-up">${vp!=null?(vp>=0?'+':'')+vp+'%':'—'}</span></td>
-            <td>${e.is_sie?'<span style="font-size:9px;color:#4b5563;">—</span>':vsSieStr}</td>
-            <td style="text-align:center;">${vsLiderStr}</td>
-            <td class="mono" style="color:${iqvU?'#111827':'#9ca3af'};font-size:10px;">${iqvU?fmt(iqvU):'—'}</td>
-            <td>${rankStr}</td>
-          </tr>`;
-        }).join('')}</tbody>
-      </table>
-    </div>`;
-}
-
 
 // ── STOCK & VENTAS ────────────────────────────────────────────────────
 let stChart=null, stProd='SIN ESTROGENO', stYears=new Set(); // empty = todos
@@ -2248,7 +2100,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   _r(()=>{renderPerfMolGrid(); bindPerfCtrls(); renderPerf();},'perf');
   _r(()=>{renderRecPills(); bindRecCtrls(); renderRec();},'recetas');
   _r(()=>{renderConvPills(); renderConv();},'convenios');
-  _r(()=>{renderPrecPills(); renderPrecDoses(); renderPrec();},'precios');
   _r(()=>{renderStockPills(); renderStockYr(); renderStock();},'stock');
   _r(()=>{renderCovBrandPills(); renderCobertura();},'cobertura');
   _r(()=>{renderPCompPills(); renderPComp();},'preccomp');
