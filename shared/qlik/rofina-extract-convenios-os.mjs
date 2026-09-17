@@ -6,6 +6,7 @@
 // tenant) y se VERIFICA leyendo el selection object antes de extraer.
 import { writeFileSync } from "fs";
 import { loadSession, openEngine } from "./rofina-session.mjs";
+import { CONSUMO_UNI, CONSUMO_UNI_BRUTO } from "./rofina-medidas.mjs";
 
 const a = process.argv.slice(2);
 const arg = (n, d) => { const i = a.indexOf("--" + n); return i >= 0 ? a[i + 1] : d; };
@@ -49,7 +50,12 @@ for (const x of sl.qSelectionObject?.qSelections || []) {
 console.log("  selecciones reales:", JSON.stringify(real));
 if (!real["AñoSeleccion"]?.includes(YEAR)) throw new Error("La seleccion de AñoSeleccion NO quedo aplicada");
 
-// cubo: ObraSocial1 + Producto -> Consumo uni (Consumo_Unidades_Inf, igual que el pivot)
+// cubo: ObraSocial1 + Producto -> las DOS medidas.
+// La que se publica es CONSUMO_UNI (neto de notas de debito): es la columna
+// "Consumo uni" del pivot y el KPI "Consumo unidades" de la hoja, o sea el numero
+// que el usuario ve en Qlik. El bruto viaja al lado solo para poder reproducir el
+// "% convenio UNI" y para medir cuanto pesan las ND. Antes esto extraia el BRUTO y
+// lo publicaba como unidades: +22,3% en ROACCUTAN Ene-Jun 2026.
 const o = await app.createSessionObject({
   qInfo: { qType: "c" },
   qHyperCubeDef: {
@@ -57,7 +63,8 @@ const o = await app.createSessionObject({
       { qDef: { qFieldDefs: ["ObraSocial1"] }, qNullSuppression: true },
       { qDef: { qFieldDefs: ["Producto"] }, qNullSuppression: true },
     ],
-    qMeasures: [{ qDef: { qDef: "sum(Consumo_Unidades_Inf)" } }],
+    qMeasures: [{ qDef: { qDef: CONSUMO_UNI } },
+                { qDef: { qDef: CONSUMO_UNI_BRUTO } }],
     qInitialDataFetch: [],
     qSuppressZero: true,
   },
@@ -69,12 +76,22 @@ for (let top = 0; top < H; top += 2500) {
   const p = await o.getHyperCubeData("/qHyperCubeDef", [
     { qTop: top, qLeft: 0, qHeight: Math.min(2500, H - top), qWidth: W },
   ]);
-  for (const r of p[0].qMatrix) rows.push([r[0].qText, r[1].qText, r[2].qNum]);
+  for (const r of p[0].qMatrix) rows.push([r[0].qText, r[1].qText, r[2].qNum, r[3].qNum]);
 }
 console.log(`  ${YEAR}: ${rows.length} filas (OS x Producto)`);
 const aplicados = (real["MesSeleccion"] || "").split(",").map((x) => x.trim()).filter(Boolean);
 console.log(`  meses aplicados: ${aplicados.join(",") || "(todos)"}`);
+const neto = rows.reduce((t, r) => t + (r[2] || 0), 0);
+const bruto = rows.reduce((t, r) => t + (r[3] || 0), 0);
+console.log(`  consumo uni (neto de ND): ${Math.round(neto).toLocaleString("es-AR")}`);
+console.log(`  bruto (solo para el %)  : ${Math.round(bruto).toLocaleString("es-AR")}` +
+            `  -> las ND pesan ${(100 - neto / bruto * 100).toFixed(1)}%`);
+// 'medida' es la compuerta: build-convenios-os.py ABORTA si el extracto no la declara,
+// asi un JSON viejo (que traia el bruto en la col 2) no puede colarse como si fuera neto.
 if (OUT) writeFileSync(OUT, JSON.stringify(
-  { year: YEAR, mesesPedidos: MONTHS, mesesAplicados: aplicados, rows }), "utf8");
+  { year: YEAR, mesesPedidos: MONTHS, mesesAplicados: aplicados,
+    medida: "Consumo uni (neto de ND)", expr: CONSUMO_UNI,
+    cols: ["ObraSocial1", "Producto", "consumo_uni_neto", "consumo_uni_bruto"],
+    totalNeto: neto, totalBruto: bruto, rows }), "utf8");
 await session.close();
 process.exit(0);

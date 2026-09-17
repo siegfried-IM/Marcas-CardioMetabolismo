@@ -70,9 +70,20 @@ MES_ES = {'Jan': 'Ene', 'Feb': 'Feb', 'Mar': 'Mar', 'Apr': 'Abr', 'May': 'May',
 ORD = list(MES_ES)
 
 
+MEDIDA_OK = 'Consumo uni (neto de ND)'
+
+
 def load_year(y):
-    """filas + los meses que la extraccion VERIFICO aplicados (no los pedidos)."""
+    """filas + los meses que la extraccion VERIFICO aplicados (no los pedidos).
+
+    ABORTA si el extracto no declara la medida esperada. Los JSON viejos traian el
+    consumo BRUTO en la columna 2 y se publicaron como unidades: +22,3% en ROACCUTAN
+    Ene-Jun 2026 (83.237 contra las 68.035 que muestra Qlik), con desvio POR obra
+    social de 0% a +74%. Sin esta compuerta el error vuelve callado."""
     d = json.loads((SP / f'os_{y}.json').read_text(encoding='utf-8'))
+    if d.get('medida') != MEDIDA_OK:
+        sys.exit(f"ABORTA: os_{y}.json declara medida={d.get('medida')!r} y se espera "
+                 f'{MEDIDA_OK!r}. Re-extraer con rofina-extract-convenios-os.mjs.')
     return d['rows'], list(d.get('mesesAplicados') or d.get('months') or [])
 
 
@@ -122,15 +133,14 @@ def blk(text, anchor):
     return D, ob, end
 
 
-# La medida extraida es sum(Consumo_Unidades_Inf): el consumo BRUTO, la misma que
-# usa el "% convenio UNI" del tablero de Rofina. NO son unidades netas de notas de
-# debito. Medido contra el resto del tablero en las 82 familias comparables de las 7
-# lineas, corre ~21% arriba del neto (mediana 1,21; p25 1,17 / p75 1,23; sigma 0,079).
-# Se rotula en la pagina para que nadie lo lea como unidades vendidas.
-METRICA = 'consumo bruto por convenio (antes de notas de débito)'
-METRICA_TIP = ('Medida del tablero de Rofina (Consumo_Unidades_Inf), la misma que usa '
-               'el % convenio UNI. Es BRUTA: medida en 09/2026 corre ~21% arriba de '
-               'las unidades netas de notas de débito.')
+# La medida es la columna "Consumo uni" del pivot de Rofina, NETA de notas de debito
+# (rofina-medidas.mjs -> CONSUMO_UNI). No confundir con el bruto sum(Consumo_Unidades_Inf),
+# que es el que usa el "% convenio UNI" y da ~22% mas: publicarlo como unidades fue el
+# bug de 2026-09-16 (ROACCUTAN Ene-Jun 2026: 83.237 publicadas contra 68.035 reales).
+METRICA = 'consumo por convenio neto de notas de débito'
+METRICA_TIP = ("Columna 'Consumo uni' del tablero de Rofina: resta las notas de "
+               "debito, igual que el KPI 'Consumo unidades' de la hoja. NO es el "
+               "consumo bruto, que usa el % convenio UNI y da ~22% mas.")
 
 r26, m26 = load_year(2026)
 r25, m25 = load_year(2025)
