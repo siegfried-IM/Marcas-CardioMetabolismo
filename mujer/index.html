@@ -434,23 +434,7 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
       <div class="g2" data-rec-fullwidth style="grid-template-columns:1fr !important;"><div><div class="chart-h280"><canvas id="recChart"></canvas></div></div>
         <div class="card-sm" id="rec-detail" style="display:none;"></div>
       </div>
-      <!-- Competitor recetas (only shown in MS% mode) -->
-      <div id="rec-comp-panel" style="display:none;margin-top:14px;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;">
-        <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Top competidores por recetas · misma molécula</p>
-        
-        <div class="perf-bf" id="rec-bf">
-          <span class="lbl">Comparar con</span>
-          <div class="seg" id="rcf-mode">
-            <button data-m="top5">Top 5</button>
-            <button data-m="top10" class="on">Top 10</button>
-            <button data-m="sie">Solo SIE</button>
-            <button data-m="all">Todos</button>
-          </div>
-          <input type="text" class="search" id="rcf-search" placeholder="Buscar marca..." />
-          <div class="pills" id="rcf-pills"></div>
-        </div>
-        <div id="rec-comp-table"></div>
-      </div>
+      <!-- La tabla "Top competidores por recetas" se saco a pedido (2026-09-17): queda solo la comparativa multi-periodo. El render (renderRecComp) sigue en el archivo pero no se dibuja: sale temprano porque #rec-comp-table ya no existe. -->
     </div>
       <div class="card mp-summary-card" style="margin-top:14px;">
       <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Comparativa multi-periodo &middot; Recetas (CloseUp)</p>
@@ -1663,7 +1647,7 @@ function renderRec(){
         fill:false,tension:.3,pointRadius:2,borderWidth:1.5,borderDash:[4,3],order:i+1
       });
     });
-    document.getElementById('rec-comp-panel').style.display='block';
+    (function(p){if(p)p.style.display='block';})(document.getElementById('rec-comp-panel'));
     renderRecComp(rProd,msKeys,'ms');
   } else if(rView==='quarterly'){
     const msObj=D.rec_ms?.[rProd]||{};
@@ -1698,7 +1682,7 @@ function renderRec(){
         fill:false,tension:.2,pointRadius:4,borderWidth:1.5,borderDash:[4,3]
       });
     });
-    document.getElementById('rec-comp-panel').style.display='block';
+    (function(p){if(p)p.style.display='block';})(document.getElementById('rec-comp-panel'));
     renderRecComp(rProd, [],'quarterly');
   } else {
     // Vistas Recetas / Médicos (unidades absolutas) + competidores
@@ -1726,7 +1710,7 @@ function renderRec(){
         fill:false,tension:.3,pointRadius:2,borderWidth:1.5,borderDash:[4,3],order:i+2
       });
     });
-    document.getElementById('rec-comp-panel').style.display='block';
+    (function(p){if(p)p.style.display='block';})(document.getElementById('rec-comp-panel'));
     renderRecComp(rProd,keys,rView);
   }
 
@@ -1824,6 +1808,7 @@ function renderRecComp(prod, months, viewMode){
   viewMode=viewMode||'rec';
   const compData=D.rec_comp?.[prod]||{};
   const el=document.getElementById('rec-comp-table');
+  if(!el) return;
   if(!Object.keys(compData).length){el.innerHTML='<p style="color:#4b5563;font-size:11px;">Sin datos de competidores.</p>';return;}
   const lastMes=months[months.length-1];const prevMes=months[months.length-2];
   let cIdx=0;
