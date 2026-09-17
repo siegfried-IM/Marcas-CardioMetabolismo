@@ -283,4 +283,23 @@ if git diff --cached --name-only | grep -qE 'data\.js$'; then
     fi
 fi
 
+# Check 18: el JS no puede desreferenciar un nodo que la pagina no tiene. Nace del
+# caso de 2026-09-17: se saco el panel "Top competidores por recetas" y quedo vivo
+# document.getElementById('rec-comp-table').innerHTML en la rama "marca sin base
+# CloseUp". El tablero abria bien; el TypeError solo saltaba al elegir una marca sin
+# recetas, y se llevaba puesto el render de toda la seccion. Las ramas vacias son
+# justo las que no se prueban a mano.
+if git diff --cached --name-only | grep -qE '\.html$'; then
+    echo "Running DOM refs check..."
+    py shared/check-dom-refs-vivas.py
+    if [ $? -ne 0 ]; then
+        echo ""
+        echo "BLOQUEADO: hay JS que usa un nodo inexistente sin guardia."
+        echo "Arriba estan el archivo y la linea. O se repone el markup, o se borra"
+        echo "el codigo que quedo colgando (no alcanza con envolverlo en un if:"
+        echo "si el id no existe, ese codigo ya no hace nada)."
+        exit 1
+    fi
+fi
+
 exit 0

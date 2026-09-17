@@ -343,6 +343,9 @@ foreach ($g in @(
     # laboratorio, is_sie en false y 0 marcas SIE en mol_perf, con audit 16.626/16.634).
     @{n='sie-pres';s='check-molperf-sie-presente.py';   a=@()},
     @{n='forma';   s='check-forma-vs-baseline.py';      a=@()},
+    # Mira el markup, no las sumas: caza el JS que quedo apuntando a un nodo
+    # que ya no existe (las ramas vacias, que no se prueban a mano).
+    @{n='dom-refs';s='check-dom-refs-vivas.py';         a=@()},
     @{n='vs-master';s='check-molperf-vs-master.py';     a=@('--month', $closeLabel)},
     # El de arriba concilia el NUMERADOR (marcas SIE). Este el DENOMINADOR: el total de
     # cada familia contra el master por molecula exacta. Sin el, un mercado inflado pasa
