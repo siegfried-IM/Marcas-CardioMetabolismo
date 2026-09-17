@@ -434,7 +434,6 @@ body{background:var(--bg);font-family:'IBM Plex Sans',sans-serif;color:var(--tex
       <div class="g2" data-rec-fullwidth style="grid-template-columns:1fr !important;"><div><div class="chart-h280"><canvas id="recChart"></canvas></div></div>
         <div class="card-sm" id="rec-detail" style="display:none;"></div>
       </div>
-      <!-- La tabla "Top competidores por recetas" se saco a pedido (2026-09-17): queda solo la comparativa multi-periodo. El render (renderRecComp) sigue en el archivo pero no se dibuja: sale temprano porque #rec-comp-table ya no existe. -->
     </div>
       <div class="card mp-summary-card" style="margin-top:14px;">
       <p style="font-size:9px;font-weight:700;color:#4b5563;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Comparativa multi-periodo &middot; Recetas (CloseUp)</p>
@@ -1647,8 +1646,6 @@ function renderRec(){
         fill:false,tension:.3,pointRadius:2,borderWidth:1.5,borderDash:[4,3],order:i+1
       });
     });
-    (function(p){if(p)p.style.display='block';})(document.getElementById('rec-comp-panel'));
-    renderRecComp(rProd,msKeys,'ms');
   } else if(rView==='quarterly'){
     const msObj=D.rec_ms?.[rProd]||{};
     const qKeys=sortQ(Object.keys(msObj.ms_quarterly||{}));
@@ -1682,8 +1679,6 @@ function renderRec(){
         fill:false,tension:.2,pointRadius:4,borderWidth:1.5,borderDash:[4,3]
       });
     });
-    (function(p){if(p)p.style.display='block';})(document.getElementById('rec-comp-panel'));
-    renderRecComp(rProd, [],'quarterly');
   } else {
     // Vistas Recetas / Médicos (unidades absolutas) + competidores
     let keys=sortM(Object.keys(data));
@@ -1710,8 +1705,6 @@ function renderRec(){
         fill:false,tension:.3,pointRadius:2,borderWidth:1.5,borderDash:[4,3],order:i+2
       });
     });
-    (function(p){if(p)p.style.display='block';})(document.getElementById('rec-comp-panel'));
-    renderRecComp(rProd,keys,rView);
   }
 
   const isMs=rView==='ms'||rView==='quarterly';
@@ -1804,98 +1797,6 @@ function renderRec(){
 function round2(v){return Math.round(v*100)/100;}
 
 
-function renderRecComp(prod, months, viewMode){
-  viewMode=viewMode||'rec';
-  const compData=D.rec_comp?.[prod]||{};
-  const el=document.getElementById('rec-comp-table');
-  if(!el) return;
-  if(!Object.keys(compData).length){el.innerHTML='<p style="color:#4b5563;font-size:11px;">Sin datos de competidores.</p>';return;}
-  const lastMes=months[months.length-1];const prevMes=months[months.length-2];
-  let cIdx=0;
-  const isQ=lastMes&&lastMes.startsWith('Q');
-  const mField=viewMode==='med'?'monthly_medicos':'monthly';
-  const unitLabel=viewMode==='med'?'médicos':'recetas';
-
-  function getV(data, key){
-    if(!key) return 0;
-    if(!isQ) return data[mField]?.[key]||0;
-    const[q,y]=key.split(' ');
-    const Q_M={'Q1':['Jan','Feb','Mar'],'Q2':['Apr','May','Jun'],'Q3':['Jul','Aug','Sep'],'Q4':['Oct','Nov','Dec']};
-    const vals=Q_M[q].map(m=>data[mField]?.[m+' '+y]).filter(v=>v);
-    return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):0;
-  }
-
-  // Orden: SIE primero, luego por valor del último mes desc
-  let sorted=Object.entries(compData).sort((a,b)=>{
-    const aSie=a[1].is_sie?1:0, bSie=b[1].is_sie?1:0;
-    if(aSie!==bSie) return bSie-aSie;
-    return getV(b[1],lastMes)-getV(a[1],lastMes);
-  });
-
-  // Apply brand filter to sorted list
-  if(!window.__sfRecPF) window.__sfRecPF = { mode:'top10', selected:new Set(), search:'' };
-  const _pf = window.__sfRecPF;
-  const _allSorted = sorted.slice();
-  let _filteredSorted = _allSorted;
-  if(_pf.mode==='top5') _filteredSorted = _allSorted.slice(0,5);
-  else if(_pf.mode==='top10') _filteredSorted = _allSorted.slice(0,10);
-  else if(_pf.mode==='sie') _filteredSorted = _allSorted.filter(([p,d])=>p.includes(' SIE'));
-  if(_pf.selected.size > 0){
-    _filteredSorted = _allSorted.filter(([p,d])=>_pf.selected.has(p));
-  }
-  // Always include SIE
-  _allSorted.filter(([p,d])=>p.includes(' SIE')).forEach(s=>{
-    if(!_filteredSorted.find(x=>x[0]===s[0])) _filteredSorted.push(s);
-  });
-  // Render pills (from full sorted list)
-  const _pillEl = document.getElementById('rcf-pills');
-  if(_pillEl){
-    const _shown = new Set(_filteredSorted.map(([p])=>p));
-    const q = (_pf.search||'').toLowerCase();
-    const _pillList = q ? _allSorted.filter(([p])=>p.toLowerCase().includes(q)) : _allSorted.slice(0,30);
-    _pillEl.innerHTML = _pillList.map(([p])=>{
-      const on = _shown.has(p);
-      const sie = p.includes(' SIE')?' sie':'';
-      return `<span class="pill${on?' on':''}${sie}" data-prod="${p.replace(/"/g,'&quot;')}">${p}</span>`;
-    }).join('');
-  }
-  sorted = _filteredSorted;
-  const maxVal=Math.max(...sorted.map(([,d])=>getV(d,lastMes)))||1;
-  const colors=['#b01e1e','#1d4ed8','#059669','#d97706','#7c3aed','#c2410c','#0369a1','#16a34a'];
-
-  const MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  el.innerHTML=`<table class="pt">
-    <thead><tr>
-      <th>#</th>
-      <th>Producto</th>
-      <th>${isQ?'Prom. '+lastMes:(lastMes||'Último')} (${unitLabel})</th>
-      <th>Δ vs ant.</th>
-      <th style="text-align:right">Total 2024</th>
-      <th style="text-align:right">Total 2025</th>
-      <th style="text-align:right">Δ 24→ 25</th>
-    </tr></thead>
-    <tbody>${sorted.map(([p,data],idx)=>{
-      const isSie=data.is_sie===true;
-      const vNow=getV(data,lastMes);const vPrev=getV(data,prevMes);
-      const delta=vPrev>0?Math.round((vNow/vPrev-1)*100):null;
-      const barW=Math.round(vNow/maxVal*80);
-      const clr=isSie?'#b01e1e':colors[cIdx++%colors.length];
-      const dClr=delta==null?'#6b7280':delta>=0?'#16a34a':'#dc2626';
-      const tot24=MO.reduce((s,m)=>s+(data[mField]?.[m+' 2024']||0),0);
-      const tot25=MO.reduce((s,m)=>s+(data[mField]?.[m+' 2025']||0),0);
-      const dy=tot24>0?Math.round((tot25/tot24-1)*100):null;
-      const dyClr=dy==null?'#6b7280':dy>=0?'#16a34a':'#dc2626';
-      return `<tr class="${isSie?'sie-row':''}">
-        <td style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6b7280;">${idx+1}</td>
-        <td><span style="color:${clr};font-size:9px;">◠</span><span style="font-weight:${isSie?700:500};font-size:10px;color:${isSie?'#b01e1e':'#111827'};">${p}${isSie?' ★':''}</span></td>
-        <td><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#111827;">${fmt(vNow)}</span><span style="display:inline-block;height:3px;width:${barW}px;background:${clr};opacity:.5;vertical-align:middle;margin-left:5px;border-radius:2px;"></span></td>
-        <td style="font-size:9px;font-weight:600;color:${dClr};">${delta!=null?(delta>=0?'+':'')+delta+'%':'—'}</td>
-        <td style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#374151;text-align:right;">${tot24?fmt(tot24):'—'}</td>
-        <td style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#374151;text-align:right;">${tot25?fmt(tot25):'—'}</td>
-        <td style="font-size:9px;font-weight:700;color:${dyClr};text-align:right;">${dy!=null?(dy>=0?'+':'')+dy+'%':'—'}</td>
-      </tr>`;
-    }).join('')}</tbody></table>`;
-}
 
 // ── CANALES ───────────────────────────────────────────────────────────
 function renderCanales(filterFam){
@@ -2389,42 +2290,6 @@ window.__sfPF = window.__sfPF || { mode:'top10', selected:new Set(), search:'' }
 </script>
 <script>
 
-// Wire rec brand filter
-(function(){
-  if(window.__sfRecPFWired) return;
-  window.__sfRecPFWired = true;
-  window.__sfRecPF = window.__sfRecPF || { mode:'top10', selected:new Set(), search:'' };
-  const ready = function(fn){
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn);
-    else fn();
-  };
-  ready(function(){
-    const seg = document.getElementById('rcf-mode');
-    const search = document.getElementById('rcf-search');
-    const pills = document.getElementById('rcf-pills');
-    if(seg) seg.addEventListener('click', function(e){
-      const b = e.target.closest('button[data-m]');
-      if(!b) return;
-      seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
-      b.classList.add('on');
-      window.__sfRecPF.mode = b.dataset.m;
-      window.__sfRecPF.selected = new Set();
-      if(typeof renderRec==='function') renderRec();
-    });
-    if(search) search.addEventListener('input', function(e){
-      window.__sfRecPF.search = e.target.value;
-      if(typeof renderRec==='function') renderRec();
-    });
-    if(pills) pills.addEventListener('click', function(e){
-      const p = e.target.closest('.pill[data-prod]');
-      if(!p) return;
-      const prod = p.dataset.prod;
-      if(window.__sfRecPF.selected.has(prod)) window.__sfRecPF.selected.delete(prod);
-      else window.__sfRecPF.selected.add(prod);
-      if(typeof renderRec==='function') renderRec();
-    });
-  });
-})();
 
 </script>
 <script src="../shared/multi-period-table.js?v=8389c4cde7"></script>
