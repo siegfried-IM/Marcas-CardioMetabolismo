@@ -161,8 +161,14 @@ def main():
         print('  (skip) openpyxl no disponible')
         return 0
 
-    # accum[familia][anio][Q] = {c,m}. Si hay 2 archivos para el mismo (anio,Q),
-    # gana el de nombre 'Convenios vs mostrador' (mas nuevo) sobre 'Ner trm'.
+    # accum[familia][anio][Q] = {c,m}. Si hay varios archivos para el mismo (anio,Q)
+    # gana el de mayor prioridad:
+    #   3 '(neto)'               -> % convenio = consumo NETO de bajas / facturado
+    #   2 'Convenios vs mostrador' -> % del pivot ThZZvT, consumo BRUTO / facturado
+    #   1 'Ner trm'              -> formato viejo
+    # El bruto sobre facturado no es una participacion (pasa de 100%): mezcla un
+    # numerador que no descuenta las bajas con un denominador que si. Ver
+    # shared/qlik/rofina-canales-to-xlsx.py.
     # Se leen TODAS y se ordena por prioridad DESPUES, para poder reportar los archivos
     # que no aportan nada (antes se descartaban en silencio: 13 planillas, 8 trimestres).
     files = sorted(d.glob('*.xlsx'))
@@ -175,7 +181,8 @@ def main():
             ignorados.append(f.name)
             continue
         year, q = yq
-        prio = 2 if 'convenios vs mostrador' in f.name.lower() else 1
+        _n = f.name.lower()
+        prio = 3 if '(neto)' in _n else (2 if 'convenios vs mostrador' in _n else 1)
         fam_data, motivo = read_file_familia(f)
         if not fam_data:
             vacios.append((f.name, motivo))
