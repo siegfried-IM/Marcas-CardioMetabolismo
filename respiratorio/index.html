@@ -983,6 +983,17 @@ function renderBudget(){
     return budSort.dir==='asc' ? av-bv : bv-av;
   });
   var ytdLabel = ytdLast>=0 ? ('YTD '+MESES_L[ytdLast]) : 'YTD';
+  // La columna Total mezcla ventanas A PROPOSITO: Venta es el real acumulado al mes de
+  // cierre y Estim. es el presupuesto de los 12 meses. Entonces su % NO es cumplimiento
+  // -por eso no lleva la escala de color, que pintaba de rojo un 73% que solo significa
+  // "vamos 8 de 12 meses"-: es AVANCE sobre el plan anual. El cumplimiento comparable
+  // (misma ventana de los dos lados) es la columna YTD.
+  var _mesesCorridos = ytdLast + 1;
+  var _ritmoLineal = Math.round(_mesesCorridos / 12 * 100);
+  var _totTip = 'Avance sobre el plan ANUAL, no cumplimiento: la venta es el acumulado a '
+    + (ytdLast >= 0 ? MESES_L[ytdLast] : '—') + ' y el estimado es el de los 12 meses. Con '
+    + _mesesCorridos + ' de 12 meses corridos, un ritmo lineal daria ' + _ritmoLineal
+    + '%. El cumplimiento comparable esta en la columna ' + ytdLabel + '.';
   // Colgroup: distribuye anchos para responsive sin scroll horizontal
   var cg = document.getElementById('bud-table-cols');
   if(cg){
@@ -1004,7 +1015,7 @@ function renderBudget(){
       hh += '<th data-bcol="'+mi+'" style="cursor:pointer;text-align:right;padding:5px 4px;font-size:9px;font-weight:700;color:#374151;letter-spacing:.04em;text-transform:uppercase;">'+m+ar+'</th>';
     });
     hh += '<th data-bcol="ytd" style="cursor:pointer;text-align:right;padding:5px 5px;font-size:9px;font-weight:800;color:#1f4ba6;letter-spacing:.04em;text-transform:uppercase;border-left:2px solid #dbeafe;">'+ytdLabel+((budSort.col==='ytd')?(budSort.dir==='asc'?' ▲':' ▼'):'')+'</th>';
-    hh += '<th data-bcol="total" style="cursor:pointer;text-align:right;padding:5px 6px;font-size:9px;font-weight:700;color:#b01e1e;letter-spacing:.04em;text-transform:uppercase;border-left:2px solid #fde2e2;">Total'+((budSort.col==='total')?(budSort.dir==='asc'?' ▲':' ▼'):'')+'</th>';
+    hh += '<th data-bcol="total" style="cursor:pointer;text-align:right;padding:5px 6px;font-size:9px;font-weight:700;color:#b01e1e;letter-spacing:.04em;text-transform:uppercase;border-left:2px solid #fde2e2;" title="'+_totTip+'">Total año'+((budSort.col==='total')?(budSort.dir==='asc'?' ▲':' ▼'):'')+'</th>';
     hh += '</tr>';
     head.innerHTML = hh;
     head.querySelectorAll('th[data-bcol]').forEach(function(th){
@@ -1061,7 +1072,7 @@ function renderBudget(){
       var totPctStr = totPct==null ? '—' : totPct.toFixed(0)+'%';
       var ytdPctStr = ytdPct==null ? '—' : ytdPct.toFixed(0)+'%';
       html += '<td style="padding:2px 5px;text-align:right;font-weight:800;color:'+pctColor(ytdPct)+';background:'+pctBg(ytdPct)+';border-left:2px solid #dbeafe;">'+ytdPctStr+'</td>';
-      html += '<td style="padding:2px 5px;text-align:right;font-weight:800;color:'+pctColor(totPct)+';background:'+pctBg(totPct)+';border-left:2px solid #fde2e2;">'+totPctStr+'</td>';
+      html += '<td title="'+_totTip+'" style="padding:2px 5px;text-align:right;font-weight:800;color:#374151;background:#f3f4f6;border-left:2px solid #fde2e2;">'+totPctStr+'</td>';
       html += '</tr>';
     });
     body.innerHTML = html;
@@ -1110,7 +1121,7 @@ function renderBudget(){
     var gpctStr = grandPct == null ? '—' : grandPct.toFixed(0)+'%';
     var gYtdPctStr = grandYtdPct == null ? '—' : grandYtdPct.toFixed(0)+'%';
     fhtml += '<td style="padding:2px 5px;text-align:right;font-weight:800;color:'+pctColor(grandYtdPct)+';background:'+pctBg(grandYtdPct)+';border-left:2px solid #dbeafe;">'+gYtdPctStr+'</td>';
-    fhtml += '<td style="padding:2px 5px;text-align:right;font-weight:800;color:'+pctColor(grandPct)+';background:'+pctBg(grandPct)+';border-left:2px solid #fde2e2;">'+gpctStr+'</td>';
+    fhtml += '<td title="'+_totTip+'" style="padding:2px 5px;text-align:right;font-weight:800;color:#374151;background:#eceff3;border-left:2px solid #fde2e2;">'+gpctStr+'</td>';
     fhtml += '</tr>';
     foot.innerHTML = fhtml;
   }
