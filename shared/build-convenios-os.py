@@ -112,7 +112,9 @@ def periodo(meses):
 
 def agg(rows, alias):
     out = defaultdict(lambda: defaultdict(float)); disp = {}
-    for os1, prod, val in rows:
+    # col 2 = consumo uni NETO de ND (lo que muestra Qlik); col 3 = bruto, se ignora
+    # a proposito: esta solo para poder reproducir el "% convenio UNI" si hiciera falta.
+    for os1, prod, val, _bruto in rows:
         if not prod or str(prod).strip() in ('Totales', '-'):
             continue
         if not os1 or str(os1).strip() == 'Totales':
@@ -139,8 +141,9 @@ def blk(text, anchor):
 # bug de 2026-09-16 (ROACCUTAN Ene-Jun 2026: 83.237 publicadas contra 68.035 reales).
 METRICA = 'consumo por convenio neto de notas de débito'
 METRICA_TIP = ("Columna 'Consumo uni' del tablero de Rofina: resta las notas de "
-               "debito, igual que el KPI 'Consumo unidades' de la hoja. NO es el "
-               "consumo bruto, que usa el % convenio UNI y da ~22% mas.")
+               "debito, igual que el KPI 'Consumo unidades' de la hoja. No es el "
+               "consumo bruto (el que usa el % convenio UNI), que da mas: las ND "
+               "pesaron 13,5% en Ene-Jun 2026 y 3,3% en Ene-Jun 2025.")
 
 r26, m26 = load_year(2026)
 r25, m25 = load_year(2025)
